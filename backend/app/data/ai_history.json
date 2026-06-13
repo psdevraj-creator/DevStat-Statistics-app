@@ -1,0 +1,92 @@
+[
+  {
+    "id": "8a3214ae",
+    "question": "Describe the distribution of age in the dataset",
+    "plan_name": "Distribution of Age",
+    "timestamp": "2026-06-13T12:36:25.685994",
+    "test_count": 1,
+    "success_count": 1,
+    "summary": "The requested descriptive analysis of age could not be performed due to a data processing error. No statistics or visualizations were generated, leaving the distribution of age in the dataset completely unknown."
+  },
+  {
+    "id": "ed749032",
+    "question": "Is there an association between smoking and hypertension?",
+    "plan_name": "Association between smoking and hypertension",
+    "timestamp": "2026-06-13T12:39:39.320825",
+    "test_count": 1,
+    "success_count": 0,
+    "summary": "The requested analysis to examine the association between smoking and hypertension could not be completed due to a technical error in the statistical processing system. No results, effect sizes, or charts are available to interpret."
+  },
+  {
+    "id": "040ef6f8",
+    "question": "Is there an association between smoking and hypertension?",
+    "plan_name": "Association between smoking status and hypertension",
+    "timestamp": "2026-06-13T12:41:22.645632",
+    "test_count": 1,
+    "success_count": 0,
+    "summary": "The analysis to assess the association between smoking and hypertension could not be completed due to a technical error in both the primary chi-square test and the fallback Fisher's exact test. No statistical results are available to answer the research question."
+  },
+  {
+    "id": "403fc861",
+    "question": "Is there an association between smoking and hypertension?",
+    "plan_name": "Smoking-Hypertension Association",
+    "timestamp": "2026-06-13T12:42:19.781602",
+    "test_count": 1,
+    "success_count": 0,
+    "summary": "The requested chi-square test of independence to examine the association between smoking and hypertension could not be executed due to a technical error. No statistical results are available, so no conclusion can be drawn about the relationship."
+  },
+  {
+    "id": "d23f061c",
+    "question": "Is there an association between smoking and hypertension?",
+    "plan_name": "Association between Smoking and Hypertension",
+    "timestamp": "2026-06-13T12:43:36.178050",
+    "test_count": 1,
+    "success_count": 0,
+    "summary": "The analysis to determine whether there is an association between smoking and hypertension could not be completed due to a technical failure in both the primary and fallback statistical tests. No results are available, and therefore no clinical interpretation can be made."
+  },
+  {
+    "id": "fb241822",
+    "question": "Is there an association between smoking and hypertension?",
+    "plan_name": "Smoking-Hypertension Association",
+    "timestamp": "2026-06-13T12:44:59.926655",
+    "test_count": 1,
+    "success_count": 0,
+    "summary": "The analysis to determine an association between smoking and hypertension could not be completed. A Chi-Square test was attempted but failed due to an implementation gap in the analysis router; the fallback Fisher's Exact Test also encountered an internal error. No results or charts were produced."
+  },
+  {
+    "id": "0e329629",
+    "question": "Is there an association between smoking and hypertension?",
+    "plan_name": "Association between Smoking and Hypertension",
+    "timestamp": "2026-06-13T12:46:09.056814",
+    "test_count": 1,
+    "success_count": 0,
+    "summary": "The requested analysis to evaluate the association between smoking and hypertension could not be completed due to a technical error during execution. No statistical results or charts were generated. Consequently, no inference can be made from the available data."
+  },
+  {
+    "id": "04b8f4aa",
+    "question": "Is there an association between smoking and hypertension?",
+    "plan_name": "Smoking-Hypertension Association",
+    "timestamp": "2026-06-13T12:47:27.288835",
+    "test_count": 1,
+    "success_count": 0,
+    "summary": "The analysis to assess the association between smoking and hypertension could not be completed due to a technical error. Both the primary Chi-square test and the fallback Fisher's exact test failed to execute because the required statistical function is not implemented in the current environment. As a result, no valid statistical results are available, and we cannot draw any conclusions about the relationship between smoking and hypertension status."
+  },
+  {
+    "id": "e129cbbb",
+    "question": "Is there an association between smoking and hypertension?",
+    "plan_name": "Association between smoking and hypertension",
+    "timestamp": "2026-06-13T12:49:06.273636",
+    "test_count": 1,
+    "success_count": 0,
+    "summary": "The requested analysis (association between smoking and hypertension) could not be performed due to a technical error during execution of the Chi-square test and its fallback (Fisher's exact test). No valid statistical results or charts were produced, so no conclusion can be drawn at this time."
+  },
+  {
+    "id": "0e2a02e0",
+    "question": "Is there an association between smoking and hypertension?",
+    "plan_name": "Association between smoking status and hypertension",
+    "timestamp": "2026-06-13T12:53:15.757604",
+    "test_count": 1,
+    "success_count": 0,
+    "summary": "An attempt to assess the association between smoking and hypertension using a chi-square test of independence failed due to technical errors. Neither the primary test nor the fallback (Fisher's exact test) could be completed, so no statistical results are available. The question of association remains unanswered pending a successful re-analysis."
+  }
+]
