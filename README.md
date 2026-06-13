@@ -1,6 +1,6 @@
 # DevStat — Medical Statistics Software
 
-[![User Guide](https://img.shields.io/badge/%F0%9F%93%96-User_Guide_%26_Statistics_Manual-005eb8?style=for-the-badge)](https://psdevraj-creator.github.io/DevStat-Statistics-app/USER_GUIDE_AND_STATISTICS_MANUAL.html)
+[![User Guide](https://img.shields.io/badge/%F0%9F%93%96-User_Guide_%26_Statistics_Manual-005eb8?style=for-the-badge)](https://psdevraj-creator.github.io/DevStat-Statistics-app/STATS_MANUAL.html)
 
 
 **A desktop application for statistical analysis and visualisation of medical and clinical data.**
