@@ -1,5 +1,8 @@
 # DevStat — Medical Statistics Software
 
+[![User Guide](https://img.shields.io/badge/%F0%9F%93%96-User_Guide_%26_Statistics_Manual-005eb8?style=for-the-badge)](https://psdevraj-creator.github.io/DevStat-Statistics-app/USER_GUIDE_AND_STATISTICS_MANUAL.html)
+
+
 **A desktop application for statistical analysis and visualisation of medical and clinical data.**
 
 DevStat provides an interactive, point-and-click interface for performing common medical statistical analyses without requiring programming knowledge. It features over 37 chart types, comprehensive statistical tests, survival analysis, diagnostic test evaluation, and a built-in eligibility engine that guides you to the right analysis.
