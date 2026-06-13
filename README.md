@@ -50,7 +50,14 @@ No Python installation required. The app runs entirely offline (no internet conn
 
 ## Screenshots
 
-*(Screenshots to be added)*
+<img width="650" height="462" alt="GUI" src="https://github.com/user-attachments/assets/35dfc490-87ec-4624-a993-36798587cc9f" />
+<img width="1877" height="952" alt="Chart" src="https://github.com/user-attachments/assets/a712ddcd-4564-4fa3-9d11-524fa4747d34" />
+<img width="1857" height="702" alt="COX" src="https://github.com/user-attachments/assets/30204f8d-b271-44c4-8877-480e1d0aaffc" />
+<img width="1882" height="942" alt="KM curve" src="https://github.com/user-attachments/assets/d017e314-b4fd-4d1b-b9e7-334c1f2410ac" />
+<img width="1912" height="995" alt="Main Screen" src="https://github.com/user-attachments/assets/f25d5c14-94bf-49c0-bdb9-18e5393965c4" />
+<img width="651" height="460" alt="GUI Start" src="https://github.com/user-attachments/assets/0ec15169-ac34-4c82-99c1-bda17b2716fb" />
+
+
 
 ---
 
