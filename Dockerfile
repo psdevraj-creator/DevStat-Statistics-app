@@ -2,7 +2,7 @@ FROM python:3.14-slim
 
 LABEL privacy="Zero data retention. Data is processed in memory only."
 
-# Install build tools and runtime libraries for scipy/numpy/matplotlib
+# Install build tools AND runtime libraries for scipy/sklearn/numpy/matplotlib
 RUN apt-get update && apt-get install -y --no-install-recommends \
     build-essential \
     libgfortran5 \
@@ -21,6 +21,4 @@ WORKDIR /app/backend
 
 ENV PORT=8080
 ENV PYTHONPATH=/app/backend
-
-# Shell form CMD — Cloud Run sets PORT env var
-CMD uvicorn app.main:create_app --host 0.0.0.0 --port ${PORT:-8080} --factory
+CMD ["uvicorn", "app.main:create_app", "--host", "0.0.0.0", "--port", "8080", "--factory"]
