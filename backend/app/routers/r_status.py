@@ -4,6 +4,7 @@ Mounted at ``/api`` in the main FastAPI application.
 """
 from __future__ import annotations
 
+import os
 from typing import Any, Dict
 
 from fastapi import APIRouter
@@ -24,6 +25,8 @@ async def engine_status() -> Dict[str, Any]:
 @router.get("/logs")
 async def get_backend_logs() -> Dict[str, Any]:
     """Return the last 2000 lines of the backend log file."""
+    if os.environ.get("K_SERVICE", ""):
+        return {"available": False, "logs": "Logs disabled on Cloud Run (privacy)."}
     from app.logging_config import LOG_FILE
     if not LOG_FILE.exists():
         return {"available": False, "logs": "No log file found."}

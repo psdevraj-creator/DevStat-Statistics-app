@@ -40,7 +40,8 @@ console_handler.setFormatter(logging.Formatter(
 # Root logger
 root_logger = logging.getLogger()
 root_logger.handlers.clear()
-root_logger.addHandler(file_handler)
+if not os.environ.get("K_SERVICE", ""):
+    root_logger.addHandler(file_handler)
 root_logger.addHandler(console_handler)
 root_logger.setLevel(logging.DEBUG)
 
