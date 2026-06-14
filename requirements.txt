@@ -15,6 +15,8 @@ numpy>=2.0
 # ── Statistics (Python-only analyses) ────────────────────────────────────
 scipy>=1.11,<2.0
 statsmodels>=0.14,<1.0
+factor-analyzer>=0.4,<1.0
+pingouin>=0.5,<1.0
 
 # ── Survival analysis (Python fallback) ─────────────────────────────────
 lifelines>=0.28,<1.0
