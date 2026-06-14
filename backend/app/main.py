@@ -135,8 +135,9 @@ def create_app() -> FastAPI:
             )
         return response
 
-    # ---- Request logging middleware — logs EVERYTHING ------------------------
-    app.add_middleware(RequestLoggingMiddleware)
+    # ---- Request logging middleware — desktop only (never on Cloud Run) -------
+    if not os.environ.get("K_SERVICE", ""):
+        app.add_middleware(RequestLoggingMiddleware)
 
     # ---- CORS ----------------------------------------------------------------
     cors_origins = os.environ.get("CORS_ORIGINS", "http://localhost:5173,http://127.0.0.1:8150,http://localhost:8150").split(",")
