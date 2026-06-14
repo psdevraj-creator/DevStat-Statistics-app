@@ -10,17 +10,19 @@ from __future__ import annotations
 
 import json
 import os
+import secrets
 from pathlib import Path
 from typing import Any
 
 import math
 import numpy as np
 import pandas as pd
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse, JSONResponse
 
-from app.state import current_data, current_filename
+import app.state as _state
+from app.state import init_session
 from app.config import PROJECT_NAME, VERSION
 from app.routers import data, analysis, charts, output, suggest, transform, wizard, r_status, syntax, eligibility
 
@@ -115,6 +117,24 @@ def create_app() -> FastAPI:
         n = len(app.state.engine.available_analyses())
         slog.info("Python engine active — %d analyses available", n)
 
+    # ---- Session middleware — cookie-based user isolation ---------------------
+    @app.middleware("http")
+    async def _session_middleware(request: Request, call_next):
+        session_id = request.cookies.get("devstat_session")
+        if not session_id:
+            session_id = secrets.token_urlsafe(32)
+        init_session(session_id)
+        response = await call_next(request)
+        if not request.cookies.get("devstat_session"):
+            response.set_cookie(
+                key="devstat_session",
+                value=session_id,
+                httponly=True,
+                max_age=86400,
+                samesite="lax",
+            )
+        return response
+
     # ---- Request logging middleware — logs EVERYTHING ------------------------
     app.add_middleware(RequestLoggingMiddleware)
 
@@ -149,8 +169,8 @@ def create_app() -> FastAPI:
             "status": "ok",
             "project": PROJECT_NAME,
             "version": VERSION,
-            "data_loaded": current_data is not None,
-            "filename": current_filename,
+            "data_loaded": _state.current_data is not None,
+            "filename": _state.current_filename,
             "engine": "py",
             "cloud_run": cloud_run,
             "privacy_notice": "Zero data retention. Your data is processed in memory only and never stored, logged, or written to disk." if cloud_run else "",

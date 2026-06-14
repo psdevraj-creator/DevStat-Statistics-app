@@ -230,16 +230,12 @@ async def sort_cases(req: SortRequest) -> Dict[str, Any]:
 # ---------------------------------------------------------------------------
 
 
-_state_split_var: Optional[str] = None
-
-
 @router.post("/split-file")
 async def split_file(req: SplitFileRequest) -> Dict[str, Any]:
     """Set or clear split-file grouping for grouped analysis."""
-    global _state_split_var
 
     if req.state == "off":
-        _state_split_var = None
+        _state._split_var = None
         return {"status": "ok", "state": "off", "message": "Split file disabled."}
 
     if not req.group_var:
@@ -247,7 +243,7 @@ async def split_file(req: SplitFileRequest) -> Dict[str, Any]:
     if req.group_var not in _state.current_data.columns:
         raise HTTPException(400, detail=f"Column '{req.group_var}' not found.")
 
-    _state_split_var = req.group_var
+    _state._split_var = req.group_var
     return {"status": "ok", "state": req.state, "group_var": req.group_var}
 
 
@@ -256,16 +252,12 @@ async def split_file(req: SplitFileRequest) -> Dict[str, Any]:
 # ---------------------------------------------------------------------------
 
 
-_state_weight_var: Optional[str] = None
-
-
 @router.post("/weight")
 async def weight_cases(req: WeightRequest) -> Dict[str, Any]:
     """Set or clear weight variable for weighted analysis."""
-    global _state_weight_var
 
     if req.state == "off":
-        _state_weight_var = None
+        _state._weight_var = None
         return {"status": "ok", "state": "off", "message": "Weighting disabled."}
 
     if not req.weight_var:
@@ -273,7 +265,7 @@ async def weight_cases(req: WeightRequest) -> Dict[str, Any]:
     if req.weight_var not in _state.current_data.columns:
         raise HTTPException(400, detail=f"Column '{req.weight_var}' not found.")
 
-    _state_weight_var = req.weight_var
+    _state._weight_var = req.weight_var
     return {"status": "ok", "state": req.state, "weight_var": req.weight_var}
 
 
@@ -339,8 +331,8 @@ async def aggregate_data(req: AggregateRequest) -> Dict[str, Any]:
 async def transform_state() -> Dict[str, Any]:
     """Return current transform state (split, weight settings)."""
     return {
-        "split_var": getattr(_state, "_state_split_var", None) if hasattr(_state, "_state_split_var") else None,
-        "weight_var": getattr(_state, "_state_weight_var", None) if hasattr(_state, "_state_weight_var") else None,
+        "split_var": _state._split_var,
+        "weight_var": _state._weight_var,
         "nrows": len(_state.current_data) if _state.current_data is not None else 0,
         "ncols": len(_state.current_data.columns) if _state.current_data is not None else 0,
     }
