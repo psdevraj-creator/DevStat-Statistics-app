@@ -144,7 +144,6 @@ def create_app() -> FastAPI:
     @app.get("/api/health", tags=["Health"])
     async def health_check():
         """Return basic service health information."""
-        cloud_run = bool(os.environ.get("K_SERVICE", ""))
         return {
             "status": "ok",
             "project": PROJECT_NAME,
@@ -152,8 +151,6 @@ def create_app() -> FastAPI:
             "data_loaded": current_data is not None,
             "filename": current_filename,
             "engine": "py",
-            "cloud_run": cloud_run,
-            "privacy_notice": "Zero data retention. Your data is processed in memory only and never stored, logged, or written to disk." if cloud_run else "",
         }
 
     # ---- Engine status -------------------------------------------------------
