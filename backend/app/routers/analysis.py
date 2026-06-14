@@ -497,6 +497,12 @@ async def np_friedman_endpoint(body: Dict[str, Any]) -> Dict[str, Any]:
     samples = [
         _state.current_data[col].dropna().values for col in variables
     ]
+
+    # Ensure all samples have same length (row-wise dropna)
+    min_len = min(len(s) for s in samples)
+    if min_len < 3:
+        raise HTTPException(status_code=400, detail="Friedman test requires at least 3 complete cases across all variables.")
+    samples = [s[:min_len] for s in samples]
     stat, p_value = sp_stats.friedmanchisquare(*samples)
     return {
         "test_name": "Friedman Test",

@@ -347,6 +347,20 @@ def _power_analysis(
             "n_per_group": int(np.ceil(n_total / n_groups)),
             "interpretation": f"Required total sample size: {n_total} (~{int(np.ceil(n_total / n_groups))} per group).",
         }
+    elif test in ("corr", "correlation"):
+        from scipy.stats import norm
+        z_alpha = norm.ppf(1 - alpha / 2)
+        z_beta = norm.ppf(power)
+        n = int(np.ceil(((z_alpha + z_beta) / (0.5 * np.log((1 + effect_size) / (1 - effect_size)))) ** 2 + 3))
+        return {
+            "test": "Pearson correlation (two-sided)",
+            "effect_size": effect_size,
+            "effect_size_measure": "Pearson's r",
+            "alpha": alpha,
+            "power": power,
+            "n_total": n,
+            "interpretation": f"Required sample size: {n} to detect r = {effect_size} with {power:.0%} power at α = {alpha}.",
+        }
     return {"error": f"Unknown power test: '{test}'"}
 
 

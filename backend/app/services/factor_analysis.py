@@ -67,6 +67,20 @@ def factor_analysis(
     try:
         from factor_analyzer import FactorAnalyzer
         from factor_analyzer.factor_analyzer import calculate_bartlett_sphericity, calculate_kmo
+
+        # sklearn >= 1.6 renamed force_all_finite → ensure_all_finite.
+        # factor_analyzer 0.5.1 uses the old name. Patch its local reference.
+        import factor_analyzer.factor_analyzer as _fa_mod
+        _fa_fn = _fa_mod.check_array
+        try:
+            _fa_fn([[1]], force_all_finite=True)
+        except TypeError:
+            _orig_fa = _fa_fn
+            def _patched_fa(array, **kw):
+                if 'force_all_finite' in kw and 'ensure_all_finite' not in kw:
+                    kw['ensure_all_finite'] = kw.pop('force_all_finite')
+                return _orig_fa(array, **kw)
+            _fa_mod.check_array = _patched_fa
     except ImportError:
         return error("factor_analyzer library is not installed. pip install factor-analyzer")
 
