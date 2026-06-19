@@ -1,0 +1,39 @@
+# DevStat — Python Backend Dependencies
+# Install with: pip install -r requirements.txt
+# Python 3.11+ required
+
+# ── Web framework ────────────────────────────────────────────────────────
+fastapi>=0.110,<1.0
+uvicorn[standard]>=0.29,<1.0
+pydantic>=2.0,<3.0
+python-multipart>=0.0.9
+
+# ── Data processing ─────────────────────────────────────────────────────
+pandas>=2.0,<3.0
+numpy>=2.0
+
+# ── Statistics (Python-only analyses) ────────────────────────────────────
+scipy>=1.11,<2.0
+statsmodels>=0.14,<1.0
+factor-analyzer>=0.4,<1.0
+pingouin>=0.5,<1.0
+
+# ── Survival analysis (Python fallback) ─────────────────────────────────
+lifelines>=0.28,<1.0
+
+# ── Machine learning ────────────────────────────────────────────────────
+scikit-learn>=1.3,<2.0
+
+# ── File I/O ────────────────────────────────────────────────────────────
+chardet>=5.2,<6.0
+openpyxl>=3.1,<4.0
+xlsxwriter>=3.1,<4.0
+pyreadstat>=1.2,<2.0
+
+# ── Charting (static exports) ────────────────────────────────────────────
+plotly>=5.18,<6.0
+matplotlib>=3.7,<4.0
+seaborn>=0.12,<1.0
+
+# ── Templating ──────────────────────────────────────────────────────────
+jinja2>=3.1,<4.0

@@ -1,0 +1,53 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.egg-info/
+dist/
+build/
+*.egg
+.pytest_cache/
+.mypy_cache/
+*.spec
+
+# Environment
+.env
+.env.*
+!.env.example
+
+# Logs
+*.log
+logs/
+
+# Node
+node_modules/
+frontend/node_modules/
+frontend/dist/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.idea/
+.vscode/
+*.swp
+
+# Virtual environment
+venv/
+backend/venv/
+
+# Built frontend (pre-built in source_clean, no frontend/ source)
+# backend/static/
+
+# Backup files
+*.bak
+
+# Test artifacts
+frontend/test-results/
+
+# Data
+backend/app/data/ai_history.json
+
+# Release
+release_preparation/output/

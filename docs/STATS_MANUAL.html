@@ -1,0 +1,1244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="DevStat — User Guide & Statistics Manual. A comprehensive guide to using DevStat and understanding the statistical concepts behind it.">
+  <title>DevStat — User Guide & Statistics Manual | DPS Oncology</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Merriweather:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --nhs-blue:      #005eb8;
+      --nhs-dark:      #003f8a;
+      --nhs-light:     #e8f0fb;
+      --nhs-mid:       #c5d9f2;
+      --accent:        #005eb8;
+      --accent-hover:  #004494;
+      --green:         #00843d;
+      --green-light:   #d4edda;
+      --amber:         #d97706;
+      --amber-light:   #fef3c7;
+      --purple:        #7c3aed;
+      --purple-light:  #ede9fe;
+      --teal:          #0891b2;
+      --teal-light:    #cffafe;
+      --bg:            #f1f5f9;
+      --surface:       #ffffff;
+      --surface2:      #f8fafc;
+      --border:        #e2e8f0;
+      --border2:       #cbd5e1;
+      --text:          #0f172a;
+      --text2:         #334155;
+      --text3:         #64748b;
+      --text4:         #94a3b8;
+      --radius-sm:     6px;
+      --radius:        12px;
+      --radius-lg:     18px;
+      --shadow-sm:     0 1px 4px rgba(0,0,0,0.07);
+      --shadow:        0 4px 16px rgba(0,0,0,0.08);
+      --shadow-md:     0 8px 30px rgba(0,0,0,0.10);
+      --shadow-lg:     0 12px 40px rgba(0,0,0,0.12);
+      --transition:    0.18s ease;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      font-size: 15px;
+      line-height: 1.6;
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a { color: var(--nhs-blue); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    pre, code { font-family: 'JetBrains Mono', 'Cascadia Code', 'Fira Code', monospace; }
+
+    .header {
+      background: linear-gradient(135deg, var(--nhs-dark) 0%, var(--nhs-blue) 55%, #1a7fd4 100%);
+      color: #fff;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.15);
+    }
+    .header-inner {
+      max-width: 1320px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 8px 20px;
+      flex-wrap: wrap;
+      min-height: 52px;
+    }
+    .header-logo {
+      font-family: 'Inter', monospace;
+      font-weight: 700;
+      font-size: 13px;
+      background: #fff;
+      color: var(--nhs-blue);
+      padding: 4px 10px;
+      border-radius: 4px;
+      letter-spacing: -0.3px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.18);
+    }
+    .header-title {
+      font-size: 14px;
+      font-weight: 600;
+      color: #fff;
+      line-height: 1.2;
+      text-decoration: none;
+    }
+    .header-subtitle {
+      font-size: 10px;
+      opacity: 0.7;
+      font-weight: 400;
+    }
+    .header-spacer { flex: 1; min-width: 0; }
+
+    .header-nav {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+    .nav-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 6px 11px;
+      border-radius: var(--radius-sm);
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.20);
+      color: #fff;
+      font-size: 11.5px;
+      font-weight: 500;
+      text-decoration: none;
+      transition: background var(--transition);
+      white-space: nowrap;
+      font-family: inherit;
+      cursor: pointer;
+      line-height: 1.3;
+    }
+    .nav-btn:hover {
+      background: rgba(255,255,255,0.24);
+      text-decoration: none;
+    }
+    .nav-btn.active {
+      background: rgba(255,255,255,0.28);
+      border-color: rgba(255,255,255,0.45);
+      font-weight: 600;
+    }
+
+    .page-hero {
+      text-align: center;
+      padding: 56px 24px 48px;
+      background: linear-gradient(165deg, var(--nhs-light) 0%, #eef4fb 40%, #f8fafc 100%);
+      border-bottom: 1px solid var(--border);
+      position: relative;
+      overflow: hidden;
+    }
+    .page-hero::before {
+      content: '';
+      position: absolute;
+      top: -30%; left: -20%;
+      width: 140%; height: 160%;
+      background: radial-gradient(ellipse at 35% 45%, rgba(0,94,184,0.05) 0%, transparent 60%);
+      pointer-events: none;
+    }
+    .page-hero-inner {
+      position: relative;
+      z-index: 1;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    .page-hero-badge {
+      display: inline-block;
+      background: var(--nhs-blue);
+      color: #fff;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 5px 16px;
+      border-radius: 20px;
+      margin-bottom: 16px;
+    }
+    .page-hero h1 {
+      font-family: 'Merriweather', Georgia, serif;
+      font-size: clamp(1.7rem, 3.8vw, 2.6rem);
+      font-weight: 700;
+      color: var(--text);
+      line-height: 1.3;
+      margin-bottom: 12px;
+      letter-spacing: -0.02em;
+    }
+    .page-hero h1 span { color: var(--nhs-blue); }
+    .page-hero p {
+      font-size: 1.05rem;
+      color: var(--text2);
+      max-width: 620px;
+      margin: 0 auto;
+      line-height: 1.65;
+    }
+
+    .content-wrapper {
+      max-width: 1060px;
+      margin: 0 auto;
+      padding: 0 20px;
+      display: flex;
+      gap: 32px;
+    }
+
+    .toc-sidebar {
+      width: 260px;
+      flex-shrink: 0;
+      position: sticky;
+      top: 72px;
+      align-self: flex-start;
+      max-height: calc(100vh - 90px);
+      overflow-y: auto;
+      padding: 20px 0 20px 0;
+      margin-right: 0;
+    }
+    .toc-sidebar::-webkit-scrollbar { width: 4px; }
+    .toc-sidebar::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 2px; }
+
+    .toc-label {
+      font-size: 0.65rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--text4);
+      margin-bottom: 12px;
+    }
+    .toc-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 1px;
+    }
+    .toc-list li { margin: 0; }
+    .toc-list a {
+      display: block;
+      padding: 5px 12px;
+      font-size: 0.78rem;
+      font-weight: 500;
+      color: var(--text3);
+      border-radius: 4px;
+      text-decoration: none;
+      transition: background 0.12s, color 0.12s;
+      line-height: 1.35;
+    }
+    .toc-list a:hover {
+      background: var(--nhs-light);
+      color: var(--nhs-blue);
+      text-decoration: none;
+    }
+    .toc-list a.toc-l2 { padding-left: 24px; font-size: 0.73rem; font-weight: 400; }
+    .toc-list a.toc-l3 { padding-left: 36px; font-size: 0.70rem; font-weight: 400; color: var(--text4); }
+
+    .main-content {
+      flex: 1;
+      min-width: 0;
+      padding: 40px 0 60px;
+    }
+
+    .main-content h2 {
+      font-family: 'Merriweather', Georgia, serif;
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-top: 48px;
+      margin-bottom: 16px;
+      padding-bottom: 8px;
+      border-bottom: 2px solid var(--nhs-light);
+      letter-spacing: -0.01em;
+    }
+    .main-content h2:first-of-type { margin-top: 0; }
+
+    .main-content h3 {
+      font-family: 'Merriweather', Georgia, serif;
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-top: 32px;
+      margin-bottom: 12px;
+    }
+
+    .main-content h4 {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--text2);
+      margin-top: 24px;
+      margin-bottom: 8px;
+    }
+
+    .main-content p {
+      margin-bottom: 14px;
+      color: var(--text2);
+      line-height: 1.7;
+    }
+
+    .main-content p:has(em:only-child) {
+      font-size: 1.05rem;
+      color: var(--text3);
+      font-style: italic;
+      text-align: center;
+      max-width: 560px;
+      margin: 24px auto;
+    }
+
+    .main-content hr {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 40px 0;
+    }
+
+    .main-content strong {
+      color: var(--text);
+      font-weight: 600;
+    }
+
+    .main-content ul, .main-content ol {
+      margin-bottom: 14px;
+      padding-left: 24px;
+      color: var(--text2);
+    }
+    .main-content li { margin-bottom: 4px; }
+
+    .main-content blockquote {
+      border-left: 3px solid var(--nhs-blue);
+      background: var(--nhs-light);
+      padding: 12px 16px;
+      margin: 16px 0;
+      border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+      color: var(--text2);
+      font-size: 0.9rem;
+    }
+    .main-content blockquote p { margin-bottom: 0; }
+
+    .table-wrap {
+      overflow-x: auto;
+      margin: 16px 0 20px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+    }
+    .table-wrap table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.88rem;
+      min-width: 460px;
+    }
+    .table-wrap thead {
+      background: var(--nhs-light);
+    }
+    .table-wrap th {
+      padding: 10px 14px;
+      text-align: left;
+      font-weight: 700;
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: var(--nhs-dark);
+      border-bottom: 2px solid var(--nhs-mid);
+      white-space: nowrap;
+    }
+    .table-wrap td {
+      padding: 9px 14px;
+      border-bottom: 1px solid var(--border);
+      color: var(--text2);
+      vertical-align: top;
+    }
+    .table-wrap tr:last-child td { border-bottom: none; }
+    .table-wrap tbody tr:hover { background: var(--surface2); }
+
+    .pre-wrap {
+      background: #1e293b;
+      color: #e2e8f0;
+      border-radius: var(--radius-sm);
+      padding: 16px 20px;
+      margin: 16px 0 20px;
+      overflow-x: auto;
+      font-size: 0.82rem;
+      line-height: 1.5;
+    }
+    .pre-wrap code {
+      background: none;
+      color: inherit;
+      font-size: inherit;
+      padding: 0;
+    }
+
+    .main-content code {
+      background: var(--nhs-light);
+      color: var(--nhs-dark);
+      font-size: 0.82em;
+      padding: 2px 6px;
+      border-radius: 3px;
+    }
+
+    .info-box {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--nhs-blue);
+      padding: 16px 20px;
+      margin: 16px 0;
+      border-radius: var(--radius-sm);
+      box-shadow: var(--shadow-sm);
+    }
+    .info-box p { margin-bottom: 0; }
+
+    .num-list {
+      list-style: none;
+      counter-reset: item;
+      padding-left: 0;
+    }
+    .num-list li {
+      counter-increment: item;
+      padding-left: 32px;
+      position: relative;
+      margin-bottom: 8px;
+    }
+    .num-list li::before {
+      content: counter(item);
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: var(--nhs-light);
+      color: var(--nhs-blue);
+      font-size: 0.72rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .qa-item {
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      margin: 12px 0;
+      overflow: hidden;
+    }
+    .qa-q {
+      background: var(--surface2);
+      padding: 10px 16px;
+      font-weight: 600;
+      font-size: 0.9rem;
+      color: var(--text);
+      border-bottom: 1px solid var(--border);
+    }
+    .qa-a {
+      padding: 10px 16px;
+      font-size: 0.88rem;
+      color: var(--text2);
+      background: var(--surface);
+    }
+    .qa-a p { margin-bottom: 0; }
+
+    .as-code {
+      font-family: 'JetBrains Mono', 'Fira Code', monospace;
+      background: var(--nhs-light);
+      color: var(--nhs-dark);
+      padding: 1px 5px;
+      border-radius: 3px;
+      font-size: 0.85em;
+    }
+
+    .footnote {
+      text-align: center;
+      padding: 32px 20px;
+      color: var(--text4);
+      font-size: 0.8rem;
+      margin-top: 40px;
+      border-top: 1px solid var(--border);
+    }
+
+    .footer {
+      text-align: center;
+      padding: 32px 20px;
+      color: var(--text4);
+      font-size: 0.8rem;
+      line-height: 1.7;
+      border-top: 1px solid var(--border);
+    }
+    .footer a { color: var(--text3); font-weight: 500; }
+    .footer a:hover { color: var(--nhs-blue); }
+
+    @media (max-width: 900px) {
+      .content-wrapper { flex-direction: column; }
+      .toc-sidebar {
+        width: 100%;
+        position: static;
+        max-height: none;
+        padding: 16px 0 0;
+        margin-bottom: 0;
+      }
+      .toc-list {
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 4px;
+      }
+      .toc-list a {
+        padding: 4px 10px;
+        font-size: 0.75rem;
+        background: var(--surface2);
+        border: 1px solid var(--border);
+        border-radius: 4px;
+      }
+      .toc-list a.toc-l2, .toc-list a.toc-l3 { padding-left: 10px; }
+      .page-hero { padding: 40px 16px 32px; }
+      .page-hero h1 { font-size: 1.5rem; }
+      .main-content { padding-top: 24px; }
+      .main-content h2 { font-size: 1.3rem; margin-top: 32px; }
+      .main-content h3 { font-size: 1.05rem; }
+    }
+  </style>
+</head>
+<body>
+
+<header class="header">
+  <div class="header-inner">
+    <a href="https://dpsoncology.com" style="display:flex;align-items:baseline;gap:8px;text-decoration:none;color:#fff;flex-shrink:0;">
+      <span class="header-logo">Onco</span>
+      <span style="display:flex;flex-direction:column;">
+        <span class="header-title">DPS Oncology</span>
+        <span class="header-subtitle">Evidence-based oncology tools &amp; insights</span>
+      </span>
+    </a>
+    <div class="header-spacer"></div>
+    <div class="header-nav">
+      <a class="nav-btn" href="https://dpsoncology.com">Home</a>
+      <a class="nav-btn" href="https://dpsoncology.com/posts/">Posts</a>
+      <a class="nav-btn" href="https://dpsoncology.com/about/">About</a>
+    </div>
+  </div>
+</header>
+
+<section class="page-hero">
+  <div class="page-hero-inner">
+    <div class="page-hero-badge">Documentation</div>
+    <h1>DevStat — <span>User Guide &amp; Statistics Manual</span></h1>
+    <p>A comprehensive guide to using DevStat and understanding the statistical concepts behind it.</p>
+  </div>
+</section>
+
+<div class="content-wrapper">
+
+  <nav class="toc-sidebar" aria-label="Table of Contents">
+    <div class="toc-label">On this page</div>
+    <ul class="toc-list">
+      <li><a href="#sec-1">1. Introduction</a></li>
+      <li><a href="#sec-2">2. Who This App Is For</a></li>
+      <li><a href="#sec-3">3. Getting Started</a>
+        <ul class="toc-list" style="gap:0">
+          <li><a class="toc-l2" href="#sec-3-1">3.1 Launching the App</a></li>
+          <li><a class="toc-l2" href="#sec-3-2">3.2 First-Time Workflow</a></li>
+        </ul>
+      </li>
+      <li><a href="#sec-4">4. Uploading &amp; Preparing Data</a></li>
+      <li><a href="#sec-5">5. Variables &amp; Study Questions</a></li>
+      <li><a href="#sec-6">6. The Analysis Pages</a>
+        <ul class="toc-list" style="gap:0">
+          <li><a class="toc-l2" href="#sec-6-1">6.1 Data View</a></li>
+          <li><a class="toc-l2" href="#sec-6-2">6.2 Descriptive Statistics</a></li>
+          <li><a class="toc-l2" href="#sec-6-3">6.3 Compare Groups</a></li>
+          <li><a class="toc-l2" href="#sec-6-4">6.4 Correlation</a></li>
+          <li><a class="toc-l2" href="#sec-6-5">6.5 Regression</a></li>
+          <li><a class="toc-l2" href="#sec-6-6">6.6 Survival Analysis</a></li>
+          <li><a class="toc-l2" href="#sec-6-7">6.7 Diagnostic Tests</a></li>
+          <li><a class="toc-l2" href="#sec-6-8">6.8 Factor Analysis &amp; Reliability</a></li>
+          <li><a class="toc-l2" href="#sec-6-9">6.9 Graphs &amp; Charts</a></li>
+        </ul>
+      </li>
+      <li><a href="#sec-7">7. Statistical Test Guide</a></li>
+      <li><a href="#sec-8">8. Interpreting Outputs</a></li>
+      <li><a href="#sec-9">9. Charts &amp; Visualisations</a></li>
+      <li><a href="#sec-10">10. Common Pitfalls</a></li>
+      <li><a href="#sec-11">11. Worked Examples</a></li>
+      <li><a href="#sec-12">12. Glossary</a></li>
+      <li><a href="#sec-13">13. FAQ</a></li>
+      <li><a href="#sec-14">14. Troubleshooting</a></li>
+    </ul>
+  </nav>
+
+  <div class="main-content">
+
+<p><em>A comprehensive guide to using DevStat and understanding the statistical concepts behind it.</em></p>
+
+<hr>
+
+<!-- ============================================================ -->
+<!-- 1. Introduction -->
+<!-- ============================================================ -->
+<h2 id="sec-1">1. Introduction</h2>
+
+<p>DevStat is a desktop medical statistics application that lets you analyse data through a point-and-click interface. It handles the full workflow: importing data, exploring variables, running statistical tests, creating publication-quality charts, and reviewing results.</p>
+<p>The app is powered by a Python backend (FastAPI) and an interactive frontend (React with Plotly.js charts). Everything runs locally on your machine — no data is ever sent to external servers.</p>
+
+<hr>
+
+<!-- ============================================================ -->
+<!-- 2. Who This App Is For -->
+<!-- ============================================================ -->
+<h2 id="sec-2">2. Who This App Is For</h2>
+
+<p>DevStat is designed for:</p>
+<ul>
+  <li><strong>Medical researchers</strong> analysing clinical trial or observational study data</li>
+  <li><strong>Healthcare professionals</strong> evaluating diagnostic tests or patient outcomes</li>
+  <li><strong>Students</strong> learning medical statistics</li>
+  <li><strong>Data analysts</strong> working with health or biomedical datasets</li>
+</ul>
+
+<div class="info-box">
+  <p><strong>What you need to know:</strong> Basic familiarity with spreadsheets and your data. The app will guide you through choosing appropriate analyses, but understanding the concepts in this manual will help you make better decisions.</p>
+</div>
+
+<hr>
+
+<!-- ============================================================ -->
+<!-- 3. Getting Started -->
+<!-- ============================================================ -->
+<h2 id="sec-3">3. Getting Started</h2>
+
+<h3 id="sec-3-1">3.1 Launching the App</h3>
+<ol>
+  <li>Download the latest release zip from the GitHub Releases page</li>
+  <li>Unzip to any folder</li>
+  <li>Double-click <code class="as-code">DevStat.exe</code></li>
+  <li>Click <strong>Start</strong> — the status changes to "Ready"</li>
+  <li>Click <strong>Open App</strong> — your default browser opens to <code class="as-code">http://localhost:8150</code></li>
+</ol>
+
+<h3 id="sec-3-2">3.2 First-Time Workflow</h3>
+<ol>
+  <li><strong>Upload your data</strong> (CSV, Excel, or SPSS file)</li>
+  <li><strong>Check your variables</strong> in the Variable View</li>
+  <li><strong>Run a descriptive analysis</strong> to understand your data</li>
+  <li><strong>Use the Wizard</strong> or pick an analysis from the menu</li>
+  <li><strong>Review results</strong> in the Output panel</li>
+  <li><strong>Create charts</strong> on the Graphs page</li>
+</ol>
+
+<hr>
+
+<!-- ============================================================ -->
+<!-- 4. Uploading and Preparing Data -->
+<!-- ============================================================ -->
+<h2 id="sec-4">4. Uploading and Preparing Data</h2>
+
+<h3>Supported Formats</h3>
+<div class="table-wrap">
+<table>
+  <thead><tr><th>Format</th><th>Extension</th><th>Notes</th></tr></thead>
+  <tbody>
+    <tr><td>CSV</td><td><code>.csv</code></td><td>UTF-8 recommended</td></tr>
+    <tr><td>Excel</td><td><code>.xlsx</code>, <code>.xls</code></td><td>First sheet only</td></tr>
+    <tr><td>SPSS</td><td><code>.sav</code></td><td>Variable labels preserved</td></tr>
+  </tbody>
+</table>
+</div>
+
+<h3>Data Preparation Tips</h3>
+<ul>
+  <li><strong>One row per observation</strong> (patient, subject, sample)</li>
+  <li><strong>One column per variable</strong> (age, sex, diagnosis, blood pressure)</li>
+  <li><strong>Missing values</strong> should be blank or <code>NA</code> — the app handles them automatically</li>
+  <li><strong>Column names</strong> should be short and meaningful (e.g., <code>age</code>, <code>systolic_bp</code>, <code>treatment_arm</code>)</li>
+</ul>
+
+<h3>Transform Tab</h3>
+<p>The Transform tab lets you:</p>
+<ul>
+  <li><strong>Compute</strong> new variables using formulas: <code>bmi = weight / (height/100)^2</code></li>
+  <li><strong>Recode</strong> values: combine categories, convert text to numbers</li>
+  <li><strong>Filter</strong> rows based on conditions</li>
+</ul>
+
+<hr>
+
+<!-- ============================================================ -->
+<!-- 5. Understanding Variables and Study Questions -->
+<!-- ============================================================ -->
+<h2 id="sec-5">5. Understanding Variables and Study Questions</h2>
+
+<p>Before choosing an analysis, identify your variables:</p>
+
+<div class="table-wrap">
+<table>
+  <thead><tr><th>Variable Type</th><th>Description</th><th>Examples</th></tr></thead>
+  <tbody>
+    <tr><td><strong>Continuous</strong></td><td>Numeric, can take any value</td><td>Age, blood pressure, cholesterol</td></tr>
+    <tr><td><strong>Binary</strong></td><td>Exactly 2 categories</td><td>Yes/No, Male/Female, Alive/Dead</td></tr>
+    <tr><td><strong>Categorical (Nominal)</strong></td><td>3+ unordered categories</td><td>Blood type, diagnosis, treatment arm</td></tr>
+    <tr><td><strong>Ordinal</strong></td><td>Ordered categories</td><td>Stage I/II/III, Mild/Moderate/Severe</td></tr>
+    <tr><td><strong>Time-to-event</strong></td><td>Time until an event occurs</td><td>Survival months, time to recurrence</td></tr>
+  </tbody>
+</table>
+</div>
+
+<p><strong>Key question types:</strong></p>
+
+<div class="table-wrap">
+<table>
+  <thead><tr><th>You want to...</th><th>Use...</th></tr></thead>
+  <tbody>
+    <tr><td>Summarise a variable</td><td>Descriptive statistics (mean, median, frequency)</td></tr>
+    <tr><td>Compare two groups</td><td>t-test or Mann-Whitney U</td></tr>
+    <tr><td>Compare three+ groups</td><td>ANOVA or Kruskal-Wallis</td></tr>
+    <tr><td>Measure association</td><td>Correlation or chi-square</td></tr>
+    <tr><td>Predict an outcome</td><td>Linear or logistic regression</td></tr>
+    <tr><td>Analyse time to event</td><td>Kaplan-Meier or Cox regression</td></tr>
+    <tr><td>Evaluate a test</td><td>Diagnostic test or ROC curve</td></tr>
+  </tbody>
+</table>
+</div>
+
+<hr>
+
+<!-- ============================================================ -->
+<!-- 6. The Analysis Pages -->
+<!-- ============================================================ -->
+<h2 id="sec-6">6. The Analysis Pages</h2>
+
+<h3 id="sec-6-1">6.1 Data View</h3>
+<p>The starting page. Upload your dataset, browse rows and columns, check variable types, and apply transformations.</p>
+<p><strong>Features:</strong></p>
+<ul>
+  <li>Table view with sortable columns</li>
+  <li>Variable View showing data types, unique values, missing counts</li>
+  <li>Upload multiple datasets and switch between them</li>
+  <li>Download data as Excel or SPSS format</li>
+</ul>
+
+<h3 id="sec-6-2">6.2 Descriptive Statistics</h3>
+<p>Summarise your data numerically and visually.</p>
+<p><strong>Descriptives tab:</strong> Mean, median, standard deviation, min, max, quartiles, skewness, kurtosis for numeric variables. Use Group By to split statistics by a categorical variable.</p>
+<p><strong>Frequencies tab:</strong> Counts and percentages for categorical variables. Shows how many cases fall into each category.</p>
+<p><strong>Crosstabs tab:</strong> Cross-tabulation between two categorical variables with chi-square test and Cramer's V. The contingency table shows observed counts, expected counts, and percentages. Fisher's exact test is provided for 2×2 tables.</p>
+<p><strong>Explore tab:</strong> Normality diagnostics — Shapiro-Wilk test, skewness/kurtosis z-scores, and outlier detection via Tukey's fences. Use this before parametric tests to check assumptions.</p>
+
+<h3 id="sec-6-3">6.3 Compare Groups</h3>
+<p>Statistical tests for comparing groups.</p>
+
+<div class="table-wrap">
+<table>
+  <thead><tr><th>Test</th><th>When to Use</th><th>Assumptions</th></tr></thead>
+  <tbody>
+    <tr><td>Independent t-test</td><td>2 independent groups, continuous outcome</td><td>Normality, equal variances</td></tr>
+    <tr><td>Paired t-test</td><td>Same subjects measured twice</td><td>Normality of differences</td></tr>
+    <tr><td>Mann-Whitney U</td><td>2 independent groups, non-normal data</td><td>Independent groups</td></tr>
+    <tr><td>Wilcoxon Signed-Rank</td><td>Paired data, non-normal</td><td>Paired observations</td></tr>
+    <tr><td>One-way ANOVA</td><td>3+ independent groups</td><td>Normality, equal variances</td></tr>
+    <tr><td>Kruskal-Wallis</td><td>3+ groups, non-normal</td><td>Independent groups</td></tr>
+    <tr><td>Chi-square</td><td>Two categorical variables</td><td>Expected count ≥ 5 per cell</td></tr>
+  </tbody>
+</table>
+</div>
+
+<p><strong>How to read results:</strong></p>
+<ul>
+  <li><strong>p-value</strong> &lt; 0.05: statistically significant (unlikely to have occurred by chance)</li>
+  <li><strong>Effect size</strong> (Cohen's d, η², ε²): how large the difference is</li>
+  <li><strong>Confidence interval</strong>: range that likely contains the true difference</li>
+</ul>
+
+<h3 id="sec-6-4">6.4 Correlation</h3>
+<p>Measure the relationship between numeric variables.</p>
+<p><strong>Methods:</strong></p>
+<ul>
+  <li><strong>Pearson:</strong> linear relationships (assumes normality)</li>
+  <li><strong>Spearman:</strong> monotonic relationships (no normality assumption)</li>
+  <li><strong>Kendall:</strong> non-parametric, best for small samples with ties</li>
+</ul>
+<p><strong>Output:</strong> Correlation matrix showing r-values and p-values. Significant correlations are starred. The heatmap view colours correlations blue (positive) or red (negative).</p>
+
+<p><strong>Common interpretation:</strong></p>
+<div class="table-wrap">
+<table>
+  <thead><tr><th>r value</th><th>Interpretation</th></tr></thead>
+  <tbody>
+    <tr><td>0</td><td>No linear relationship</td></tr>
+    <tr><td>±0.1</td><td>Small effect</td></tr>
+    <tr><td>±0.3</td><td>Medium effect</td></tr>
+    <tr><td>±0.5</td><td>Large effect</td></tr>
+  </tbody>
+</table>
+</div>
+
+<p><strong>Partial correlation</strong> measures the relationship between two variables while controlling for others.</p>
+
+<h3 id="sec-6-5">6.5 Regression</h3>
+<p>Model the relationship between predictors and an outcome.</p>
+
+<p><strong>Linear regression:</strong> Continuous outcome (e.g., blood pressure, cholesterol level).</p>
+<p>Key outputs:</p>
+<ul>
+  <li><strong>R-squared:</strong> proportion of variance explained</li>
+  <li><strong>Coefficients:</strong> the change in outcome per unit change in each predictor</li>
+  <li><strong>p-value:</strong> whether each predictor contributes significantly</li>
+  <li><strong>ANOVA table:</strong> overall model significance</li>
+</ul>
+
+<p><strong>Logistic regression:</strong> Binary outcome (e.g., yes/no, alive/dead).</p>
+<p>Key outputs:</p>
+<ul>
+  <li><strong>Odds ratio:</strong> the change in odds of the outcome per unit change in a predictor</li>
+  <li><strong>95% CI:</strong> range for the odds ratio (crossing 1.0 = not significant)</li>
+  <li><strong>Classification table:</strong> how well the model predicts outcomes</li>
+  <li><strong>Pseudo R-squared:</strong> approximate measure of model fit</li>
+</ul>
+
+<p><strong>Variable selection methods:</strong></p>
+<ul>
+  <li><strong>Enter:</strong> all variables at once</li>
+  <li><strong>Stepwise:</strong> adds/removes based on statistical criteria</li>
+  <li><strong>Forward/Backward:</strong> directional selection</li>
+</ul>
+
+<h3 id="sec-6-6">6.6 Survival Analysis</h3>
+<p>Analyse time-to-event data (e.g., time to death, time to recurrence).</p>
+
+<p><strong>Kaplan-Meier:</strong> Estimates the survival function over time. The curve shows the proportion of subjects who have not yet had the event at each time point.</p>
+<ul>
+  <li>Steps in the curve = event times</li>
+  <li>Tick marks = censored observations</li>
+  <li>Log-rank test compares survival between groups</li>
+  <li>Median survival = time when 50% of subjects have had the event</li>
+</ul>
+
+<p><strong>Cox regression:</strong> Models the effect of predictors on the hazard (instantaneous risk).</p>
+<ul>
+  <li><strong>Hazard ratio (HR):</strong> &gt; 1 = increased risk, &lt; 1 = protective</li>
+  <li><strong>Proportional hazards assumption:</strong> the effect of predictors should be constant over time</li>
+  <li><strong>Schoenfeld residuals:</strong> check the proportional hazards assumption</li>
+</ul>
+
+<h3 id="sec-6-7">6.7 Diagnostic Tests</h3>
+<p>Evaluate the accuracy of a diagnostic test against a gold standard.</p>
+
+<p><strong>2×2 Table:</strong></p>
+<ul>
+  <li><strong>Sensitivity:</strong> proportion of true positives correctly identified</li>
+  <li><strong>Specificity:</strong> proportion of true negatives correctly identified</li>
+  <li><strong>PPV:</strong> probability a positive test truly has the condition</li>
+  <li><strong>NPV:</strong> probability a negative test truly does not</li>
+</ul>
+
+<p><strong>ROC Curve:</strong></p>
+<ul>
+  <li>Plots sensitivity vs 1-specificity across all cutoff values</li>
+  <li><strong>AUC (Area Under the Curve):</strong> overall test performance</li>
+</ul>
+
+<div class="table-wrap">
+<table>
+  <thead><tr><th>AUC</th><th>Interpretation</th></tr></thead>
+  <tbody>
+    <tr><td>1.0</td><td>Perfect</td></tr>
+    <tr><td>&gt; 0.9</td><td>Excellent</td></tr>
+    <tr><td>&gt; 0.8</td><td>Good</td></tr>
+    <tr><td>0.5</td><td>No better than chance</td></tr>
+  </tbody>
+</table>
+</div>
+
+<ul>
+  <li><strong>Youden index:</strong> the optimal cutoff (maximises sensitivity + specificity - 1)</li>
+</ul>
+
+<h3 id="sec-6-8">6.8 Factor Analysis &amp; Reliability</h3>
+<p><strong>Factor analysis:</strong> Identifies underlying dimensions (factors) in a set of measured variables. Useful for questionnaire validation and reducing many variables to a few meaningful constructs.</p>
+<p>Key outputs:</p>
+<ul>
+  <li><strong>KMO:</strong> measure of sampling adequacy (&gt; 0.7 = good)</li>
+  <li><strong>Bartlett's test:</strong> tests whether the correlation matrix is suitable for factor analysis</li>
+  <li><strong>Loadings:</strong> how strongly each variable relates to each factor</li>
+  <li><strong>Variance explained:</strong> how much of the total variance each factor accounts for</li>
+</ul>
+
+<p><strong>Reliability (Cronbach's alpha):</strong> Measures how consistently a set of items measures a single construct.</p>
+<div class="table-wrap">
+<table>
+  <thead><tr><th>Cronbach's α</th><th>Interpretation</th></tr></thead>
+  <tbody>
+    <tr><td>&gt; 0.9</td><td>Excellent</td></tr>
+    <tr><td>&gt; 0.8</td><td>Good</td></tr>
+    <tr><td>&gt; 0.7</td><td>Acceptable</td></tr>
+    <tr><td>&gt; 0.6</td><td>Questionable</td></tr>
+  </tbody>
+</table>
+</div>
+<ul>
+  <li>"Alpha if deleted" shows whether removing an item improves reliability</li>
+</ul>
+
+<h3 id="sec-6-9">6.9 Graphs &amp; Charts</h3>
+<p>The Graphs page provides 37+ chart types. The eligibility engine checks your variable selections and warns if they don't fit the chosen chart type.</p>
+
+<p><strong>Selecting variables:</strong> Each chart type shows different variable selectors. For example:</p>
+<ul>
+  <li>Histogram needs 1 numeric variable</li>
+  <li>Scatter needs 2 numeric variables</li>
+  <li>Boxplot needs 1 numeric + 1 categorical</li>
+  <li>Violin, Strip, ECDF need 1 numeric + optional group</li>
+  <li>Pareto, Cleveland Dot, Lollipop need 1 category + 1 value</li>
+  <li>SPLOM, Parallel Coordinates, PCA need 3+ numeric variables</li>
+</ul>
+
+<p><strong>Interacting with charts:</strong> Hover for values, zoom with scroll wheel, pan by dragging, download as PNG via the modebar.</p>
+
+<p><strong>Export options:</strong></p>
+<ul>
+  <li>PNG download (Plotly modebar or Download button)</li>
+  <li>Send to Output panel for later review</li>
+  <li>Matplotlib export for publication-quality static images</li>
+</ul>
+
+<hr>
+
+<!-- ============================================================ -->
+<!-- 7. Statistical Test Guide -->
+<!-- ============================================================ -->
+<h2 id="sec-7">7. Statistical Test Guide</h2>
+
+<h3>Choosing a Test</h3>
+
+<div class="pre-wrap">
+<code>                           ┌─────────────────────────┐
+                           │  What is your outcome?  │
+                           └──────────┬──────────────┘
+                                      │
+                    ┌─────────────────┼─────────────────┐
+                    │                 │                 │
+               Continuous           Binary         Time-to-event
+                    │                 │                 │
+               ┌────┴────┐       Logistic          Survival
+               │         │      Regression         Analysis
+           2 groups  3+ groups    (p. 6.7)         (p. 6.6)
+               │         │
+          ┌────┴────┐    ANOVA /
+          │        │   Kruskal-
+       Normal  Non-normal  Wallis
+          │        │
+      t-test  Mann-Whitney
+      (p. 6.3)   U (p. 6.3)</code>
+</div>
+
+<h3>Assumptions of Common Tests</h3>
+
+<div class="table-wrap">
+<table>
+  <thead><tr><th>Test</th><th>Normality</th><th>Equal Variance</th><th>Independence</th></tr></thead>
+  <tbody>
+    <tr><td>t-test</td><td>✓</td><td>✓ (Levene's test)</td><td>✓</td></tr>
+    <tr><td>ANOVA</td><td>✓</td><td>✓</td><td>✓</td></tr>
+    <tr><td>Linear regression</td><td>✓ (residuals)</td><td>✓</td><td>✓</td></tr>
+    <tr><td>Mann-Whitney U</td><td>✗</td><td>✗</td><td>✓</td></tr>
+    <tr><td>Kruskal-Wallis</td><td>✗</td><td>✗</td><td>✓</td></tr>
+    <tr><td>Chi-square</td><td>✗</td><td>✗</td><td>✓</td></tr>
+    <tr><td>Pearson correlation</td><td>✓</td><td>✓</td><td>✓</td></tr>
+    <tr><td>Spearman correlation</td><td>✗</td><td>✗</td><td>✓</td></tr>
+  </tbody>
+</table>
+</div>
+
+<h3>Effect Size Benchmarks</h3>
+
+<div class="table-wrap">
+<table>
+  <thead><tr><th>Measure</th><th>Small</th><th>Medium</th><th>Large</th></tr></thead>
+  <tbody>
+    <tr><td>Cohen's d</td><td>0.2</td><td>0.5</td><td>0.8</td></tr>
+    <tr><td>Pearson's r</td><td>0.1</td><td>0.3</td><td>0.5</td></tr>
+    <tr><td>Eta-squared (η²)</td><td>0.01</td><td>0.06</td><td>0.14</td></tr>
+    <tr><td>Cramer's V</td><td>0.1</td><td>0.3</td><td>0.5</td></tr>
+    <tr><td>Odds Ratio</td><td>1.5</td><td>2.0</td><td>3.0</td></tr>
+  </tbody>
+</table>
+</div>
+
+<hr>
+
+<!-- ============================================================ -->
+<!-- 8. Interpreting Outputs -->
+<!-- ============================================================ -->
+<h2 id="sec-8">8. Interpreting Outputs</h2>
+
+<h3>The p-value</h3>
+<p>The p-value answers: "If there were actually no effect, how likely would I be to see results this extreme?"</p>
+<ul>
+  <li><strong>p &lt; 0.05:</strong> conventionally considered "statistically significant"</li>
+  <li><strong>p &lt; 0.001:</strong> highly significant</li>
+  <li><strong>p &gt; 0.05:</strong> not statistically significant (but this does NOT mean "no effect")</li>
+</ul>
+
+<div class="info-box">
+  <p><strong>Important:</strong> A significant p-value does NOT mean:</p>
+  <ul>
+    <li>The effect is large (check effect size)</li>
+    <li>The result is clinically important (use domain knowledge)</li>
+    <li>The finding will replicate (replication studies are needed)</li>
+  </ul>
+</div>
+
+<h3>The Confidence Interval</h3>
+<p>A 95% confidence interval means: if you repeated the study 100 times, 95 of the intervals would contain the true population value.</p>
+<ul>
+  <li>A narrow CI = precise estimate</li>
+  <li>A wide CI = imprecise estimate (more data needed)</li>
+</ul>
+
+<h3>The Effect Size</h3>
+<p>The p-value tells you if an effect exists. The effect size tells you how large it is.</p>
+<ul>
+  <li>Always report both p-value AND effect size</li>
+  <li>A tiny effect can be "significant" with a large sample</li>
+  <li>A large effect can be "non-significant" with a small sample</li>
+</ul>
+
+<hr>
+
+<!-- ============================================================ -->
+<!-- 9. Charts and Visualisations -->
+<!-- ============================================================ -->
+<h2 id="sec-9">9. Charts and Visualisations</h2>
+
+<h3>Key Chart Types</h3>
+
+<div class="table-wrap">
+<table>
+  <thead><tr><th>Chart</th><th>Best for</th><th>Example</th></tr></thead>
+  <tbody>
+    <tr><td>Histogram</td><td>Distribution of one numeric variable</td><td>Age distribution</td></tr>
+    <tr><td>Boxplot</td><td>Comparing distributions across groups</td><td>BP by treatment arm</td></tr>
+    <tr><td>Scatter</td><td>Relationship between two numeric vars</td><td>Age vs cholesterol</td></tr>
+    <tr><td>Violin</td><td>Distribution shape across groups</td><td>Biomarker by diagnosis</td></tr>
+    <tr><td>Kaplan-Meier</td><td>Survival over time</td><td>Survival by treatment</td></tr>
+    <tr><td>ROC Curve</td><td>Diagnostic test performance</td><td>Biomarker accuracy</td></tr>
+    <tr><td>Correlation heatmap</td><td>Many pairwise correlations</td><td>Lab values matrix</td></tr>
+    <tr><td>Swimmer plot</td><td>Individual patient timelines</td><td>Oncology response</td></tr>
+    <tr><td>Volcano plot</td><td>Biomarker discovery</td><td>Effect vs significance</td></tr>
+    <tr><td>Bland-Altman</td><td>Method comparison</td><td>Two measurement techniques</td></tr>
+    <tr><td>Funnel plot</td><td>Publication bias detection</td><td>Meta-analysis</td></tr>
+  </tbody>
+</table>
+</div>
+
+<h3>Interpretation Tips</h3>
+<ul>
+  <li><strong>Look at the chart first</strong>, then check the numbers</li>
+  <li><strong>Pattern &gt; p-value</strong> — a clear visual pattern matters more than significance</li>
+  <li><strong>Check the axes</strong> — misleading scales can exaggerate or hide differences</li>
+  <li><strong>Small samples</strong> make charts unreliable (too few data points)</li>
+  <li><strong>Outliers</strong> can dominate the visual impression — check if they're real or errors</li>
+</ul>
+
+<hr>
+
+<!-- ============================================================ -->
+<!-- 10. Common Pitfalls -->
+<!-- ============================================================ -->
+<h2 id="sec-10">10. Common Pitfalls</h2>
+
+<ol class="num-list">
+  <li><strong>Confusing correlation with causation.</strong> Two things that correlate may be related to a third variable, not to each other.</li>
+  <li><strong>Over-relying on p-values.</strong> A p-value just below 0.05 is not materially different from one just above. Report confidence intervals and effect sizes.</li>
+  <li><strong>Ignoring assumptions.</strong> Using a t-test on severely non-normal data can give misleading results. Check assumptions first, use non-parametric alternatives if violated.</li>
+  <li><strong>Multiple comparisons.</strong> Running 20 tests at α = 0.05 means one will be "significant" by chance alone. Use corrections (Bonferroni, Holm) or replication.</li>
+  <li><strong>Small sample sizes.</strong> A study with n = 10 per group has very low power to detect anything except huge effects.</li>
+  <li><strong>Survival analysis requires events.</strong> If nobody has the event, you cannot estimate survival. At least 5-10 events per predictor are recommended for Cox regression.</li>
+  <li><strong>Diagnostic tests depend on prevalence.</strong> A test with 99% sensitivity can have low positive predictive value if the disease is rare.</li>
+</ol>
+
+<hr>
+
+<!-- ============================================================ -->
+<!-- 11. Worked Examples -->
+<!-- ============================================================ -->
+<h2 id="sec-11">11. Worked Examples</h2>
+
+<h3>Example 1: Comparing Blood Pressure Between Treatment Groups</h3>
+<p><strong>Question:</strong> Is systolic blood pressure different between the treatment and control groups?</p>
+
+<p><strong>Steps:</strong></p>
+<ol>
+  <li>Upload data with columns: <code>systolic_bp</code>, <code>treatment_arm</code></li>
+  <li>Go to Compare Groups → select "Independent t-test"</li>
+  <li>Set Group variable to <code>treatment_arm</code>, Test variable to <code>systolic_bp</code></li>
+  <li>Click Run</li>
+</ol>
+
+<p><strong>Check assumptions first:</strong> Go to Descriptive → Explore, select <code>systolic_bp</code> grouped by <code>treatment_arm</code>. Check the Shapiro-Wilk test p-value (&gt; 0.05 = normal).</p>
+
+<div class="info-box">
+  <p><strong>If normal:</strong> Use the t-test result. Report: <em>"Systolic BP was significantly higher in the treatment group (M = 142.3, SD = 12.1) compared to control (M = 135.6, SD = 11.4), t(98) = 2.84, p = 0.005, d = 0.57."</em></p>
+  <p><strong>If non-normal:</strong> Use Mann-Whitney U instead.</p>
+</div>
+
+<h3>Example 2: Survival Analysis</h3>
+<p><strong>Question:</strong> Does a new drug improve survival compared to standard treatment?</p>
+
+<p><strong>Steps:</strong></p>
+<ol>
+  <li>Upload data with columns: <code>survival_months</code>, <code>event_death</code> (0 = censored, 1 = died), <code>treatment</code></li>
+  <li>Go to Survival → set Time = <code>survival_months</code>, Status = <code>event_death</code>, Factor = <code>treatment</code></li>
+  <li>Click Run Analysis</li>
+</ol>
+
+<p><strong>Kaplan-Meier results show:</strong></p>
+<ul>
+  <li>The survival curve for the new drug stays higher</li>
+  <li>Median survival: drug = 34 months, standard = 22 months</li>
+  <li>Log-rank test: p = 0.003 — significant difference</li>
+</ul>
+
+<p><strong>Cox regression shows:</strong></p>
+<ul>
+  <li>Hazard ratio for new drug = 0.52 (95% CI: 0.35–0.77)</li>
+  <li>Patients on the new drug have 48% lower hazard of death</li>
+</ul>
+
+<h3>Example 3: Diagnostic Test Evaluation</h3>
+<p><strong>Question:</strong> How accurate is a new biomarker for detecting cancer?</p>
+
+<p><strong>Steps:</strong></p>
+<ol>
+  <li>Upload data with columns: <code>biomarker_level</code> (continuous), <code>cancer</code> (0 = no, 1 = yes)</li>
+  <li>Go to Diagnostic Tests → set Test = <code>biomarker_level</code>, Gold Standard = <code>cancer</code></li>
+  <li>Click Run Analysis</li>
+</ol>
+
+<p><strong>Results:</strong></p>
+<ul>
+  <li>AUC = 0.87 (95% CI: 0.81–0.93) — good discriminatory ability</li>
+  <li>Optimal cutoff = 45.2 (sensitivity = 82%, specificity = 79%)</li>
+  <li>The biomarker correctly identifies 82% of cancer patients</li>
+</ul>
+
+<hr>
+
+<!-- ============================================================ -->
+<!-- 12. Glossary -->
+<!-- ============================================================ -->
+<h2 id="sec-12">12. Glossary</h2>
+
+<div class="table-wrap">
+<table>
+  <thead><tr><th>Term</th><th>Definition</th></tr></thead>
+  <tbody>
+    <tr><td><strong>AUC</strong></td><td>Area Under the ROC Curve. Summary measure of diagnostic test performance. 1.0 = perfect, 0.5 = no better than chance.</td></tr>
+    <tr><td><strong>Censoring</strong></td><td>When follow-up ends before the event occurs. The subject contributes information up to their last known time.</td></tr>
+    <tr><td><strong>Cohen's d</strong></td><td>Effect size for t-tests: the difference between two means divided by the pooled standard deviation.</td></tr>
+    <tr><td><strong>Confidence Interval</strong></td><td>A range that plausibly contains the true population value. A 95% CI means 95 of 100 similar intervals would contain the true value.</td></tr>
+    <tr><td><strong>Cox Regression</strong></td><td>A regression model for time-to-event data that estimates hazard ratios.</td></tr>
+    <tr><td><strong>Cramer's V</strong></td><td>Effect size for chi-square tests. Ranges from 0 (no association) to 1 (perfect association).</td></tr>
+    <tr><td><strong>Cronbach's Alpha</strong></td><td>Measure of internal consistency reliability. Values &gt; 0.7 are considered acceptable.</td></tr>
+    <tr><td><strong>Effect Size</strong></td><td>A measure of how large a difference or relationship is, independent of sample size.</td></tr>
+    <tr><td><strong>Hazard Ratio</strong></td><td>The ratio of event rates between two groups in survival analysis. HR &gt; 1 = higher risk.</td></tr>
+    <tr><td><strong>KMO</strong></td><td>Kaiser-Meyer-Olkin measure of sampling adequacy for factor analysis. Values &gt; 0.7 indicate suitability.</td></tr>
+    <tr><td><strong>Levene's Test</strong></td><td>Tests whether groups have equal variances — an assumption for t-tests and ANOVA.</td></tr>
+    <tr><td><strong>Log-rank Test</strong></td><td>A test comparing survival distributions between two or more groups.</td></tr>
+    <tr><td><strong>Odds Ratio</strong></td><td>The odds of an outcome in one group divided by the odds in another. Used in logistic regression.</td></tr>
+    <tr><td><strong>p-value</strong></td><td>The probability of observing results at least as extreme if the null hypothesis were true.</td></tr>
+    <tr><td><strong>PCA</strong></td><td>Principal Component Analysis. A dimensionality reduction technique.</td></tr>
+    <tr><td><strong>Sensitivity</strong></td><td>Proportion of true positives correctly identified by a diagnostic test.</td></tr>
+    <tr><td><strong>Specificity</strong></td><td>Proportion of true negatives correctly identified by a diagnostic test.</td></tr>
+    <tr><td><strong>Youden Index</strong></td><td>The optimal cutoff for a diagnostic test — maximises sensitivity + specificity - 1.</td></tr>
+  </tbody>
+</table>
+</div>
+
+<hr>
+
+<!-- ============================================================ -->
+<!-- 13. FAQ -->
+<!-- ============================================================ -->
+<h2 id="sec-13">13. FAQ</h2>
+
+<div class="qa-item">
+  <div class="qa-q">Q: What file formats does DevStat support?</div>
+  <div class="qa-a">A: CSV (.csv), Excel (.xlsx, .xls), and SPSS (.sav) files up to 50 MB.</div>
+</div>
+
+<div class="qa-item">
+  <div class="qa-q">Q: Do I need an internet connection?</div>
+  <div class="qa-a">A: No. The app runs entirely offline. No data is sent to external servers.</div>
+</div>
+
+<div class="qa-item">
+  <div class="qa-q">Q: How do I export my results?</div>
+  <div class="qa-a">A: Charts can be downloaded as PNG. Analysis results can be sent to the Output panel and exported as PDF.</div>
+</div>
+
+<div class="qa-item">
+  <div class="qa-q">Q: What does the eligibility checker do?</div>
+  <div class="qa-a">A: It checks your variable selections before you run an analysis. If the variables don't match the analysis type, it explains why and suggests alternatives.</div>
+</div>
+
+<div class="qa-item">
+  <div class="qa-q">Q: Why is my p-value shown as 0.000?</div>
+  <div class="qa-a">A: Very small p-values are rounded to 0.000 in the display. The actual value is reported as "p &lt; 0.001".</div>
+</div>
+
+<div class="qa-item">
+  <div class="qa-q">Q: How do I handle missing data?</div>
+  <div class="qa-a">A: DevStat automatically excludes missing values (NA/NaN) from calculations.</div>
+</div>
+
+<div class="qa-item">
+  <div class="qa-q">Q: Can I compare more than two groups?</div>
+  <div class="qa-a">A: Yes — use one-way ANOVA (parametric) or Kruskal-Wallis (non-parametric) for 3+ groups.</div>
+</div>
+
+<hr>
+
+<!-- ============================================================ -->
+<!-- 14. Troubleshooting -->
+<!-- ============================================================ -->
+<h2 id="sec-14">14. Troubleshooting</h2>
+
+<div class="table-wrap">
+<table>
+  <thead><tr><th>Problem</th><th>Likely Cause</th><th>Solution</th></tr></thead>
+  <tbody>
+    <tr><td>App won't start</td><td>Port 8150 in use</td><td>Stop other instances, restart the launcher</td></tr>
+    <tr><td>Charts show nothing</td><td>Wrong variable type</td><td>Check the eligibility message for guidance</td></tr>
+    <tr><td>Analysis fails</td><td>Convergence issue</td><td>Try fewer predictors, check for constant columns</td></tr>
+    <tr><td>Upload fails</td><td>File too large</td><td>Files must be under 50 MB</td></tr>
+    <tr><td>Missing values</td><td>Data has blanks</td><td>The app handles them, but too many may affect results</td></tr>
+    <tr><td>"Column not found"</td><td>Typo or wrong dataset</td><td>Check column names in Variable View</td></tr>
+    <tr><td>Slow performance</td><td>Large dataset</td><td>Use sample_100.csv for testing, limit analysis to 10,000 rows</td></tr>
+  </tbody>
+</table>
+</div>
+
+<hr>
+
+<div class="footnote">
+  <em>This guide was written for DevStat v1.0.0. For the latest version, visit the GitHub repository.</em>
+</div>
+
+  </div>
+</div>
+
+<footer class="footer">
+  &copy; 2026 <a href="https://dpsoncology.com">DPS Oncology</a> &mdash; Evidence-based oncology tools &amp; clinical insights<br>
+  <span style="font-size:0.7rem;">For educational purposes only &mdash; always follow local institutional guidelines</span>
+</footer>
+
+</body>
+</html>
