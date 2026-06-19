@@ -7,6 +7,7 @@
     }
   },
   "postCreateCommand": "bash .devcontainer/setup.sh",
+  "postStartCommand": "bash codespace_setup/start.sh",
   "forwardPorts": [8150],
   "portsAttributes": {
     "8150": {
