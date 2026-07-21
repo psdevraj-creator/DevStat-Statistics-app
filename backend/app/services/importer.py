@@ -212,7 +212,7 @@ def import_csv(file_path: str) -> pd.DataFrame:
     """Import a CSV (or similarly delimited) file into a DataFrame.
 
     Automatically detects:
-        * File encoding (via ``chardet``, falling back to ``utf-8``\ / ``latin-1``)
+        * File encoding (via ``chardet``, falling back to ``utf-8`` / ``latin-1``)
         * Delimiter (via ``csv.Sniffer``)
         * Standard NA value representations
 

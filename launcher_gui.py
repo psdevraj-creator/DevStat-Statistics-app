@@ -48,6 +48,8 @@ class DevStatLauncher:
         self.browser_proc: subprocess.Popen | None = None
         self.backend_ready = False
         self.monitor_active = True
+        self._stop_event = threading.Event()
+        self._server_started = False
 
         self._build_ui()
         self._start_monitor()
@@ -110,13 +112,15 @@ class DevStatLauncher:
     # ── Server management ──────────────────────────────────────────────
 
     def _start_backend(self):
-        if self.uvicorn_server is not None:
+        if self._server_started:
             return
         import socket
         with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
             if s.connect_ex(('127.0.0.1', int(BACKEND_PORT))) == 0:
                 self.status_bar.configure(text="Port 8150 in use — wait a moment")
                 return
+        self._stop_event.clear()
+        self._server_started = True
         self._set_controls(start=False, stop=True, open_=False)
         self.badge.configure(text="● Starting", fg="#ecc94b")
         self.status_label.configure(text="Loading modules...", fg="#e0a800")
@@ -126,12 +130,17 @@ class DevStatLauncher:
 
     def _run_uvicorn(self):
         try:
-            self.root.after(0, lambda: self.status_bar.configure(text="Loading statistics engine..."))
             os.chdir(str(BACKEND_DIR))
             sys.path.insert(0, str(BACKEND_DIR))
             import uvicorn
+
+            if self._stop_event.is_set():
+                self.root.after(0, self._on_stopped)
+                return
+
             self.root.after(0, lambda: self.status_label.configure(text="Starting HTTP server..."))
             self.root.after(0, lambda: self.status_bar.configure(text="Initialising web server"))
+
             config = uvicorn.Config(
                 "app.main:create_app",
                 host="127.0.0.1",
@@ -140,15 +149,32 @@ class DevStatLauncher:
                 log_level="warning",
             )
             self.uvicorn_server = uvicorn.Server(config)
+
+            if self._stop_event.is_set():
+                self.uvicorn_server = None
+                self.root.after(0, self._on_stopped)
+                return
+
             self.uvicorn_server.run()
+
         except Exception as e:
-            self.root.after(0, lambda e=e: self._on_startup_error(e))
+            # Only treat as startup error if we haven't been asked to stop
+            if not self._stop_event.is_set():
+                self.root.after(0, lambda e=e: self._on_startup_error(e))
+            self.root.after(0, self._on_stopped)
+        else:
+            # .run() returned normally — check if user asked to stop
+            if self._stop_event.is_set():
+                self.root.after(0, self._on_stopped)
+        finally:
+            self.uvicorn_server = None
+            self._server_started = False
 
     def _stop_backend(self):
+        self._stop_event.set()
         self.backend_ready = False
         if self.uvicorn_server:
             self.uvicorn_server.should_exit = True
-            self.uvicorn_server = None
 
         if self.browser_proc and self.browser_proc.poll() is None:
             try:
@@ -156,11 +182,6 @@ class DevStatLauncher:
             except Exception:
                 pass
             self.browser_proc = None
-
-        self._set_controls(start=True, stop=False, open_=False)
-        self.badge.configure(text="● Stopped", fg="#ff6b6b")
-        self.status_label.configure(text="Stopped", fg="#888888")
-        self.status_bar.configure(text="")
 
     def _open_browser(self):
         chrome = _get_chrome()
@@ -186,6 +207,7 @@ class DevStatLauncher:
     def _start_monitor(self):
         def _poll():
             startup_phase = True
+            poll_count = 0
             while self.monitor_active:
                 try:
                     resp = urllib.request.urlopen(f"{BACKEND_URL}/api/health", timeout=2)
@@ -200,15 +222,12 @@ class DevStatLauncher:
                     if self.backend_ready:
                         self.root.after(0, self._on_crash)
                     elif startup_phase:
-                        # Still starting — update status every few tries
-                        if not hasattr(self, '_poll_count'):
-                            self._poll_count = 0
-                        self._poll_count += 1
-                        if self._poll_count == 3:
+                        poll_count += 1
+                        if poll_count == 3:
                             self.root.after(0, lambda: self.status_bar.configure(text="Starting — loading modules..."))
-                        elif self._poll_count == 8:
+                        elif poll_count == 8:
                             self.root.after(0, lambda: self.status_bar.configure(text="Still starting — large module import..."))
-                        elif self._poll_count == 15:
+                        elif poll_count == 15:
                             self.root.after(0, lambda: self.status_bar.configure(text="Starting — almost ready..."))
                 time.sleep(1)
 
@@ -221,6 +240,12 @@ class DevStatLauncher:
         self.status_label.configure(text="Ready — open the app in your browser", fg="#38a169")
         self.status_bar.configure(text=BACKEND_URL)
 
+    def _on_stopped(self):
+        self._set_controls(start=True, stop=False, open_=False)
+        self.badge.configure(text="● Stopped", fg="#ff6b6b")
+        self.status_label.configure(text="Stopped", fg="#888888")
+        self.status_bar.configure(text="")
+
     def _on_crash(self):
         self.backend_ready = False
         self._set_controls(start=True, stop=False, open_=False)
@@ -229,8 +254,8 @@ class DevStatLauncher:
         self.status_bar.configure(text="Click Start to restart")
 
     def _on_startup_error(self, error: Exception):
-        self.backend_ready = False
         self.uvicorn_server = None
+        self._server_started = False
         self._set_controls(start=True, stop=False, open_=False)
         self.badge.configure(text="● Error", fg="#f44747")
         self.status_label.configure(text=f"Startup error: {error}", fg="#f44747")
