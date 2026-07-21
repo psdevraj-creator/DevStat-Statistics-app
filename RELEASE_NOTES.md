@@ -1,4 +1,4 @@
-# DevStat v1.0.0 Release Notes
+# DevStat v1.2.0 Release Notes
 
 ## Overview
 
@@ -47,7 +47,7 @@ The following features were removed for the public release:
 
 ## Changelog
 
-### v1.0.0 (2026-06-13)
+### v1.2.0 (2026-06-13)
 
 - Initial public release
 - All 37 chart types implemented and tested
