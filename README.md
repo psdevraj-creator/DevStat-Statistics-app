@@ -27,6 +27,7 @@ DevStat provides an interactive, point-and-click interface for performing common
 - **Publication-Quality Exports** — matplotlib/seaborn static export for journal figures
 - **Output Panel** — review, compare, and export all analysis results
 - **Wizard** — describe your research question in plain English and get guided to the right test
+- **Save** - Save your work and reload . Files saved as .devstat files
 
 ---
 
