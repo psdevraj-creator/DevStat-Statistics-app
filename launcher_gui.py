@@ -119,24 +119,30 @@ class DevStatLauncher:
                 return
         self._set_controls(start=False, stop=True, open_=False)
         self.badge.configure(text="● Starting", fg="#ecc94b")
-        self.status_label.configure(text="Starting server...", fg="#e0a800")
-        self.status_bar.configure(text="Launching backend...")
+        self.status_label.configure(text="Loading modules...", fg="#e0a800")
+        self.status_bar.configure(text="Importing statistics engine")
         self.backend_ready = False
         threading.Thread(target=self._run_uvicorn, daemon=True, name="uvicorn").start()
 
     def _run_uvicorn(self):
-        os.chdir(str(BACKEND_DIR))
-        sys.path.insert(0, str(BACKEND_DIR))
-        import uvicorn
-        config = uvicorn.Config(
-            "app.main:create_app",
-            host="127.0.0.1",
-            port=int(BACKEND_PORT),
-            factory=True,
-            log_level="info",
-        )
-        self.uvicorn_server = uvicorn.Server(config)
-        self.uvicorn_server.run()
+        try:
+            self.root.after(0, lambda: self.status_bar.configure(text="Loading statistics engine..."))
+            os.chdir(str(BACKEND_DIR))
+            sys.path.insert(0, str(BACKEND_DIR))
+            import uvicorn
+            self.root.after(0, lambda: self.status_label.configure(text="Starting HTTP server..."))
+            self.root.after(0, lambda: self.status_bar.configure(text="Initialising web server"))
+            config = uvicorn.Config(
+                "app.main:create_app",
+                host="127.0.0.1",
+                port=int(BACKEND_PORT),
+                factory=True,
+                log_level="warning",
+            )
+            self.uvicorn_server = uvicorn.Server(config)
+            self.uvicorn_server.run()
+        except Exception as e:
+            self.root.after(0, lambda e=e: self._on_startup_error(e))
 
     def _stop_backend(self):
         self.backend_ready = False
@@ -179,18 +185,32 @@ class DevStatLauncher:
 
     def _start_monitor(self):
         def _poll():
+            startup_phase = True
             while self.monitor_active:
                 try:
                     resp = urllib.request.urlopen(f"{BACKEND_URL}/api/health", timeout=2)
                     if resp.status == 200:
                         if not self.backend_ready:
                             self.root.after(0, self._on_ready)
+                        startup_phase = False
                     else:
-                        self.root.after(0, self._on_crash)
+                        if self.backend_ready:
+                            self.root.after(0, self._on_crash)
                 except Exception:
                     if self.backend_ready:
                         self.root.after(0, self._on_crash)
-                time.sleep(5)
+                    elif startup_phase:
+                        # Still starting — update status every few tries
+                        if not hasattr(self, '_poll_count'):
+                            self._poll_count = 0
+                        self._poll_count += 1
+                        if self._poll_count == 3:
+                            self.root.after(0, lambda: self.status_bar.configure(text="Starting — loading modules..."))
+                        elif self._poll_count == 8:
+                            self.root.after(0, lambda: self.status_bar.configure(text="Still starting — large module import..."))
+                        elif self._poll_count == 15:
+                            self.root.after(0, lambda: self.status_bar.configure(text="Starting — almost ready..."))
+                time.sleep(1)
 
         threading.Thread(target=_poll, daemon=True).start()
 
@@ -207,6 +227,14 @@ class DevStatLauncher:
         self.badge.configure(text="● Crashed", fg="#f44747")
         self.status_label.configure(text="Server stopped unexpectedly", fg="#f44747")
         self.status_bar.configure(text="Click Start to restart")
+
+    def _on_startup_error(self, error: Exception):
+        self.backend_ready = False
+        self.uvicorn_server = None
+        self._set_controls(start=True, stop=False, open_=False)
+        self.badge.configure(text="● Error", fg="#f44747")
+        self.status_label.configure(text=f"Startup error: {error}", fg="#f44747")
+        self.status_bar.configure(text="Check logs for details")
 
     # ── Cleanup ────────────────────────────────────────────────────────
 
