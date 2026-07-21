@@ -42,21 +42,31 @@ def _get_chrome():
 
 def run_server():
     """Start uvicorn server in the current process (--server mode)."""
-    if getattr(sys, 'frozen', False):
-        root = Path(sys._MEIPASS)
-    else:
-        root = Path(__file__).resolve().parent
-    backend = root / "backend"
-    os.chdir(str(backend))
-    sys.path.insert(0, str(backend))
-    import uvicorn
-    uvicorn.run(
-        "app.main:create_app",
-        host="127.0.0.1",
-        port=int(BACKEND_PORT),
-        factory=True,
-        log_level="warning",
-    )
+    try:
+        if getattr(sys, 'frozen', False):
+            root = Path(sys._MEIPASS)
+        else:
+            root = Path(__file__).resolve().parent
+        backend = root / "backend"
+        os.chdir(str(backend))
+        sys.path.insert(0, str(backend))
+        import uvicorn
+        uvicorn.run(
+            "app.main:create_app",
+            host="127.0.0.1",
+            port=int(BACKEND_PORT),
+            factory=True,
+            log_level="warning",
+        )
+    except Exception:
+        import traceback
+        crash_log = (Path(__file__).resolve().parent if not getattr(sys, 'frozen', False) else Path(sys._MEIPASS).parent) / "devstat_crash.log"
+        try:
+            with open(str(crash_log), "w") as f:
+                f.write(traceback.format_exc())
+        except Exception:
+            pass
+        raise
 
 
 class DevStatLauncher:
