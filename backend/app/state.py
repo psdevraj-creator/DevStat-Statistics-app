@@ -11,8 +11,14 @@ _session_id_var: contextvars.ContextVar[str] = contextvars.ContextVar("session_i
 _sessions: Dict[str, dict] = {}
 
 
+_DUMMY_SESSION = {"current_data": None, "current_filename": "", "variable_metadata": {}, "_undo_stack": [], "_redo_stack": []}
+
+
 def _session() -> dict:
-    sid = _session_id_var.get()
+    try:
+        sid = _session_id_var.get()
+    except LookupError:
+        return _DUMMY_SESSION
     if sid not in _sessions:
         _sessions[sid] = {
             "current_data": None,
