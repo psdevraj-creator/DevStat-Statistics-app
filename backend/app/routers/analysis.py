@@ -1124,6 +1124,31 @@ async def cox_forest_endpoint(body: Dict[str, Any]) -> Dict[str, Any]:
     return result
 
 
+@router.post("/cox-adjusted-survival")
+async def cox_adjusted_survival_endpoint(body: Dict[str, Any]) -> Dict[str, Any]:
+    """Generate adjusted survival curves from a Cox model, stratified by exposure variable."""
+    from app.services.survival import cox_adjusted_survival
+    _require_data()
+    time_col = body.get("time_col")
+    status_col = body.get("status_col")
+    exposure = body.get("exposure")
+    adjusters: list = body.get("adjusters", [])
+    event_code: int = body.get("event_code", 1)
+    if not time_col or not status_col:
+        raise HTTPException(status_code=400, detail="'time_col' and 'status_col' are required.")
+    if not exposure:
+        raise HTTPException(status_code=400, detail="'exposure' (stratification variable) is required.")
+    result = cox_adjusted_survival(
+        _state.current_data,
+        time_col=time_col,
+        status_col=status_col,
+        exposure=exposure,
+        adjusters=adjusters,
+        event_code=event_code,
+    )
+    return result
+
+
 # ── Advanced Modules ─────────────────────────────────────────────────────
 #
 # Mixed Models, Cluster Analysis, Power Analysis

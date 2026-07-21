@@ -71,7 +71,7 @@ def _build_registry() -> Dict[str, callable]:
     from app.services.regression import (
         correlation_matrix, linear_regression, logistic_regression, partial_correlation,
     )
-    from app.services.survival import kaplan_meier, cox_regression
+    from app.services.survival import kaplan_meier, cox_regression, cox_adjusted_survival
     from app.services.diagnostic import diagnostic_test, roc_analysis
     from app.services.factor_analysis import factor_analysis, reliability_analysis
 
@@ -146,6 +146,14 @@ def _build_registry() -> Dict[str, callable]:
             p.get("time_col"),
             p.get("status_col"),
             p.get("covariates", []),
+            p.get("event_code", 1),
+        ),
+        "cox_adjusted_survival": lambda p: cox_adjusted_survival(
+            _state.current_data,
+            p.get("time_col"),
+            p.get("status_col"),
+            p.get("exposure"),
+            p.get("adjusters", []),
             p.get("event_code", 1),
         ),
 

@@ -549,6 +549,134 @@ def cox_predict_survival(
 
 
 # ---------------------------------------------------------------------------
+# Adjusted survival curves
+# ---------------------------------------------------------------------------
+
+
+def cox_adjusted_survival(
+    df: pd.DataFrame,
+    time_col: str,
+    status_col: str,
+    exposure: str,
+    adjusters: List[str],
+    event_code: int = 1,
+) -> Dict[str, Any]:
+    """Generate adjusted survival curves from a Cox PH model.
+
+    Fit a Cox model ``~ exposure + adjusters``, then predict survival
+    curves for each level (categorical exposure) or tertile (continuous
+    exposure), holding all *adjusters* at their mean / reference level.
+
+    Returns Plotly-compatible ``{traces, layout}``.
+    """
+    all_cols = [time_col, status_col, exposure] + adjusters
+    for col in all_cols:
+        if col not in df.columns:
+            return error(f"Column '{col}' not found.")
+    df_clean = df[all_cols].dropna().copy()
+    n = len(df_clean)
+    if n < 3:
+        return error("Insufficient data (need at least 3 complete cases).")
+
+    df_clean["_event"] = (df_clean[status_col] == event_code).astype(int)
+    n_events = int(df_clean["_event"].sum())
+    if n_events < 1:
+        return error("No events observed in data.")
+
+    # One-hot encode all categorical variables (exposure + adjusters)
+    model_cols = [time_col, "_event"]
+    exp_is_cat = not pd.api.types.is_numeric_dtype(df_clean[exposure])
+
+    for col in all_cols[2:]:  # exposure + adjusters
+        if not pd.api.types.is_numeric_dtype(df_clean[col]):
+            dummies = pd.get_dummies(df_clean[col], prefix=col, drop_first=True)
+            df_clean = pd.concat([df_clean, dummies], axis=1)
+            model_cols.extend(list(dummies.columns))
+        else:
+            model_cols.append(col)
+
+    try:
+        cph = CoxPHFitter()
+        cph.fit(df_clean[model_cols],
+                duration_col=time_col, event_col="_event", show_progress=False)
+    except Exception as e:
+        return error(f"Cox regression failed: {str(e)}")
+
+    feature_cols = [c for c in model_cols if c not in (time_col, "_event")]
+
+    # Build reference (mean for numeric, 0 for dummy)
+    ref = {}
+    for col in all_cols[2:]:
+        if pd.api.types.is_numeric_dtype(df_clean[col]):
+            ref[col] = float(df_clean[col].mean())
+        else:
+            for dc in [c for c in feature_cols if c.startswith(f"{col}_")]:
+                ref[dc] = 0.0
+
+    # Generate profiles
+    profiles = []
+    if exp_is_cat:
+        levels = sorted(df_clean[exposure].unique())
+        for level in levels:
+            vals = dict(ref)
+            exp_dcs = [c for c in feature_cols if c.startswith(f"{exposure}_")]
+            for dc in exp_dcs:
+                suffix = dc.removeprefix(f"{exposure}_")
+                vals[dc] = 1.0 if str(level) == suffix else 0.0
+            profiles.append({"label": f"{exposure} = {level}", "values": vals})
+    else:
+        pct_vals = np.percentile(df_clean[exposure].dropna(), [25, 50, 75])
+        for label, val in [("25th %ile", pct_vals[0]),
+                           ("50th %ile (median)", pct_vals[1]),
+                           ("75th %ile", pct_vals[2])]:
+            vals = dict(ref)
+            vals[exposure] = float(val)
+            profiles.append({"label": f"{exposure} = {label} ({val:.2f})", "values": vals})
+
+    # Time grid
+    max_t = float(df_clean[time_col].quantile(0.95))
+    if max_t <= 0:
+        max_t = float(df_clean[time_col].max())
+    times = list(np.linspace(0, max_t, 200))
+
+    # Predict survival for each profile
+    traces = []
+    for p in profiles:
+        pf = {k: v for k, v in p["values"].items() if k in feature_cols}
+        try:
+            surv = cph.predict_survival_function(
+                pd.DataFrame([pf]), times=times).values.flatten()
+        except Exception as e:
+            surv = np.linspace(1, 0, len(times))
+        traces.append({
+            "type": "scatter", "mode": "lines",
+            "x": list(times),
+            "y": [float(s) for s in surv],
+            "name": p["label"],
+        })
+
+    # Baseline
+    baseline = cph.baseline_survival_
+    bl_t = list(baseline.index.astype(float))
+    bl_s = [float(s) for s in baseline.values.flatten()]
+    bl = [float(np.interp(t, bl_t, bl_s, left=1.0, right=bl_s[-1])) for t in times]
+    traces.append({
+        "type": "scatter", "mode": "lines",
+        "x": list(times), "y": bl,
+        "name": "Baseline survival",
+        "line": {"dash": "dash", "color": "#94a3b8"},
+    })
+
+    layout = {
+        "title": f"Adjusted Survival Curves (by {exposure})",
+        "xaxis": {"title": "Time"},
+        "yaxis": {"title": "Survival Probability", "range": [0, 1]},
+        "hovermode": "x unified",
+    }
+    return {"traces": traces, "layout": layout}
+
+
+# ---------------------------------------------------------------------------
 # Transform R output → frontend-ready chart + results format
 # (pass-through — R scripts now output directly in the R_OUTPUT_FORMAT.md standard)
 # ---------------------------------------------------------------------------
