@@ -71,6 +71,7 @@ class DevStatLauncher:
         self.browser_proc = None
         self.backend_ready = False
         self.monitor_active = True
+        self._stopping = False
 
         self._build_ui()
         self._start_monitor()
@@ -135,11 +136,22 @@ class DevStatLauncher:
     def _start_backend(self):
         if self._server_proc and self._server_proc.poll() is None:
             return
-        import socket
-        with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
-            if s.connect_ex(('127.0.0.1', int(BACKEND_PORT))) == 0:
-                self.status_bar.configure(text="Port 8150 in use — wait a moment")
-                return
+        # Kill any stale process on our port (leftover from a previous crash)
+        try:
+            import socket
+            with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+                port_busy = s.connect_ex(('127.0.0.1', int(BACKEND_PORT))) == 0
+            if port_busy:
+                self.status_bar.configure(text="Port in use — terminating old process...")
+                cmd = f'netstat -ano | findstr "127.0.0.1:{BACKEND_PORT}" | findstr "LISTENING"'
+                result = subprocess.run(cmd, shell=True, capture_output=True, text=True, timeout=5)
+                for line in result.stdout.splitlines():
+                    parts = line.split()
+                    if len(parts) >= 5:
+                        subprocess.run(f'taskkill /f /pid {parts[4]}', shell=True, capture_output=True)
+                time.sleep(1)
+        except Exception:
+            pass
         self._set_controls(start=False, stop=True, open_=False)
         self.badge.configure(text="● Starting", fg="#ecc94b")
         self.status_label.configure(text="Starting server...", fg="#e0a800")
@@ -156,7 +168,7 @@ class DevStatLauncher:
         )
 
     def _stop_backend(self):
-        self.backend_ready = False
+        self._stopping = True
         if self._server_proc and self._server_proc.poll() is None:
             try:
                 self._server_proc.terminate()
@@ -165,6 +177,7 @@ class DevStatLauncher:
                 self._server_proc.kill()
                 self._server_proc.wait()
         self._server_proc = None
+        self.backend_ready = False
 
         if self.browser_proc and self.browser_proc.poll() is None:
             try:
@@ -173,6 +186,7 @@ class DevStatLauncher:
                 pass
             self.browser_proc = None
         self._on_stopped()
+        self._stopping = False
 
     def _open_browser(self):
         chrome = _get_chrome()
@@ -224,6 +238,8 @@ class DevStatLauncher:
         threading.Thread(target=_poll, daemon=True).start()
 
     def _on_ready(self):
+        if self._stopping:
+            return
         self.backend_ready = True
         self._set_controls(start=False, stop=True, open_=True)
         self.badge.configure(text="● Running", fg="#4ec9b0")
