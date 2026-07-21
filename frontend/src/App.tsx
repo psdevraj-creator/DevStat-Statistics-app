@@ -15,6 +15,8 @@ import {
   QuestionCircleOutlined,
   UndoOutlined,
   RedoOutlined,
+  SaveOutlined,
+  FolderOpenOutlined,
 } from '@ant-design/icons'
 import HelpPanel from './components/HelpPanel'
 
@@ -44,6 +46,7 @@ const { Text, Title } = Typography
 
 // ── Global error logging ──────────────────────────────────────────────
 import logStore from './stores/logStore'
+import outputStore from './stores/outputStore'
 if (typeof window !== 'undefined') {
   window.addEventListener('unhandledrejection', (event) => {
     const err = event.reason
@@ -192,21 +195,15 @@ const App: React.FC = () => {
     } catch { message.warning('Redo failed') }
   }
 
-  // ── Download ALL logs (frontend + backend) ──────────────────────
-  const downloadLogs = async () => {
+  // ── Download frontend logs ──────────────────────────────────────
+  const downloadLogs = () => {
     const frontendLogs = logStore.getEntries()
-
-    let backendLogs = ''
-    try {
-      const resp = await fetch('/api/logs')
-      if (resp.ok) backendLogs = await resp.text()
-    } catch {}
 
     const payload = JSON.stringify({
       downloadedAt: new Date().toISOString(),
       frontendLogCount: frontendLogs.length,
       frontendLogs,
-      backendLogs: backendLogs ? backendLogs.slice(0, 50000) : '(unavailable)',
+      backendLogs: '(captured in Cloud Logging)',
     }, null, 2)
 
     const blob = new Blob([payload], { type: 'application/json' })
@@ -216,6 +213,56 @@ const App: React.FC = () => {
     a.download = `devstat-logs-${new Date().toISOString().slice(0, 10)}.json`
     a.click()
     URL.revokeObjectURL(url)
+  }
+
+  // ── Save / Load project ────────────────────────────────────────────
+  const loadInputRef = useRef<HTMLInputElement>(null)
+
+  const saveProject = async () => {
+    try {
+      const outputs = outputStore.getEntries()
+      const resp = await fetch('/api/project/save', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ outputs }),
+      })
+      if (!resp.ok) throw new Error(`Save failed: ${resp.status}`)
+      const blob = await resp.blob()
+      const url = URL.createObjectURL(blob)
+      const a = document.createElement('a')
+      a.href = url
+      a.download = `devstat-project-${new Date().toISOString().slice(0, 10)}.devstat`
+      a.click()
+      URL.revokeObjectURL(url)
+      message.success('Project saved')
+    } catch (e: any) {
+      message.error(`Save failed: ${e.message}`)
+    }
+  }
+
+  const loadProject = async (file: File) => {
+    const form = new FormData()
+    form.append('file', file)
+    try {
+      const resp = await fetch('/api/project/load', { method: 'POST', body: form })
+      if (!resp.ok) throw new Error(`Load failed: ${resp.status}`)
+      const data = await resp.json()
+      if (data.outputs) {
+        outputStore.clearAll()
+        data.outputs.forEach((o: any) => outputStore.addEntry(o.type, o.title, o.result))
+      }
+      window.dispatchEvent(new CustomEvent('devstat:data-changed'))
+      message.success(`Project loaded: ${data.filename || 'untitled'} (${data.rows} rows)`)
+    } catch (e: any) {
+      message.error(`Load failed: ${e.message}`)
+    }
+  }
+
+  const handleLoadClick = () => { loadInputRef.current?.click() }
+
+  const handleLoadFile = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const f = e.target.files?.[0]
+    if (f) { loadProject(f); e.target.value = '' }
   }
 
   // ── Keyboard shortcut: Ctrl+Shift+D → download logs ──────────────
@@ -366,6 +413,18 @@ const App: React.FC = () => {
           </Space>
 
           <Space size={4} style={{ borderLeft: '1px solid rgba(255,255,255,0.2)', paddingLeft: 16 }}>
+            <Tooltip title="Save project (.devstat)">
+              <SaveOutlined style={{ color: 'rgba(255,255,255,0.8)', fontSize: 16, cursor: 'pointer' }}
+                onClick={saveProject} />
+            </Tooltip>
+            <Tooltip title="Load project (.devstat)">
+              <FolderOpenOutlined style={{ color: 'rgba(255,255,255,0.8)', fontSize: 16, cursor: 'pointer' }}
+                onClick={handleLoadClick} />
+            </Tooltip>
+            <input ref={loadInputRef} type="file" accept=".devstat" style={{ display: 'none' }} onChange={handleLoadFile} />
+          </Space>
+
+          <Space size={4} style={{ borderLeft: '1px solid rgba(255,255,255,0.2)', paddingLeft: 16 }}>
             <Tooltip title={`Undo${undoCount > 0 ? ` (${undoCount} available)` : ''}`}>
               <UndoOutlined style={{ color: undoCount > 0 ? 'rgba(255,255,255,0.9)' : 'rgba(255,255,255,0.3)', fontSize: 16, cursor: undoCount > 0 ? 'pointer' : 'default' }}
                 onClick={() => { if (undoCount > 0) handleUndo() }} />
@@ -430,17 +489,6 @@ const App: React.FC = () => {
             showIcon
             closable={false}
             style={{ borderRadius: 0, border: 'none' }}
-          />
-        )}
-
-        {backendOnline && cloudRun && (
-          <Alert
-            message="🔒 Zero Data Retention"
-            description="All data is processed in memory only and never stored, logged, or written to disk. Your privacy is protected."
-            type="info"
-            showIcon
-            closable={false}
-            style={{ borderRadius: 0, border: 'none', background: '#e8f4fd', textAlign: 'center' }}
           />
         )}
 

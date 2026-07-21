@@ -24,7 +24,7 @@ from fastapi.responses import FileResponse, JSONResponse
 
 from app.state import _session_id_var
 from app.config import PROJECT_NAME, VERSION
-from app.routers import data, analysis, charts, output, suggest, transform, wizard, r_status, syntax, eligibility
+from app.routers import data, analysis, charts, output, suggest, transform, wizard, r_status, syntax, eligibility, project
 try:
     from app.routers import ai
     AI_AVAILABLE = True
@@ -194,6 +194,7 @@ def create_app() -> FastAPI:
         app.include_router(ai.router, prefix="/api", tags=["AI Assistant"])
     app.include_router(syntax.router, prefix="/api/syntax", tags=["Syntax"])
     app.include_router(eligibility.router)
+    app.include_router(project.router, prefix="/api")
 
     # ---- Health check --------------------------------------------------------
     @app.get("/api/health", tags=["Health"])

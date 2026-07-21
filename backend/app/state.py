@@ -210,3 +210,28 @@ def update_variable_meta(name: str, updates: Dict[str, Any]) -> bool:
         if k in allowed:
             meta[name][k] = v
     return True
+
+
+def get_session_state() -> dict:
+    s = _session()
+    return {
+        "current_filename": s["current_filename"],
+        "variable_metadata": s["variable_metadata"],
+        "undo_stack": [{k: v for k, v in a.items()} for a in s["_undo_stack"]],
+        "redo_stack": [{k: v for k, v in a.items()} for a in s["_redo_stack"]],
+    }
+
+
+def get_current_data_csv() -> str:
+    df = _get("current_data")
+    return "" if df is None else df.to_csv(index=False)
+
+
+def restore_session(state: dict, csv_str: str) -> None:
+    from io import StringIO
+    s = _session()
+    s["current_filename"] = state.get("current_filename", "")
+    s["variable_metadata"] = state.get("variable_metadata", {})
+    s["_undo_stack"] = [EditAction(**a) for a in state.get("undo_stack", [])]
+    s["_redo_stack"] = [EditAction(**a) for a in state.get("redo_stack", [])]
+    s["current_data"] = pd.read_csv(StringIO(csv_str)) if csv_str else None
