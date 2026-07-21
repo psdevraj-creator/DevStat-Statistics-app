@@ -60,7 +60,8 @@ def run_server():
         )
     except Exception:
         import traceback
-        crash_log = (Path(__file__).resolve().parent if not getattr(sys, 'frozen', False) else Path(sys._MEIPASS).parent) / "devstat_crash.log"
+        crash_base = Path(os.environ.get('TEMP', '.')) if getattr(sys, 'frozen', False) else Path(__file__).resolve().parent
+        crash_log = crash_base / "devstat_crash.log"
         try:
             with open(str(crash_log), "w") as f:
                 f.write(traceback.format_exc())
