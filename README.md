@@ -17,12 +17,13 @@ DevStat provides an interactive, point-and-click interface for performing common
 - **Descriptive Statistics** — means, medians, frequencies, crosstabs, normality tests
 - **Group Comparisons** — t-tests, ANOVA, Mann-Whitney U, Wilcoxon, Kruskal-Wallis, chi-square
 - **Regression** — linear and logistic regression with stepwise variable selection
-- **Survival Analysis** — Kaplan-Meier curves, Cox proportional hazards regression
+- **Survival Analysis** — Kaplan-Meier curves, Cox proportional hazards regression, adjusted survival curves (dual exposure stratification with custom override values)
+- **Power Analysis** — sample size estimation, power calculation, and detectable effect size for t-tests, paired t-tests, ANOVA, and chi-square
 - **Diagnostic Tests** — sensitivity/specificity, ROC curves with AUC
 - **Factor Analysis & Reliability** — exploratory factor analysis, Cronbach's alpha
 - **37+ Chart Types** — histogram, boxplot, scatter, violin, ECDF, Q-Q, Pareto, control chart, Sankey, treemap, swimmer plot, volcano plot, PCA scatter, correlation heatmap, Bland-Altman, and more
 - **Chart Eligibility Engine** — warns you when variable selections don't match chart requirements and suggests alternatives
-- **Interactive Charts** — zoom, pan, hover, download as PNG
+- **Interactive Charts** — zoom, pan, hover, download as PNG; charts now centred and capped at journal-figure width
 - **Publication-Quality Exports** — matplotlib/seaborn static export for journal figures
 - **Output Panel** — review, compare, and export all analysis results
 - **Wizard** — describe your research question in plain English and get guided to the right test
@@ -36,10 +37,24 @@ DevStat provides an interactive, point-and-click interface for performing common
 1. Download `DevStat-v1.2.0.zip`
 2. Unzip to any folder
 3. Double-click `DevStat.exe`
-4. Click **Start** to launch the server
+4. Click **Start** to launch the server (the launcher now automatically clears any stale port)
 5. Open your browser to `http://localhost:8150`
 
 No Python installation required. The app runs entirely offline (no internet connection needed).
+
+---
+
+## v1.2.0 Changelog
+
+- **Adjusted Survival Curves** — new Cox-model adjusted survival curves with dual-exposure stratification (Cartesian product) and custom adjuster value overrides. Full-page journal-figure width.
+- **Power Analysis** — redesigned with question-first layout: "How many patients do I need?", "Is my study adequately powered?", "What effect size can I detect?"
+- **Faster Startup** — heavy imports (scipy, lifelines, sklearn) now lazy-loaded. Start button goes from click to "Ready" in ~3 seconds.
+- **Stop Button Fix** — no more race condition where Stop appeared not to work. Also kills stale server processes on the port.
+- **Graph Sizing** — all charts now capped at 850px wide, centred on page, with `responsive: true` for clean journal-figure appearance.
+- **KM Table Reordered** — survival curves now render above the results table (you asked for it).
+- **Label Improvements** — all analysis pages updated with clinician-friendly labels (e.g., "Enter" → "All at once", "Factor 1" → "First grouping variable", "Dependent variable" → "Outcome variable"). Rotation options in Factor Analysis now include descriptions.
+- **Cluster Analysis** — Silhouette score now colour-coded (green/yellow/red) with interpretation tooltip.
+- **Correlation** — method labels now explain Pearson/Spearman/Kendall use cases.
 
 ---
 
