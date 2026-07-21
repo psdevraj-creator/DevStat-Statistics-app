@@ -10,7 +10,10 @@ Usage in router code::
 from __future__ import annotations
 
 import logging
+import os
+import sys
 import time
+from pathlib import Path
 from typing import Any, Dict, List
 
 import app.state as _state
@@ -75,7 +78,17 @@ def run_analysis(
              dispatch_id, analysis_name, n_rows, n_cols,
              {k: v for k, v in params.items()})
 
-    result = get_engine().run(analysis_name, params)
+    try:
+        result = get_engine().run(analysis_name, params)
+    except Exception as exc:
+        import traceback
+        try:
+            crash_log = _get_crash_path()
+            with open(str(crash_log), "w") as f:
+                f.write(f"Analysis: {analysis_name}\nParams: {params}\n\n{traceback.format_exc()}")
+        except Exception:
+            pass
+        result = {"error": f"{type(exc).__name__}: {str(exc)}"}
 
     elapsed = time.time() - t0
     has_error = "error" in result
@@ -86,6 +99,14 @@ def run_analysis(
     )
 
     return result
+
+
+def _get_crash_path():
+    if getattr(sys, 'frozen', False):
+        base = Path(os.environ.get('TEMP', sys._MEIPASS))
+    else:
+        base = Path(__file__).resolve().parent.parent
+    return base / "devstat_crash.log"
 
 
 def available_analyses() -> List[str]:

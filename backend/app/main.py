@@ -10,6 +10,7 @@ from __future__ import annotations
 
 import json
 import os
+import sys
 from pathlib import Path
 from typing import Any
 
@@ -46,14 +47,26 @@ class NumpyJSONResponse(JSONResponse):
 
     def render(self, content: Any) -> bytes:
         sanitized = _sanitize_for_json(content)
-        return json.dumps(
-            sanitized,
-            ensure_ascii=False,
-            allow_nan=False,
-            indent=None,
-            separators=(",", ":"),
-            default=_json_encoder_default,
-        ).encode("utf-8")
+        try:
+            return json.dumps(
+                sanitized,
+                ensure_ascii=False,
+                allow_nan=False,
+                indent=None,
+                separators=(",", ":"),
+                default=_json_encoder_default,
+            ).encode("utf-8")
+        except Exception as exc:
+            _write_crash(exc, content)
+            # Fallback: re-serialize with allow_nan=True and convert nan to None
+            return json.dumps(
+                sanitized,
+                ensure_ascii=False,
+                allow_nan=True,
+                indent=None,
+                separators=(",", ":"),
+                default=_json_encoder_default,
+            ).replace(":NaN", ":null").replace(":-NaN", ":null").replace(":Infinity", ":null").replace(":-Infinity", ":null").encode("utf-8")
 
 
 def _sanitize_for_json(obj: Any) -> Any:
@@ -90,6 +103,26 @@ def _json_encoder_default(obj: Any) -> Any:
     if hasattr(obj, "item"):
         return obj.item()
     raise TypeError(f"Object of type {type(obj)} is not JSON serializable")
+
+
+def _write_crash(exc: Exception, content: Any = None) -> None:
+    """Write exception traceback to a crash log file."""
+    import traceback
+    from pathlib import Path
+    if getattr(sys, 'frozen', False):
+        base = Path(os.environ.get('TEMP', '.'))
+    else:
+        base = Path(__file__).resolve().parent.parent
+    crash_log = base / "devstat_crash.log"
+    try:
+        with open(str(crash_log), "w") as f:
+            f.write(f"Exception: {type(exc).__name__}: {exc}\n\n")
+            f.write(traceback.format_exc())
+            if content is not None:
+                f.write(f"\n\nContent type: {type(content)}\n")
+                f.write(f"Content (partial): {str(content)[:2000]}\n")
+    except Exception:
+        pass
 
 
 # ---------------------------------------------------------------------------
@@ -167,6 +200,17 @@ def create_app() -> FastAPI:
             "ai_available": AI_AVAILABLE,
             "privacy_notice": "Data is processed in memory. Request metadata (paths, timings) may be logged for debugging; request bodies are never logged unless DEVSTAT_LOG_BODY=true is set. See privacy docs for details." if cloud_run else "",
         }
+
+    # ---- Global exception handler — logs crashes ---------------------------
+    @app.exception_handler(Exception)
+    async def _global_exception_handler(request, exc):
+        _write_crash(exc)
+        import traceback
+        lines = traceback.format_exc().splitlines()
+        return JSONResponse(
+            status_code=500,
+            content={"detail": f"{type(exc).__name__}: {str(exc)}", "traceback": lines[-15:]},
+        )
 
     # ---- Engine status -------------------------------------------------------
     @app.get("/api/r-status", tags=["Health"])
