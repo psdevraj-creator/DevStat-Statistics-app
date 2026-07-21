@@ -1188,7 +1188,7 @@ async def mixed_model_endpoint(body: Dict[str, Any]) -> Dict[str, Any]:
 
 @router.post("/cluster")
 async def cluster_endpoint(body: Dict[str, Any]) -> Dict[str, Any]:
-    """Perform cluster analysis (k-means or hierarchical) via R."""
+    """Perform cluster analysis (k-means or hierarchical) via Python (scikit-learn)."""
     columns = body.get("columns", [])
     n_clusters = body.get("n_clusters", 3)
     validate_cluster(columns, n_clusters)
@@ -1196,7 +1196,6 @@ async def cluster_endpoint(body: Dict[str, Any]) -> Dict[str, Any]:
     method = body.get("method", "kmeans")
     if not columns or len(columns) < 2:
         raise HTTPException(status_code=400, detail="At least two 'columns' required.")
-    # Soft eligibility check
     if n_clusters < 2:
         return {
             "eligible": False,
@@ -1211,40 +1210,21 @@ async def cluster_endpoint(body: Dict[str, Any]) -> Dict[str, Any]:
             "inferred_data_role": {},
             "help_terms": [],
         }
-    result = run_analysis("cluster_analysis", {
-        "columns": columns, "method": method, "n_clusters": n_clusters,
-    })
+    from app.services.cluster import cluster_analysis
+    result = cluster_analysis(columns, method, n_clusters)
     return result
 
 
 @router.post("/power")
 async def power_endpoint(body: Dict[str, Any]) -> Dict[str, Any]:
-    """Perform power analysis via R (pwr)."""
+    """Perform power analysis via Python (statsmodels)."""
     test = body.get("test", "ttest")
     n = body.get("n")
     effect_size = body.get("effect_size")
     power = body.get("power")
     alpha = body.get("alpha", 0.05)
-    k = body.get("k", 2)  # number of groups for ANOVA
+    k = body.get("k")
     validate_power(test, effect_size, power, alpha)
-    # Soft eligibility check
-    supported = ("ttest", "anova", "chisq", "corr", "prop")
-    if test not in supported:
-        return {
-            "eligible": False,
-            "blocked": True,
-            "requested_action": f"Power analysis ({test})",
-            "action_type": "test",
-            "reason": f"Test type '{test}' is not supported.",
-            "details": f"Supported types: {', '.join(supported)}.",
-            "triggering_data_properties": [f"test_type={test}"],
-            "suggested_alternatives": ["Choose from: ttest, anova, chisq, corr, prop."],
-            "alternative_ranked": {"preferred": [], "acceptable": [], "advanced": []},
-            "inferred_data_role": {},
-            "help_terms": [],
-        }
-    result = run_analysis("power_analysis", {
-        "test": test, "n": n, "effect_size": effect_size,
-        "power": power, "alpha": alpha, "k": k,
-    })
+    from app.services.power import power_analysis
+    result = power_analysis(test, effect_size, n, power, alpha, k)
     return result
