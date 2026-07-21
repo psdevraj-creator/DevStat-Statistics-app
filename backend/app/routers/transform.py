@@ -181,7 +181,7 @@ async def select_if(req: SelectIfRequest) -> Dict[str, Any]:
             description=f"Delete rows: {req.expression}",
             edit_type="transform",
         )
-        _state.current_data = df[~mask].reset_index(drop=True)
+        _state.set_current_data(df[~mask].reset_index(drop=True))
         n_deleted = before - len(_state.current_data)
         return {"status": "ok", "mode": "delete", "deleted": n_deleted, "remaining": len(_state.current_data)}
 
@@ -190,7 +190,7 @@ async def select_if(req: SelectIfRequest) -> Dict[str, Any]:
         description=f"Filter: {req.expression}",
         edit_type="transform",
     )
-    _state.current_data = df[mask].reset_index(drop=True)
+    _state.set_current_data(df[mask].reset_index(drop=True))
     n_kept = len(_state.current_data)
     return {"status": "ok", "mode": "filter", "kept": n_kept, "removed": before - n_kept}
 
@@ -220,7 +220,7 @@ async def sort_cases(req: SortRequest) -> Dict[str, Any]:
         ascending.append(order.lower() == "asc")
 
     push_undo(description=f"Sort by {', '.join(by)}", edit_type="transform")
-    _state.current_data = df.sort_values(by=by, ascending=ascending, na_position="last").reset_index(drop=True)
+    _state.set_current_data(df.sort_values(by=by, ascending=ascending, na_position="last").reset_index(drop=True))
 
     return {"status": "ok", "sorted_by": by, "rows": len(_state.current_data)}
 
@@ -320,7 +320,7 @@ async def aggregate_data(req: AggregateRequest) -> Dict[str, Any]:
     grouped = df.groupby(req.group_var, dropna=True).agg(**agg_dict).reset_index()
     push_undo(description=f"Aggregate by {req.group_var}", edit_type="transform")
 
-    _state.current_data = grouped
+    _state.set_current_data(grouped)
     init_variable_metadata(_state.current_data)
 
     return {

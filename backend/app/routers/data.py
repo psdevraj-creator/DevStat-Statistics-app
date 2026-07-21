@@ -23,7 +23,6 @@ from fastapi.responses import Response, StreamingResponse
 import app.state as _state
 from app.logging_config import log_data_mutation
 from app.state import (
-    variable_metadata,
     init_variable_metadata,
     update_variable_meta,
     push_undo,
@@ -82,7 +81,7 @@ def _build_column_info(df: pd.DataFrame) -> List[ColumnInfo]:
     result = []
     for col_dict in base_cols:
         name = col_dict["name"]
-        meta = variable_metadata.get(name, {})
+        meta = _state.variable_metadata.get(name, {})
         result.append(ColumnInfo(
             name=name,
             dtype=col_dict.get("dtype", "string"),
@@ -158,8 +157,8 @@ async def upload_file(file: UploadFile = File(...)) -> DatasetInfo:
         _cleanup_temp(tmp_dir)
 
     # Update state
-    _state.current_data = df
-    _state.current_filename = file.filename
+    _state.set_current_data(df)
+    _state.set_current_filename(file.filename)
     init_variable_metadata(df)
     clear_history()
     _invalidate_metadata_cache()
@@ -564,10 +563,8 @@ async def download_multiformat(body: Dict[str, Any]) -> Response:
 @router.delete("/reset")
 async def reset_data() -> Dict[str, str]:
     """Clear the currently loaded dataset from memory."""
-    # Using _state.current_data / _state.current_filename
-    _state.current_data = None
-    _state.current_filename = ""
-    variable_metadata.clear()
+    _state.clear_current_data()
+    _state.variable_metadata.clear()
     clear_history()
     _invalidate_metadata_cache()
     return {"status": "ok", "message": "Dataset has been cleared."}
@@ -643,11 +640,11 @@ async def insert_row(index: int = -1, count: int = 1) -> Dict[str, Any]:
 
     new_rows = pd.DataFrame({col: [None] * count for col in _state.current_data.columns})
     if index < 0 or index >= len(_state.current_data):
-        _state.current_data = pd.concat([_state.current_data, new_rows], ignore_index=True)
+        _state.set_current_data(pd.concat([_state.current_data, new_rows], ignore_index=True))
     else:
         before = _state.current_data.iloc[:index]
         after = _state.current_data.iloc[index:]
-        _state.current_data = pd.concat([before, new_rows, after], ignore_index=True)
+        _state.set_current_data(pd.concat([before, new_rows, after], ignore_index=True))
 
     _invalidate_metadata_cache()
     return {"status": "ok", "rows": len(_state.current_data), "inserted": count}
@@ -668,7 +665,7 @@ async def delete_row(row_index: int) -> Dict[str, Any]:
         edit_detail={"index": row_index},
     )
 
-    _state.current_data = _state.current_data.drop(index=row_index).reset_index(drop=True)
+    _state.set_current_data(_state.current_data.drop(index=row_index).reset_index(drop=True))
     _invalidate_metadata_cache()
     return {"status": "ok", "rows": len(_state.current_data)}
 
@@ -708,7 +705,7 @@ async def delete_column(col_name: str) -> Dict[str, Any]:
 
     push_undo(description=f"Delete column '{col_name}'", edit_type="col_delete")
 
-    _state.current_data = _state.current_data.drop(columns=[col_name])
+    _state.set_current_data(_state.current_data.drop(columns=[col_name]))
     init_variable_metadata(_state.current_data)
     _invalidate_metadata_cache()
     return {"status": "ok", "columns": list(_state.current_data.columns)}
@@ -731,7 +728,7 @@ async def get_variable_view() -> List[Dict[str, Any]]:
 async def update_variable(req: VariableMetaUpdate) -> Dict[str, Any]:
     """Update metadata for a single variable."""
     _require_data()
-    if req.name not in variable_metadata:
+    if req.name not in _state.variable_metadata:
         raise HTTPException(status_code=400, detail=f"Variable '{req.name}' not found.")
 
     push_undo(description=f"Update variable metadata: {req.name}", edit_type="meta")
@@ -744,7 +741,7 @@ async def update_variable(req: VariableMetaUpdate) -> Dict[str, Any]:
 async def set_value_labels(req: ValueLabelSet) -> Dict[str, Any]:
     """Set value labels for a variable (e.g. 1=Male, 2=Female)."""
     _require_data()
-    if req.column not in variable_metadata:
+    if req.column not in _state.variable_metadata:
         raise HTTPException(status_code=400, detail=f"Variable '{req.column}' not found.")
 
     # Convert keys to the same type as the column
@@ -759,7 +756,7 @@ async def set_value_labels(req: ValueLabelSet) -> Dict[str, Any]:
         except (ValueError, TypeError):
             typed_labels[k] = v
 
-    variable_metadata[req.column]["value_labels"] = typed_labels
+    _state.variable_metadata[req.column]["value_labels"] = typed_labels
     _invalidate_metadata_cache()
     return {"status": "ok", "column": req.column, "value_labels": typed_labels}
 
@@ -768,9 +765,9 @@ async def set_value_labels(req: ValueLabelSet) -> Dict[str, Any]:
 async def set_missing_values(req: MissingValueSet) -> Dict[str, Any]:
     """Set user-defined missing values for a variable."""
     _require_data()
-    if req.column not in variable_metadata:
+    if req.column not in _state.variable_metadata:
         raise HTTPException(status_code=400, detail=f"Variable '{req.column}' not found.")
-    variable_metadata[req.column]["missing_values"] = req.missing_values
+    _state.variable_metadata[req.column]["missing_values"] = req.missing_values
     _invalidate_metadata_cache()
     return {"status": "ok", "column": req.column, "missing_values": req.missing_values}
 

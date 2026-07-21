@@ -37,6 +37,20 @@ def __getattr__(name: str) -> Any:
     raise AttributeError(f"module 'state' has no attribute '{name}'")
 
 
+def set_current_data(df):
+    _session()["current_data"] = df
+
+
+def set_current_filename(name: str):
+    _session()["current_filename"] = name
+
+
+def clear_current_data():
+    s = _session()
+    s["current_data"] = None
+    s["current_filename"] = ""
+
+
 def _get(key: str) -> Any:
     return _session()[key]
 

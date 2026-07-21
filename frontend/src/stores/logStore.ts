@@ -79,13 +79,13 @@ class LogStore {
 
   private save(): void {
     try {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(this.entries))
+      sessionStorage.setItem(STORAGE_KEY, JSON.stringify(this.entries))
     } catch { /* storage full or unavailable */ }
   }
 
   private load(): void {
     try {
-      const raw = localStorage.getItem(STORAGE_KEY)
+      const raw = sessionStorage.getItem(STORAGE_KEY)
       if (raw) {
         this.entries = JSON.parse(raw)
         if (!Array.isArray(this.entries)) this.entries = []
