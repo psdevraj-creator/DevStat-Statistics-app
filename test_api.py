@@ -23,8 +23,8 @@ from typing import Any, Dict, List, Optional, Tuple
 HOST = "127.0.0.1"
 PORT = 15850
 BASE = f"http://{HOST}:{PORT}"
-DATASET = r"C:\DevStat\test_dataset.csv"
-CHART_DIR = Path(r"C:\DevStat\chart_outputs")
+DATASET = str(Path(__file__).resolve().parent.parent.parent / "test_dataset.csv")
+CHART_DIR = Path(__file__).resolve().parent.parent.parent / "chart_outputs"
 CHART_DIR.mkdir(parents=True, exist_ok=True)
 
 passed: List[str] = []

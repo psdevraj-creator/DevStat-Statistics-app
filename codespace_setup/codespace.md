@@ -61,7 +61,7 @@ Prebuilds cache the container so users skip the build step entirely (~15s vs ~2m
 - **R is skipped** — the Python-only engine runs fully without R
 - **Frontend is pre-built** — no `frontend/` source in this repo; static files are
   in `backend/static/` and committed directly
-- **`source_clean/`** is the GitHub source root. The parent `C:\DevStat\` is the
+- **`source_clean/`** is the GitHub source root. The parent `C:\Users\dell 7390\OneDrive\Desktop\Desktop files\DevStat\` is the
   development workspace and has its own gitignore (not pushed to GitHub).
 - **CORS** is already configured in `backend/app/main.py` to allow Codespaces URLs.
 - **Data privacy** — all data stays in the Codespace container; no external calls.

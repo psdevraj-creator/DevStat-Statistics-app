@@ -10,6 +10,11 @@ build/
 .mypy_cache/
 *.spec
 
+# Virtual environment
+venv/
+backend/venv/
+.venv/
+
 # Environment
 .env
 .env.*
@@ -18,6 +23,7 @@ build/
 # Logs
 *.log
 logs/
+backend/logs/
 
 # Node
 node_modules/
@@ -33,12 +39,18 @@ Thumbs.db
 .vscode/
 *.swp
 
-# Virtual environment
-venv/
-backend/venv/
+# Release builds
+release_preparation/output/
+release_preparation/build/
+release_preparation/dist/
 
-# Built frontend (pre-built in source_clean, no frontend/ source)
-# backend/static/
+# Backend caches
+backend/cache/
+backend/binary/
+backend/index/
+backend/p3m/
+backend/static/
+backend/app/data/ai_history.json
 
 # Backup files
 *.bak
@@ -46,8 +58,15 @@ backend/venv/
 # Test artifacts
 frontend/test-results/
 
-# Data
-backend/app/data/ai_history.json
+# Project logs
+devstat-logs-*.json
 
-# Release
-release_preparation/output/
+# Generated chart outputs
+chart_outputs/
+
+# Archive — contains secrets / old cruft
+_archive/
+
+# Windows
+*.exe
+*.msix

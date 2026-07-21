@@ -23,6 +23,7 @@ from fastapi.responses import Response, StreamingResponse
 import app.state as _state
 from app.logging_config import log_data_mutation
 from app.state import (
+    variable_metadata,
     init_variable_metadata,
     update_variable_meta,
     push_undo,
@@ -81,7 +82,7 @@ def _build_column_info(df: pd.DataFrame) -> List[ColumnInfo]:
     result = []
     for col_dict in base_cols:
         name = col_dict["name"]
-        meta = _state.variable_metadata.get(name, {})
+        meta = variable_metadata.get(name, {})
         result.append(ColumnInfo(
             name=name,
             dtype=col_dict.get("dtype", "string"),
@@ -304,25 +305,29 @@ async def paginated_rows(body: Dict[str, Any]) -> Dict[str, Any]:
 # Metadata cache (cleared on upload, recomputed lazily)
 # ---------------------------------------------------------------------------
 
+_cached_metadata: Optional[Dict[str, Any]] = None
+
 
 def _invalidate_metadata_cache() -> None:
-    _state._cached_metadata = None
+    global _cached_metadata
+    _cached_metadata = None
 
 
 @router.get("/metadata")
 async def cached_metadata() -> Dict[str, Any]:
     """Return cached column metadata (avoids recomputation on every call)."""
     _require_data()
-    if _state._cached_metadata is None:
+    global _cached_metadata
+    if _cached_metadata is None:
         df = _state.current_data
         cols = _build_column_info(df)
-        _state._cached_metadata = {
+        _cached_metadata = {
             "rows": len(df),
             "cols": len(df.columns),
             "columns": [c.model_dump() for c in cols],
             "memory_mb": round(df.memory_usage(deep=True).sum() / (1024 * 1024), 2),
         }
-    return _state._cached_metadata
+    return _cached_metadata
 
 
 @router.get("/download")
@@ -562,7 +567,7 @@ async def reset_data() -> Dict[str, str]:
     # Using _state.current_data / _state.current_filename
     _state.current_data = None
     _state.current_filename = ""
-    _state.variable_metadata.clear()
+    variable_metadata.clear()
     clear_history()
     _invalidate_metadata_cache()
     return {"status": "ok", "message": "Dataset has been cleared."}
@@ -726,7 +731,7 @@ async def get_variable_view() -> List[Dict[str, Any]]:
 async def update_variable(req: VariableMetaUpdate) -> Dict[str, Any]:
     """Update metadata for a single variable."""
     _require_data()
-    if req.name not in _state.variable_metadata:
+    if req.name not in variable_metadata:
         raise HTTPException(status_code=400, detail=f"Variable '{req.name}' not found.")
 
     push_undo(description=f"Update variable metadata: {req.name}", edit_type="meta")
@@ -739,7 +744,7 @@ async def update_variable(req: VariableMetaUpdate) -> Dict[str, Any]:
 async def set_value_labels(req: ValueLabelSet) -> Dict[str, Any]:
     """Set value labels for a variable (e.g. 1=Male, 2=Female)."""
     _require_data()
-    if req.column not in _state.variable_metadata:
+    if req.column not in variable_metadata:
         raise HTTPException(status_code=400, detail=f"Variable '{req.column}' not found.")
 
     # Convert keys to the same type as the column
@@ -754,7 +759,7 @@ async def set_value_labels(req: ValueLabelSet) -> Dict[str, Any]:
         except (ValueError, TypeError):
             typed_labels[k] = v
 
-    _state.variable_metadata[req.column]["value_labels"] = typed_labels
+    variable_metadata[req.column]["value_labels"] = typed_labels
     _invalidate_metadata_cache()
     return {"status": "ok", "column": req.column, "value_labels": typed_labels}
 
@@ -763,9 +768,9 @@ async def set_value_labels(req: ValueLabelSet) -> Dict[str, Any]:
 async def set_missing_values(req: MissingValueSet) -> Dict[str, Any]:
     """Set user-defined missing values for a variable."""
     _require_data()
-    if req.column not in _state.variable_metadata:
+    if req.column not in variable_metadata:
         raise HTTPException(status_code=400, detail=f"Variable '{req.column}' not found.")
-    _state.variable_metadata[req.column]["missing_values"] = req.missing_values
+    variable_metadata[req.column]["missing_values"] = req.missing_values
     _invalidate_metadata_cache()
     return {"status": "ok", "column": req.column, "missing_values": req.missing_values}
 

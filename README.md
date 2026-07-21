@@ -33,7 +33,7 @@ DevStat provides an interactive, point-and-click interface for performing common
 
 **End users:** Download the latest portable release from the [Releases](https://github.com/psdevraj-creator/DevStat-Statistics-app/releases) page.
 
-1. Download `DevStat-v1.0.0.zip`
+1. Download `DevStat-v1.2.0.zip`
 2. Unzip to any folder
 3. Double-click `DevStat.exe`
 4. Click **Start** to launch the server

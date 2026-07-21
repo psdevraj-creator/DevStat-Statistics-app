@@ -1,14 +1,15 @@
 """
-Backend logging configuration — logs EVERYTHING to devstat.log.
+Backend logging configuration — logs API activity to devstat.log.
 
-Captures all API requests/responses, service calls, R bridge operations,
-data mutations, and errors with full context for debugging.
+Request/response bodies are only logged when DEVSTAT_LOG_BODY=true is set.
+By default, only request path, status, and duration are recorded.
 """
 
 from __future__ import annotations
 
 import json
 import logging
+import logging.handlers
 import os
 import time
 import traceback
@@ -23,8 +24,13 @@ LOG_DIR = Path(__file__).resolve().parent.parent / "logs"
 LOG_DIR.mkdir(parents=True, exist_ok=True)
 LOG_FILE = LOG_DIR / "devstat.log"
 
-# ── File handler — everything at DEBUG+ ──────────────────────────────
-file_handler = logging.FileHandler(str(LOG_FILE), mode="w", encoding="utf-8")
+# ── Env-aware: log bodies only when explicitly enabled ────────────────
+LOG_BODY = os.getenv("DEVSTAT_LOG_BODY", "").lower() == "true"
+
+# ── File handler — DEBUG+ with rotation ──────────────────────────────
+file_handler = logging.handlers.RotatingFileHandler(
+    str(LOG_FILE), maxBytes=10 * 1024 * 1024, backupCount=3, encoding="utf-8"
+)
 file_handler.setLevel(logging.DEBUG)
 file_handler.setFormatter(logging.Formatter(
     "%(asctime)s | %(levelname)-7s | %(name)s | %(message)s"
@@ -40,8 +46,7 @@ console_handler.setFormatter(logging.Formatter(
 # Root logger
 root_logger = logging.getLogger()
 root_logger.handlers.clear()
-if not os.environ.get("K_SERVICE", ""):
-    root_logger.addHandler(file_handler)
+root_logger.addHandler(file_handler)
 root_logger.addHandler(console_handler)
 root_logger.setLevel(logging.DEBUG)
 
@@ -62,20 +67,21 @@ class RequestLoggingMiddleware(BaseHTTPMiddleware):
         req_id = f"{time.time_ns():x}"
         start = time.time()
 
-        # Log request
-        body = None
-        try:
-            if request.method in ("POST", "PUT", "PATCH"):
-                body_bytes = await request.body()
-                if body_bytes:
-                    body = body_bytes.decode("utf-8", errors="replace")[:5000]
-        except Exception:
-            pass
+        # Log request (body only when DEVSTAT_LOG_BODY=true)
+        body_summary = "(body logging disabled)"
+        if LOG_BODY:
+            try:
+                if request.method in ("POST", "PUT", "PATCH"):
+                    body_bytes = await request.body()
+                    if body_bytes:
+                        body_summary = body_bytes.decode("utf-8", errors="replace")[:200]
+            except Exception:
+                pass
 
         api_logger.info(
             "REQ  | id=%s | %s %s | body=%s",
             req_id, request.method, request.url.path,
-            body[:200] if body else "(empty)",
+            body_summary,
         )
 
         try:
@@ -91,20 +97,21 @@ class RequestLoggingMiddleware(BaseHTTPMiddleware):
 
         elapsed = time.time() - start
 
-        # Log response
-        resp_body = None
-        try:
-            if hasattr(response, "body"):
-                resp_body = response.body.decode("utf-8", errors="replace")[:2000]
-        except Exception:
-            pass
+        # Log response (body only when DEVSTAT_LOG_BODY=true)
+        resp_summary = "(body logging disabled)"
+        if LOG_BODY:
+            try:
+                if hasattr(response, "body"):
+                    resp_summary = response.body.decode("utf-8", errors="replace")[:500]
+            except Exception:
+                pass
 
         log_level = api_logger.info if response.status_code < 400 else api_logger.warning
         log_level(
             "RESP | id=%s | %s %s | status=%d | elapsed=%.3fs | body=%s",
             req_id, request.method, request.url.path,
             response.status_code, elapsed,
-            resp_body[:500] if resp_body else "(streaming)",
+            resp_summary,
         )
 
         return response

@@ -59,7 +59,7 @@ _require_data = require_data
 # ---------------------------------------------------------------------------
 
 
-@router.post("/histogram")
+@router.post("/histogram", response_model=ChartResponse)
 async def histogram(
     body: Dict[str, Any],
 ) -> Dict[str, Any]:
@@ -81,7 +81,7 @@ async def histogram(
     return histogram_data(_state.current_data, column=column, bins=bins, group_col=group_col)
 
 
-@router.post("/boxplot")
+@router.post("/boxplot", response_model=ChartResponse)
 async def boxplot(body: Dict[str, Any]) -> Dict[str, Any]:
     """Prepare boxplot chart data for a numeric column.
 
@@ -99,7 +99,7 @@ async def boxplot(body: Dict[str, Any]) -> Dict[str, Any]:
     return boxplot_data(_state.current_data, column=column, group_col=group_col)
 
 
-@router.post("/scatter")
+@router.post("/scatter", response_model=ChartResponse)
 async def scatter(body: Dict[str, Any]) -> Dict[str, Any]:
     """Prepare scatter plot chart data with regression line.
 
@@ -123,7 +123,7 @@ async def scatter(body: Dict[str, Any]) -> Dict[str, Any]:
     )
 
 
-@router.post("/bar")
+@router.post("/bar", response_model=ChartResponse)
 async def bar(body: Dict[str, Any]) -> Dict[str, Any]:
     """Prepare bar chart data.
 
