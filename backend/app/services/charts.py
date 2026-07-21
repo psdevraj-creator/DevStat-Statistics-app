@@ -12,7 +12,6 @@ from typing import Any, Dict, List, Optional
 
 import numpy as np
 import pandas as pd
-from scipy import stats as sp_stats
 from app.services import error
 
 
@@ -101,6 +100,7 @@ def histogram_data(
         counts, _ = np.histogram(vals, bins=bin_edges)
 
         # Normal curve coordinates.
+        from scipy import stats as sp_stats
         mu = float(np.mean(vals))
         sigma = float(np.std(vals, ddof=1))
         x_normal = np.linspace(vals.min(), vals.max(), 100)
@@ -285,6 +285,7 @@ def scatter_data(
 
     # Regression line.
     if len(x_vals) > 2:
+        from scipy import stats as sp_stats
         slope, intercept, r_val, p_val, se = sp_stats.linregress(x_vals, y_vals)
         x_line = np.linspace(float(x_vals.min()), float(x_vals.max()), 100)
         y_line = intercept + slope * x_line
@@ -375,6 +376,7 @@ def bar_chart_data(
             elif error_bars == "se":
                 err = std_val / np.sqrt(n_vals) if n_vals > 1 else 0.0
             elif error_bars == "ci95":
+                from scipy import stats as sp_stats
                 err = (std_val / np.sqrt(n_vals)) * sp_stats.t.ppf(0.975, n_vals - 1) if n_vals > 1 else 0.0
             else:
                 err = 0.0

@@ -561,21 +561,31 @@ def cox_adjusted_survival(
     adjusters: List[str],
     event_code: int = 1,
     adjuster_values: Optional[Dict[str, Any]] = None,
+    exposure2: Optional[str] = None,
 ) -> Dict[str, Any]:
     """Generate adjusted survival curves from a Cox PH model.
 
-    Fit a Cox model ``~ exposure + adjusters``, then predict survival
-    curves for each level (categorical exposure) or tertile (continuous
-    exposure), holding adjusters at specified values (or their mean /
-    reference level if not specified).
+    Fit a Cox model ``~ exposure + exposure2 + adjusters``, then predict
+    survival curves stratified by the exposure(s).
 
-    ``adjuster_values`` is an optional dict mapping adjuster name to the
-    value to use (e.g. ``{"age": 65, "stage": "III"}``). Omitted adjusters
-    default to the mean (numeric) or reference level (categorical).
+    For a single *exposure*: one curve per level (categorical) or tertile
+    (continuous), holding adjusters at their specified values (or mean /
+    reference level).
+
+    For two exposures (*exposure* + *exposure2*): one curve per combination
+    of their levels (Cartesian product). Labels use the form
+    ``"exposure=val, exposure2=val"``.
+
+    ``adjuster_values`` is an optional dict to override adjuster values
+    (e.g. ``{"age": 65, "stage": "III"}``).
 
     Returns Plotly-compatible ``{traces, layout}``.
     """
-    all_cols = [time_col, status_col, exposure] + adjusters
+    exposures = [e for e in [exposure, exposure2] if e is not None]
+    all_cols = [time_col, status_col] + exposures + adjusters
+    # Deduplicate while preserving order
+    all_cols = list(dict.fromkeys(all_cols))
+
     for col in all_cols:
         if col not in df.columns:
             return error(f"Column '{col}' not found.")
@@ -589,11 +599,9 @@ def cox_adjusted_survival(
     if n_events < 1:
         return error("No events observed in data.")
 
-    # One-hot encode all categorical variables (exposure + adjusters)
+    # One-hot encode all categorical variables (exposures + adjusters)
     model_cols = [time_col, "_event"]
-    exp_is_cat = not pd.api.types.is_numeric_dtype(df_clean[exposure])
-
-    for col in all_cols[2:]:  # exposure + adjusters
+    for col in all_cols[2:]:
         if not pd.api.types.is_numeric_dtype(df_clean[col]):
             dummies = pd.get_dummies(df_clean[col], prefix=col, drop_first=True)
             df_clean = pd.concat([df_clean, dummies], axis=1)
@@ -611,10 +619,12 @@ def cox_adjusted_survival(
     feature_cols = [c for c in model_cols if c not in (time_col, "_event")]
 
     # Build reference — mean for numeric, 0 for dummy (reference level)
-    # Respect overrides from adjuster_values
+    # Respect overrides from adjuster_values. Skip exposure variables.
     adjuster_values = adjuster_values or {}
     ref = {}
     for col in all_cols[2:]:
+        if col in exposures:
+            continue
         if col in adjuster_values:
             raw = adjuster_values[col]
             if pd.api.types.is_numeric_dtype(df_clean[col]):
@@ -634,25 +644,50 @@ def cox_adjusted_survival(
                 for dc in [c for c in feature_cols if c.startswith(f"{col}_")]:
                     ref[dc] = 0.0
 
-    # Generate profiles
-    profiles = []
-    if exp_is_cat:
-        levels = sorted(df_clean[exposure].unique())
-        for level in levels:
-            vals = dict(ref)
-            exp_dcs = [c for c in feature_cols if c.startswith(f"{exposure}_")]
-            for dc in exp_dcs:
-                suffix = dc.removeprefix(f"{exposure}_")
-                vals[dc] = 1.0 if str(level) == suffix else 0.0
-            profiles.append({"label": f"{exposure} = {level}", "values": vals})
+    # ── Profile generator for one variable ─────────────────────────────
+    def _exp_profiles(col):
+        results = []
+        if not pd.api.types.is_numeric_dtype(df_clean[col]):
+            levels = sorted(df_clean[col].unique())
+            for level in levels:
+                vals = {}
+                dcs = [c for c in feature_cols if c.startswith(f"{col}_")]
+                for dc in dcs:
+                    suffix = dc.removeprefix(f"{col}_")
+                    vals[dc] = 1.0 if str(level) == suffix else 0.0
+                results.append((f"{col}={level}", vals))
+        else:
+            pcts = np.percentile(df_clean[col].dropna(), [25, 50, 75])
+            for lbl, v in [("25th %ile", pcts[0]),
+                           ("50th %ile", pcts[1]),
+                           ("75th %ile", pcts[2])]:
+                results.append((f"{col}={lbl} ({v:.2f})", {col: float(v)}))
+        return results
+
+    e1_items = _exp_profiles(exposure)
+    e1_labels, e1_vals = zip(*e1_items)
+    e1_labels = list(e1_labels)
+    e1_vals = [dict(v) for v in e1_vals]
+
+    if exposure2:
+        e2_labels, e2_vals = zip(*_exp_profiles(exposure2))
+        e2_vals = [dict(v) for v in e2_vals]
+        comb_labels, comb_vals = [], []
+        for l1, v1 in zip(e1_labels, e1_vals):
+            for l2, v2 in zip(e2_labels, e2_vals):
+                vals = dict(ref)
+                vals.update(v1)
+                vals.update(v2)
+                comb_labels.append(f"{l1}, {l2}")
+                comb_vals.append(vals)
+        e1_labels, e1_vals = comb_labels, comb_vals
     else:
-        pct_vals = np.percentile(df_clean[exposure].dropna(), [25, 50, 75])
-        for label, val in [("25th %ile", pct_vals[0]),
-                           ("50th %ile (median)", pct_vals[1]),
-                           ("75th %ile", pct_vals[2])]:
+        for i in range(len(e1_vals)):
             vals = dict(ref)
-            vals[exposure] = float(val)
-            profiles.append({"label": f"{exposure} = {label} ({val:.2f})", "values": vals})
+            vals.update(e1_vals[i])
+            e1_vals[i] = vals
+
+    profiles = [{"label": l, "values": v} for l, v in zip(e1_labels, e1_vals)]
 
     # Time grid
     max_t = float(df_clean[time_col].quantile(0.95))

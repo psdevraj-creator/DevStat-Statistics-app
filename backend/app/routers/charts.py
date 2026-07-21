@@ -35,8 +35,6 @@ from app.services.charts import (
     pca_scatter_data, correlation_network_data, monthly_trend_heatmap_data,
     adverse_event_heatmap_data,
 )
-from app.services.diagnostic import roc_analysis
-from app.services.survival import kaplan_meier
 from app.models.dataset import ChartResponse
 
 router = APIRouter(prefix="", tags=["Charts"])
@@ -178,6 +176,7 @@ async def km_curve(body: Dict[str, Any]) -> Dict[str, Any]:
     event_code: int = body.get("event_code", 1)
     group_col: Optional[str] = body.get("group_col")
 
+    from app.services.survival import kaplan_meier
     km_result = kaplan_meier(
         _state.current_data,
         time_col=time_col,
@@ -212,6 +211,7 @@ async def roc_curve(body: Dict[str, Any]) -> Dict[str, Any]:
 
     positive_code = body.get("positive_code", 1)
 
+    from app.services.diagnostic import roc_analysis
     roc_result = roc_analysis(
         _state.current_data,
         test_col=test_col,

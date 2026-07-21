@@ -155,6 +155,8 @@ def _build_registry() -> Dict[str, callable]:
             p.get("exposure"),
             p.get("adjusters", []),
             p.get("event_code", 1),
+            p.get("adjuster_values", {}),
+            p.get("exposure2"),
         ),
 
         # ── Diagnostic ─────────────────────────────────────────────────

@@ -9,7 +9,6 @@ from fastapi import APIRouter, HTTPException
 import app.state as _state
 from app.state import require_data
 from app.models.suggest import SuggestTestRequest, SuggestTestResponse
-from app.services.suggest import recommend_test
 from app.services.validate_test import validate_test_choice, TEST_CONTRACTS
 
 router = APIRouter(prefix="", tags=["Suggest Test"])
@@ -24,6 +23,7 @@ async def suggest_test(req: SuggestTestRequest) -> Dict[str, Any]:
     _require_data()
     if not req.goal:
         raise HTTPException(status_code=400, detail="'goal' is required.")
+    from app.services.suggest import recommend_test
     result = recommend_test(_state.current_data, req)
     return result.model_dump()
 
