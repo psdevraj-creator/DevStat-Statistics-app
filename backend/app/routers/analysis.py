@@ -69,19 +69,12 @@ from ..eligibility import (
     infer_variable_type,
 )
 
-# ── Analysis dispatcher ──────────────────────────────────────────────────
+# ── Services (imported lazily inside each endpoint) ──────────────────────
+# All heavy packages (lifelines, statsmodels, sklearn, etc.) are imported
+# on first use, not at startup.
+
 from r.dispatcher import run_analysis
 
-from app.services.compare import (
-    anova_twoway,
-    chisquare as py_chisquare,
-    kruskal_wallis,
-    mannwhitney,
-    ttest as py_ttest,
-    wilcoxon,
-)
-from app.services.descriptive import crosstab as py_crosstab, descriptive_stats, explore, frequencies as py_frequencies, means
-from app.services.diagnostic import diagnostic_test, roc_analysis
 from app.services.interpreter import (
     interpret_anova,
     interpret_chisquare,
@@ -92,14 +85,6 @@ from app.services.interpreter import (
     interpret_survival,
     interpret_ttest,
 )
-from app.services.regression import (
-    correlation_matrix as py_correlation,
-    linear_regression as py_linear_regression,
-    logistic_regression as py_logistic_regression,
-    partial_correlation,
-)
-from app.services.survival import cox_forest_data, cox_predict_survival, cox_regression as py_cox_regression, kaplan_meier as py_kaplan_meier
-from app.services.factor_analysis import factor_analysis, reliability_analysis
 
 router = APIRouter(prefix="", tags=["Analysis"])
 
@@ -286,6 +271,8 @@ async def ttest_endpoint(req: TestRequest) -> Dict[str, Any]:
     * If ``req.test_type == \"mannwhitney\"`` → Mann-Whitney U (Python).
     * Otherwise → t-test via R.
     """
+    from app.services.compare import mannwhitney
+    from app.services.interpreter import interpret_ttest
     validate_ttest(req.dependent, req.group, test_type=req.test_type)
     _require_data()
 
@@ -330,6 +317,8 @@ async def ttest_endpoint(req: TestRequest) -> Dict[str, Any]:
 @router.post("/anova")
 async def anova_endpoint(req: TestRequest) -> Dict[str, Any]:
     """Perform a one-way ANOVA via R or Kruskal-Wallis via Python."""
+    from app.services.compare import kruskal_wallis
+    from app.services.interpreter import interpret_anova
     validate_anova(req.dependent, req.group, req.test_type)
     _require_data()
 
@@ -1070,6 +1059,7 @@ async def means_endpoint(body: Dict[str, Any]) -> Dict[str, Any]:
 @router.post("/cox-predict")
 async def cox_predict_endpoint(body: Dict[str, Any]) -> Dict[str, Any]:
     """Generate predicted survival curves from a Cox model."""
+    from app.services.survival import cox_predict_survival
     _require_data()
     time_col = body.get("time_col")
     status_col = body.get("status_col")
@@ -1118,6 +1108,7 @@ async def cox_forest_endpoint(body: Dict[str, Any]) -> Dict[str, Any]:
     Typically obtained from the ``data.coefficients`` array returned by
     ``POST /api/analysis/cox-regression``.
     """
+    from app.services.survival import cox_forest_data
     coefficients: list = body.get("coefficients", [])
     if not coefficients:
         raise HTTPException(

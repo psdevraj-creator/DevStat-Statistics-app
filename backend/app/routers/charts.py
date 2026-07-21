@@ -14,10 +14,6 @@ import base64
 import io
 from typing import Any, Dict, Optional
 
-import matplotlib
-matplotlib.use("Agg")
-import matplotlib.pyplot as plt
-import seaborn as sns
 from fastapi import APIRouter, HTTPException
 
 import app.state as _state
@@ -588,6 +584,10 @@ async def adverse_event_heatmap(body: Dict[str, Any]) -> Dict[str, Any]:
 @router.post("/export/matplotlib")
 async def export_matplotlib(body: Dict[str, Any]) -> Dict[str, Any]:
     """Generate a publication-quality chart via matplotlib/seaborn and return as base64 PNG."""
+    import matplotlib
+    matplotlib.use("Agg")
+    import matplotlib.pyplot as plt
+    import seaborn as sns
     _require_data()
     chart_type = body.get("chart_type", "histogram")
     column = body.get("column")
@@ -643,3 +643,4 @@ async def export_matplotlib(body: Dict[str, Any]) -> Dict[str, Any]:
     except Exception as e:
         plt.close("all")
         return {"error": f"Matplotlib export failed: {e}"}
+

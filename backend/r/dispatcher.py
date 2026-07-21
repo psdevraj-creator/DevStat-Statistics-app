@@ -14,10 +14,17 @@ import time
 from typing import Any, Dict, List
 
 import app.state as _state
-from r.engine import AnalysisEngine
 
-_engine = AnalysisEngine()
 
+_engine_instance = None
+
+
+def get_engine():
+    global _engine_instance
+    if _engine_instance is None:
+        from r.engine import AnalysisEngine
+        _engine_instance = AnalysisEngine()
+    return _engine_instance
 _ANALYSIS_PATH_MAP: Dict[str, str] = {
     "frequencies": "frequencies",
     "descriptive": "descriptive",
@@ -68,7 +75,7 @@ def run_analysis(
              dispatch_id, analysis_name, n_rows, n_cols,
              {k: v for k, v in params.items()})
 
-    result = _engine.run(analysis_name, params)
+    result = get_engine().run(analysis_name, params)
 
     elapsed = time.time() - t0
     has_error = "error" in result
@@ -83,4 +90,4 @@ def run_analysis(
 
 def available_analyses() -> List[str]:
     """Return the list of analyses available."""
-    return _engine.available_analyses()
+    return get_engine().available_analyses()
