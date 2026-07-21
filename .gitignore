@@ -70,3 +70,5 @@ _archive/
 # Windows
 *.exe
 *.msix
+
+*.bak.*
