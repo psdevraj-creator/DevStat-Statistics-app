@@ -1,3 +1,10 @@
+FROM node:22-slim AS frontend-builder
+WORKDIR /build/frontend
+COPY frontend/package*.json ./
+RUN npm ci
+COPY frontend/ ./
+RUN npx vite build
+
 FROM python:3.14-slim
 
 LABEL privacy="Zero data retention. Data is processed in memory only."
@@ -15,6 +22,7 @@ COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
 COPY backend/ ./backend/
+COPY --from=frontend-builder /build/backend/static/ ./backend/static/
 COPY sample_100.csv sample_medical_data.csv ./
 COPY startup.sh .
 

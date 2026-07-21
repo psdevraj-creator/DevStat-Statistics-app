@@ -10,7 +10,7 @@ build/
 *.log
 logs/
 node_modules/
-frontend/
+# frontend/ is needed for multi-stage Docker build — see Dockerfile
 .DS_Store
 .git/
 .gitignore
