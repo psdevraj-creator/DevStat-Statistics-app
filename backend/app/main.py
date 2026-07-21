@@ -22,6 +22,7 @@ from fastapi.responses import FileResponse, JSONResponse
 
 from app.state import current_data, current_filename
 from app.config import PROJECT_NAME, VERSION
+from app.routers import data, analysis, charts, output, suggest, transform, wizard, r_status, syntax, eligibility
 
 # ── Analysis engine ───────────────────────────────────────────────────────
 from r.engine import AnalysisEngine
