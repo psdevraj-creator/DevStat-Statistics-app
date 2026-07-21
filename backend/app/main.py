@@ -11,17 +11,18 @@ from __future__ import annotations
 import json
 import os
 import sys
+import uuid
 from pathlib import Path
 from typing import Any
 
 import math
 import numpy as np
 import pandas as pd
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse, JSONResponse
 
-from app.state import current_data, current_filename
+from app.state import _session_id_var
 from app.config import PROJECT_NAME, VERSION
 from app.routers import data, analysis, charts, output, suggest, transform, wizard, r_status, syntax, eligibility
 try:
@@ -170,6 +171,16 @@ def create_app() -> FastAPI:
         allow_headers=["*"],
     )
 
+    # ---- Session isolation — each browser gets its own data ------------------
+    @app.middleware("http")
+    async def _session_middleware(request: Request, call_next):
+        sid = request.cookies.get("session_id") or str(uuid.uuid4())
+        token = _session_id_var.set(sid)
+        response = await call_next(request)
+        response.set_cookie("session_id", sid, httponly=True, samesite="lax")
+        _session_id_var.reset(token)
+        return response
+
     # ---- API routers ---------------------------------------------------------
     app.include_router(data.router, prefix="/api/data", tags=["Data"])
     app.include_router(analysis.router, prefix="/api/analysis", tags=["Analysis"])
@@ -193,12 +204,9 @@ def create_app() -> FastAPI:
             "status": "ok",
             "project": PROJECT_NAME,
             "version": VERSION,
-            "data_loaded": current_data is not None,
-            "filename": current_filename,
             "engine": "py",
             "cloud_run": cloud_run,
             "ai_available": AI_AVAILABLE,
-            "privacy_notice": "Data is processed in memory. Request metadata (paths, timings) may be logged for debugging; request bodies are never logged unless DEVSTAT_LOG_BODY=true is set. See privacy docs for details." if cloud_run else "",
         }
 
     # ---- Global exception handler — logs crashes ---------------------------

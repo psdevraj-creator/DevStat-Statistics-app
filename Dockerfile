@@ -7,8 +7,6 @@ RUN npx vite build
 
 FROM python:3.14-slim
 
-LABEL privacy="Zero data retention. Data is processed in memory only."
-
 # Install build tools AND runtime libraries for scipy/sklearn/numpy/matplotlib
 RUN apt-get update && apt-get install -y --no-install-recommends \
     build-essential \
