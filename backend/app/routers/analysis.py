@@ -1134,6 +1134,7 @@ async def cox_adjusted_survival_endpoint(body: Dict[str, Any]) -> Dict[str, Any]
     exposure = body.get("exposure")
     adjusters: list = body.get("adjusters", [])
     event_code: int = body.get("event_code", 1)
+    adjuster_values: dict = body.get("adjuster_values", {})
     if not time_col or not status_col:
         raise HTTPException(status_code=400, detail="'time_col' and 'status_col' are required.")
     if not exposure:
@@ -1145,6 +1146,7 @@ async def cox_adjusted_survival_endpoint(body: Dict[str, Any]) -> Dict[str, Any]
         exposure=exposure,
         adjusters=adjusters,
         event_code=event_code,
+        adjuster_values=adjuster_values,
     )
     return result
 

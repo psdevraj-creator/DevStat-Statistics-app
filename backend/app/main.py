@@ -23,6 +23,11 @@ from fastapi.responses import FileResponse, JSONResponse
 from app.state import current_data, current_filename
 from app.config import PROJECT_NAME, VERSION
 from app.routers import data, analysis, charts, output, suggest, transform, wizard, r_status, syntax, eligibility
+try:
+    from app.routers import ai
+    AI_AVAILABLE = True
+except ImportError:
+    AI_AVAILABLE = False
 
 # ── Analysis engine ───────────────────────────────────────────────────────
 from r.engine import AnalysisEngine
@@ -103,10 +108,14 @@ def create_app() -> FastAPI:
     # ---- Analysis engine startup ---------------------------------------------
     @app.on_event("startup")
     async def _startup_engine():
-        """Create analysis engine and verify dependencies."""
+        """Initialize analysis engine in background — health responds immediately."""
+        import threading
+        threading.Thread(target=_init_engine, daemon=True, name="engine-init").start()
+
+    def _init_engine():
         import logging
         slog = logging.getLogger("devstat.startup")
-
+        slog.info("Engine init started in background thread")
         app.state.engine = AnalysisEngine()
         app.state.engine_type = "py"
 
@@ -137,6 +146,8 @@ def create_app() -> FastAPI:
     app.include_router(transform.router, prefix="/api/transform", tags=["Transform"])
     app.include_router(wizard.router, prefix="/api/wizard", tags=["Wizard"])
     app.include_router(r_status.router, prefix="/api", tags=["Health"])
+    if AI_AVAILABLE:
+        app.include_router(ai.router, prefix="/api", tags=["AI Assistant"])
     app.include_router(syntax.router, prefix="/api/syntax", tags=["Syntax"])
     app.include_router(eligibility.router)
 
@@ -153,6 +164,7 @@ def create_app() -> FastAPI:
             "filename": current_filename,
             "engine": "py",
             "cloud_run": cloud_run,
+            "ai_available": AI_AVAILABLE,
             "privacy_notice": "Data is processed in memory. Request metadata (paths, timings) may be logged for debugging; request bodies are never logged unless DEVSTAT_LOG_BODY=true is set. See privacy docs for details." if cloud_run else "",
         }
 
@@ -220,4 +232,3 @@ def _mount_static_files_and_spa_fallback(app: FastAPI) -> None:
 # ---------------------------------------------------------------------------
 
 app = create_app()
-

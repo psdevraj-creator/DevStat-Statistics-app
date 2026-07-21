@@ -152,7 +152,6 @@ class DevStatLauncher:
             cmd = [sys.executable, str(Path(__file__).resolve()), "--server"]
         self._server_proc = subprocess.Popen(
             cmd,
-            stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL,
             creationflags=subprocess.CREATE_NO_WINDOW,
         )
 

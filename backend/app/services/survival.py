@@ -560,12 +560,18 @@ def cox_adjusted_survival(
     exposure: str,
     adjusters: List[str],
     event_code: int = 1,
+    adjuster_values: Optional[Dict[str, Any]] = None,
 ) -> Dict[str, Any]:
     """Generate adjusted survival curves from a Cox PH model.
 
     Fit a Cox model ``~ exposure + adjusters``, then predict survival
     curves for each level (categorical exposure) or tertile (continuous
-    exposure), holding all *adjusters* at their mean / reference level.
+    exposure), holding adjusters at specified values (or their mean /
+    reference level if not specified).
+
+    ``adjuster_values`` is an optional dict mapping adjuster name to the
+    value to use (e.g. ``{"age": 65, "stage": "III"}``). Omitted adjusters
+    default to the mean (numeric) or reference level (categorical).
 
     Returns Plotly-compatible ``{traces, layout}``.
     """
@@ -604,14 +610,29 @@ def cox_adjusted_survival(
 
     feature_cols = [c for c in model_cols if c not in (time_col, "_event")]
 
-    # Build reference (mean for numeric, 0 for dummy)
+    # Build reference — mean for numeric, 0 for dummy (reference level)
+    # Respect overrides from adjuster_values
+    adjuster_values = adjuster_values or {}
     ref = {}
     for col in all_cols[2:]:
-        if pd.api.types.is_numeric_dtype(df_clean[col]):
-            ref[col] = float(df_clean[col].mean())
+        if col in adjuster_values:
+            raw = adjuster_values[col]
+            if pd.api.types.is_numeric_dtype(df_clean[col]):
+                try:
+                    ref[col] = float(raw)
+                except (ValueError, TypeError):
+                    ref[col] = float(df_clean[col].mean())
+            else:
+                dcs = [c for c in feature_cols if c.startswith(f"{col}_")]
+                for dc in dcs:
+                    suffix = dc.removeprefix(f"{col}_")
+                    ref[dc] = 1.0 if str(raw) == suffix else 0.0
         else:
-            for dc in [c for c in feature_cols if c.startswith(f"{col}_")]:
-                ref[dc] = 0.0
+            if pd.api.types.is_numeric_dtype(df_clean[col]):
+                ref[col] = float(df_clean[col].mean())
+            else:
+                for dc in [c for c in feature_cols if c.startswith(f"{col}_")]:
+                    ref[dc] = 0.0
 
     # Generate profiles
     profiles = []
