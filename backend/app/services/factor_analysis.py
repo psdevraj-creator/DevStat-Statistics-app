@@ -70,12 +70,18 @@ def factor_analysis(
     except ImportError:
         return error("factor_analyzer library is not installed. pip install factor-analyzer")
 
-    # Bartlett's test of sphericity and KMO.
+    # Bartlett's test of sphericity and KMO. These can fail on ill-conditioned
+    # correlation matrices (zero-variance variables, constant columns, or a
+    # numpy/factor_analyzer version mismatch). Degrade gracefully so the factor
+    # loadings still render rather than 500ing the whole exercise.
+    kmo_model = None
+    bartlett_p = None
     try:
         chi2, bartlett_p = calculate_bartlett_sphericity(df_clean)
         kmo_all, kmo_model = calculate_kmo(df_clean)
     except Exception as e:
-        return error(f"Failed to compute KMO / Bartlett: {e}")
+        kmo_model = None
+        bartlett_p = None
 
     # Fit factor analyzer.
     try:
@@ -135,13 +141,13 @@ def factor_analysis(
         "n_variables": k,
         "n_observations": n,
         "kmo": {
-            "model": round(float(kmo_model), 4),
-            "interpretation": _interpret_kmo(kmo_model),
+            "model": round(float(kmo_model), 4) if kmo_model is not None else None,
+            "interpretation": _interpret_kmo(kmo_model) if kmo_model is not None else None,
         },
         "bartlett": {
-            "chi2": round(float(chi2), 4),
+            "chi2": round(float(chi2), 4) if bartlett_p is not None else None,
             "df": int(k * (k - 1) / 2),
-            "p_value": float(bartlett_p),
+            "p_value": float(bartlett_p) if bartlett_p is not None else None,
         },
         "interpretation": interpretation,
     }
@@ -176,12 +182,19 @@ def _interpret_factor_analysis(
         f"An exploratory factor analysis with {rotation or 'no'} rotation was performed "
         f"on {len(loadings)} variables using principal axis factoring. "
     )
-    parts.append(
-        f"KMO measure of sampling adequacy was {kmo:.3f} ({_interpret_kmo(kmo)}), "
-        f"and Bartlett's test of sphericity was {'significant' if bartlett_p < 0.05 else 'not significant'} "
-        f"(p = {bartlett_p:.4f}), "
-        f"{'supporting' if bartlett_p < 0.05 else 'not supporting'} the suitability of the data for factor analysis. "
-    )
+    if kmo is None or bartlett_p is None:
+        parts.append(
+            "KMO / Bartlett's test of sphericity could not be computed on this "
+            "dataset (likely an ill-conditioned correlation matrix); the factor "
+            "loadings below are shown without those checks. "
+        )
+    else:
+        parts.append(
+            f"KMO measure of sampling adequacy was {kmo:.3f} ({_interpret_kmo(kmo)}), "
+            f"and Bartlett's test of sphericity was {'significant' if bartlett_p < 0.05 else 'not significant'} "
+            f"(p = {bartlett_p:.4f}), "
+            f"{'supporting' if bartlett_p < 0.05 else 'not supporting'} the suitability of the data for factor analysis. "
+        )
 
     total_var = variance_explained[-1]["cumulative_pct"] if variance_explained else 0.0
     parts.append(

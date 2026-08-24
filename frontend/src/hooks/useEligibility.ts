@@ -33,7 +33,7 @@ const EMPTY: EligibilityResult = { eligible: true, blocked: false }
 
 export function useEligibilityCheck(params: EligibilityParams | null): EligibilityResult {
   const [result, setResult] = useState<EligibilityResult>(EMPTY)
-  const timerRef = useRef<ReturnType<typeof setTimeout>>()
+  const timerRef = useRef<ReturnType<typeof setTimeout> | undefined>(undefined)
   const lastKeyRef = useRef('')
 
   useEffect(() => {

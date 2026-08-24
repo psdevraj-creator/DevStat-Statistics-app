@@ -5,6 +5,7 @@ import {
 } from 'antd'
 import { PlayCircleOutlined, DoubleRightOutlined, ArrowRightOutlined, ArrowLeftOutlined, DoubleLeftOutlined, FileTextOutlined } from '@ant-design/icons'
 import EligibilityAlert from '../components/EligibilityAlert'
+import BlockedAnalysisPanel from '../components/BlockedAnalysisPanel'
 import { useEligibilityCheck } from '../hooks/useEligibility'
 import { regressionApi, datasetApi } from '../api/client'
 import outputStore from '../stores/outputStore'
@@ -225,10 +226,9 @@ const RegressionPage: React.FC = () => {
 
       {results && !loading && (
         <Card title="Results" style={{ marginTop: 16 }} extra={<Button size="small" icon={<FileTextOutlined />} onClick={() => { navigate('/output') }}>View Full Results</Button>}>
-          {renderModelSummary()}
-          {renderANOVA()}
-          {renderCoefficients()}
-          {renderInterpretation()}
+          {(results.blocked === true || results.eligible === false)
+            ? <BlockedAnalysisPanel result={results} />
+            : (<>{renderModelSummary()}{renderANOVA()}{renderCoefficients()}{renderInterpretation()}</>)}
         </Card>
       )}
     </div>

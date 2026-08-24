@@ -2,16 +2,16 @@
   "name": "frontend",
   "private": true,
   "version": "0.0.0",
-  "type": "module",
   "main": "electron/main.js",
+  "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "build:tsc": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
     "desktop:start": "electron .",
     "desktop:build": "electron-builder",
+    "build:tsc": "tsc -b && vite build",
     "desktop:build:win": "electron-builder --win",
     "desktop:build:mac": "electron-builder --mac"
   },
@@ -21,11 +21,13 @@
     "ag-grid-react": "^35.3.1",
     "antd": "^5.29.3",
     "axios": "^1.17.0",
+    "firebase": "^12.18.0",
     "plotly.js": "^3.6.0",
     "react": "^19.2.6",
     "react-dom": "^19.2.6",
     "react-plotly.js": "^3.0.0",
-    "react-router-dom": "^7.17.0"
+    "react-router-dom": "^7.17.0",
+    "zustand": "^5.0.15"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
@@ -53,22 +55,26 @@
       "package.json"
     ],
     "extraResources": [
-      { "from": "../backend/dist/DevStatEngine", "to": "engine" }
+      {
+        "from": "../backend/dist/DevStatEngine",
+        "to": "engine"
+      }
     ],
     "directories": {
       "output": "release"
     },
     "win": {
-      "target": ["msi", "nsis"]
+      "target": [
+        "nsis",
+        "msi"
+      ]
     },
     "mac": {
-      "target": ["dmg", "zip"],
+      "target": [
+        "dmg",
+        "zip"
+      ],
       "category": "public.app-category.medical"
-    },
-    "nsis": {
-      "oneClick": true,
-      "perMachine": false,
-      "allowToChangeInstallationDirectory": false
     }
   }
 }

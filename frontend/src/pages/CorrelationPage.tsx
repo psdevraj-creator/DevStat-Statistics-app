@@ -5,6 +5,7 @@ import {
 } from 'antd'
 import { PlayCircleOutlined, FileTextOutlined } from '@ant-design/icons'
 import EligibilityAlert from '../components/EligibilityAlert'
+import BlockedAnalysisPanel from '../components/BlockedAnalysisPanel'
 import { useEligibilityCheck } from '../hooks/useEligibility'
 import { correlationApi, datasetApi } from '../api/client'
 import outputStore from '../stores/outputStore'
@@ -68,6 +69,7 @@ const CorrelationPage: React.FC = () => {
   const renderCorrelationMatrix = () => {
     if (!results) return null
     const data = results.matrix || results.correlation_matrix || results.data || results
+    if (results.blocked === true || results.eligible === false) return <BlockedAnalysisPanel result={results} />
     const pvalues = results.p_values || results.pvalues || {}
 
     // If we have a matrix in the form of correlation values

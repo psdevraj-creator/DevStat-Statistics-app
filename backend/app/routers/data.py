@@ -11,7 +11,6 @@ from __future__ import annotations
 import io
 import json
 import os
-import subprocess
 import tempfile
 from pathlib import Path
 from typing import Any, Dict, List, Optional
@@ -397,97 +396,85 @@ async def download_excel(body: Optional[Dict[str, Any]] = None) -> Response:
 
 
 # ---------------------------------------------------------------------------
-# R / haven export helpers
+# Pure-Python export helpers (no R / haven required)
 # ---------------------------------------------------------------------------
 
-_SUPPORTED_EXPORT_FORMATS = {"sav", "dta", "xpt"}
+_SUPPORTED_EXPORT_FORMATS = {"sav", "dta"}
 
 _CONTENT_TYPE_MAP = {
     "sav": "application/x-spss-sav",
     "dta": "application/x-stata-dta",
-    "xpt": "application/x-sas-transport",
 }
 
 _EXT_MAP = {
     "sav": ".sav",
     "dta": ".dta",
-    "xpt": ".xpt",
 }
 
 
-def _run_haven_export(format_suffix: str) -> bytes:
-    """Common logic for R / haven export: write temp CSV, run Rscript,
-    return the resulting binary bytes."""
-    fmt = format_suffix.lstrip(".")  # normalise
-    content_type = _CONTENT_TYPE_MAP[fmt]
-    ext = _EXT_MAP[fmt]
+def _export_sav_bytes(df: pd.DataFrame) -> bytes:
+    """Write a DataFrame to SPSS .sav bytes using pyreadstat (pure Python)."""
+    import pyreadstat
+    fd, path = tempfile.mkstemp(suffix=".sav")
+    os.close(fd)
+    try:
+        pyreadstat.write_sav(df.astype(object), path)
+        with open(path, "rb") as fh:
+            return fh.read()
+    finally:
+        if os.path.exists(path):
+            try:
+                os.unlink(path)
+            except OSError:
+                pass
 
+
+def _export_dta_bytes(df: pd.DataFrame) -> bytes:
+    """Write a DataFrame to Stata .dta bytes using pandas (pure Python)."""
+    fd, path = tempfile.mkstemp(suffix=".dta")
+    os.close(fd)
+    try:
+        df.to_stata(path, write_index=False)
+        with open(path, "rb") as fh:
+            return fh.read()
+    finally:
+        if os.path.exists(path):
+            try:
+                os.unlink(path)
+            except OSError:
+                pass
+
+
+def _run_export(fmt: str) -> bytes:
+    """Return the current dataset exported in the requested format (pure Python)."""
     _require_data()
     df = _state.current_data
-
     try:
-        # ---- write temp CSV ----
-        csv_fd, csv_path = tempfile.mkstemp(suffix=".csv")
-        os.close(csv_fd)
-        df.to_csv(csv_path, index=False)
-
-        # ---- write temp R script ----
-        r_fd, r_path = tempfile.mkstemp(suffix=".R")
-        os.close(r_fd)
-
-        # ---- temp output file ----
-        out_fd, out_path = tempfile.mkstemp(suffix=ext)
-        os.close(out_fd)
-
-        # MSYS: R wants forward slashes
-        csv_posix = Path(csv_path).as_posix()
-        out_posix = Path(out_path).as_posix()
-
-        r_code = (
-            f'df <- read.csv("{csv_posix}", stringsAsFactors = FALSE)\n'
-            f'library(haven, quietly = TRUE)\n'
-            f'haven::write_{fmt}(df, "{out_posix}")\n'
+        if fmt == "sav":
+            return _export_sav_bytes(df)
+        if fmt == "dta":
+            return _export_dta_bytes(df)
+    except ImportError:
+        raise HTTPException(
+            status_code=500,
+            detail="Export to this format requires the 'pyreadstat' package. "
+            "Run: pip install -r requirements.txt",
         )
-        with open(r_path, "w", encoding="utf-8") as fh:
-            fh.write(r_code)
-
-        result = subprocess.run(
-            ["Rscript", r_path],
-            capture_output=True,
-            text=True,
-            timeout=120,
+    except Exception as exc:
+        raise HTTPException(
+            status_code=500,
+            detail=f"Export failed: {type(exc).__name__}: {exc}",
         )
-        if result.returncode != 0:
-            raise HTTPException(
-                status_code=500,
-                detail=f"R / haven export failed (exit {result.returncode}): "
-                f"{result.stderr or result.stdout}",
-            )
-
-        with open(out_path, "rb") as fh:
-            payload = fh.read()
-
-        if not payload:
-            raise HTTPException(
-                status_code=500,
-                detail="R / haven export produced an empty file.",
-            )
-
-        return payload
-
-    finally:
-        for p in (csv_path, r_path, out_path):
-            if p and os.path.exists(p):
-                try:
-                    os.unlink(p)
-                except OSError:
-                    pass
+    raise HTTPException(
+        status_code=400,
+        detail=f"Unsupported export format '{fmt}'.",
+    )
 
 
 @router.post("/download/sav")
 async def download_sav() -> Response:
-    """Export current dataset as SPSS .sav via R / haven::write_sav()."""
-    payload = _run_haven_export("sav")
+    """Export current dataset as SPSS .sav (pure Python, via pyreadstat)."""
+    payload = _run_export("sav")
     download_name = (
         Path(_state.current_filename).stem + "_export.sav"
         if _state.current_filename
@@ -502,8 +489,8 @@ async def download_sav() -> Response:
 
 @router.post("/download/dta")
 async def download_dta() -> Response:
-    """Export current dataset as Stata .dta via R / haven::write_dta()."""
-    payload = _run_haven_export("dta")
+    """Export current dataset as Stata .dta (pure Python, via pandas)."""
+    payload = _run_export("dta")
     download_name = (
         Path(_state.current_filename).stem + "_export.dta"
         if _state.current_filename
@@ -518,17 +505,14 @@ async def download_dta() -> Response:
 
 @router.post("/download/xpt")
 async def download_xpt() -> Response:
-    """Export current dataset as SAS XPORT .xpt via R / haven::write_xpt()."""
-    payload = _run_haven_export("xpt")
-    download_name = (
-        Path(_state.current_filename).stem + "_export.xpt"
-        if _state.current_filename
-        else "export.xpt"
-    )
-    return StreamingResponse(
-        iter([payload]),
-        media_type=_CONTENT_TYPE_MAP["xpt"],
-        headers={"Content-Disposition": f'attachment; filename="{download_name}"'},
+    """SAS .xpt export is no longer supported (removed R/ haven dependency).
+
+    Use CSV/Excel (.xlsx) exports instead.
+    """
+    raise HTTPException(
+        status_code=400,
+        detail="SAS .xpt export is not supported. Export as CSV, Excel, SPSS .sav, "
+        "or Stata .dta instead.",
     )
 
 
@@ -546,7 +530,7 @@ async def download_multiformat(body: Dict[str, Any]) -> Response:
             detail=f"Unsupported format '{fmt}'. Supported: {', '.join(sorted(_SUPPORTED_EXPORT_FORMATS))}",
         )
     # Dispatch to the common helper
-    payload = _run_haven_export(fmt)
+    payload = _run_export(fmt)
     ext = _EXT_MAP[fmt]
     download_name = (
         Path(_state.current_filename).stem + f"_export{ext}"

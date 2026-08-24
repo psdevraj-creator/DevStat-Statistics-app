@@ -163,7 +163,7 @@ const TransformPage: React.FC = () => {
                   <div>
                     <Text strong>Variables to rank</Text>
                     <Select mode="multiple" value={rankVars} onChange={setRankVars}
-                      options={columns} style={{ width: '100%' }} placeholder="Select numeric variables" />
+                      options={columns.map(c => ({ label: c, value: c }))} style={{ width: '100%' }} placeholder="Select numeric variables" />
                   </div>
                   <Space>
                     <div>
@@ -211,7 +211,7 @@ const TransformPage: React.FC = () => {
                   <div>
                     <Text strong>Variables to search</Text>
                     <Select mode="multiple" value={countVars} onChange={setCountVars}
-                      options={columns} style={{ width: '100%' }} placeholder="Select variables" />
+                      options={columns.map(c => ({ label: c, value: c }))} style={{ width: '100%' }} placeholder="Select variables" />
                   </div>
                   <div>
                     <Text strong>Values to count (comma-separated):</Text>
@@ -276,7 +276,7 @@ const TransformPage: React.FC = () => {
                     <Space key={i}>
                       <Select value={sk.column} onChange={v => {
                         const k = [...sortKeys]; k[i].column = v; setSortKeys(k)
-                      }} options={columns} style={{ width: 250 }} placeholder="Select column" />
+                      }} options={columns.map(c => ({ label: c, value: c }))} style={{ width: 250 }} placeholder="Select column" />
                       <Radio.Group value={sk.order} onChange={e => {
                         const k = [...sortKeys]; k[i].order = e.target.value; setSortKeys(k)
                       }}>
@@ -306,7 +306,7 @@ const TransformPage: React.FC = () => {
                 <Space direction="vertical" style={{ width: '100%' }} size="middle">
                   <div>
                     <Text strong>Group by variable</Text>
-                    <Select value={aggGroup} onChange={setAggGroup} options={columns}
+                    <Select value={aggGroup} onChange={setAggGroup} options={columns.map(c => ({ label: c, value: c }))}
                       style={{ width: '100%' }} placeholder="Select grouping variable" />
                   </div>
                   <Text strong>Aggregates</Text>
@@ -314,7 +314,7 @@ const TransformPage: React.FC = () => {
                     <Space key={i}>
                       <Select value={ad.variable} onChange={v => {
                         const a = [...aggDefs]; a[i].variable = v; setAggDefs(a)
-                      }} options={columns} style={{ width: 200 }} placeholder="Variable" />
+                      }} options={columns.map(c => ({ label: c, value: c }))} style={{ width: 200 }} placeholder="Variable" />
                       <Select value={ad.function} onChange={v => {
                         const a = [...aggDefs]; a[i].function = v; setAggDefs(a)
                       }} style={{ width: 140 }}

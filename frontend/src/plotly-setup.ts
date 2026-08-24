@@ -1,5 +1,6 @@
-// Use the slimmer cartesian-only build of plotly.js
-// Drops: 3D, geo, mapbox, finance, and 70+ locales
-// Retains: scatter, bar, box, histogram, line, pie, heatmap
-import Plotly from 'plotly.js/dist/plotly-cartesian.js';
+// Use the FULL plotly.js build so every chart type renders (violin, treemap,
+// sankey, radar, parcoords, splom, funnel, waterfall, heatmap, etc.).
+// Bundle size is acceptable in a desktop app, and it avoids charts silently
+// degrading to a plain bar chart for unsupported trace types.
+import Plotly from 'plotly.js/dist/plotly.js';
 export default Plotly;

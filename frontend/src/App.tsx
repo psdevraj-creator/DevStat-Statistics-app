@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef, useCallback, Suspense } from 'react'
 import { Routes, Route, useNavigate, useLocation } from 'react-router-dom'
-import { Layout, Menu, Typography, Space, Dropdown, ConfigProvider, theme, Badge, Alert, Tag, Tooltip, message, Spin } from 'antd'
+import { Layout, Menu, Typography, Space, Dropdown, ConfigProvider, theme, Badge, Alert, Tag, Tooltip, message, Spin, Button, Modal } from 'antd'
 import {
   BarChartOutlined,
   TableOutlined,
@@ -17,8 +17,13 @@ import {
   RedoOutlined,
   SaveOutlined,
   FolderOpenOutlined,
+  LoginOutlined,
+  CrownOutlined,
+  UserOutlined,
 } from '@ant-design/icons'
 import HelpPanel from './components/HelpPanel'
+import { useAuth } from './stores/authStore'
+import { authApi } from './api/authApi'
 
 // ── Lazy-loaded pages ───────────────────────────────────────────────
 const DataPage = React.lazy(() => import('./pages/DataPage'))
@@ -29,7 +34,6 @@ const RegressionPage = React.lazy(() => import('./pages/RegressionPage'))
 const SurvivalPage = React.lazy(() => import('./pages/SurvivalPage'))
 const DiagnosticPage = React.lazy(() => import('./pages/DiagnosticPage'))
 const GraphsPage = React.lazy(() => import('./pages/GraphsPage'))
-const SyntaxPage = React.lazy(() => import('./pages/SyntaxPage'))
 const CorrelationPage = React.lazy(() => import('./pages/CorrelationPage'))
 const OutputPage = React.lazy(() => import('./pages/OutputPage'))
 const FactorPage = React.lazy(() => import('./pages/FactorPage'))
@@ -38,6 +42,7 @@ const TestSuggestionPage = React.lazy(() => import('./pages/TestSuggestionPage')
 const WizardPage = React.lazy(() => import('./pages/WizardPage'))
 const PowerPage = React.lazy(() => import('./pages/PowerPage'))
 const ClusterPage = React.lazy(() => import('./pages/ClusterPage'))
+const AuthPage = React.lazy(() => import('./pages/AuthPage'))
 
 
 
@@ -83,6 +88,7 @@ export let isBackendOnline = false
 export function setIsBackendOnline(v: boolean) { isBackendOnline = v }
 
 const App: React.FC = () => {
+  const { user, clearSession } = useAuth()
   const navigate = useNavigate()
   const location = useLocation()
   const prevPath = useRef(location.pathname)
@@ -90,6 +96,33 @@ const App: React.FC = () => {
   const [backendOnline, setBackendOnline] = useState(true)
   const [backendChecked, setBackendChecked] = useState(false)
   const backoffRef = useRef(1)
+  const [showAuthPopup, setShowAuthPopup] = useState(false)
+
+  // Unmissable "sign in / use free" popup for guests (see note about sign-in).
+  useEffect(() => {
+    if (!user && !localStorage.getItem('devstat_dismiss_auth')) {
+      const t = setTimeout(() => setShowAuthPopup(true), 600)
+      return () => clearTimeout(t)
+    }
+  }, [user])
+
+  const startCheckout = useCallback(async () => {
+    if (!user) {
+      message.info('Please sign in to upgrade to a £25/year DevStat licence.')
+      navigate('/auth')
+      return
+    }
+    try {
+      const res = await authApi.checkout()
+      if (res?.url) {
+        window.location.href = res.url
+      } else {
+        message.error('Could not start checkout. Try again.')
+      }
+    } catch (e: any) {
+      message.error(e?.response?.data?.detail || e?.message || 'Checkout failed')
+    }
+  }, [user, navigate])
 
   // Clear frontend log on every app load
   useEffect(() => { logStore.clear() }, [])
@@ -299,7 +332,6 @@ const App: React.FC = () => {
       case 'diagnostic': case 'roc': navigate('/analyze/diagnostic'); break
       case 'survival': case 'kaplan-meier': case 'cox': navigate('/survival'); break
       case 'graphs': navigate('/graphs'); break
-      case 'syntax': navigate('/syntax'); break
       case 'wizard': navigate('/wizard'); break
       case 'transform': navigate('/transform'); break
       case 'output': navigate('/output'); break
@@ -370,7 +402,6 @@ const App: React.FC = () => {
       ],
     },
     { key: 'graphs', label: 'Graphs', icon: <BarChartOutlined /> },
-    { key: 'syntax', label: 'Syntax', icon: <FileTextOutlined /> },
     { key: 'wizard', label: 'Wizard', icon: <QuestionCircleOutlined /> },
 
     { key: 'output', label: 'Output', icon: <FileTextOutlined /> },
@@ -436,6 +467,30 @@ const App: React.FC = () => {
           </Space>
 
           <Space size={16}>
+            {user ? (
+              <Dropdown
+                menu={{ items: [
+                  { key: 'acct', label: user.name || user.email || 'Account', disabled: true },
+                  { type: 'divider' },
+                  ...(user.licensed ? [] : [{ key: 'upgrade', label: 'Upgrade — £25/year licence' }]),
+                  { key: 'logout', label: 'Sign out', danger: true },
+                ], onClick: ({ key }) => { if (key === 'logout') { clearSession(); message.success('Signed out') } else if (key === 'upgrade') { startCheckout() } } }}
+                placement="bottomRight"
+              >
+                <Button size="small" style={{ color: '#fff', borderColor: 'rgba(255,255,255,0.4)' }} icon={<UserOutlined />}>
+                  {user.name || user.email || 'Account'}
+                </Button>
+              </Dropdown>
+            ) : (
+              <Button size="small" type="primary" icon={<LoginOutlined />} onClick={() => navigate('/auth')}>
+                Sign in
+              </Button>
+            )}
+            {user && !user.licensed && (
+              <Button size="small" type="primary" icon={<CrownOutlined />} onClick={startCheckout}>
+                Upgrade
+              </Button>
+            )}
             <Tooltip title="Help">
               <QuestionCircleOutlined
                 style={{ color: 'rgba(255,255,255,0.8)', fontSize: 18, cursor: 'pointer' }}
@@ -449,22 +504,16 @@ const App: React.FC = () => {
                   { key: 'help', label: 'Open Help', icon: <QuestionCircleOutlined /> },
                   { key: 'about', label: 'About DevStat', icon: <FileTextOutlined /> },
                   { type: 'divider' },
-                  { key: 'download-logs', label: `Download Logs (${logStore.getEntries().length})`, icon: <FileTextOutlined /> },
-                  { key: 'download-logs-verbose', label: 'Download Logs + Backend (full debug)', icon: <FileTextOutlined />, danger: true },
-                  { type: 'divider' },
                   { key: 'github', label: 'GitHub', icon: <GithubOutlined /> },
                 ],
                 onClick: ({ key }) => {
                   if (key === 'help') setHelpOpen(true)
-                  else if (key === 'download-logs' || key === 'download-logs-verbose') downloadLogs()
                   else if (key === 'github') window.open('https://github.com/anomalyco/devstat', '_blank')
                 },
               }}
               placement="bottomRight"
             >
-              <Badge count={logStore.getEntries().length} size="small" offset={[2, -2]}>
-                <QuestionCircleOutlined style={{ color: 'rgba(255,255,255,0.8)', fontSize: 18, cursor: 'pointer' }} />
-              </Badge>
+              <QuestionCircleOutlined style={{ color: 'rgba(255,255,255,0.8)', fontSize: 18, cursor: 'pointer' }} />
             </Dropdown>
           </Space>
         </Header>
@@ -489,6 +538,18 @@ const App: React.FC = () => {
             showIcon
             closable={false}
             style={{ borderRadius: 0, border: 'none' }}
+          />
+        )}
+
+        {/* Online (Cloud Run) privacy warning */}
+        {cloudRun && (
+          <Alert
+            message="Online demo — exam practice only"
+            description="This online version runs on a shared public server. Use it for exam practice with the synthetic practice data only. Do NOT upload real, identifiable or confidential patient data — for real (anonymised) analysis, use the offline desktop app."
+            type="warning"
+            showIcon
+            closable={false}
+            style={{ borderRadius: 0, border: 'none', background: '#fff7ed', borderBottom: '1px solid #fed7aa' }}
           />
         )}
 
@@ -518,17 +579,41 @@ const App: React.FC = () => {
             <Route path="/suggest" element={<TestSuggestionPage />} />
             <Route path="/wizard" element={<WizardPage />} />
             <Route path="/transform" element={<TransformPage />} />
-            <Route path="/syntax" element={<SyntaxPage />} />
             <Route path=
                 "/output" element={<OutputPage />} />
             <Route path="/analyze/power" element={<PowerPage />} />
             <Route path="/analyze/cluster" element={<ClusterPage />} />
+            <Route path="/auth" element={<AuthPage />} />
 
           </Routes>
           </Suspense>
         </Content>
       </Layout>
       <HelpPanel open={helpOpen} onClose={() => setHelpOpen(false)} />
+      <Modal
+        open={showAuthPopup}
+        onCancel={() => { setShowAuthPopup(false); localStorage.setItem('devstat_dismiss_auth', '1') }}
+        footer={null}
+        centered
+        width={440}
+      >
+        <div style={{ textAlign: 'center', padding: '8px 4px' }}>
+          <div style={{ fontSize: 40, marginBottom: 8 }}>📊</div>
+          <Typography.Title level={4} style={{ marginBottom: 8 }}>Free to start — no sign-up needed</Typography.Title>
+          <Typography.Paragraph type="secondary" style={{ marginBottom: 16 }}>
+            Use DevStat for your <b>first 3 analyses free</b>. Create an account to
+            save your work and unlock unlimited use for £25/year.
+          </Typography.Paragraph>
+          <Space direction="vertical" style={{ width: '100%' }}>
+            <Button type="primary" block size="large" onClick={() => { setShowAuthPopup(false); navigate('/auth') }}>
+              Sign in / Create account
+            </Button>
+            <Button block onClick={() => { setShowAuthPopup(false); localStorage.setItem('devstat_dismiss_auth', '1') }}>
+              Continue free (use the 3 free analyses)
+            </Button>
+          </Space>
+        </div>
+      </Modal>
     </ConfigProvider>
   )
 }

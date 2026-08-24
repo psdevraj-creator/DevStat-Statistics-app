@@ -78,6 +78,34 @@ def run_analysis(
              dispatch_id, analysis_name, n_rows, n_cols,
              {k: v for k, v in params.items()})
 
+    # ── Free-trial gate (3 analyses per machine/IP, LIFETIME) ───────────
+    # A signed-in, licensed user is exempt. Guests get 3 analyses before a
+    # "create an account / pay" prompt. Count is stored in Firestore keyed by
+    # the stable device id (or client IP) so it survives reloads.
+    try:
+        from app.state import get_uid, get_device
+        from app.services.firebase_store import licence_live, guest_trial_status, guest_trial_consume
+        uid = get_uid()
+        licensed = bool(uid) and licence_live(uid)
+        if not licensed:
+            device = get_device() or "guest"
+            status = guest_trial_status(device)
+            if not status.get("eligible", True):
+                log.warning("DISPATCH_GATE | id=%s | analysis=%s | trial_used=%s/%s",
+                            dispatch_id, analysis_name, status.get("used"), status.get("limit"))
+                return {
+                    "blocked": True,
+                    "requires_subscription": True,
+                    "action_type": "subscription",
+                    "reason": f"Your free trial of {status.get('limit')} analyses is used up. "
+                              "Create an account and buy a £25/year licence to continue.",
+                    "details": "Create a free account, then subscribe (£25/yr) to keep analysing.",
+                    "suggested_alternatives": [],
+                }
+            guest_trial_consume(device)
+    except Exception as gate_err:  # never let the gate break a run
+        log.warning("DISPATCH_GATE_FAIL | id=%s | %s", dispatch_id, gate_err)
+
     try:
         result = get_engine().run(analysis_name, params)
     except Exception as exc:
@@ -89,6 +117,18 @@ def run_analysis(
         except Exception:
             pass
         result = {"error": f"{type(exc).__name__}: {str(exc)}"}
+
+    # ── Automatic quality control ──────────────────────────────────────
+    # Validate + auto-correct the result (downsample huge point sets, clamp
+    # probability CIs, clean non-finite values, flag degenerate data). The
+    # frontend renders result["qa"] as a "Quality control" badge so the user
+    # is informed rather than frustrated by a broken chart.
+    try:
+        from app.services.qa import apply_qa
+        result = apply_qa(result, analysis_name)
+    except Exception:
+        # QA must never break the analysis path.
+        pass
 
     elapsed = time.time() - t0
     has_error = "error" in result

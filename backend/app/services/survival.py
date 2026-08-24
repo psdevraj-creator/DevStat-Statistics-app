@@ -17,6 +17,11 @@ from lifelines import KaplanMeierFitter, CoxPHFitter
 from lifelines.statistics import multivariate_logrank_test
 from app.services import error
 
+# Below this many subjects still at risk we suppress the 95% CI band on the
+# Kaplan-Meier curve — in the far tail lifelines' CI balloons toward [0,1] and
+# a visible band there is misleading (SPSS hides it too).
+MIN_AT_RISK = 10
+
 
 # ---------------------------------------------------------------------------
 # Helper utilities
@@ -173,8 +178,13 @@ def kaplan_meier(
                 "group": g,
                 "x": [float(t) for t in tl.tolist()],
                 "y": [float(s) for s in sp.tolist()],
-                "ci_lower": [float(c) for c in ci_l.tolist()],
-                "ci_upper": [float(c) for c in ci_u.tolist()],
+                # Suppress the CI band in the far tail, where very few subjects
+                # remain at risk and lifelines' CI balloons toward [0,1].
+                # A visible band there is misleading; SPSS hides it too.
+                "ci_lower": [float(c) if int(np.sum(subset[time_col] >= tl[j])) >= MIN_AT_RISK else float(sp[j])
+                             for j, c in enumerate(ci_l.tolist())],
+                "ci_upper": [float(c) if int(np.sum(subset[time_col] >= tl[j])) >= MIN_AT_RISK else float(sp[j])
+                             for j, c in enumerate(ci_u.tolist())],
             })
 
         try:
@@ -327,14 +337,21 @@ def cox_regression(
     for cov in covariates:
         if not pd.api.types.is_numeric_dtype(df_clean[cov]):
             dummies = pd.get_dummies(df_clean[cov], prefix=cov, drop_first=True)
+            dummies.columns = [c.replace(" ", "_").replace("-", "_") for c in dummies.columns]
             df_clean = pd.concat([df_clean, dummies], axis=1)
             model_cols.extend(list(dummies.columns))
         else:
             model_cols.append(cov)
 
     try:
+        # Coerce the model frame to strictly numeric (handles numpy 2.x stricter
+        # casting and any object/NaN leakage from one-hot dummies) before fit.
+        model_frame = df_clean[model_cols].apply(pd.to_numeric, errors="coerce")
+        model_frame = model_frame.dropna()
+        if len(model_frame) < 3 or int(model_frame["_event"].sum()) < 1:
+            return error("Insufficient numeric data for Cox regression after coercion.")
         cph = CoxPHFitter()
-        cph.fit(df_clean[model_cols],
+        cph.fit(model_frame,
                 duration_col=time_col, event_col="_event", show_progress=False)
     except Exception as e:
         return error(f"Cox regression failed: {str(e)}")
@@ -374,7 +391,7 @@ def cox_regression(
     model_col_set = [c for c in model_cols if c not in (time_col, "_event")]
     try:
         schoenfeld = cph.check_assumptions(
-            df_clean[model_cols],
+            model_frame,
             p_value_threshold=0.05)
         ph_test = {}
         if hasattr(schoenfeld, "result") and schoenfeld.result is not None:

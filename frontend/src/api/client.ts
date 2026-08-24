@@ -14,12 +14,45 @@ export const api = axios.create({
   timeout: 120000,
 })
 
+// DevStat account session token (Firebase ID token) stored by authStore.
+export function getToken(): string | null {
+  try {
+    const raw = localStorage.getItem('devstat_session')
+    return raw ? (JSON.parse(raw).token ?? null) : null
+  } catch {
+    return null
+  }
+}
+
+// Stable per-machine/device id (persisted) so the 3-use free trial is a
+// LIFETIME limit per machine — not reset every time the web app is opened.
+export function getDeviceId(): string {
+  const KEY = 'devstat_device_id'
+  try {
+    let id = localStorage.getItem(KEY)
+    if (!id) {
+      id = (globalThis.crypto?.randomUUID?.() ?? `d-${Date.now()}-${Math.random().toString(16).slice(2)}`)
+      localStorage.setItem(KEY, id)
+    }
+    return id
+  } catch {
+    return `d-${Date.now()}`
+  }
+}
+
 // ── Logging interceptors — log EVERY API call ─────────────────────────
 api.interceptors.request.use(
   config => {
     const requestId = `${Date.now()}_${Math.random().toString(36).slice(2, 8)}`
     ;(config as any)._logRequestId = requestId
     ;(config as any)._logStartTime = Date.now()
+    // Send the stable machine/device id so the free-trial gate is per-machine.
+    config.headers = (config.headers || {}) as any
+    config.headers['X-Devstat-Device'] = getDeviceId()
+    if (typeof getToken === 'function') {
+      const t = getToken()
+      if (t && !config.headers['Authorization']) config.headers['Authorization'] = `Bearer ${t}`
+    }
 
     let body = config.data
     if (typeof body === 'string') {

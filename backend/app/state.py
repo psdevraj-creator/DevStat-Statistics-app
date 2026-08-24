@@ -8,17 +8,43 @@ import pandas as pd
 from fastapi import HTTPException
 
 _session_id_var: contextvars.ContextVar[str] = contextvars.ContextVar("session_id")
+# When a user signs in, the session is keyed by their Firebase uid so one
+# account can NEVER collide with another's data (real per-user isolation).
+_uid_var: contextvars.ContextVar[str] = contextvars.ContextVar("uid", default="")
+# Stable guest/machine identifier (from the client's device id or client IP),
+# used for the lifetime 3-analysis free-trial gate before registration.
+_device_var: contextvars.ContextVar[str] = contextvars.ContextVar("device", default="")
 _sessions: Dict[str, dict] = {}
+
+
+def set_uid(uid: str) -> None:
+    _uid_var.set(uid or "")
+
+
+def get_uid() -> str:
+    return _uid_var.get() or ""
+
+
+def set_device(dev: str) -> None:
+    _device_var.set(dev or "")
+
+
+def get_device() -> str:
+    return _device_var.get() or ""
 
 
 _DUMMY_SESSION = {"current_data": None, "current_filename": "", "variable_metadata": {}, "_undo_stack": [], "_redo_stack": []}
 
 
 def _session() -> dict:
-    try:
-        sid = _session_id_var.get()
-    except LookupError:
-        return _DUMMY_SESSION
+    # Prefer the signed-in uid (per-user isolation); fall back to the browser
+    # session cookie for guests.
+    sid = _uid_var.get() or ""
+    if not sid:
+        try:
+            sid = _session_id_var.get()
+        except LookupError:
+            return _DUMMY_SESSION
     if sid not in _sessions:
         _sessions[sid] = {
             "current_data": None,
@@ -39,16 +65,66 @@ def __getattr__(name: str) -> Any:
 
 def set_current_data(df):
     _session()["current_data"] = df
+    _persist_user_dataset()
 
 
 def set_current_filename(name: str):
     _session()["current_filename"] = name
+    _persist_user_dataset()
 
 
 def clear_current_data():
     s = _session()
     s["current_data"] = None
     s["current_filename"] = ""
+    _uid = _uid_var.get() or ""
+    if _uid:
+        try:
+            from app.services.firebase_store import clear_user_dataset
+            clear_user_dataset(_uid)
+        except Exception:
+            pass
+
+
+def _persist_user_dataset() -> None:
+    uid = _uid_var.get() or ""
+    if not uid:
+        return
+    try:
+        import json
+        from app.services.firebase_store import save_user_dataset
+        df = _get("current_data")
+        csv = df.to_csv(index=False) if df is not None else ""
+        meta = json.dumps(_get("variable_metadata"), default=str)
+        save_user_dataset(uid, csv, _get("current_filename"), meta)
+    except Exception:
+        pass
+
+
+def restore_user_dataset() -> None:
+    """If signed in and nothing loaded yet, restore the user's stored dataset
+    from Firestore so their data follows them across instances/restarts."""
+    uid = _uid_var.get() or ""
+    if not uid:
+        return
+    s = _session()
+    if s.get("current_data") is not None:
+        return
+    try:
+        import json
+        from io import StringIO
+        from app.services.firebase_store import load_user_dataset
+        d = load_user_dataset(uid)
+        if d.get("csv"):
+            s["current_data"] = pd.read_csv(StringIO(d["csv"]))
+            s["current_filename"] = d.get("filename", "")
+            if d.get("meta"):
+                try:
+                    s["variable_metadata"] = json.loads(d["meta"])
+                except Exception:
+                    pass
+    except Exception:
+        pass
 
 
 def _get(key: str) -> Any:

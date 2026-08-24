@@ -4,6 +4,7 @@ import { BarChartOutlined, TableOutlined } from '@ant-design/icons'
 import Plot from '../utils/plotlyWrap'
 import { seriesToPlotlyChart } from '../utils/chartMapping'
 import logStore from '../stores/logStore'
+import BlockedAnalysisPanel from './BlockedAnalysisPanel'
 
 // Runtime guard: verify imports are callable components/functions, not objects
 
@@ -57,6 +58,15 @@ const ChartRenderer: React.FC<ChartRendererProps> = ({ data: rawData, title, sho
   }, [rawData])
 
   if (!data) return null
+
+  // ── Blocked / not-eligible results → show the guidance panel ─────────
+  // The eligibility engine returns { blocked, reason, details, suggested_alternatives }
+  // instead of a chart; surface that instead of a blank/broken chart.
+  if (data && (data.blocked === true || data.eligible === false) ) {
+    if (typeof BlockedAnalysisPanel === 'function') {
+      return <BlockedAnalysisPanel result={data} />
+    }
+  }
 
   const buildPlotly = (): { traces: any[]; layout: any } | null => {
     const ct = data.chart_type as string | undefined

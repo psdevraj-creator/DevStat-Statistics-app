@@ -8,6 +8,7 @@ import { descriptiveApi, datasetApi } from '../api/client'
 import outputStore from '../stores/outputStore'
 import ChartRenderer from '../components/ChartRenderer'
 import ErrorBoundary from '../components/ErrorBoundary'
+import BlockedAnalysisPanel from '../components/BlockedAnalysisPanel'
 
 const { Text, Title } = Typography
 
@@ -125,6 +126,11 @@ const DescriptivePage: React.FC = () => {
 
   const renderDescriptivesTable = () => {
     if (!results) return null
+
+    // ── Blocked / not-eligible result → show the guidance panel ────────
+    if (results.blocked === true || results.eligible === false) {
+      return <BlockedAnalysisPanel result={results} />
+    }
 
     // ── Crosstabs format: {row, col, table (2D array), chi2, ...} ──
     // Check first because crosstabs also have a `table` field (2D array, not {value,count} objects).

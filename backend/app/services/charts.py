@@ -323,7 +323,7 @@ def bar_chart_data(
     df: pd.DataFrame,
     category_col: str,
     value_col: Optional[str] = None,
-    error_bars: str = "sd",
+    error_bars: str = "se",
 ) -> Dict[str, Any]:
     """Prepare bar chart data.
 
@@ -337,13 +337,9 @@ def bar_chart_data(
         Column containing numeric values. If None, counts of categories
         are used.
     error_bars : str, optional
-        Type of error bars: ``'sd'`` (default, standard deviation),
-        ``'se'`` (standard error), ``'ci95'`` (95% CI), or ``'none'``.
-
-    Returns
-    -------
-    dict
-        With keys ``categories``, ``values``, ``errors``, ``n``.
+        Type of error bars: ``'sd'`` (standard deviation), ``'se'``
+        (standard error, default — modest and SPSS-like), ``'ci95'``
+        (95% confidence interval), or ``'none'``.
     """
     if category_col not in df.columns:
         return error(f"Column '{category_col}' not found in DataFrame.")
@@ -377,7 +373,8 @@ def bar_chart_data(
                 err = std_val / np.sqrt(n_vals) if n_vals > 1 else 0.0
             elif error_bars == "ci95":
                 from scipy import stats as sp_stats
-                err = (std_val / np.sqrt(n_vals)) * sp_stats.t.ppf(0.975, n_vals - 1) if n_vals > 1 else 0.0
+                n_eff = max(n_vals, 3)  # guard: avoid the small-n t-multiplier blow-up
+                err = (std_val / np.sqrt(n_eff)) * sp_stats.t.ppf(0.975, n_eff - 1) if n_vals > 1 else 0.0
             else:
                 err = 0.0
 

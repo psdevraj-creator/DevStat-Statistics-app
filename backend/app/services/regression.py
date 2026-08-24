@@ -394,27 +394,49 @@ def logistic_regression(
             return error(f"Column '{col}' not found in DataFrame.")
 
     all_cols = [dependent] + independents
-    df_clean = df[all_cols].dropna()
-    # Coerce all columns to numeric
-    for col in [dependent] + independents:
-        df_clean[col] = pd.to_numeric(df_clean[col], errors="coerce")
-    df_clean = df_clean.dropna()
-    n = len(df_clean)
+    df_clean = df[all_cols].copy()
 
+    # Binary outcome: map a 2-level categorical/string DV to 0/1.
+    dv_raw = df_clean[dependent]
+    if pd.api.types.is_numeric_dtype(dv_raw):
+        df_clean[dependent] = pd.to_numeric(df_clean[dependent], errors="coerce")
+    else:
+        non_na = dv_raw.dropna().astype(str).str.strip()
+        levels = sorted(set(non_na))
+        if len(levels) != 2:
+            return error(
+                f"Logistic regression requires a binary outcome; '{dependent}' has "
+                f"{len(levels)} categories: {levels[:5]}."
+            )
+        mapping = {levels[0]: 0, levels[1]: 1}
+        df_clean[dependent] = dv_raw.map(
+            lambda v: mapping.get(str(v).strip()) if pd.notna(v) else np.nan
+        )
+
+    # Predictors: numeric stay numeric, categorical are one-hot encoded.
+    encoded = pd.DataFrame(index=df_clean.index)
+    for iv_col in independents:
+        if pd.api.types.is_numeric_dtype(df_clean[iv_col]):
+            encoded[iv_col] = pd.to_numeric(df_clean[iv_col], errors="coerce")
+        else:
+            dummies = pd.get_dummies(df_clean[iv_col], prefix=iv_col, drop_first=True)
+            dummies = dummies.astype(float)
+            encoded = pd.concat([encoded, dummies], axis=1)
+    df_clean = pd.concat([df_clean[[dependent]], encoded], axis=1).dropna()
+    n = len(df_clean)
     if n < 3:
         return error("Insufficient data (need at least 3 complete cases).")
+    pred_cols = list(encoded.columns)
 
     # Stepwise variable selection (same p-value approach for logistic).
     if method != "enter":
-        selected = _stepwise_selection_logistic(df_clean, dependent, independents, method)
+        selected = _stepwise_selection_logistic(df_clean, dependent, pred_cols, method)
         if not selected:
             return error("No variables met entry criteria in stepwise selection.")
-        independents = selected
-    else:
-        independents = list(independents)
+        pred_cols = selected
 
     # Build and fit model.
-    X = df_clean[independents].astype(float)
+    X = df_clean[pred_cols].astype(float)
     y = df_clean[dependent].astype(float)
     X = sm.add_constant(X)
 
@@ -430,7 +452,7 @@ def logistic_regression(
     conf_int = model.conf_int()
 
     coefficients = []
-    for var in ["const"] + independents:
+    for var in ["const"] + pred_cols:
         coef = params[var]
         se = bse[var]
         p_val = pvals[var]
@@ -471,10 +493,10 @@ def logistic_regression(
         "aic": _round(aic),
         "bic": _round(bic),
         "n": n,
-        "n_predictors": len(independents),
+        "n_predictors": len(pred_cols),
         "method": method,
         "dependent": dependent,
-        "independents": independents,
+        "independents": pred_cols,
     }
 
     # Classification table.

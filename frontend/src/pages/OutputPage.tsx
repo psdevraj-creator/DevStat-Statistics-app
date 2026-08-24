@@ -11,6 +11,7 @@ import outputStore from '../stores/outputStore'
 import type { OutputEntry, OutputNode } from '../stores/outputStore'
 import Plot from '../utils/plotlyWrap'
 import BlockedAnalysisPanel from '../components/BlockedAnalysisPanel'
+import { QualityBadge } from '../components/QualityBadge'
 import { normalizeResult, safeKeys } from '../utils/responseNormalizer'
 import type { NormalizedResult } from '../utils/responseNormalizer'
 
@@ -45,6 +46,10 @@ function renderResultContent(entry: OutputEntry): React.ReactNode {
   const { tables, charts, narrative, warnings, _blocked } = normalized
   if (_blocked) return <BlockedAnalysisPanel result={_blocked} />
   const tabs: any[] = []
+  // Automatic quality-control report (added by the backend on every analysis).
+  if (entry.result?.qa) {
+    tabs.push({ key: 'qa', label: 'Quality', children: <QualityBadge qa={entry.result.qa} /> })
+  }
   if (tables.length > 0) {
     tabs.push({ key: 'table', label: `Table (${tables.length})`, children: <Table dataSource={tables} columns={columnsFromData(tables)} rowKey="_key" pagination={false} size="small" bordered scroll={{ x: 'max-content' }} /> })
   }
@@ -64,18 +69,42 @@ function renderResultContent(entry: OutputEntry): React.ReactNode {
 }
 
 function seriesToPlotlyTraces(series: any[], chartType: string): any[] {
+  const ct = (chartType || '').toLowerCase()
+  // Survival / KM curves: draw a clean step line + a shaded 95% confidence band
+  // instead of giant per-point error bars (which looked terrible with the
+  // raw lifelines CI that balloons toward [0,1] at the tail).
+  if (ct === 'km_curve' || ct === 'kaplan_meier' || (series[0] && series[0].x && series[0].y && series[0].ci_lower && series[0].ci_upper && series[0].group)) {
+    return series.flatMap((s: any) => {
+      const out: any[] = []
+      out.push({
+        type: 'scatter', mode: 'lines', name: s.group || s.label || '',
+        x: s.x, y: s.y, line: { shape: 'hv', width: 2.5, color: '#005eb8' },
+      })
+      if (s.ci_lower && s.ci_upper && s.x) {
+        out.push({
+          type: 'scatter', mode: 'lines', hoverinfo: 'skip', showlegend: false,
+          x: s.x, y: s.ci_upper, line: { width: 0 }, fill: null,
+        })
+        out.push({
+          type: 'scatter', mode: 'lines', hoverinfo: 'skip', showlegend: false,
+          x: s.x, y: s.ci_lower, line: { width: 0 },
+          fill: 'tonexty', fillcolor: 'rgba(0,94,184,0.15)',
+        })
+      }
+      return out
+    })
+  }
+
   return series.map((s: any) => {
     const trace: any = { type: 'scatter', mode: 'lines', name: s.group || s.label || '' }
     if (s.x && s.y) {
       trace.x = s.x
       trace.y = s.y
+      trace.line = { shape: 'hv', width: 2.5, color: '#005eb8' }
     } else if (s.values) {
       trace.y = s.values
-      trace.type = chartType === 'boxplot' ? 'box' : 'bar'
-      trace.mode = 'markers'
-    }
-    if (s.ci_lower && s.ci_upper && s.x) {
-      trace.error_y = { type: 'data', symmetric: false, array: s.ci_upper.map((u: number, i: number) => u - s.y[i]), arrayminus: s.ci_lower.map((l: number, i: number) => s.y[i] - l) }
+      trace.type = ct === 'boxplot' ? 'box' : ct === 'violin' ? 'violin' : 'bar'
+      trace.mode = ct === 'scatter' ? 'markers' : 'markers'
     }
     return trace
   })
@@ -171,7 +200,7 @@ const OutputPage: React.FC = () => {
           ? <span style={{ fontWeight: 600, fontSize: 12 }}>{node.title} ({node.children?.length || 0})</span>
           : <span style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
               <Tag color={TYPE_COLORS[node.entry?.category || 'descriptive']} style={{ fontSize: 9, lineHeight: '16px', padding: '0 4px', margin: 0 }}>{node.entry?.type}</Tag>
-              <Checkbox size="small" checked={outputStore.isSelected(node.key)} onChange={() => handleToggleSelect(node.key)} />
+              <Checkbox checked={outputStore.isSelected(node.key)} onChange={() => handleToggleSelect(node.key)} />
               <span style={{ fontSize: 12 }}>{node.title}</span>
             </span>,
         children: node.children ? convertNodes(node.children) : undefined,

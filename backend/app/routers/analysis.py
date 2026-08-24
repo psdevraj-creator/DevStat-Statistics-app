@@ -483,9 +483,8 @@ async def np_friedman_endpoint(body: Dict[str, Any]) -> Dict[str, Any]:
             }
             if elig["blocked"]:
                 return elig
-    samples = [
-        _state.current_data[col].dropna().values for col in variables
-    ]
+    common = _state.current_data[variables].dropna()
+    samples = [common[col].values for col in variables]
     stat, p_value = sp_stats.friedmanchisquare(*samples)
     return {
         "test_name": "Friedman Test",
@@ -954,7 +953,7 @@ async def anova_twoway_endpoint(body: Dict[str, Any]) -> Dict[str, Any]:
     dependent = body.get("dependent")
     factor1 = body.get("factor1")
     factor2 = body.get("factor2")
-    validate_anova(dependent, factor1, factor2, test_type='twoway')
+    validate_anova(dependent, group=factor1, factor1=factor1, factor2=factor2, test_type='twoway')
     _require_data()
     if not dependent or not factor1 or not factor2:
         raise HTTPException(
@@ -1038,13 +1037,11 @@ async def means_endpoint(body: Dict[str, Any]) -> Dict[str, Any]:
             status_code=400, detail="'dependent' is required."
         )
     _require_data()
-    # Eligibility check per column
-    cols = [dependent] + ([group] if group else []) + (layers if layers else [])
-    for col in cols:
-        if col:
-            elig = check_descriptive_eligibility("mean", _infer_var_type(col), col)
-            if elig["blocked"]:
-                return elig
+    # Eligibility check: only the DEPENDENT must be numeric for 'mean'. The
+    # group/layers are grouping factors (categorical) and must NOT be mean-checked.
+    elig = check_descriptive_eligibility("mean", _infer_var_type(dependent), dependent)
+    if elig["blocked"]:
+        return elig
     result = run_analysis("means", {
         "dependent": dependent, "group": group, "layers": layers,
     })
@@ -1170,6 +1167,13 @@ async def mixed_model_endpoint(body: Dict[str, Any]) -> Dict[str, Any]:
     family = body.get("family", "gaussian")
     if not dv or not fixed:
         raise HTTPException(status_code=400, detail="'dv' and 'fixed' are required.")
+    if not random:
+        raise HTTPException(
+            status_code=400,
+            detail="A mixed-effects model needs a random-effect (subject/grouping) column "
+                   "with repeated measures; none was provided. Skip this analysis if your "
+                   "dataset has no repeated-measures variable.",
+        )
     # Eligibility check: check dv is appropriate for the model family
     dep_type = _infer_var_type(dv)
     if family == "gaussian" and dep_type not in ("continuous",):

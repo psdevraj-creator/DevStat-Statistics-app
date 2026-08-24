@@ -7,6 +7,7 @@ import { PlayCircleOutlined, CalculatorOutlined, SwapOutlined, FileTextOutlined 
 import { useNavigate } from 'react-router-dom'
 import EligibilityAlert from '../components/EligibilityAlert'
 import ErrorDisplay from '../components/ErrorDisplay'
+import BlockedAnalysisPanel from '../components/BlockedAnalysisPanel'
 import { useEligibilityCheck } from '../hooks/useEligibility'
 import Plot from '../utils/plotlyWrap'
 import ErrorBoundary from '../components/ErrorBoundary'
@@ -216,6 +217,10 @@ const SurvivalPage: React.FC = () => {
   const renderResults = () => {
     if (!results) return null
     const data = results.data || results.results || results
+    // ── Blocked / not-eligible result → show the guidance panel ────────
+    if (data && (data.blocked === true || data.eligible === false)) {
+      return <BlockedAnalysisPanel result={data} />
+    }
     if (Array.isArray(data)) {
       const cols = Object.keys(data[0] || {}).map(key => ({
         title: key.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase()),

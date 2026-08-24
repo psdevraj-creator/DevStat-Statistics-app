@@ -5,6 +5,7 @@ import {
 } from 'antd'
 import { PlayCircleOutlined, FileTextOutlined } from '@ant-design/icons'
 import EligibilityAlert from '../components/EligibilityAlert'
+import BlockedAnalysisPanel from '../components/BlockedAnalysisPanel'
 import { useEligibilityCheck } from '../hooks/useEligibility'
 import { compareApi, datasetApi } from '../api/client'
 import outputStore from '../stores/outputStore'
@@ -148,6 +149,10 @@ const ComparePage: React.FC = () => {
   const renderResults = () => {
     if (!results) return null
     const data = results.data || results.results || results
+    // ── Blocked / not-eligible result → show the guidance panel ────────
+    if (data && (data.blocked === true || data.eligible === false)) {
+      return <BlockedAnalysisPanel result={data} />
+    }
 
     if (Array.isArray(data)) {
       const safeData = data

@@ -4,7 +4,16 @@ import math
 from typing import Any
 
 import numpy as np
+from scipy import stats as _st
 from statsmodels.stats.power import TTestIndPower, TTestPower, FTestPower, GofChisquarePower
+
+
+def _scalar(v):
+    """Coerce a statsmodels result (scalar or 1-element numpy array) to float."""
+    try:
+        return float(np.asarray(v).reshape(-1)[0])
+    except Exception:
+        return float(v)
 
 
 def power_analysis(test: str, effect_size: float | None = None,
@@ -34,28 +43,34 @@ def power_analysis(test: str, effect_size: float | None = None,
     -------
     dict with computed parameter and interpretation.
     """
-    param = next((p for p in ['effect_size', 'n', 'power'] if eval(p) is not None), None)
-    if not param:
+    vals = {'effect_size': effect_size, 'n': n, 'power': power}
+    given = [k for k in ('effect_size', 'n', 'power') if vals[k] is not None]
+    missing = [k for k in ('effect_size', 'n', 'power') if vals[k] is None]
+    if not given:
         return {'error': 'Specify at least one of: effect_size, n, or power'}
+    # The value being solved for is the MISSING one (e.g. n from effect+power).
+    param = missing[0] if missing else 'effect_size'
 
     if test == 'ttest':
         solver = TTestIndPower()
-        if param == 'power':
+        if n is None and power is not None:
+            computed = solver.solve_power(effect_size=effect_size, alpha=alpha, power=power, ratio=ratio, nobs1=None)
+        elif power is None and n is not None:
             computed = solver.power(effect_size=effect_size, nobs1=n, alpha=alpha, ratio=ratio)
-        elif param == 'n':
-            computed = solver.solve_power(effect_size=effect_size, power=power, alpha=alpha, ratio=ratio)
         else:
-            computed = solver.solve_power(nobs1=n, power=power, alpha=alpha, ratio=ratio)
+            computed = solver.solve_power(nobs1=n, alpha=alpha, power=power, ratio=ratio, effect_size=None)
+        computed = _scalar(computed)
         interpretation = _interpret_power(test, computed, param, effect_size, n, power, alpha)
 
     elif test == 'ttest_paired':
         solver = TTestPower()
-        if param == 'power':
+        if n is None and power is not None:
+            computed = solver.solve_power(effect_size=effect_size, alpha=alpha, power=power, nobs=None)
+        elif power is None and n is not None:
             computed = solver.power(effect_size=effect_size, nobs=n, alpha=alpha)
-        elif param == 'n':
-            computed = solver.solve_power(effect_size=effect_size, power=power, alpha=alpha)
         else:
-            computed = solver.solve_power(nobs=n, power=power, alpha=alpha)
+            computed = solver.solve_power(nobs=n, alpha=alpha, power=power, effect_size=None)
+        computed = _scalar(computed)
         interpretation = _interpret_power(test, computed, param, effect_size, n, power, alpha)
 
     elif test == 'anova':
@@ -63,11 +78,12 @@ def power_analysis(test: str, effect_size: float | None = None,
             return {'error': 'Number of groups (k) is required for ANOVA power'}
         solver = FTestPower()
         if param == 'power':
-            computed = solver.power(effect_size=effect_size, df1=k - 1, df2=n - k, alpha=alpha)
+            computed = solver.power(effect_size=effect_size, df_num=k - 1, df_denom=n - k, alpha=alpha)
         elif param == 'n':
-            computed = solver.solve_power(effect_size=effect_size, power=power, alpha=alpha, df1=k - 1, df2=None)
+            computed = solver.solve_power(effect_size=effect_size, power=power, alpha=alpha, df_num=k - 1, df_denom=None)
         else:
-            computed = solver.solve_power(power=power, alpha=alpha, df1=k - 1, df2=None)
+            computed = solver.solve_power(power=power, alpha=alpha, df_num=k - 1, df_denom=None)
+        computed = _scalar(computed)
         interpretation = _interpret_power(test, computed, param, effect_size, n, power, alpha, k)
 
     elif test == 'chisquare':
@@ -80,7 +96,24 @@ def power_analysis(test: str, effect_size: float | None = None,
             computed = solver.solve_power(effect_size=effect_size, power=power, alpha=alpha, df=k)
         else:
             computed = solver.solve_power(power=power, alpha=alpha, df=k)
+        computed = _scalar(computed)
         interpretation = _interpret_power(test, computed, param, effect_size, n, power, alpha, k)
+
+    elif test in ('correlation', 'r'):
+        # Pearson correlation power via Fisher-z approximation.
+        import math
+        r = effect_size or 0.0
+        z_a = _st.norm.ppf(1 - alpha / 2)
+        z_b = _st.norm.ppf(power) if power is not None else _st.norm.ppf(0.8)
+        atanh_r = math.atanh(abs(r)) if abs(r) < 1 else 0.0
+        if param == 'n':
+            computed = ((z_a + z_b) / atanh_r) ** 2 + 3 if atanh_r > 0 else float('nan')
+        elif param == 'power':
+            computed = _st.norm.cdf(atanh_r * math.sqrt(max(n - 3, 1)) - z_a)
+        else:  # effect_size
+            computed = math.tanh((z_a + z_b) / math.sqrt(max(n - 3, 1)))
+        computed = _scalar(computed)
+        interpretation = _interpret_power(test, computed, param, effect_size, n, power, alpha)
 
     else:
         return {'error': f"Unknown test type: {test}. Use 'ttest', 'ttest_paired', 'anova', or 'chisquare'."}
@@ -89,7 +122,7 @@ def power_analysis(test: str, effect_size: float | None = None,
         'test': test,
         'parameter_type': param,
         'alpha': alpha,
-        interpretation['label']: round(float(computed), 4),
+        interpretation['label']: round(computed, 4),
         'interpretation': interpretation['text'],
     }
     if effect_size is not None:
@@ -111,7 +144,8 @@ def _interpret_power(test: str, computed: float, param: str,
                      power: float | None, alpha: float,
                      k: int | None = None) -> dict[str, str]:
     test_labels = {'ttest': 'Independent t-test', 'ttest_paired': 'Paired t-test',
-                   'anova': 'ANOVA', 'chisquare': 'Chi-square'}
+                   'anova': 'ANOVA', 'chisquare': 'Chi-square',
+                   'correlation': 'Correlation', 'r': 'Correlation'}
     label = test_labels.get(test, test)
     param_label = {'effect_size': 'Effect size d', 'n': 'Sample size', 'power': 'Power'}
 

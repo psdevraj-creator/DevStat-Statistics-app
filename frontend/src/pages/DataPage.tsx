@@ -179,13 +179,15 @@ const DataPage: React.FC = () => {
 
   const handleSaveAs = useCallback(() => {
     if (!dataset) { message.warning('No dataset to save'); return }
-    const blob = new Blob([dataset], { type: 'text/csv' })
+    const headers = colDefs.map((c) => c.field)
+    const csv = [headers.join(','), ...rowData.map((r) => headers.map((h) => r[h] ?? '').join(','))].join('\n')
+    const blob = new Blob([csv], { type: 'text/csv' })
     const url = URL.createObjectURL(blob)
     const a = document.createElement('a')
     a.href = url; a.download = 'dataset.csv'; a.click()
     URL.revokeObjectURL(url)
     message.success('Dataset downloaded')
-  }, [dataset])
+  }, [dataset, rowData, colDefs])
 
   const handleOpen = useCallback(() => {
     message.info('Open file — implement file picker')

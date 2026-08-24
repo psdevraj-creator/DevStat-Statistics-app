@@ -24,7 +24,7 @@ from fastapi.responses import FileResponse, JSONResponse
 
 from app.state import _session_id_var
 from app.config import PROJECT_NAME, VERSION
-from app.routers import data, analysis, charts, output, suggest, transform, wizard, r_status, syntax, eligibility, project
+from app.routers import data, analysis, charts, output, suggest, transform, wizard, r_status, eligibility, project, auth, license
 try:
     from app.routers import ai
     AI_AVAILABLE = True
@@ -106,6 +106,15 @@ def _json_encoder_default(obj: Any) -> Any:
     raise TypeError(f"Object of type {type(obj)} is not JSON serializable")
 
 
+def _client_ip(request: Request) -> str:
+    """First X-Forwarded-For value (set by Cloud Run) = the client IP."""
+    try:
+        ff = request.headers.get("x-forwarded-for", "") or ""
+        return (ff.split(",", 1)[0] or "").strip()[:64]
+    except Exception:  # noqa: BLE001
+        return ""
+
+
 def _write_crash(exc: Exception, content: Any = None) -> None:
     """Write exception traceback to a crash log file."""
     import traceback
@@ -176,6 +185,22 @@ def create_app() -> FastAPI:
     async def _session_middleware(request: Request, call_next):
         sid = request.cookies.get("session_id") or str(uuid.uuid4())
         token = _session_id_var.set(sid)
+        # Per-USER isolation: if a valid DevStat session token is present, key
+        # the in-memory session by the user's uid (so no account can ever see
+        # another account's data) and restore their stored dataset.
+        auth = request.headers.get("authorization", "")
+        if auth.lower().startswith("bearer "):
+            from app.services.session_guard import peek_uid
+            from app import state as _state
+            uid = peek_uid(auth[7:].strip())
+            if uid:
+                _state.set_uid(uid)
+                _state.restore_user_dataset()
+        # Guest machine id (stable device id or client IP) for the 3-use trial gate.
+        device = request.headers.get("x-devstat-device", "") or _client_ip(request)
+        if device:
+            from app import state as _state
+            _state.set_device(device)
         response = await call_next(request)
         response.set_cookie("session_id", sid, httponly=True, samesite="lax")
         _session_id_var.reset(token)
@@ -192,9 +217,10 @@ def create_app() -> FastAPI:
     app.include_router(r_status.router, prefix="/api", tags=["Health"])
     if AI_AVAILABLE:
         app.include_router(ai.router, prefix="/api", tags=["AI Assistant"])
-    app.include_router(syntax.router, prefix="/api/syntax", tags=["Syntax"])
     app.include_router(eligibility.router)
     app.include_router(project.router, prefix="/api")
+    app.include_router(auth.router, prefix="/api/auth", tags=["Auth"])
+    app.include_router(license.router, prefix="/api", tags=["License"])
 
     # ---- Health check --------------------------------------------------------
     @app.get("/api/health", tags=["Health"])

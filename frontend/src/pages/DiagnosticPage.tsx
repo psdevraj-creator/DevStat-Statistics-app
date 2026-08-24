@@ -5,6 +5,7 @@ import {
 } from 'antd'
 import { PlayCircleOutlined, FileTextOutlined } from '@ant-design/icons'
 import EligibilityAlert from '../components/EligibilityAlert'
+import BlockedAnalysisPanel from '../components/BlockedAnalysisPanel'
 import { useEligibilityCheck } from '../hooks/useEligibility'
 import { diagnosticApi, datasetApi } from '../api/client'
 import outputStore from '../stores/outputStore'
@@ -62,6 +63,7 @@ const DiagnosticPage: React.FC = () => {
 
   const renderContingencyTable = () => {
     if (!results) return null
+    if (results.blocked === true || results.eligible === false) return <BlockedAnalysisPanel result={results} />
     const raw = results.table || results.contingency_table || results.confusion_matrix || results['2x2']
     if (!raw) return null
     // R returns confusion_matrix as dict {tp, fp, fn, tn}; convert to array

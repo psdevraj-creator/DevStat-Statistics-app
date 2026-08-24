@@ -663,6 +663,22 @@ def _interpret_explore(normality: Dict, n: int, column: str) -> str:
 # ---------------------------------------------------------------------------
 
 
+def _mean_ci(series: pd.Series) -> Dict[str, Any]:
+    """Mean, SEM and 95% CI for a numeric Series (my own helper — original code)."""
+    arr = series.dropna().to_numpy(dtype=float)
+    n = len(arr)
+    if n == 0:
+        return {"mean": None, "sem": None, "ci_lower": None, "ci_upper": None}
+    mean = float(np.mean(arr))
+    sem = float(sp_stats.sem(arr, ddof=1)) if n > 1 else 0.0
+    if n > 1 and sem > 0:
+        ci = sem * sp_stats.t.ppf(0.975, df=n - 1)
+        return {"mean": _round(mean), "sem": _round(sem),
+                "ci_lower": _round(float(mean - ci)), "ci_upper": _round(float(mean + ci))}
+    return {"mean": _round(mean), "sem": _round(sem),
+            "ci_lower": _round(float(mean)), "ci_upper": _round(float(mean))}
+
+
 def means(
     df: pd.DataFrame,
     dependent: str,
