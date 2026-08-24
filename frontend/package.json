@@ -9,10 +9,10 @@
     "lint": "eslint .",
     "preview": "vite preview",
     "desktop:start": "electron .",
-    "desktop:build": "electron-builder",
+    "desktop:build": "electron-builder --publish never",
     "build:tsc": "tsc -b && vite build",
-    "desktop:build:win": "electron-builder --win",
-    "desktop:build:mac": "electron-builder --mac"
+    "desktop:build:win": "electron-builder --win --publish never",
+    "desktop:build:mac": "electron-builder --mac --publish never"
   },
   "dependencies": {
     "@ant-design/icons": "^6.2.5",
@@ -77,5 +77,10 @@
     }
   },
   "author": "DevStat",
-  "description": "DevStat \u2014 medical statistics (offline desktop)"
+  "description": "DevStat \u2014 medical statistics (offline desktop)",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/psdevraj-creator/DevStat-Statistics-app.git"
+  },
+  "homepage": "https://github.com/psdevraj-creator/DevStat-Statistics-app"
 }
