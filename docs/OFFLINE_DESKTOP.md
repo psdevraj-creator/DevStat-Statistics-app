@@ -32,7 +32,20 @@ release.
 > Fixing this fully needs an Apple Developer ID + a Windows code-signing
 > certificate.
 
-To build the installers yourself, run `build_offline.ps1` on Windows:
+## Building the installers locally (then publish to Releases)
+The GitHub Actions auto-build was unreliable (PyInstaller + electron-builder are
+finicky in CI), so the installers are **built on a Windows/macOS machine and
+uploaded to the GitHub Release**:
+```powershell
+# from the repo root
+cd frontend; npm install; npm run build        # SPA -> backend/static
+cd ../backend; python -m PyInstaller devstat_engine.spec --noconfirm   # -> dist/DevStatEngine (10-25 min)
+cd ../frontend; $env:CSC_IDENTITY_AUTO_DISCOVERY="false"
+npx electron-builder --win --publish never      # -> frontend/release/*.{exe,msi}  (or --mac -> .dmg)
+# then attach the files to a release, e.g.
+gh release upload <tag> frontend/release/*.exe frontend/release/*.msi --clobber
+```
+Run each of these on the OS you're targeting (Windows → Windows, macOS → macOS).
 
 
 ## Source layout (offline pieces)
