@@ -6,7 +6,8 @@
   "main": "electron/main.js",
   "scripts": {
     "dev": "vite",
-    "build": "tsc -b && vite build",
+    "build": "vite build",
+    "build:tsc": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
     "desktop:start": "electron .",
