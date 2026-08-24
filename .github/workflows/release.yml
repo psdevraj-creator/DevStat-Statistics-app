@@ -62,7 +62,7 @@ jobs:
       - name: Build frontend (SPA -> backend/static)
         run: |
           cd frontend
-          npm ci
+          npm install
           npm run build
 
       - name: Install backend deps + PyInstaller
@@ -107,7 +107,7 @@ jobs:
       - name: Build frontend (SPA -> backend/static)
         run: |
           cd frontend
-          npm ci
+          npm install
           npm run build
       - name: Install backend deps + PyInstaller
         run: |
@@ -125,3 +125,4 @@ jobs:
       - name: Attach installer to release
         run: |
           find frontend/release -type f \( -name "*.dmg" -o -name "*.zip" \) -exec gh release upload "$GITHUB_REF_NAME" {} --clobber \;
+
