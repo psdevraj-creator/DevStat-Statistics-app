@@ -15,20 +15,25 @@ every 30 days; it works fully offline in between and re-locks (to the 3-free-tri
 
 ## Download / build
 
-The downloadable installer is produced by `build_offline.ps1` (Python + Node +
-Electron required). Build once on Windows:
+**For end users (non-technical):** download the installer from the GitHub
+**Releases** page (`psdevraj-creator/DevStat-Statistics-app` → Releases) — there
+is a **Windows** installer (`.msi`/`.exe`) and a **macOS** installer (`.dmg`).
+They are built automatically on every `v*` release tag by GitHub Actions
+(`.github/workflows/release.yml`), which bundles the Python engine (PyInstaller)
+and packages the Electron app (electron-builder), then attaches the files to the
+release.
 
-```powershell
-powershell -ExecutionPolicy Bypass -File build_offline.ps1
-```
+> **Unsigned caveat:** the installers are **not code-signed** (no code-signing
+> certificate configured). 
+> - **Windows:** SmartScreen may show "Windows protected your PC" — click
+>   *More info → Run anyway*. 
+> - **macOS:** Gatekeeper may say "unidentified developer" — **right-click the
+>   app → Open** (or System Settings → Privacy & Security → Open Anyway).
+> Fixing this fully needs an Apple Developer ID + a Windows code-signing
+> certificate.
 
-It 1) `npm run build`s the frontend, 2) bundles the Python engine with PyInstaller
-(`backend/devstat_engine.spec`), and 3) builds the Electron app (electron-builder),
-leaving the installer in `frontend/release/`.
+To build the installers yourself, run `build_offline.ps1` on Windows:
 
-For releases, the GitHub Actions `release.yml` workflow publishes the practice
-dataset; the desktop installer is built locally with the script above (a CI
-Windows build job is a planned follow-up).
 
 ## Source layout (offline pieces)
 - `backend/run_local.py` — launches the local engine (`app.main:create_app`, `cloud_run:false`).
