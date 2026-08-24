@@ -20,9 +20,26 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
+          cat > /tmp/release_body.md <<'EOF'
+          ## DevStat — download & install
+
+          **Installers** (offline desktop app): Windows `.msi`/`.exe` and macOS `.dmg`.
+          The analysis runs 100% on your machine; data never leaves your computer.
+
+          ### ⚠️ Trust / install note (please read)
+          These installers are **not code-signed** (no signing certificate is set up).
+          Your OS may warn you — **the app is clean and safe to install.** Simply:
+          - **Windows:** SmartScreen → “More info” → **Run anyway**.
+          - **macOS:** right-click the app → **Open** → **Open** (or System Settings → Privacy & Security → Open Anyway).
+
+          If you’d rather not install, use the **online app** instead:
+          https://devstat-statistics-app-991466352708.europe-west1.run.app
+          (online version is for exam/synthetic data only; licence £25/yr).
+          EOF
           gh release create "$GITHUB_REF_NAME" \
             data/devstat-practice-data.csv \
-            data/README_practice_dataset.md --generate-notes
+            data/README_practice_dataset.md \
+            --notes-file /tmp/release_body.md
 
   # Build the Windows desktop installer (offline app) + attach to the release.
   installer:
