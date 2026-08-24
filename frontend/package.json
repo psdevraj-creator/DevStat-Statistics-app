@@ -3,7 +3,6 @@
   "private": true,
   "version": "0.0.0",
   "main": "electron/main.js",
-  "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
@@ -76,5 +75,7 @@
       ],
       "category": "public.app-category.medical"
     }
-  }
+  },
+  "author": "DevStat",
+  "description": "DevStat \u2014 medical statistics (offline desktop)"
 }
