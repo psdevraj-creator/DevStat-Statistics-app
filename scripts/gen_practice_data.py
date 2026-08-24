@@ -37,11 +37,19 @@ surv = np.round(np.clip(np.random.gamma(2.2, 22, n) * np.array([surv_factor[t] f
 ev_p = [0.45 if t == "Placebo" else (0.28 if t == "Drug B" else 0.22) for t in treat]
 event_death = np.array([int(np.random.rand() < p) for p in ev_p])
 
+# Pairs + other columns used by the paired/Wilcoxon/Friedman exercises.
+# Generated AFTER the above so the existing columns' values are unchanged.
+diastolic_bp = np.round(np.clip(systolic * 0.6 + np.random.normal(0, 5, n), 45, 120), 0)
+anxiety_score = np.clip(np.round(np.random.normal(5, 2.5, n)), 0, 10).astype(int)
+depression_score = np.clip(np.round(np.random.normal(5, 2.5, n)), 0, 10).astype(int)
+diabetes = np.random.choice([0, 1], n, p=[0.6, 0.4]).astype(int)
+
 df = pd.DataFrame({
     "patient_id": range(1, n + 1),
     "age": age, "sex": sex, "bmi": bmi, "treatment": treat,
-    "systolic_bp": systolic, "cholesterol": chol, "smoking": smoking,
-    "pain_score": pain_score, "outcome": outcome,
+    "systolic_bp": systolic, "diastolic_bp": diastolic_bp, "cholesterol": chol,
+    "smoking": smoking, "pain_score": pain_score, "outcome": outcome,
+    "anxiety_score": anxiety_score, "depression_score": depression_score, "diabetes": diabetes,
     "new_biomarker": new_biomarker, "gold_standard": gold_standard,
     "followup_months": surv, "event_death": event_death,
 })
