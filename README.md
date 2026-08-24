@@ -178,3 +178,14 @@ This project is provided for educational and research purposes.
 ## Contributing
 
 Contributions are welcome. Please open an issue or pull request on GitHub.
+
+---
+
+## Offline desktop app
+
+DevStat also ships as an **offline desktop app** that runs the analysis engine
+100% on your machine (data never leaves it). See [docs/OFFLINE_DESKTOP.md](docs/OFFLINE_DESKTOP.md)
+for how it works and how to build it with uild_offline.ps1.
+
+- Online (exam practice): https://devstat-statistics-app-991466352708.europe-west1.run.app
+- Licence: free trial + £25/yr (occasional phone-home; works offline between checks)

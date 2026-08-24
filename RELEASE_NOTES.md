@@ -56,3 +56,5 @@ The following features were removed for the public release:
 - Frontend log store clears on app start
 - Backend log clears on server restart
 - Cox regression serialization bug fixed
+
+- Offline desktop app: local analysis engine (backend/run_local.py) + Electron shell (frontend/electron) with Option A licence gate (occasional phone-home)
