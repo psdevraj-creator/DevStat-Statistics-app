@@ -11,11 +11,15 @@ const LOCAL_URL = `http://127.0.0.1:${LOCAL_PORT}`
 let serverProc = null
 
 function engineCmd() {
-  // Packaged build: set DEVSTAT_ENGINE_EXE to the bundled executable, or ship the
-  // backend next to the app and run it with a bundled (PyInstaller) interpreter.
+  // Packaged: the engine was bundled as extraResources -> resources/engine/
+  if (app.isPackaged) {
+    const name = process.platform === 'win32' ? 'DevStatEngine.exe' : 'DevStatEngine'
+    const exe = path.join(process.resourcesPath, 'engine', name)
+    return { cmd: exe, args: [], cwd: path.dirname(exe) }
+  }
+  // Dev: run backend/run_local.py with the system python.
   const exe = process.env.DEVSTAT_ENGINE_EXE || ''
   if (exe) return { cmd: exe, args: [], cwd: path.dirname(exe) }
-  // Dev: run backend/run_local.py with the system python.
   const backend = path.resolve(__dirname, '..', '..', 'backend')
   const py = process.env.DEVSTAT_PYTHON || 'python'
   return { cmd: py, args: [path.join(backend, 'run_local.py')], cwd: backend }

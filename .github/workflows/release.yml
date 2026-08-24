@@ -23,3 +23,88 @@ jobs:
           gh release create "$GITHUB_REF_NAME" \
             data/devstat-practice-data.csv \
             data/README_practice_dataset.md --generate-notes
+
+  # Build the Windows desktop installer (offline app) + attach to the release.
+  installer:
+    needs: release
+    runs-on: windows-latest
+    env:
+      GH_TOKEN: ${{ github.token }}
+      DEVSTAT_API_URL: https://devstat-statistics-app-991466352708.europe-west1.run.app
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Build frontend (SPA -> backend/static)
+        run: |
+          cd frontend
+          npm ci
+          npm run build
+
+      - name: Install backend deps + PyInstaller
+        run: |
+          cd backend
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt pyinstaller
+
+      - name: Bundle offline engine with PyInstaller
+        run: |
+          cd backend
+          python -m PyInstaller devstat_engine.spec --noconfirm
+
+      - name: Build Windows installer (MSI + NSIS)
+        run: |
+          cd frontend
+          npm run desktop:build
+
+      - name: Attach installer to release
+        shell: pwsh
+        run: |
+          Get-ChildItem "frontend\release" -Filter "*.msi","*.exe" -ErrorAction SilentlyContinue | ForEach-Object {
+            gh release upload "$env:GITHUB_REF_NAME" $_.FullName --clobber
+          }
+
+  # macOS offline desktop installer (.dmg).
+  installer-mac:
+    needs: release
+    runs-on: macos-latest
+    env:
+      GH_TOKEN: ${{ github.token }}
+      DEVSTAT_API_URL: https://devstat-statistics-app-991466352708.europe-west1.run.app
+      CSC_IDENTITY_AUTO_DISCOVERY: "false"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Build frontend (SPA -> backend/static)
+        run: |
+          cd frontend
+          npm ci
+          npm run build
+      - name: Install backend deps + PyInstaller
+        run: |
+          cd backend
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt pyinstaller
+      - name: Bundle offline engine with PyInstaller
+        run: |
+          cd backend
+          python -m PyInstaller devstat_engine.spec --noconfirm
+      - name: Build macOS installer (.dmg)
+        run: |
+          cd frontend
+          npm run desktop:build
+      - name: Attach installer to release
+        run: |
+          find frontend/release -type f \( -name "*.dmg" -o -name "*.zip" \) -exec gh release upload "$GITHUB_REF_NAME" {} --clobber \;
