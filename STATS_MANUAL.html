@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DevStat — User Guide &amp; Statistics Manual (SPSS-style)</title>
+<meta name="description" content="A clear SPSS-style guide to DevStat: follow the menu paths, run each analysis step by step, and interpret the output.">
+<style>
+:root{--ink:#0f172a;--muted:#5b6b7f;--brand:#005eb8;--brand2:#1a7fd4;--bg:#f6f8fb;--card:#fff;--line:#e5eaf1;--code:#0b1220;--green:#059669}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;color:var(--ink);background:var(--bg);line-height:1.7}
+.layout{display:flex;min-height:100vh}
+/* Sidebar (menu-tree TOC) */
+.sidebar{width:290px;flex-shrink:0;background:var(--code);color:#cbd5e1;position:sticky;top:0;height:100vh;overflow-y:auto;padding:24px 18px}
+.sidebar h1{color:#fff;font-size:17px;display:flex;align-items:center;gap:8px}
+.sidebar .tag{font-size:11px;color:#7dd3fc;margin-bottom:16px}
+.sidebar .grp{color:#64748b;text-transform:uppercase;font-size:10.5px;letter-spacing:.08em;margin:14px 0 4px;font-weight:700}
+.sidebar nav a{display:block;color:#94a3b8;font-size:13px;padding:4px 6px;border-radius:6px;text-decoration:none}
+.sidebar nav a:hover,.sidebar nav a:focus-visible{color:#fff;background:rgba(255,255,255,.06)}
+.sidebar nav a.sub{padding-left:18px}
+@media(max-width:880px){.layout{display:block}.sidebar{position:relative;height:auto}}
+/* Main */
+.main{flex:1;padding:40px 46px 90px;max-width:1000px}
+@media(max-width:880px){.main{padding:22px 16px}}
+.breadcrumb{font-size:13px;color:var(--muted);margin-bottom:14px}
+.breadcrumb a{color:var(--brand)}
+.hero{background:linear-gradient(135deg,#003d8b,var(--brand) 60%,var(--brand2));color:#fff;border-radius:18px;padding:40px 34px;margin-bottom:26px}
+.hero h2{font-size:32px;margin-bottom:8px}
+.hero p{opacity:.92;max-width:640px}
+.hero .chips{margin-top:16px;display:flex;flex-wrap:wrap;gap:8px}
+.chip{background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.28);padding:5px 12px;border-radius:999px;font-size:12.5px}
+h2.sect{font-size:24px;padding-bottom:8px;border-bottom:2px solid var(--line);margin:46px 0 16px;scroll-margin-top:14px}
+h3{font-size:18px;margin:24px 0 8px;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+p,li{font-size:15px;color:#334155}
+ul,ol{margin:8px 0 16px 22px}
+li{margin-bottom:6px}
+a{color:var(--brand)}
+table{width:100%;border-collapse:collapse;margin:14px 0;background:var(--card);border:1px solid var(--line);border-radius:10px;overflow:hidden;font-size:14px}
+th,td{text-align:left;padding:9px 12px;border-bottom:1px solid var(--line)}
+th{background:#f0f4f9;font-weight:700;color:#1f2937}
+tr:last-child td{border-bottom:none}
+code,.menu{background:#eef2f7;padding:2px 7px;border-radius:5px;font-family:'SFMono-Regular',Consolas,Menlo,monospace;font-size:12.5px;font-weight:600;color:var(--brand)}
+.menu{background:#e0ebfa;white-space:nowrap}
+.darkcode{background:var(--code);color:#e2e8f0;padding:12px 16px;border-radius:10px;overflow-x:auto;margin:10px 0;font-family:Consolas,Menlo,monospace;font-size:13px;line-height:1.6}
+.callout{background:#eff6ff;border-left:4px solid var(--brand);border-radius:8px;padding:13px 16px;margin:14px 0;font-size:14.5px}
+.callout.warn{background:#fffbeb;border-left-color:#d97706}
+.callout.ok{background:#ecfdf5;border-left-color:var(--green)}
+/* Accordion procedures */
+details{background:var(--card);border:1px solid var(--line);border-radius:12px;margin-bottom:10px;overflow:hidden}
+summary{cursor:pointer;padding:14px 18px;font-size:15px;font-weight:700;list-style:none;display:flex;align-items:center;gap:12px;justify-content:space-between}
+summary::-webkit-details-marker{display:none}
+summary .t{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+summary .idx{display:inline-flex;width:26px;height:26px;border-radius:8px;background:var(--brand);color:#fff;align-items:center;justify-content:center;font-size:13px;font-weight:700;flex-shrink:0}
+summary .caret{color:#94a3b8;transition:.15s;font-size:13px}
+details[open] summary{border-bottom:1px solid var(--line);background:#fafcff}
+details[open] summary .caret{transform:rotate(90deg)}
+details .body{padding:16px 20px}
+.badge{display:inline-block;background:#e0ebfa;color:var(--brand);font-size:11.5px;font-weight:700;padding:2px 8px;border-radius:999px;white-space:nowrap}
+.badge.offline{background:#dcfce7;color:#047857}
+.badge.free{background:#fef3c7;color:#b45309}
+.gloss dt{font-weight:700;margin-top:10px}
+.gloss dd{margin-left:0;color:var(--muted);font-size:14.5px}
+footer{margin-top:52px;padding-top:20px;border-top:1px solid var(--line);font-size:13.5px;color:var(--muted);display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
+</style>
+</head>
+<body>
+<div class="layout">
+  <aside class="sidebar">
+    <h1>📘 DevStat</h1>
+    <div class="tag">User Guide &amp; Statistics Manual — SPSS-style</div>
+    <nav id="toc">
+      <div class="grp">Start</div>
+      <a href="#start">1 · Getting Started</a>
+      <a href="#data">2 · Preparing Data</a>
+      <div class="grp">Analyze ▸</div>
+      <a href="#desc">3 · Descriptive Statistics</a>
+      <a href="#compare">4 · Compare Means</a>
+      <a href="#np">5 · Nonparametric Tests</a>
+      <a href="#corr">6 · Correlations</a>
+      <a href="#reg">7 · Regression</a>
+      <a href="#surv">8 · Survival Analysis</a>
+      <a href="#diag">9 · Diagnostic Tests</a>
+      <a href="#factor">10 · Factor &amp; Reliability</a>
+      <a href="#graphs">11 · Graphs</a>
+      <div class="grp">Understand</div>
+      <a href="#interp">12 · Interpreting Output</a>
+      <a href="#choose">13 · Choosing a Test</a>
+      <a href="#glossary">14 · Glossary &amp; FAQ</a>
+    </nav>
+  </aside>
+
+  <main class="main">
+    <div class="breadcrumb"><a href="https://dpsoncology.com/">dpsoncology.com</a> › DevStat Manual</div>
+
+    <div class="hero">
+      <h2>DevStat — User Guide &amp; Statistics Manual</h2>
+      <p>Work through it like an SPSS manual: follow the <b>menu path</b>, click through the steps, then read the interpretable output. Same steps on the <b>Online app</b> and the fully-offline <b>Desktop Edition</b>.</p>
+      <div class="chips">
+        <span class="chip">🧭 Menu-based navigation</span><span class="chip">📊 40+ analyses</span>
+        <span class="chip">🔒 Desktop Edition offline</span><span class="chip">☁️ Online app</span>
+      </div>
+    </div>
+
+    <div class="callout ok"><b>Desktop Edition?</b> <a href="https://dpsoncology.com/desktop-edition.html">Download it</a> and it runs entirely on your machine — data never leaves. Your account, free trial and licence are shared with the <a href="https://dpsoncology.com">online app</a>: sign in once, upgrade once.</div>
+
+    <!-- 1 Getting Started -->
+    <h2 class="sect" id="start">1 · Getting Started</h2>
+    <details open><summary><span class="t"><span class="idx">1</span> Launch &amp; first run</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p><b>Online:</b> open <a href="https://dpsoncology.com">https://dpsoncology.com</a> and sign in.<br>
+        <b>Desktop Edition:</b> extract the zip, double-click <code>DevStatDesktopLauncher</code> (Windows) or <code>DevStat Desktop Edition.app</code> (macOS). It opens in a clean, frameless browser window.</p>
+        <p><b>First run:</b> create a free account → upload a file → inspect it → run an analysis. Your first <b>5 analyses + 5 charts</b> are free; then a £25/year licence unlocks unlimited use (shared with the online app).</p>
+      </div>
+    </details>
+
+    <!-- 2 Data -->
+    <h2 class="sect" id="data">2 · Preparing Data</h2>
+    <p>One row per subject, one column per variable. DevStat reads <code>.csv</code>, Excel (<code>.xlsx/.xls</code>), SPSS (<code>.sav</code>) and Stata (<code>.dta</code>).</p>
+    <details><summary><span class="t"><span class="idx">2</span> Set types &amp; labels (Variable View)</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p>Open <span class="menu">Data ▸ Variable View</span>. For each variable set: type (Numeric / Date / String), measure (Nominal / Ordinal / Scale), decimals, label and value labels (e.g. code <code>1 = Male, 2 = Female</code>).</p>
+      </div>
+    </details>
+    <details><summary><span class="t"><span class="idx">3</span> Transform · compute &amp; recode</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p><b>Compute a new variable:</b> <span class="menu">Data ▸ Transform ▸ Compute</span> — enter a name and an expression (e.g. <code>bmi = weight / (height/100)^2</code>).<br>
+        <b>Recode:</b> <span class="menu">Data ▸ Transform ▸ Recode</span> — convert a value into a new code (e.g. group ages into bands).</p>
+      </div>
+    </details>
+
+    <!-- 3 Descriptive -->
+    <h2 class="sect" id="desc">3 · Descriptive Statistics</h2>
+    <details><summary><span class="t"><span class="idx">4</span> Frequencies</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p><b>Path:</b> <span class="menu">Analyze ▸ Descriptive ▸ Frequencies</span><br><b>Steps:</b> select one or more categorical/numeric variables → Run.<br><b>Output:</b> count, percent, cumulative percent for each category/value.</p>
+      </div>
+    </details>
+    <details><summary><span class="t"><span class="idx">5</span> Descriptives</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p><b>Path:</b> <span class="menu">Analyze ▸ Descriptive ▸ Descriptives</span><br><b>Steps:</b> select continuous variables; optionally add <b>Group by</b> for a subgroup breakdown → Run.<br><b>Output:</b> n, mean, SD, standard error, min/max and 95% CI of the mean.</p>
+      </div>
+    </details>
+    <details><summary><span class="t"><span class="idx">6</span> Crosstabs</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p><b>Path:</b> <span class="menu">Analyze ▸ Descriptive ▸ Crosstabs</span><br><b>Steps:</b> choose a row variable and a column variable → Run.<br><b>Output:</b> count table with expected counts; add Chi-square to test association.</p>
+      </div>
+    </details>
+    <details><summary><span class="t"><span class="idx">7</span> Explore (normality &amp; outliers)</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p><b>Path:</b> <span class="menu">Analyze ▸ Descriptive ▸ Explore</span><br><b>Steps:</b> select a numeric variable (optionally a factor) → Run.<br><b>Output:</b> skewness/kurtosis, Kolmogorov–Smirnov and Shapiro–Wilk normality tests, boxplots/outliers.</p>
+      </div>
+    </details>
+
+    <!-- 4 Compare Means -->
+    <h2 class="sect" id="compare">4 · Compare Means</h2>
+    <details><summary><span class="t"><span class="idx">8</span> Independent-samples t-test</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p><b>Path:</b> <span class="menu">Analyze ▸ Compare ▸ Compare Means</span> (Independent t-test)<br><b>Steps:</b> dependent variable (continuous) + grouping variable (2 groups) → Run.<br><b>Output:</b> mean difference, 95% CI, t, df, p; Levene's test tells you whether to read the equal- or unequal-variance row.</p>
+      </div>
+    </details>
+    <details><summary><span class="t"><span class="idx">9</span> Paired / related t-test</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p><b>Path:</b> <span class="menu">Analyze ▸ Compare ▸ Paired t-test</span><br><b>Steps:</b> select the two repeated measures → Run.<br><b>Output:</b> mean within-pair difference, CI, t and p.</p>
+      </div>
+    </details>
+    <details><summary><span class="t"><span class="idx">10</span> One-way ANOVA</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p><b>Path:</b> <span class="menu">Analyze ▸ Compare ▸ One-way ANOVA</span><br><b>Steps:</b> dependent (continuous) + factor (2+ groups) → Run.<br><b>Output:</b> F ratio and p; effect size (eta²); a post-hoc comparison if you request one.</p>
+      </div>
+    </details>
+    <details><summary><span class="t"><span class="idx">11</span> Factorial ANOVA</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p><b>Path:</b> <span class="menu">Analyze ▸ Compare ▸ Factorial ANOVA</span><br><b>Steps:</b> dependent + two factors → Run.<br><b>Output:</b> main effects for each factor and the interaction; F and p for each.</p>
+      </div>
+    </details>
+
+    <!-- 5 Nonparametric -->
+    <h2 class="sect" id="np">5 · Nonparametric Tests</h2>
+    <p>Use when data are not normal, are ordinal, or are small samples. All under <span class="menu">Analyze ▸ Compare ▸ Non-parametric</span>.</p>
+    <table>
+      <thead><tr><th>Data</th><th>Test (menu name)</th></tr></thead>
+      <tbody>
+        <tr><td>2 independent groups</td><td>Mann-Whitney U</td></tr>
+        <tr><td>2 related measures</td><td>Wilcoxon Signed-Rank</td></tr>
+        <tr><td>3+ independent groups</td><td>Kruskal-Wallis</td></tr>
+        <tr><td>3+ related measures</td><td>Friedman</td></tr>
+        <tr><td>Related dichotomous</td><td>McNemar's</td></tr>
+        <tr><td>One variable vs a value</td><td>Sign / Binomial / Runs</td></tr>
+        <tr><td>Distribution fit</td><td>Kolmogorov-Smirnov</td></tr>
+      </tbody>
+    </table>
+
+    <!-- 6 Correlation -->
+    <h2 class="sect" id="corr">6 · Correlations</h2>
+    <details><summary><span class="t"><span class="idx">12</span> Pearson / Spearman</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p><b>Path:</b> <span class="menu">Analyze ▸ Correlation</span><br><b>Steps:</b> select two or more continuous variables; choose Pearson (linear, normal) or Spearman (monotonic/ordinal) → Run.<br><b>Output:</b> correlation matrix with r and p for each pair.</p>
+      </div>
+    </details>
+    <details><summary><span class="t"><span class="idx">13</span> Partial correlation</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p><b>Path:</b> <span class="menu">Analyze ▸ Correlation ▸ Partial</span><br><b>Steps:</b> variables + one or more control variables → Run.<br><b>Output:</b> correlation adjusted for the controls.</p>
+      </div>
+    </details>
+
+    <!-- 7 Regression -->
+    <h2 class="sect" id="reg">7 · Regression</h2>
+    <details><summary><span class="t"><span class="idx">14</span> Linear regression</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p><b>Path:</b> <span class="menu">Analyze ▸ Regression ▸ Linear</span><br><b>Steps:</b> dependent (continuous) + one or more independents → Run (Enter method).<br><b>Output:</b> R², ANOVA for the model, coefficients with SE, 95% CI and p for each predictor.</p>
+      </div>
+    </details>
+    <details><summary><span class="t"><span class="idx">15</span> Logistic regression</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p><b>Path:</b> <span class="menu">Analyze ▸ Regression ▸ Logistic</span><br><b>Steps:</b> dependent (binary) + independents → Run.<br><b>Output:</b> odds ratios with 95% CI and p; model fit (-2 log likelihood, pseudo-R²).</p>
+      </div>
+    </details>
+    <details><summary><span class="t"><span class="idx">16</span> Mixed model (clustered / repeated)</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p><b>Path:</b> <span class="menu">Analyze ▸ Regression ▸ Mixed Model</span><br><b>Steps:</b> dependent, fixed effects, random effects → Run.<br><b>Output:</b> fixed-effect coefficients with CI; random-effect variance; for repeated measures or nested data.</p>
+      </div>
+    </details>
+
+    <!-- 8 Survival -->
+    <h2 class="sect" id="surv">8 · Survival Analysis</h2>
+    <details><summary><span class="t"><span class="idx">17</span> Kaplan-Meier + log-rank</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p><b>Path:</b> <span class="menu">Analyze ▸ Survival ▸ Kaplan-Meier</span><br><b>Steps:</b> time variable + status variable (event=1) + optional factor → Run.<br><b>Output:</b> survival curve, median survival, and a log-rank test comparing groups.</p>
+      </div>
+    </details>
+    <details><summary><span class="t"><span class="idx">18</span> Cox regression</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p><b>Path:</b> <span class="menu">Analyze ▸ Survival ▸ Cox Regression</span><br><b>Steps:</b> time, status, covariates → Run.<br><b>Output:</b> hazard ratios with 95% CI and p; a forest plot of the estimates.</p>
+      </div>
+    </details>
+    <details><summary><span class="t"><span class="idx">19</span> Life tables</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p><b>Path:</b> <span class="menu">Analyze ▸ Survival ▸ Life Tables</span><br><b>Steps:</b> time, status → Run.<br><b>Output:</b> interval-based survival, hazard and cumulative survival rates.</p>
+      </div>
+    </details>
+
+    <!-- 9 Diagnostic -->
+    <h2 class="sect" id="diag">9 · Diagnostic Tests</h2>
+    <details><summary><span class="t"><span class="idx">20</span> Sensitivity / specificity &amp; ROC</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p><b>Path:</b> <span class="menu">Analyze ▸ Diagnostic Test</span> (then <span class="menu">Charts ▸ ROC curve</span>)<br><b>Steps:</b> test column + gold-standard column + positive code → Run.<br><b>Output:</b> sensitivity, specificity, positive/negative predictive value, and an ROC curve with AUC (and optimal cut-off).</p>
+      </div>
+    </details>
+
+    <!-- 10 Factor -->
+    <h2 class="sect" id="factor">10 · Factor Analysis &amp; Reliability</h2>
+    <details><summary><span class="t"><span class="idx">21</span> Factor analysis</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p><b>Path:</b> <span class="menu">Analyze ▸ Factor Analysis</span><br><b>Steps:</b> select the items; choose number of factors and rotation → Run.<br><b>Output:</b> KMO/Bartlett checks, factor loadings and explained variance.</p>
+      </div>
+    </details>
+    <details><summary><span class="t"><span class="idx">22</span> Reliability (Cronbach's α)</span><span class="caret">▶</span></summary>
+      <div class="body">
+        <p><b>Path:</b> <span class="menu">Analyze ▸ Factor ▸ Reliability</span><br><b>Steps:</b> select the scale items → Run.<br><b>Output:</b> Cronbach's α (α ≥ 0.7 is usually acceptable) and item-total correlations.</p>
+      </div>
+    </details>
+
+    <!-- 11 Graphs -->
+    <h2 class="sect" id="graphs">11 · Graphs</h2>
+    <p>All under <span class="menu">Graphs</span>. Pick by purpose — 40+ types are available.</p>
+    <table>
+      <thead><tr><th>Purpose</th><th>Chart</th></tr></thead>
+      <tbody>
+        <tr><td>Distribution</td><td>Histogram, boxplot, violin, Q-Q</td></tr>
+        <tr><td>Two continuous</td><td>Scatter (with regression line)</td></tr>
+        <tr><td>Compare groups</td><td>Boxplot, error-bar bar, violin</td></tr>
+        <tr><td>Counts</td><td>Bar, Pareto</td></tr>
+        <tr><td>Time to event</td><td>Kaplan-Meier</td></tr>
+        <tr><td>Accuracy</td><td>ROC curve</td></tr>
+        <tr><td>Estimates</td><td>Forest plot</td></tr>
+        <tr><td>Multi-variable</td><td>Correlation heatmap, radar, parallel coordinates</td></tr>
+      </tbody>
+    </table>
+    <p>Charts are interactive (hover to inspect) and exportable for manuscripts.</p>
+
+    <!-- 12 Interpreting -->
+    <h2 class="sect" id="interp">12 · Interpreting the Output</h2>
+    <p>Every result comes with a plain-English interpretation. The three numbers to read first:</p>
+    <ul>
+      <li><b>p-value</b> — chance of the data if there were really no effect. Report the value, not just "&lt;0.05".</li>
+      <li><b>95% confidence interval</b> — the range of plausible true values. Excluding the null value is consistent with significance.</li>
+      <li><b>Effect size</b> — how big the difference is (Cohen's d, eta², odds/hazard ratio). Often more clinically important than p.</li>
+    </ul>
+    <div class="callout warn"><b>p &lt; 0.05 is not special.</b> Tiny p on a huge sample or a large effect on a tiny sample both deserve a sentence about clinical importance. Always report effect sizes + CIs too.</div>
+
+    <!-- 13 Choose -->
+    <h2 class="sect" id="choose">13 · Choosing the Right Test</h2>
+    <p>Choose by the <b>type of outcome</b> (continuous / categorical / survival) and the <b>question</b> (compare / associate / predict).</p>
+    <table>
+      <thead><tr><th>Question</th><th>Outcome</th><th>Test</th></tr></thead>
+      <tbody>
+        <tr><td>2 groups differ?</td><td>Continuous, normal</td><td>Independent t-test</td></tr>
+        <tr><td>2 related measures?</td><td>Continuous</td><td>Paired t-test / Wilcoxon</td></tr>
+        <tr><td>&gt;2 groups differ?</td><td>Continuous</td><td>One-way ANOVA / Kruskal-Wallis</td></tr>
+        <tr><td>Association?</td><td>Counts</td><td>Chi-square / Fisher's exact</td></tr>
+        <tr><td>Related?</td><td>Two continuous</td><td>Pearson / Spearman</td></tr>
+        <tr><td>Predict?</td><td>Continuous</td><td>Linear regression</td></tr>
+        <tr><td>Predict?</td><td>Binary</td><td>Logistic regression</td></tr>
+        <tr><td>Time to event?</td><td>Survival</td><td>Kaplan-Meier + Cox</td></tr>
+      </tbody>
+    </table>
+    <div class="callout"><b>Check assumptions first:</b> normality &amp; homogeneity of variance for t-test/ANOVA; independence; no severe multicollinearity in regression; proportional hazards for Cox. Use <span class="menu">Descriptive ▸ Explore</span> to check normality.</div>
+    <h3>Effect-size benchmarks</h3>
+    <table>
+      <thead><tr><th>Statistic</th><th>Small</th><th>Medium</th><th>Large</th></tr></thead>
+      <tbody>
+        <tr><td>Cohen's d</td><td>0.2</td><td>0.5</td><td>0.8</td></tr>
+        <tr><td>eta²</td><td>0.01</td><td>0.06</td><td>0.14</td></tr>
+        <tr><td>Cramer's V</td><td>0.10</td><td>0.30</td><td>0.50</td></tr>
+        <tr><td>r</td><td>0.10</td><td>0.30</td><td>0.50</td></tr>
+      </tbody>
+    </table>
+
+    <!-- 14 Glossary / FAQ -->
+    <h2 class="sect" id="glossary">14 · Glossary &amp; FAQ</h2>
+    <dl class="gloss">
+      <dt>p-value</dt><dd>Probability of the data if there were no effect — not the probability the effect doesn't exist.</dd>
+      <dt>Confidence interval</dt><dd>Range of plausible true values for the effect.</dd>
+      <dt>Effect size</dt><dd>Standardised magnitude of a difference/association.</dd>
+      <dt>Null hypothesis</dt><dd>The "no effect" baseline the test is evaluated against.</dd>
+      <dt>Power</dt><dd>Chance of detecting a real effect; grows with sample size / effect size.</dd>
+      <dt>Type I / II error</dt><dd>False positive / false negative.</dd>
+      <dt>Hazard ratio</dt><dd>Ratio of event rates over time (Cox); &lt;1 favours the first group.</dd>
+    </dl>
+    <details><summary>Is my data private on the Desktop Edition? <span class="badge offline">Offline</span></summary><div class="body"><p>Yes — the engine runs on your machine; data is never uploaded. Only your account and subscription go online.</p></div></details>
+    <details><summary>Do I need to register? <span class="badge">Account</span></summary><div class="body"><p>Yes — one free account works on both the online app and the Desktop Edition.</p></div></details>
+    <details><summary>What formats can I upload?</summary><div class="body"><p>CSV, Excel (.xlsx/.xls), SPSS (.sav), Stata (.dta).</p></div></details>
+    <details><summary>How do I unlock unlimited use? <span class="badge free">£25 / year</span></summary><div class="body"><p>Upgrade to a yearly licence — unlimited on both the online app and the Desktop Edition.</p></div></details>
+    <details><summary>Troubleshooting: chart empty / test blocked</summary><div class="body"><p>Check you've selected a column and have enough data; if blocked, you've used your free tier or need to sign in.</p></div></details>
+
+    <footer>
+      <div>DevStat · Built for clinicians &amp; researchers.</div>
+      <div><a href="https://dpsoncology.com/desktop-edition.html">Desktop Edition</a> · <a href="https://dpsoncology.com">Online app</a> · <a href="https://github.com/psdevraj-creator/DevStat-Statistics-app">GitHub</a></div>
+    </footer>
+  </main>
+</div>
+</body>
+</html>
