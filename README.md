@@ -1,191 +1,51 @@
 # DevStat — Medical Statistics Software
 
-[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/psdevraj-creator/DevStat-Statistics-app)
+[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://github.com/psdevraj-creator/DevStat-Statistics-app/codespaces)
 [![User Guide](https://img.shields.io/badge/%F0%9F%93%96-User_Guide_%26_Statistics_Manual-005eb8?style=for-the-badge)](https://psdevraj-creator.github.io/DevStat-Statistics-app/STATS_MANUAL.html)
 
 > **Try it instantly in your browser** — click the Codespaces badge above. No installation, no setup.
 
+A medical statistics application for statistical analysis and visualisation of clinical data.
 
-**A desktop application for statistical analysis and visualisation of medical and clinical data.**
+## Quick Start (Codespaces)
 
-DevStat provides an interactive, point-and-click interface for performing common medical statistical analyses without requiring programming knowledge. It features over 37 chart types, comprehensive statistical tests, survival analysis, diagnostic test evaluation, and a built-in eligibility engine that guides you to the right analysis.
+1. Click the **Open in GitHub Codespaces** badge above
+2. Wait ~2 minutes for setup to complete
+3. Run `bash codespace_setup/start.sh` in the terminal
+4. Open the forwarded port 8150 in your browser
 
----
+## Quick Start (Desktop)
 
-## Features
+Download the latest release from the [Releases page](https://github.com/psdevraj-creator/DevStat-Statistics-app/releases).
 
-- **Descriptive Statistics** — means, medians, frequencies, crosstabs, normality tests
-- **Group Comparisons** — t-tests, ANOVA, Mann-Whitney U, Wilcoxon, Kruskal-Wallis, chi-square
-- **Regression** — linear and logistic regression with stepwise variable selection
-- **Survival Analysis** — Kaplan-Meier curves, Cox proportional hazards regression, adjusted survival curves (dual exposure stratification with custom override values)
-- **Power Analysis** — sample size estimation, power calculation, and detectable effect size for t-tests, paired t-tests, ANOVA, and chi-square
-- **Diagnostic Tests** — sensitivity/specificity, ROC curves with AUC
-- **Factor Analysis & Reliability** — exploratory factor analysis, Cronbach's alpha
-- **37+ Chart Types** — histogram, boxplot, scatter, violin, ECDF, Q-Q, Pareto, control chart, Sankey, treemap, swimmer plot, volcano plot, PCA scatter, correlation heatmap, Bland-Altman, and more
-- **Chart Eligibility Engine** — warns you when variable selections don't match chart requirements and suggests alternatives
-- **Interactive Charts** — zoom, pan, hover, download as PNG; charts now centred and capped at journal-figure width
-- **Publication-Quality Exports** — matplotlib/seaborn static export for journal figures
-- **Output Panel** — review, compare, and export all analysis results
-- **Wizard** — describe your research question in plain English and get guided to the right test
-- **Save** - Save your work and reload . Files saved as .devstat files
-
----
-
-## Download
-
-**End users:** Download the latest portable release from the [Releases](https://github.com/psdevraj-creator/DevStat-Statistics-app/releases) page.
-
-1. Download `DevStat-v1.2.0.zip`
-2. Unzip to any folder
-3. Double-click `DevStat.exe`
-4. Click **Start** to launch the server (the launcher now automatically clears any stale port)
-5. Open your browser to `http://localhost:8150`
-
-No Python installation required. The app runs entirely offline (no internet connection needed).
-
----
-
-## v1.2.0 Changelog
-
-- **Adjusted Survival Curves** — new Cox-model adjusted survival curves with dual-exposure stratification (Cartesian product) and custom adjuster value overrides. Full-page journal-figure width.
-- **Power Analysis** — redesigned with question-first layout: "How many patients do I need?", "Is my study adequately powered?", "What effect size can I detect?"
-- **Faster Startup** — heavy imports (scipy, lifelines, sklearn) now lazy-loaded. Start button goes from click to "Ready" in ~3 seconds.
-- **Stop Button Fix** — no more race condition where Stop appeared not to work. Also kills stale server processes on the port.
-- **Graph Sizing** — all charts now capped at 850px wide, centred on page, with `responsive: true` for clean journal-figure appearance.
-- **KM Table Reordered** — survival curves now render above the results table (you asked for it).
-- **Label Improvements** — all analysis pages updated with clinician-friendly labels (e.g., "Enter" → "All at once", "Factor 1" → "First grouping variable", "Dependent variable" → "Outcome variable"). Rotation options in Factor Analysis now include descriptions.
-- **Cluster Analysis** — Silhouette score now colour-coded (green/yellow/red) with interpretation tooltip.
-- **Correlation** — method labels now explain Pearson/Spearman/Kendall use cases.
-
----
-
-## Quick Start
-
-1. **Launch** — double-click `DevStat.exe`, click **Start**, then click **Open App**
-2. **Upload data** — click the Upload button and select a CSV or Excel file
-3. **Explore** — browse your data in the Data View tab, check variable types
-4. **Analyse** — choose an analysis from the menu (e.g., Compare Groups, Correlation)
-5. **Visualise** — open the Graphs page to create interactive charts
-6. **Review** — all results appear in the Output panel
-
----
-
-## Screenshots
-
-<img width="650" height="462" alt="GUI" src="https://github.com/user-attachments/assets/dcf35354-08ad-4d37-9e47-1ddc72c07a11" />
-
-<img width="651" height="460" alt="GUI Start" src="https://github.com/user-attachments/assets/b5df6a54-f4f9-4c27-b3d0-98e742aa1a89" />
-
-<img width="1912" height="995" alt="Main Screen" src="https://github.com/user-attachments/assets/5ef2716b-bc68-43fc-a9d9-11fca1520d13" />
-
-<img width="1882" height="942" alt="KM curve" src="https://github.com/user-attachments/assets/259aebd2-a490-4851-9fc8-65d267545a09" />
-
-<img width="1877" height="952" alt="Chart" src="https://github.com/user-attachments/assets/33cc58e9-f05a-487c-bab8-91c0e69c0f80" />
-
-<img width="1857" height="702" alt="COX" src="https://github.com/user-attachments/assets/f4a22b66-6823-4faf-994d-6a6f9868af40" />
-
----
-
-## System Requirements
-
-- **Windows 10 or later** (64-bit)
-- **4 GB RAM** (8 GB recommended for large datasets)
-- **1 GB free disk space**
-- No Python required (bundled with the portable release)
-
----
-
-## Development Setup
-
-To run from source:
+## Development
 
 ```bash
-# Python 3.14 required
 pip install -r requirements.txt
-
-# Start backend
-cd backend
-py -3.14 -m uvicorn app.main:create_app --factory
-
-# Open browser to http://localhost:8150
+cd backend && uvicorn app.main:create_app --factory --host 0.0.0.0 --port 8150
 ```
 
-To rebuild the frontend:
+See [SETUP.md](SETUP.md) for full instructions.
 
-```bash
-cd frontend
-npm install
-npm run build
-```
+## What's New in v1.2
 
----
+- **Faster loading** — pages now load only when you click them, so the app starts quicker
+- **Undo and redo buttons** — visible in the top toolbar at all times
+- **Better error messages** — if something goes wrong (e.g. loading data), a yellow message appears instead of a blank screen
+- **Cleaner output viewer** — the Results page is more reliable and shows a helpful message when empty
+- **No more hardcoded Python version** — the launcher detects whatever Python you have installed
+- **Fixed: data never silently fails** — errors loading datasets or columns now show a warning instead of being hidden
+- **Fixed: dead code removed** — old debug messages and unused chart types cleaned up
+- **Privacy improvement** — request logging no longer captures data content unless you specifically enable it with `DEVSTAT_LOG_BODY=true`
+- **Missing packages added** — `chardet`, `factor-analyzer`, `pingouin`, and `weasyprint` are now listed in `requirements.txt` and installed automatically
 
-## What's Not Included in This Release
+## Desktop Edition (fully offline)
 
-The following features have been removed from the public release:
+The **Desktop Edition** runs the whole analysis engine on your own machine:
 
-- **AI Assistant** — the natural-language analysis assistant required a DeepSeek API key and cloud LLM service. It is not included in this offline release.
-- **Syntax Editor** — previously used for running R code against the dataset. Not available in the Python-only engine.
+- **Data never leaves your computer** — every statistic computed locally. Nothing is uploaded for analysis.
+- **Opens in your own browser, app-style** (Chrome/Edge on Windows, Chrome/Safari on macOS) with no address bar — no Electron, no extra runtime.
+- **Register & subscribe online** — sign in / register / upgrade through the normal DevStat account (the same login works on the online app). Only account data goes online; your analysis stays local.
+- **Free 5 analyses + 5 charts**, then a **£25/year licence** for unlimited use.
 
----
-
-## Project Structure
-
-```
-DevStat/
-├── launcher_gui.py          # Desktop launcher (Tkinter GUI)
-├── launch_gui.bat           # Windows batch launcher
-├── requirements.txt         # Python dependencies
-├── .env.example             # Environment config template
-├── sample_*.csv             # Sample medical datasets
-├── backend/
-│   ├── app/                 # FastAPI backend
-│   │   ├── main.py          # Application factory
-│   │   ├── config.py        # Configuration
-│   │   ├── routers/         # API endpoints
-│   │   ├── services/        # Business logic
-│   │   ├── models/          # Data models
-│   │   └── eligibility.py   # Analysis eligibility engine
-│   └── static/              # Built frontend
-└── release_preparation/     # Release build workspace
-```
-
----
-
-## Limitations
-
-- Maximum upload file size: 50 MB
-- The app requires a local server (started automatically by the launcher)
-- Internet access is not required, but some matplotlib exports may attempt online font loading
-- For large datasets (>100,000 rows), some chart types may be slow
-
----
-
-## Privacy & Security
-
-- **All data stays on your machine.** DevStat runs a local server on `127.0.0.1:8150`. No data is sent to external servers.
-- The portable release contains no API keys, telemetry, or network callbacks.
-- Logs are stored locally and cleared on each restart.
-
----
-
-## License
-
-This project is provided for educational and research purposes.
-
----
-
-## Contributing
-
-Contributions are welcome. Please open an issue or pull request on GitHub.
-
----
-
-## Offline desktop app
-
-DevStat also ships as an **offline desktop app** that runs the analysis engine
-100% on your machine (data never leaves it). See [docs/OFFLINE_DESKTOP.md](docs/OFFLINE_DESKTOP.md)
-for how it works and how to build it with uild_offline.ps1.
-
-- Online (exam practice): https://devstat-statistics-app-991466352708.europe-west1.run.app
-- Licence: free trial + £25/yr (occasional phone-home; works offline between checks)
+**Download:** grab the zip for your OS from the [Releases](https://github.com/psdevraj-creator/DevStat-Statistics-app/releases) page — extract, then double-click **DevStatDesktopLauncher** (Windows) or **DevStat Desktop Edition.app** (macOS).

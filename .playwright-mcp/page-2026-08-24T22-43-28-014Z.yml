@@ -1,0 +1,51 @@
+- generic [ref=e3]:
+  - banner [ref=e4]:
+    - generic [ref=e5] [cursor=pointer]:
+      - img "radar-chart" [ref=e7]
+      - generic [ref=e11]:
+        - generic [ref=e12]: DevStat
+        - generic [ref=e13]: Medical Statistics
+    - generic [ref=e14]:
+      - img "save" [ref=e16] [cursor=pointer]
+      - img "folder-open" [ref=e20] [cursor=pointer]
+    - generic [ref=e23]:
+      - img "undo" [ref=e25]
+      - img "redo" [ref=e29]
+    - generic [ref=e32]:
+      - radiogroup "segmented control" [ref=e34]:
+        - generic [ref=e35]:
+          - generic [ref=e36] [cursor=pointer]:
+            - radio "Exam" [checked]
+            - generic "Exam" [ref=e37]
+          - generic [ref=e38] [cursor=pointer]:
+            - radio "Live"
+            - generic "Live" [ref=e39]
+      - button "login Sign in" [ref=e41] [cursor=pointer]:
+        - img "login" [ref=e43]
+        - generic [ref=e46]: Sign in
+      - img "question-circle" [ref=e48] [cursor=pointer]
+      - img "question-circle" [ref=e53] [cursor=pointer]
+  - menu [ref=e58]:
+    - menuitem [ref=e59] [cursor=pointer]:
+      - img "table" [ref=e60]
+      - text: Data
+    - menuitem [ref=e63] [cursor=pointer]:
+      - img "fund" [ref=e64]
+      - text: Analyze
+    - menuitem [ref=e67] [cursor=pointer]:
+      - img "apartment" [ref=e68]
+      - text: Survival
+    - menuitem [ref=e71] [cursor=pointer]:
+      - img "bar-chart" [ref=e72]
+      - text: Graphs
+    - menuitem [ref=e75] [cursor=pointer]:
+      - img "question-circle" [ref=e76]
+      - text: Wizard
+    - menuitem [ref=e80] [cursor=pointer]:
+      - img "crown" [ref=e81]
+      - text: Teaching
+    - menuitem [ref=e84] [cursor=pointer]:
+      - img "file-text" [ref=e85]
+      - text: Output
+    - menuitem [disabled]
+  - main [ref=e88]

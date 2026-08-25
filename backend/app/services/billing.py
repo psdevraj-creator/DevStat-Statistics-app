@@ -39,6 +39,14 @@ def price_id() -> str:
     return _env("DEVSTAT_STRIPE_PRICE_ID")
 
 
+def teaching_price_id() -> str:
+    return _env("DEVSTAT_TEACHING_PRICE_ID")
+
+
+def questionbank_price_id() -> str:
+    return _env("DEVSTAT_QB_PRICE_ID")
+
+
 def webhook_secret() -> str:
     return _env("DEVSTAT_STRIPE_WEBHOOK_SECRET", "STRIPE_WEBHOOK_SECRET")
 
@@ -64,9 +72,9 @@ def _api():
     return stripe
 
 
-def create_checkout(uid: str, email: str = "", return_url: str = "") -> str:
+def create_checkout(uid: str, email: str = "", return_url: str = "", price: str = "") -> str:
     s = _api()
-    price = price_id()
+    price = price or price_id()
     if not price:
         raise ValueError("DevStat Stripe price not configured (DEVSTAT_STRIPE_PRICE_ID).")
     session = s.checkout.Session.create(
@@ -76,6 +84,42 @@ def create_checkout(uid: str, email: str = "", return_url: str = "") -> str:
         cancel_url=(return_url or "http://127.0.0.1:8150/"),
         client_reference_id=uid,
         subscription_data={"metadata": {"uid": uid, "app": "devstat", "plan": "pro"}},
+        customer_email=email or None,
+    )
+    return session.url
+
+
+def create_questionbank_checkout(uid: str, email: str = "", qid: str = "", price: str = "") -> str:
+    """A one-off £5 checkout that unlocks a single question bank."""
+    s = _api()
+    price = price or questionbank_price_id()
+    if not price:
+        raise ValueError("Question banks are not configured (set DEVSTAT_QB_PRICE_ID).")
+    session = s.checkout.Session.create(
+        mode="payment",
+        line_items=[{"price": price, "quantity": 1}],
+        success_url="http://127.0.0.1:8150/learning?paid=1",
+        cancel_url="http://127.0.0.1:8150/learning",
+        client_reference_id=uid,
+        metadata={"uid": uid, "app": "devstat", "plan": "qb", "qb_case": qid},
+        customer_email=email or None,
+    )
+    return session.url
+
+
+def create_teaching_checkout(uid: str, email: str = "", sid: str = "", price: str = "") -> str:
+    """A one-off £1 checkout that unlocks a single paid teaching case."""
+    s = _api()
+    price = price or teaching_price_id()
+    if not price:
+        raise ValueError("Teaching case purchases are not configured (set DEVSTAT_TEACHING_PRICE_ID).")
+    session = s.checkout.Session.create(
+        mode="payment",
+        line_items=[{"price": price, "quantity": 1}],
+        success_url="http://127.0.0.1:8150/teaching?paid=1",
+        cancel_url="http://127.0.0.1:8150/teaching",
+        client_reference_id=uid,
+        metadata={"uid": uid, "app": "devstat", "plan": "case", "teaching_case": sid},
         customer_email=email or None,
     )
     return session.url
@@ -109,6 +153,14 @@ def apply_webhook(event: dict, store) -> None:
         uid = data.get("client_reference_id") or (data.get("metadata") or {}).get("uid")
         cust = data.get("customer")
         meta = data.get("metadata") or {}
+        if meta.get("teaching_case") and uid:
+            # One-off £1 purchase of a single teaching case (nested-map write).
+            store.mark_teaching_owned(uid, str(meta["teaching_case"]))
+            return
+        if meta.get("qb_case") and uid:
+            # One-off £5 purchase of a question bank.
+            store.mark_questionbank_owned(uid, str(meta["qb_case"]))
+            return
         if uid and meta.get("app") in ("devstat", None):
             patch = {"stripe_customer_id": cust or ""}
             store.update_user(uid, patch)

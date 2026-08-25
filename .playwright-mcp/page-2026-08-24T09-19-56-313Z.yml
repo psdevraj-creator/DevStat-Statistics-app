@@ -1,0 +1,100 @@
+- generic [ref=f9e3]:
+  - banner [ref=f9e4]:
+    - generic [ref=f9e5] [cursor=pointer]:
+      - img "radar-chart" [ref=f9e7]
+      - generic [ref=f9e11]:
+        - generic [ref=f9e12]: DevStat
+        - generic [ref=f9e13]: Medical Statistics
+    - generic [ref=f9e14]:
+      - img "save" [ref=f9e16] [cursor=pointer]
+      - img "folder-open" [ref=f9e20] [cursor=pointer]
+    - generic [ref=f9e23]:
+      - img "undo" [ref=f9e25]
+      - img "redo" [ref=f9e29]
+    - generic [ref=f9e32]:
+      - button "login Sign in" [ref=f9e34] [cursor=pointer]:
+        - img "login" [ref=f9e36]
+        - generic [ref=f9e39]: Sign in
+      - img "question-circle" [ref=f9e41] [cursor=pointer]
+      - img "question-circle" [ref=f9e46] [cursor=pointer]
+  - menu [ref=f9e51]:
+    - menuitem [ref=f9e52] [cursor=pointer]:
+      - img "table" [ref=f9e53]
+      - text: Data
+    - menuitem [ref=f9e56] [cursor=pointer]:
+      - img "fund" [ref=f9e57]
+      - text: Analyze
+    - menuitem [ref=f9e60] [cursor=pointer]:
+      - img "apartment" [ref=f9e61]
+      - text: Survival
+    - menuitem [ref=f9e64] [cursor=pointer]:
+      - img "bar-chart" [ref=f9e65]
+      - text: Graphs
+    - menuitem [ref=f9e68] [cursor=pointer]:
+      - img "question-circle" [ref=f9e69]
+      - text: Wizard
+    - menuitem [ref=f9e73] [cursor=pointer]:
+      - img "file-text" [ref=f9e74]
+      - text: Output
+    - menuitem [disabled]
+  - alert [ref=f9e86]:
+    - img "exclamation-circle" [ref=f9e87]
+    - generic [ref=f9e90]:
+      - generic [ref=f9e91]: Online demo — exam practice only
+      - generic [ref=f9e92]: This online version runs on a shared public server. Use it for exam practice with the synthetic practice data only. Do NOT upload real, identifiable or confidential patient data — for real (anonymised) analysis, use the offline desktop app.
+  - main [ref=f9e77]:
+    - generic [ref=f9e166]:
+      - generic [ref=f9e167]:
+        - generic [ref=f9e168]: 📊
+        - heading "DevStat" [level=3] [ref=f9e169]
+        - text: Create your account
+        - button "Already have an account? Sign in" [ref=f9e231] [cursor=pointer]
+      - separator [ref=f9e173]
+      - generic [ref=f9e174]:
+        - tablist [ref=f9e175]:
+          - generic [ref=f9e177]:
+            - tab [selected] [ref=f9e179] [cursor=pointer]:
+              - generic [ref=f9e180]:
+                - img "mail" [ref=f9e181]
+                - text: Email
+            - tab [ref=f9e185] [cursor=pointer]:
+              - generic [ref=f9e186]:
+                - img "google" [ref=f9e187]
+                - text: Google
+        - tabpanel "mail Email" [ref=f9e192]:
+          - generic [ref=f9e193]:
+            - generic [ref=f9e195]:
+              - generic "Email" [ref=f9e197]: "* Email"
+              - generic [ref=f9e201]:
+                - img "user" [ref=f9e203]
+                - textbox "* Email" [ref=f9e206]:
+                  - /placeholder: you@example.com
+                  - text: devstat.e2e.20260824@example.com
+            - generic [ref=f9e233]:
+              - generic "Password (min 8 chars)" [ref=f9e235]: "* Password (min 8 chars)"
+              - generic [ref=f9e239]:
+                - img "lock" [ref=f9e241]
+                - textbox "* Password (min 8 chars)" [ref=f9e244]:
+                  - /placeholder: ••••••••
+                  - text: TestPass123!
+                - img "eye-invisible" [ref=f9e246] [cursor=pointer]
+            - generic [ref=f9e251]:
+              - generic "Confirm password" [ref=f9e253]: "* Confirm password"
+              - generic [ref=f9e254]:
+                - generic [ref=f9e257]:
+                  - img "lock" [ref=f9e259]
+                  - textbox "* Confirm password" [invalid] [ref=f9e262]:
+                    - /placeholder: ••••••••
+                    - text: Different999
+                  - generic [ref=f9e263]:
+                    - img "eye-invisible" [ref=f9e264] [cursor=pointer]
+                    - generic:
+                      - img "close-circle"
+                - generic [ref=f9e279]: Passwords do not match
+            - button "user Create account" [active] [ref=f9e268] [cursor=pointer]:
+              - img "user" [ref=f9e269]
+              - generic [ref=f9e230]: Create account
+            - button "Already have an account? Sign in" [ref=f9e272] [cursor=pointer]
+      - generic [ref=f9e274]:
+        - img "check-circle" [ref=f9e275]
+        - text: Email registrations must verify their address (this keeps out bots).

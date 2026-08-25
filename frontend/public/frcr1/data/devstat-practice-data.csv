@@ -1,0 +1,241 @@
+patient_id,age,sex,bmi,treatment,systolic_bp,cholesterol,smoking,pain_score,outcome,new_biomarker,gold_standard,followup_months,event_death
+1,65.0,Male,28.4,Drug B,91.0,6.0,Yes,4,Improved,0.66,0,57.5,0
+2,56.0,Male,21.4,Placebo,108.0,5.26,Yes,3,Improved,1.82,1,29.7,0
+3,68.0,Male,39.2,Drug B,109.0,6.01,No,4,Improved,1.4,1,38.0,0
+4,81.0,Female,27.6,Drug B,102.0,5.11,No,10,Not improved,1.84,0,21.0,0
+5,54.0,Female,27.5,Placebo,91.0,5.29,Yes,6,Not improved,0.0,0,5.1,0
+6,54.0,Female,30.6,Drug B,92.0,3.0,No,5,Not improved,0.85,1,20.9,0
+7,82.0,Male,29.4,Drug A,104.0,6.21,Yes,5,Improved,0.41,0,52.1,0
+8,70.0,Male,28.1,Drug A,106.0,5.58,No,3,Improved,0.12,1,15.0,0
+9,51.0,Male,23.0,Placebo,97.0,6.3,No,3,Not improved,1.44,1,35.7,1
+10,66.0,Male,29.4,Drug B,85.0,2.5,Yes,8,Not improved,2.0,0,47.5,0
+11,51.0,Female,36.4,Placebo,108.0,7.5,Yes,2,Improved,0.52,0,20.0,0
+12,51.0,Female,33.7,Drug A,103.0,5.05,Yes,3,Improved,0.71,0,45.1,1
+13,62.0,Female,35.0,Drug A,91.0,6.42,No,7,Not improved,0.47,1,17.7,1
+14,29.0,Male,24.4,Drug A,85.0,4.06,Yes,3,Improved,0.0,0,96.4,0
+15,32.0,Female,22.1,Drug B,85.0,5.87,No,4,Improved,0.16,0,77.7,1
+16,50.0,Female,26.4,Drug B,89.0,4.04,Yes,2,Improved,0.21,0,16.9,0
+17,43.0,Female,27.3,Drug B,87.0,4.51,No,4,Improved,2.75,1,17.3,0
+18,63.0,Female,32.5,Drug B,111.0,7.31,No,3,Improved,2.1,1,21.1,0
+19,44.0,Male,18.5,Placebo,90.0,4.99,No,4,Improved,0.6,1,45.0,0
+20,37.0,Male,34.6,Drug B,85.0,5.44,No,4,Improved,0.72,0,57.4,1
+21,80.0,Male,26.2,Drug B,94.0,6.16,No,1,Improved,2.05,1,89.4,0
+22,55.0,Female,24.9,Placebo,92.0,5.75,No,8,Not improved,2.63,1,65.4,1
+23,59.0,Male,21.9,Drug B,92.0,5.37,No,2,Improved,3.02,1,11.1,0
+24,37.0,Male,18.7,Drug B,92.0,5.6,No,4,Improved,0.69,1,64.4,1
+25,50.0,Male,31.1,Placebo,91.0,7.84,Yes,4,Improved,0.0,0,63.7,0
+26,60.0,Male,27.4,Placebo,103.0,5.14,No,10,Not improved,0.0,0,23.9,1
+27,41.0,Female,20.6,Drug A,85.0,5.42,No,3,Improved,1.39,1,54.5,0
+28,64.0,Female,20.5,Placebo,114.0,6.36,Yes,6,Not improved,0.92,0,27.0,1
+29,49.0,Male,25.3,Drug B,106.0,6.42,No,6,Not improved,2.49,1,41.0,1
+30,54.0,Male,35.3,Drug A,86.0,6.51,No,6,Not improved,1.53,1,96.2,0
+31,49.0,Male,25.7,Drug B,85.0,5.9,No,4,Improved,0.21,0,120.0,1
+32,86.0,Male,19.5,Placebo,127.0,3.94,No,4,Not improved,1.74,1,73.6,0
+33,58.0,Male,25.8,Drug B,97.0,7.0,No,1,Improved,0.0,0,30.5,0
+34,42.0,Male,25.6,Drug A,98.0,3.94,Yes,1,Improved,2.38,0,66.8,0
+35,70.0,Male,15.0,Drug B,104.0,5.53,No,5,Improved,0.15,1,23.9,1
+36,40.0,Female,26.7,Drug A,85.0,4.37,No,6,Improved,1.77,1,31.9,0
+37,61.0,Female,25.8,Drug A,100.0,5.13,Yes,6,Not improved,2.32,0,52.8,0
+38,29.0,Male,30.5,Drug A,85.0,5.56,No,3,Improved,0.51,0,31.2,0
+39,38.0,Male,36.2,Drug A,87.0,5.55,No,3,Improved,1.43,1,35.1,1
+40,61.0,Female,32.6,Drug A,99.0,5.66,Yes,8,Not improved,1.28,1,65.7,0
+41,69.0,Female,25.7,Drug A,109.0,6.98,No,5,Not improved,1.44,1,78.3,0
+42,61.0,Female,21.5,Drug B,103.0,5.7,Yes,3,Improved,1.74,0,62.6,0
+43,56.0,Female,39.9,Drug A,103.0,4.93,Yes,5,Improved,0.0,0,77.4,1
+44,53.0,Male,27.3,Drug B,93.0,6.26,Yes,4,Improved,1.88,0,15.4,0
+45,36.0,Male,27.1,Placebo,85.0,6.51,No,7,Not improved,0.32,1,16.6,1
+46,47.0,Female,26.9,Drug B,85.0,3.85,No,8,Not improved,0.26,0,46.4,1
+47,51.0,Male,28.0,Drug B,96.0,5.86,No,2,Not improved,0.11,0,90.7,0
+48,74.0,Female,26.3,Drug A,97.0,5.97,No,4,Improved,2.13,1,120.0,0
+49,63.0,Female,24.1,Drug A,99.0,4.87,Yes,2,Improved,0.0,0,68.7,0
+50,32.0,Female,24.3,Drug A,85.0,6.71,No,0,Improved,2.02,1,90.2,1
+51,63.0,Male,26.8,Drug A,97.0,5.03,No,4,Improved,3.42,1,16.9,0
+52,52.0,Female,24.3,Drug A,100.0,5.34,No,5,Improved,0.37,1,88.6,0
+53,48.0,Male,23.4,Drug A,88.0,5.01,Yes,6,Not improved,0.67,0,120.0,0
+54,67.0,Female,27.5,Drug A,99.0,5.22,No,5,Improved,0.0,0,29.8,0
+55,73.0,Female,25.7,Drug A,92.0,3.99,Yes,6,Improved,1.98,1,36.0,1
+56,72.0,Male,34.5,Drug B,106.0,3.62,No,9,Not improved,1.62,1,80.0,0
+57,45.0,Female,15.0,Drug A,90.0,6.95,No,6,Improved,1.02,1,56.5,0
+58,53.0,Female,32.5,Drug B,105.0,4.27,No,8,Not improved,0.94,0,6.8,1
+59,63.0,Male,33.2,Drug B,92.0,4.11,No,3,Improved,3.22,1,30.8,0
+60,73.0,Male,16.6,Placebo,112.0,2.83,No,4,Not improved,1.43,1,76.2,0
+61,51.0,Male,25.3,Drug A,91.0,4.5,No,3,Improved,2.25,1,44.9,1
+62,55.0,Male,25.1,Placebo,111.0,3.74,No,2,Improved,0.44,1,24.9,1
+63,41.0,Male,20.0,Drug B,85.0,7.01,No,10,Not improved,0.74,1,76.7,1
+64,40.0,Female,23.1,Drug A,85.0,6.31,No,3,Improved,2.03,1,70.4,1
+65,70.0,Male,21.4,Placebo,113.0,4.44,No,7,Not improved,1.84,0,23.9,0
+66,78.0,Male,35.8,Placebo,115.0,7.68,No,7,Not improved,0.82,0,19.0,0
+67,57.0,Female,31.7,Drug A,89.0,6.28,No,3,Improved,0.22,0,120.0,0
+68,73.0,Male,33.4,Drug A,105.0,4.84,No,9,Not improved,0.5,0,120.0,0
+69,63.0,Female,30.6,Placebo,112.0,2.5,No,2,Improved,0.0,0,43.0,1
+70,48.0,Male,21.4,Placebo,85.0,7.72,No,7,Not improved,1.04,0,44.9,0
+71,63.0,Male,24.4,Drug A,98.0,3.67,Yes,5,Not improved,1.29,0,50.5,0
+72,81.0,Female,29.4,Drug A,103.0,3.39,No,1,Improved,0.09,0,69.8,0
+73,57.0,Female,20.9,Drug B,100.0,6.32,No,5,Not improved,1.18,1,38.0,0
+74,81.0,Female,30.6,Drug B,94.0,7.88,No,3,Improved,1.84,1,22.5,0
+75,19.0,Female,25.8,Drug B,85.0,6.72,No,2,Improved,0.11,0,58.4,0
+76,70.0,Female,25.1,Drug B,102.0,5.82,No,2,Improved,1.54,1,35.6,0
+77,59.0,Male,30.6,Drug B,104.0,5.85,No,4,Not improved,2.39,0,60.5,1
+78,54.0,Male,29.2,Placebo,97.0,6.14,No,6,Not improved,0.28,0,46.6,1
+79,59.0,Female,25.2,Drug A,89.0,6.03,Yes,0,Improved,0.18,0,77.0,1
+80,28.0,Female,32.8,Drug A,89.0,5.51,No,4,Improved,0.0,0,25.7,0
+81,55.0,Female,21.6,Placebo,87.0,5.31,Yes,3,Improved,2.27,1,22.3,0
+82,63.0,Male,30.1,Placebo,86.0,5.13,No,4,Not improved,1.44,1,24.6,0
+83,80.0,Male,30.0,Drug B,109.0,4.37,No,2,Improved,0.0,0,85.7,0
+84,50.0,Female,25.5,Drug B,85.0,4.89,No,5,Not improved,1.69,0,82.9,0
+85,46.0,Male,28.6,Drug A,85.0,3.34,Yes,4,Improved,1.78,0,31.3,0
+86,50.0,Female,20.7,Drug B,92.0,5.09,Yes,5,Improved,0.0,0,15.0,1
+87,72.0,Female,31.6,Drug B,102.0,4.11,No,0,Improved,0.0,0,120.0,1
+88,63.0,Male,26.1,Drug A,92.0,3.99,Yes,3,Improved,1.41,0,74.9,0
+89,50.0,Female,24.4,Drug A,85.0,5.4,Yes,3,Improved,0.98,1,16.2,0
+90,66.0,Female,32.2,Drug B,103.0,6.73,Yes,4,Improved,2.31,1,29.0,0
+91,59.0,Male,23.5,Drug A,99.0,6.21,No,7,Not improved,0.0,0,108.1,1
+92,73.0,Female,20.0,Drug A,102.0,3.47,No,2,Improved,2.4,1,120.0,1
+93,47.0,Female,19.2,Drug A,101.0,4.11,No,2,Improved,0.0,0,120.0,0
+94,53.0,Female,30.0,Drug A,85.0,6.23,No,2,Improved,1.16,0,72.8,1
+95,52.0,Male,20.6,Drug A,85.0,4.12,No,8,Not improved,0.51,0,55.6,1
+96,36.0,Female,35.8,Placebo,85.0,4.95,No,6,Not improved,0.74,1,13.1,0
+97,62.0,Male,16.6,Drug B,93.0,5.81,No,6,Improved,1.23,1,48.1,1
+98,62.0,Male,35.5,Placebo,105.0,4.13,Yes,6,Not improved,2.22,1,14.7,0
+99,58.0,Female,28.1,Placebo,98.0,5.32,Yes,5,Not improved,0.6,0,22.5,1
+100,54.0,Male,26.5,Drug B,91.0,3.73,Yes,0,Improved,2.13,1,79.9,1
+101,37.0,Male,24.3,Drug A,85.0,4.54,No,0,Improved,2.28,0,46.5,0
+102,52.0,Female,29.0,Drug B,99.0,5.55,No,0,Improved,0.19,1,36.0,0
+103,53.0,Female,26.8,Drug B,87.0,3.45,No,3,Improved,1.96,0,43.5,0
+104,46.0,Female,32.5,Placebo,101.0,5.68,Yes,7,Not improved,0.59,0,120.0,0
+105,56.0,Female,27.6,Drug B,93.0,5.18,Yes,4,Not improved,0.79,1,17.5,1
+106,64.0,Male,27.8,Drug A,101.0,5.81,No,5,Improved,0.4,1,67.6,0
+107,86.0,Male,25.2,Drug A,116.0,5.45,No,2,Improved,0.33,0,120.0,1
+108,61.0,Male,26.7,Drug B,97.0,6.7,No,3,Improved,2.43,1,43.4,0
+109,62.0,Female,28.5,Drug B,99.0,5.34,No,9,Not improved,0.39,0,98.9,0
+110,57.0,Female,18.4,Drug B,101.0,4.73,No,5,Improved,2.96,1,14.1,0
+111,29.0,Female,20.3,Drug B,85.0,5.33,Yes,3,Improved,0.29,1,38.8,0
+112,58.0,Female,30.7,Placebo,106.0,5.8,Yes,5,Not improved,1.59,1,16.1,1
+113,59.0,Male,27.9,Drug B,91.0,5.25,No,3,Not improved,0.47,1,43.1,1
+114,95.0,Male,26.1,Drug A,129.0,5.24,No,2,Improved,0.83,0,53.7,0
+115,55.0,Male,27.1,Drug A,86.0,4.43,No,3,Improved,1.3,0,57.8,0
+116,63.0,Female,28.7,Drug A,111.0,4.47,No,5,Not improved,1.22,1,97.5,0
+117,57.0,Male,24.3,Drug A,92.0,3.66,Yes,3,Improved,0.0,0,5.1,1
+118,40.0,Female,23.1,Drug A,85.0,7.12,No,3,Improved,0.68,0,34.3,0
+119,75.0,Male,28.0,Drug A,105.0,3.83,No,3,Improved,0.89,0,64.5,1
+120,69.0,Male,22.1,Drug A,95.0,4.44,No,2,Improved,0.86,0,8.8,0
+121,70.0,Male,29.0,Drug A,108.0,4.41,No,7,Not improved,2.71,1,84.6,0
+122,44.0,Female,18.5,Placebo,86.0,6.18,No,7,Not improved,0.0,0,18.8,0
+123,79.0,Female,32.1,Drug A,103.0,4.88,No,1,Improved,2.21,1,48.3,0
+124,37.0,Male,29.4,Drug B,85.0,6.57,No,9,Not improved,1.57,0,81.8,0
+125,67.0,Male,28.3,Drug B,93.0,4.46,No,6,Not improved,0.0,0,101.8,0
+126,91.0,Female,31.9,Placebo,102.0,5.51,No,6,Not improved,0.79,0,47.9,1
+127,43.0,Male,35.3,Drug A,85.0,4.28,Yes,4,Improved,0.05,0,20.9,0
+128,50.0,Female,32.1,Drug B,92.0,7.56,No,3,Improved,0.43,0,68.0,0
+129,59.0,Female,17.8,Placebo,107.0,3.89,No,8,Not improved,1.91,1,48.5,0
+130,50.0,Male,20.6,Placebo,98.0,5.54,Yes,7,Not improved,0.06,0,42.3,0
+131,35.0,Male,23.9,Placebo,85.0,5.9,No,2,Improved,0.99,1,76.7,1
+132,59.0,Female,27.1,Drug A,93.0,5.66,No,4,Improved,0.53,0,58.9,0
+133,42.0,Male,29.6,Drug A,85.0,5.0,No,1,Improved,0.0,0,120.0,0
+134,65.0,Male,23.4,Drug B,86.0,5.06,No,7,Not improved,0.62,1,109.3,1
+135,44.0,Female,27.9,Placebo,103.0,5.25,No,6,Not improved,1.11,0,49.4,0
+136,81.0,Female,23.2,Drug B,113.0,5.04,Yes,3,Improved,0.0,0,55.7,0
+137,46.0,Female,23.9,Drug B,85.0,6.26,Yes,3,Improved,1.1,0,62.3,0
+138,53.0,Female,20.0,Drug A,90.0,7.63,Yes,0,Improved,0.92,0,120.0,0
+139,70.0,Male,22.4,Placebo,110.0,4.59,No,5,Not improved,0.05,1,61.8,1
+140,40.0,Male,20.2,Drug A,85.0,3.69,No,3,Improved,0.0,0,23.2,0
+141,61.0,Female,22.1,Drug A,93.0,5.1,No,7,Not improved,2.67,1,73.2,1
+142,78.0,Female,32.3,Drug B,99.0,8.04,No,5,Not improved,0.72,1,22.5,0
+143,34.0,Male,22.3,Drug B,85.0,4.32,No,5,Improved,0.08,0,26.9,1
+144,61.0,Female,40.2,Drug A,93.0,7.0,No,2,Improved,2.02,1,41.7,0
+145,62.0,Male,29.5,Drug A,110.0,7.05,No,5,Improved,1.21,0,15.7,0
+146,70.0,Male,27.9,Drug B,104.0,4.59,No,7,Not improved,1.37,1,21.3,0
+147,39.0,Male,22.7,Drug A,85.0,5.83,No,2,Improved,0.0,0,120.0,1
+148,38.0,Male,30.5,Drug B,85.0,6.99,No,9,Not improved,2.88,1,26.7,0
+149,66.0,Male,24.1,Drug A,110.0,4.78,No,4,Not improved,2.07,0,97.8,0
+150,62.0,Male,27.6,Drug B,101.0,4.98,No,5,Improved,1.38,0,51.1,1
+151,62.0,Male,39.8,Drug B,94.0,4.56,No,8,Not improved,1.68,1,66.0,1
+152,63.0,Female,26.5,Drug A,91.0,4.08,No,2,Improved,0.87,1,83.4,1
+153,48.0,Female,32.7,Drug A,92.0,4.49,Yes,5,Improved,0.0,0,25.2,0
+154,61.0,Female,23.5,Drug A,98.0,3.85,No,3,Improved,0.97,0,97.5,1
+155,62.0,Female,26.8,Drug A,103.0,5.24,No,7,Not improved,1.98,1,19.0,0
+156,47.0,Male,35.9,Placebo,98.0,4.35,No,3,Improved,2.86,1,17.6,0
+157,86.0,Male,23.9,Drug A,120.0,5.46,Yes,6,Not improved,2.19,1,82.6,0
+158,65.0,Female,36.1,Placebo,100.0,3.49,Yes,8,Not improved,0.25,1,13.2,1
+159,40.0,Male,30.5,Drug A,92.0,5.56,Yes,4,Improved,2.55,1,7.8,0
+160,68.0,Female,24.2,Placebo,108.0,6.12,No,3,Not improved,0.7,1,39.4,0
+161,43.0,Male,30.2,Placebo,107.0,3.01,No,5,Improved,0.15,0,7.3,0
+162,70.0,Female,31.9,Drug B,93.0,5.61,Yes,0,Improved,0.73,0,71.6,0
+163,75.0,Male,30.1,Drug B,116.0,6.55,No,5,Improved,3.4,1,35.9,0
+164,46.0,Female,19.1,Drug B,85.0,3.87,No,8,Not improved,4.4,1,57.2,0
+165,72.0,Female,23.4,Drug B,95.0,7.04,No,5,Not improved,1.05,0,56.5,0
+166,64.0,Female,25.8,Placebo,100.0,5.66,No,2,Improved,0.34,0,51.2,0
+167,70.0,Male,26.6,Placebo,105.0,4.42,No,5,Not improved,2.08,1,46.8,1
+168,86.0,Female,30.1,Placebo,122.0,5.14,No,6,Not improved,1.3,0,13.1,1
+169,54.0,Female,27.9,Drug A,95.0,5.81,No,2,Improved,0.21,0,46.1,1
+170,47.0,Female,20.3,Placebo,88.0,5.28,No,8,Not improved,2.12,0,39.0,0
+171,45.0,Female,28.9,Placebo,92.0,5.79,No,9,Not improved,0.71,0,75.6,1
+172,46.0,Female,30.1,Drug A,103.0,4.19,No,5,Improved,0.95,0,84.7,0
+173,57.0,Male,29.8,Drug A,106.0,5.39,No,5,Not improved,1.1,0,120.0,0
+174,63.0,Female,32.4,Placebo,107.0,3.64,No,6,Not improved,0.88,0,40.4,0
+175,62.0,Female,31.2,Drug B,94.0,5.08,Yes,4,Not improved,2.36,1,91.7,0
+176,70.0,Female,29.3,Placebo,109.0,4.21,No,5,Not improved,0.0,0,36.8,1
+177,58.0,Male,26.6,Drug A,98.0,4.39,Yes,5,Improved,1.1,1,109.6,0
+178,80.0,Male,18.7,Placebo,106.0,6.56,Yes,6,Improved,0.61,1,23.5,1
+179,54.0,Female,29.1,Drug A,89.0,6.4,No,4,Not improved,0.9,0,120.0,1
+180,95.0,Female,28.0,Drug A,104.0,5.87,No,2,Improved,2.3,1,78.3,1
+181,67.0,Male,28.4,Drug A,102.0,4.0,Yes,3,Improved,0.91,0,15.8,0
+182,45.0,Female,20.6,Placebo,97.0,4.85,No,3,Improved,3.11,1,39.9,0
+183,42.0,Male,21.6,Drug B,85.0,6.53,No,2,Improved,0.49,0,69.2,0
+184,65.0,Male,32.3,Drug B,108.0,5.36,Yes,4,Improved,2.2,1,81.2,1
+185,55.0,Male,26.8,Drug B,85.0,7.75,No,6,Not improved,0.62,1,120.0,0
+186,69.0,Male,30.4,Placebo,96.0,5.63,No,6,Not improved,0.15,0,20.7,0
+187,65.0,Female,27.1,Drug B,98.0,5.41,No,4,Improved,1.13,0,120.0,1
+188,57.0,Male,27.1,Placebo,108.0,4.86,Yes,6,Not improved,2.36,1,30.9,0
+189,45.0,Female,31.7,Drug B,96.0,5.35,No,2,Improved,1.34,1,24.8,1
+190,35.0,Female,24.4,Drug B,85.0,5.03,No,6,Not improved,0.44,0,31.0,0
+191,51.0,Female,27.5,Drug B,95.0,5.98,No,6,Not improved,0.23,1,66.5,0
+192,71.0,Female,24.7,Drug A,101.0,6.25,Yes,2,Improved,0.18,0,26.9,1
+193,61.0,Male,24.8,Placebo,101.0,4.34,No,6,Not improved,2.4,1,23.8,1
+194,39.0,Female,25.5,Drug B,86.0,3.74,Yes,6,Improved,1.02,0,57.5,0
+195,61.0,Female,28.1,Drug A,100.0,3.18,No,4,Improved,2.05,1,120.0,0
+196,64.0,Male,24.6,Placebo,91.0,5.76,Yes,6,Not improved,0.54,0,54.3,1
+197,45.0,Female,33.3,Drug B,95.0,3.99,No,4,Improved,0.51,0,46.6,0
+198,60.0,Female,22.5,Drug B,104.0,2.83,No,2,Improved,0.0,0,66.3,0
+199,59.0,Female,26.1,Placebo,96.0,5.63,No,8,Not improved,1.13,0,36.6,0
+200,41.0,Female,24.8,Drug B,85.0,7.94,Yes,7,Not improved,0.88,0,16.8,0
+201,63.0,Female,34.2,Drug A,100.0,5.19,No,3,Improved,0.94,0,120.0,0
+202,66.0,Male,28.0,Placebo,107.0,6.12,No,4,Improved,1.13,1,81.6,0
+203,74.0,Female,32.2,Drug B,97.0,5.29,No,4,Not improved,0.0,0,42.8,0
+204,74.0,Female,19.6,Drug A,98.0,5.09,No,4,Not improved,1.49,0,39.1,0
+205,37.0,Male,28.3,Drug A,85.0,6.21,No,1,Improved,0.07,0,21.1,0
+206,44.0,Male,31.4,Placebo,100.0,4.88,No,3,Improved,0.0,0,47.1,1
+207,66.0,Male,27.4,Drug B,101.0,5.49,No,6,Improved,1.12,0,69.3,0
+208,66.0,Female,32.3,Drug B,93.0,5.55,No,7,Improved,0.15,0,23.5,0
+209,66.0,Female,24.4,Placebo,112.0,4.47,No,7,Not improved,1.45,0,36.9,1
+210,95.0,Male,34.0,Placebo,101.0,6.29,No,7,Not improved,1.06,0,53.2,0
+211,67.0,Female,38.5,Drug A,108.0,5.01,No,0,Improved,1.12,0,37.0,0
+212,75.0,Male,25.2,Drug A,90.0,4.37,Yes,2,Improved,0.37,1,47.8,1
+213,72.0,Female,24.8,Drug A,99.0,5.79,No,2,Improved,1.59,0,47.5,0
+214,68.0,Female,34.3,Placebo,98.0,4.21,No,5,Not improved,0.74,0,16.8,1
+215,53.0,Female,34.9,Drug A,85.0,5.23,No,3,Improved,1.27,1,48.6,1
+216,69.0,Male,24.4,Drug B,108.0,5.19,Yes,6,Not improved,0.63,0,10.9,0
+217,46.0,Male,24.9,Placebo,89.0,6.39,No,3,Not improved,0.0,1,25.4,0
+218,54.0,Male,25.6,Placebo,100.0,5.72,No,4,Improved,0.87,0,25.7,1
+219,51.0,Male,20.3,Drug B,86.0,5.17,No,5,Not improved,0.67,1,43.2,0
+220,59.0,Female,22.4,Placebo,105.0,6.1,Yes,3,Improved,0.38,1,42.9,0
+221,93.0,Female,22.0,Drug A,117.0,6.73,No,7,Improved,0.0,0,19.5,1
+222,30.0,Female,23.2,Placebo,85.0,5.81,No,1,Improved,2.6,1,12.8,1
+223,68.0,Female,26.8,Drug A,108.0,5.21,No,0,Improved,0.0,0,29.7,0
+224,34.0,Female,28.2,Drug B,85.0,3.76,No,6,Not improved,1.88,0,14.4,1
+225,51.0,Female,34.8,Placebo,85.0,4.03,No,5,Improved,1.12,1,46.3,0
+226,74.0,Female,22.0,Drug A,100.0,4.86,No,10,Not improved,0.06,1,35.8,0
+227,59.0,Female,31.9,Drug A,106.0,4.53,No,1,Improved,0.0,0,54.2,0
+228,42.0,Male,25.9,Placebo,97.0,4.99,No,7,Not improved,1.61,0,15.4,1
+229,47.0,Male,26.8,Placebo,90.0,5.26,No,6,Not improved,0.36,0,23.4,0
+230,68.0,Male,30.4,Drug B,95.0,5.78,Yes,3,Improved,0.01,0,55.9,0
+231,47.0,Female,21.4,Placebo,90.0,5.12,Yes,7,Improved,1.74,1,39.4,1
+232,61.0,Female,28.9,Drug B,110.0,5.74,No,0,Improved,0.95,0,19.4,1
+233,59.0,Male,27.8,Drug A,97.0,5.27,No,3,Improved,1.51,0,52.2,1
+234,48.0,Female,29.5,Drug B,88.0,3.03,No,4,Improved,1.8,0,22.8,0
+235,90.0,Female,28.4,Drug A,122.0,4.17,No,5,Improved,0.18,0,50.8,0
+236,68.0,Male,39.3,Placebo,109.0,5.04,No,7,Not improved,0.0,0,18.6,1
+237,28.0,Male,23.8,Drug B,85.0,3.87,No,7,Not improved,1.23,1,120.0,0
+238,61.0,Female,24.3,Drug B,92.0,5.86,Yes,6,Not improved,1.83,1,77.8,1
+239,48.0,Female,23.9,Drug B,85.0,6.88,No,7,Not improved,0.73,1,59.5,0
+240,71.0,Female,24.2,Placebo,108.0,6.54,No,6,Not improved,0.0,0,24.9,1

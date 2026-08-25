@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Study Design, Sample Size & Errors — Medical Statistics | FRCR 1</title>
+  <link rel="stylesheet" href="css/medstat.css">
+</head>
+<body>
+  <nav class="navbar">
+    <div class="navbar-logo">
+      <span class="logo-main">FRCR 1</span>
+      <span class="logo-sub">· <a href="../FRCR1.html">Hub</a> · <a href="index.html">Medical Statistics</a> · Study Design & Sample Size</span>
+    </div>
+    <div class="navbar-badge">📊 Chapter 10</div>
+  </nav>
+
+  <div class="breadcrumb">
+    <a href="../FRCR1.html">Home</a><span class="sep">›</span>
+    <a href="index.html">Medical Statistics</a><span class="sep">›</span>
+    <span>Study Design, Sample Size &amp; Errors</span>
+  </div>
+
+  <section class="hero" style="padding:32px 24px 20px;">
+    <div class="hero-inner">
+      <h1 style="font-size:1.8rem;">Study Design, Sample Size &amp; Errors</h1>
+      <p>RCTs, blinding, ITT vs PP analysis, non-inferiority, sample size calculations, multiple testing, confounding, Simpson's paradox, and bias — GCSE to FRCR level.</p>
+    </div>
+  </section>
+
+  <div class="content">
+
+    <div class="tab-container">
+      <button class="tab active" data-tab="gcse">GCSE Level</button>
+      <button class="tab" data-tab="frcr">FRCR Level</button>
+      <button class="tab" data-tab="keyfacts">Key Facts</button>
+      <button class="tab" data-tab="clinical">Clinical Relevance</button>
+    </div>
+
+    <div class="tab-contents">
+
+      <!-- GCSE TAB -->
+      <div class="tab-content active" id="tab-gcse">
+        <div class="info-card">
+          <h3>Types of Study Design</h3>
+          <p>Studies are classified by whether the researcher intervenes:</p>
+          <ul>
+            <li><strong>Observational</strong>: Researcher watches without intervening. Includes cohort, case-control, and cross-sectional studies.</li>
+            <li><strong>Experimental (interventional)</strong>: Researcher allocates treatments. The gold standard is the <strong>Randomised Controlled Trial (RCT)</strong>.</li>
+          </ul>
+          <p><strong>Hierarchy of evidence</strong> (strongest → weakest): Systematic reviews / meta-analyses → RCTs → cohort studies → case-control → case series → expert opinion.</p>
+          <div class="figure-container">
+            <svg viewBox="0 0 500 200" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:500px;display:block;margin:0 auto;">
+              <defs><marker id="ev-arr" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#475569"/></marker></defs>
+              <text x="250" y="16" text-anchor="middle" font-size="12" font-weight="700" fill="#1e293b">Hierarchy of Evidence</text>
+              <polygon points="250,26 205,54 295,54" fill="#3b82f6" opacity="0.9"/>
+              <text x="250" y="45" text-anchor="middle" font-size="8.5" font-weight="700" fill="white">Systematic Reviews / Meta-analyses</text>
+              <polygon points="205,56 160,86 340,86 295,56" fill="#0d9488" opacity="0.85"/>
+              <text x="250" y="75" text-anchor="middle" font-size="8.5" font-weight="700" fill="white">Randomised Controlled Trials (RCTs)</text>
+              <polygon points="160,88 115,118 385,118 340,88" fill="#10b981" opacity="0.8"/>
+              <text x="250" y="107" text-anchor="middle" font-size="8.5" font-weight="700" fill="white">Cohort Studies</text>
+              <polygon points="115,120 70,150 430,150 385,120" fill="#f59e0b" opacity="0.8"/>
+              <text x="250" y="139" text-anchor="middle" font-size="8.5" font-weight="700" fill="white">Case-Control Studies</text>
+              <polygon points="70,152 28,182 472,182 430,152" fill="#ef4444" opacity="0.75"/>
+              <text x="250" y="171" text-anchor="middle" font-size="8.5" font-weight="700" fill="white">Cross-sectional / Case Series / Expert Opinion</text>
+              <text x="14" y="104" font-size="8" fill="#475569" text-anchor="middle" transform="rotate(-90,14,104)">Strength</text>
+              <line x1="22" y1="181" x2="22" y2="32" stroke="#475569" stroke-width="1.5" marker-end="url(#ev-arr)"/>
+            </svg>
+            <p class="figure-caption"><strong>Figure 1:</strong> Evidence hierarchy — systematic reviews provide the strongest evidence; expert opinion the weakest.</p>
+          </div>
+        </div>
+
+        <div class="info-card">
+          <h3>The RCT and Blinding</h3>
+          <ul>
+            <li><strong>Randomisation</strong>: Balances known and unknown confounders.</li>
+            <li><strong>Control group</strong>: Provides a baseline comparator.</li>
+            <li><strong>Single-blind</strong>: Participants unaware of treatment.</li>
+            <li><strong>Double-blind</strong>: Participants AND assessors unaware.</li>
+            <li><strong>Triple-blind</strong>: Adds data analysts to the blinded parties.</li>
+            <li><strong>Allocation concealment</strong>: Hides allocation from those enrolling patients — prevents selection bias before randomisation.</li>
+          </ul>
+        </div>
+
+        <div class="info-card">
+          <h3>Types of Bias</h3>
+          <ul>
+            <li><strong>Selection bias</strong>: Non-representative sample.</li>
+            <li><strong>Recall bias</strong>: Cases remember exposures better than controls.</li>
+            <li><strong>Performance bias</strong>: Different care given between groups (prevented by blinding).</li>
+            <li><strong>Detection bias</strong>: Outcomes measured differently between groups.</li>
+            <li><strong>Attrition bias</strong>: Dropouts differ systematically between groups.</li>
+            <li><strong>Publication bias</strong>: Positive results more likely to be published.</li>
+          </ul>
+          <p><strong>Key point</strong>: Bias is a systematic error — unlike random error, it cannot be reduced by increasing sample size.</p>
+        </div>
+      </div>
+
+      <!-- FRCR TAB -->
+      <div class="tab-content" id="tab-frcr">
+        <div class="info-card">
+          <h3>Randomisation Methods</h3>
+          <p><strong>Simple randomisation</strong>: Coin flip equivalent. Balanced groups for large n (>200) but may be unbalanced for small n.</p>
+          <p><strong>Block randomisation</strong>: Ensures periodic balance (e.g., blocks of 4). Block size should be random and concealed.</p>
+          <p><strong>Stratified randomisation</strong>: Randomise within strata (centre, stage, age). Essential for multicentre trials.</p>
+          <p><strong>Minimisation</strong>: Adaptive method minimising imbalance across multiple factors. More efficient but not strictly random.</p>
+          <p><strong>Cluster randomisation</strong>: Groups (clinics, hospitals) randomised together. Requires intraclass correlation (ICC) adjustment. ICC reflects how similar patients within a cluster are.</p>
+        </div>
+
+        <div class="info-card">
+          <h3>Intention-to-Treat vs Per-Protocol Analysis</h3>
+          <p><strong>Intention-to-treat (ITT)</strong>: All randomised patients analysed in their allocated group, regardless of compliance. Preserves randomisation — the gold standard for <strong>superiority trials</strong>. Conservative estimate of efficacy.</p>
+          <p><strong>Per-protocol (PP)</strong>: Only patients who completed treatment as planned. May overestimate efficacy (excludes non-compliers who may have worse outcomes). Primary analysis for <strong>non-inferiority trials</strong> — because ITT dilutes the active comparison.</p>
+          <p><strong>Modified ITT (mITT)</strong>: Excludes patients with no post-baseline data. Pragmatic compromise used in oncology.</p>
+          <div class="warning-box">
+            <strong>⚠️ Exam Trap</strong>
+            <div>ITT = primary for superiority. PP = primary for non-inferiority. This reversal is a frequent FRCR exam question.</div>
+          </div>
+        </div>
+
+        <div class="info-card">
+          <h3>Non-Inferiority & Equivalence Trials</h3>
+          <p><strong>Non-inferiority margin (δ)</strong>: Pre-specified maximum acceptable inferiority. If the <strong>upper bound of the 95% CI</strong> for (new − control) does not exceed δ, non-inferiority is demonstrated.</p>
+          <p><strong>Equivalence</strong>: Requires BOTH bounds of the 95% CI to fall within ±δ.</p>
+          <div class="figure-container">
+            <svg viewBox="0 0 500 170" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:500px;display:block;margin:0 auto;">
+              <text x="250" y="16" text-anchor="middle" font-size="12" font-weight="700" fill="#1e293b">Non-Inferiority — CI Interpretation</text>
+              <line x1="60" y1="95" x2="460" y2="95" stroke="#cbd5e1" stroke-width="1.5"/>
+              <line x1="260" y1="80" x2="260" y2="110" stroke="#1e293b" stroke-width="2"/>
+              <text x="260" y="124" text-anchor="middle" font-size="10" fill="#1e293b">0 (no diff)</text>
+              <line x1="380" y1="80" x2="380" y2="110" stroke="#ef4444" stroke-width="2" stroke-dasharray="4,3"/>
+              <text x="380" y="124" text-anchor="middle" font-size="10" fill="#ef4444" font-weight="700">δ (NI margin)</text>
+              <text x="100" y="90" font-size="8" fill="#64748b" text-anchor="middle">← New better</text>
+              <text x="430" y="90" font-size="8" fill="#64748b" text-anchor="middle">New worse →</text>
+              <!-- CI row 1: Superiority -->
+              <text x="56" y="40" font-size="9" fill="#475569" text-anchor="end">Superior</text>
+              <line x1="130" y1="36" x2="240" y2="36" stroke="#3b82f6" stroke-width="3"/>
+              <circle cx="185" cy="36" r="4" fill="#3b82f6"/>
+              <text x="290" y="40" font-size="8.5" fill="#3b82f6">✓ Superior + non-inferior</text>
+              <!-- CI row 2: NI only -->
+              <text x="56" y="60" font-size="9" fill="#475569" text-anchor="end">Non-inferior</text>
+              <line x1="210" y1="56" x2="355" y2="56" stroke="#10b981" stroke-width="3"/>
+              <circle cx="282" cy="56" r="4" fill="#10b981"/>
+              <text x="370" y="60" font-size="8.5" fill="#10b981">✓ CI upper &lt; δ</text>
+              <!-- CI row 3: Indeterminate -->
+              <text x="56" y="80" font-size="9" fill="#475569" text-anchor="end">Indeterminate</text>
+              <line x1="235" y1="76" x2="415" y2="76" stroke="#f59e0b" stroke-width="3"/>
+              <circle cx="325" cy="76" r="4" fill="#f59e0b"/>
+              <text x="420" y="80" font-size="8.5" fill="#f59e0b">✗ CI crosses δ</text>
+              <!-- Explanatory text -->
+              <text x="60" y="148" font-size="8.5" fill="#475569">Negative direction = new treatment is BETTER. Positive = new treatment is WORSE.</text>
+              <text x="60" y="163" font-size="8.5" fill="#475569">Non-inferiority requires: 95% CI upper bound &lt; δ (does not exceed margin).</text>
+            </svg>
+            <p class="figure-caption"><strong>Figure 2:</strong> CI interpretation for non-inferiority trials. NI is demonstrated only when the upper CI bound stays within the pre-specified margin δ.</p>
+          </div>
+        </div>
+
+        <div class="info-card">
+          <h3>Sample Size Calculation</h3>
+          <p>Requires: effect size (δ), significance level (α), power (1−β), and variability (σ).</p>
+          <p style="text-align:center;font-size:1rem;font-weight:600;color:#1e293b;margin:10px 0;">n per group = 2σ²(z_α/2 + z_β)² / δ²</p>
+          <p>z_α/2 = 1.96 (α = 0.05, two-tailed); z_β = 0.84 (80% power) or 1.28 (90% power).</p>
+          <ul>
+            <li><strong>Halve δ</strong> → 4× the sample size (n ∝ 1/δ²).</li>
+            <li><strong>80% → 90% power</strong> → ~33% more patients.</li>
+            <li><strong>α 0.05 → 0.01</strong> → ~20% more patients.</li>
+          </ul>
+        </div>
+
+        <div class="info-card">
+          <h3>Multiple Testing</h3>
+          <p>Running m tests at α = 0.05 gives family-wise error rate (FWER) = 1 − (1−0.05)^m. With 20 tests, expected ~1 false positive by chance.</p>
+          <p><strong>Bonferroni</strong>: α* = α/m. Most conservative. Appropriate for small m and independent tests.</p>
+          <p><strong>Holm-Bonferroni</strong>: Sequential, less conservative than Bonferroni.</p>
+          <p><strong>False Discovery Rate (FDR — Benjamini-Hochberg)</strong>: Controls expected proportion of false positives among rejected hypotheses. Preferred for large-scale testing (genomics). Less conservative.</p>
+          <div class="warning-box">
+            <strong>⚠️ Subgroup Analyses</strong>
+            <div>Unplanned subgroup analyses in a trial with 20 subgroups are unreliable — expect ~1 false positive at α = 0.05. Pre-specified subgroups are more credible.</div>
+          </div>
+        </div>
+
+        <div class="info-card">
+          <h3>Confounding & Simpson's Paradox</h3>
+          <p>A <strong>confounder</strong> is associated with both the exposure and outcome, and is not in the causal pathway. Methods of control: randomisation (best), restriction, matching, stratification, multivariable regression, propensity score.</p>
+          <p><strong>Simpson's Paradox</strong>: An association observed in aggregated data is reversed or eliminated when data is stratified by a confounder.</p>
+          <div class="figure-container">
+            <svg viewBox="0 0 500 170" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:500px;display:block;margin:0 auto;">
+              <text x="250" y="16" text-anchor="middle" font-size="12" font-weight="700" fill="#1e293b">Simpson's Paradox — Aggregated vs Stratified</text>
+              <rect x="20" y="26" width="185" height="64" rx="8" fill="#fee2e2" stroke="#fca5a5" stroke-width="1.5"/>
+              <text x="112" y="43" text-anchor="middle" font-size="10" font-weight="700" fill="#991b1b">Overall (aggregated)</text>
+              <text x="112" y="58" text-anchor="middle" font-size="9" fill="#7f1d1d">Treatment A: 52% survival</text>
+              <text x="112" y="72" text-anchor="middle" font-size="9" fill="#7f1d1d">Treatment B: 60% survival</text>
+              <text x="112" y="86" text-anchor="middle" font-size="9" fill="#991b1b" font-weight="700">Conclusion: B is better ✗</text>
+              <text x="222" y="62" text-anchor="middle" font-size="20" fill="#64748b">→</text>
+              <rect x="248" y="26" width="115" height="64" rx="8" fill="#dcfce7" stroke="#86efac" stroke-width="1.5"/>
+              <text x="305" y="43" text-anchor="middle" font-size="9" font-weight="700" fill="#166534">Mild disease</text>
+              <text x="305" y="58" text-anchor="middle" font-size="9" fill="#14532d">A: 90% ✓</text>
+              <text x="305" y="72" text-anchor="middle" font-size="9" fill="#14532d">B: 80%</text>
+              <text x="305" y="86" text-anchor="middle" font-size="8" fill="#166534" font-weight="700">A better</text>
+              <rect x="373" y="26" width="115" height="64" rx="8" fill="#dcfce7" stroke="#86efac" stroke-width="1.5"/>
+              <text x="430" y="43" text-anchor="middle" font-size="9" font-weight="700" fill="#166534">Severe disease</text>
+              <text x="430" y="58" text-anchor="middle" font-size="9" fill="#14532d">A: 30% ✓</text>
+              <text x="430" y="72" text-anchor="middle" font-size="9" fill="#14532d">B: 20%</text>
+              <text x="430" y="86" text-anchor="middle" font-size="8" fill="#166534" font-weight="700">A better</text>
+              <rect x="20" y="100" width="468" height="62" rx="8" fill="#f8fafc" stroke="#e2e8f0"/>
+              <text x="38" y="116" font-size="8.5" fill="#475569"><tspan font-weight="700">Why reversed?</tspan> Treatment A was given preferentially to sicker patients (confounder = disease severity).</text>
+              <text x="38" y="131" font-size="8.5" fill="#475569">Sicker patients have worse survival, making A look worse overall, even though A is better within each stratum.</text>
+              <text x="38" y="151" font-size="8.5" fill="#3b82f6" font-weight="700">Lesson: always adjust for known confounders. Aggregated data can completely reverse the true relationship.</text>
+            </svg>
+            <p class="figure-caption"><strong>Figure 3:</strong> Simpson's Paradox. Treatment A is better in both strata, but appears worse overall because sicker patients (lower baseline survival) were more often given A.</p>
+          </div>
+        </div>
+
+        <div class="info-card">
+          <h3>Common Biases Summary</h3>
+          <table style="width:100%;border-collapse:collapse;margin:10px 0;font-size:0.85rem;">
+            <thead>
+              <tr style="background:#f1f5f9;">
+                <th style="padding:8px 12px;border:1px solid #e2e8f0;">Bias</th>
+                <th style="padding:8px 12px;border:1px solid #e2e8f0;">Mechanism</th>
+                <th style="padding:8px 12px;border:1px solid #e2e8f0;">Prevention</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td style="padding:6px 12px;border:1px solid #e2e8f0;">Selection</td><td style="padding:6px 12px;border:1px solid #e2e8f0;">Non-representative sample</td><td style="padding:6px 12px;border:1px solid #e2e8f0;">Randomisation; clear eligibility criteria</td></tr>
+              <tr><td style="padding:6px 12px;border:1px solid #e2e8f0;">Recall</td><td style="padding:6px 12px;border:1px solid #e2e8f0;">Cases recall exposures better</td><td style="padding:6px 12px;border:1px solid #e2e8f0;">Prospective design; objective records</td></tr>
+              <tr><td style="padding:6px 12px;border:1px solid #e2e8f0;">Performance</td><td style="padding:6px 12px;border:1px solid #e2e8f0;">Different care between groups</td><td style="padding:6px 12px;border:1px solid #e2e8f0;">Blinding of participants/staff</td></tr>
+              <tr><td style="padding:6px 12px;border:1px solid #e2e8f0;">Detection</td><td style="padding:6px 12px;border:1px solid #e2e8f0;">Outcomes assessed differently</td><td style="padding:6px 12px;border:1px solid #e2e8f0;">Blinded outcome assessment</td></tr>
+              <tr><td style="padding:6px 12px;border:1px solid #e2e8f0;">Attrition</td><td style="padding:6px 12px;border:1px solid #e2e8f0;">Dropouts differ between groups</td><td style="padding:6px 12px;border:1px solid #e2e8f0;">ITT analysis; minimise dropout</td></tr>
+              <tr><td style="padding:6px 12px;border:1px solid #e2e8f0;">Publication</td><td style="padding:6px 12px;border:1px solid #e2e8f0;">Positive results preferentially published</td><td style="padding:6px 12px;border:1px solid #e2e8f0;">Trial registration; funnel plots</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- KEY FACTS TAB -->
+      <div class="tab-content" id="tab-keyfacts">
+        <div class="info-card">
+          <h3>Essential Exam Facts</h3>
+          <div class="key-facts-grid">
+            <div class="fact-item">Evidence hierarchy: SR/meta-analysis → RCT → cohort → case-control → cross-sectional → expert opinion.</div>
+            <div class="fact-item">ITT: all randomised patients in their allocated group. Primary for superiority trials.</div>
+            <div class="fact-item">PP: compliant patients only. Primary for NON-INFERIORITY trials.</div>
+            <div class="fact-item">NI margin δ: upper 95% CI must not exceed δ to demonstrate non-inferiority.</div>
+            <div class="fact-item">Sample size ∝ σ²/δ². Halving effect size → 4× the patients needed.</div>
+            <div class="fact-item">Double-blind: participants AND assessors unaware of allocation.</div>
+            <div class="fact-item">Allocation concealment ≠ blinding. Concealment is BEFORE; blinding is AFTER randomisation.</div>
+            <div class="fact-item">Bonferroni: α* = α/m. Most conservative. FDR: less conservative, preferred for large-scale testing.</div>
+            <div class="fact-item">FWER = 1 − (1−α)^m. With 20 tests at α=0.05, expect ~1 false positive.</div>
+            <div class="fact-item">Simpson's paradox: aggregate result reversed by confounder stratification.</div>
+            <div class="fact-item">Confounder: associated with BOTH exposure and outcome, not in causal pathway.</div>
+            <div class="fact-item">Publication bias: positive results over-represented. Detected by funnel plot asymmetry.</div>
+          </div>
+        </div>
+
+        <div class="warning-box">
+          <strong>⚠️ Common Exam Traps</strong>
+          <div>• ITT for superiority; PP for non-inferiority — this reversal is a classic exam question.</div>
+          <div>• NI: check whether the CI upper bound exceeds δ, not just whether the point estimate is near zero.</div>
+          <div>• Bonferroni correction: multiply observed p by m and compare to α (equivalent to dividing α by m).</div>
+          <div>• p = 0.04 from 20 unplanned subgroups is NOT significant after multiple testing correction.</div>
+          <div>• Allocation concealment prevents selection bias BEFORE randomisation. Blinding prevents ascertainment/performance bias AFTER randomisation.</div>
+        </div>
+      </div>
+
+      <!-- CLINICAL TAB -->
+      <div class="tab-content" id="tab-clinical">
+        <div class="clinical-box">
+          <strong>🏥 Why This Matters Clinically</strong>
+          <div>
+            <p><strong>CONSORT checklist for appraising RCTs</strong>: (1) Was randomisation truly random with allocation concealment? (2) Was blinding successful? (3) Was ITT analysis used? (4) Was the sample size calculated a priori? (5) Were subgroup analyses pre-specified? These are standard FRCR critical appraisal points.</p>
+            <p><strong>Non-inferiority in oncology</strong>: Many modern trials test whether a less toxic treatment (fewer fractions, oral vs IV) is non-inferior to standard. Understanding the NI margin and CI interpretation is essential for appraising these trials.</p>
+            <p><strong>Confounding by indication</strong>: In retrospective oncology studies, sicker patients often receive more aggressive treatment. A naive comparison showing worse outcomes with aggressive treatment may reflect confounding by indication, not a real harmful effect. Always look for adjusted analyses.</p>
+            <p><strong>Multiple testing in genomics</strong>: GWAS studies test millions of SNPs. Genome-wide significance is usually p &lt; 5×10⁻⁸ (Bonferroni for ~1 million tests). FDR is used for transcriptomic studies.</p>
+            <p><strong>Publication bias in meta-analysis</strong>: Funnel plots (log effect size vs precision) should be symmetrical if there is no publication bias. Asymmetry suggests smaller studies with negative results were not published, inflating the pooled effect estimate.</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- WORKED EXAMPLES -->
+    <div class="section-label"><h2>📐 Worked Examples</h2><div class="section-divider"></div></div>
+
+    <div class="accordion">
+      <button class="accordion-btn">Sample Size Calculation — Step by Step</button>
+      <div class="accordion-panel">
+        <div class="accordion-inner">
+          <p><strong>Scenario:</strong> RCT comparing mean PSA. Expected difference δ = 2.0 ng/mL, SD σ = 5.0 ng/mL, α = 0.05 (two-tailed), 80% power. How many patients per group?</p>
+          <p><strong>Solution:</strong> z_α/2 = 1.96, z_β = 0.84.</p>
+          <p>n = 2 × 25 × (1.96 + 0.84)² / 4 = 50 × 7.84 / 4 = <strong>98 per group</strong>.</p>
+          <p>If δ halved to 1.0: n = 50 × 7.84 / 1 = 392 — 4× larger! If power increased to 90% (z_β = 1.28): n = 50 × (1.96+1.28)² / 4 = 50 × 10.50 / 4 ≈ 131 per group (+33%).</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="accordion">
+      <button class="accordion-btn">Bonferroni Correction in Subgroup Analysis</button>
+      <div class="accordion-panel">
+        <div class="accordion-inner">
+          <p><strong>Scenario:</strong> 10 subgroup analyses. Three significant p-values: p = 0.04, 0.02, 0.001. Apply Bonferroni correction (α* = 0.05/10 = 0.005).</p>
+          <p><strong>Solution:</strong> Only p = 0.001 &lt; 0.005 survives. The p = 0.04 and p = 0.02 results are not significant after correction — likely false positives. This illustrates why post-hoc subgroup analyses must be interpreted cautiously.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="accordion">
+      <button class="accordion-btn">ITT vs PP Analysis — Impact on Conclusions</button>
+      <div class="accordion-panel">
+        <div class="accordion-inner">
+          <p><strong>Scenario:</strong> Superiority RCT, 200 per group. 40 in treatment group stopped early. ITT: 5-year survival 62% vs 55% (p = 0.04). PP: 72% vs 55% (p = 0.001). Which is primary and why?</p>
+          <p><strong>Solution:</strong> ITT is primary for a superiority trial. PP overestimates efficacy by excluding non-compliers (who likely had worse outcomes). ITT gives an unbiased, real-world estimate of effectiveness. If this were a non-inferiority trial, PP would be primary — excluding non-compliers is appropriate because they blur the distinction between treatments.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ACTIVE RECALL -->
+    <div class="section-label"><h2>🧠 Active Recall Questions</h2><div class="section-divider"></div></div>
+
+    <ul class="recall-list">
+      <li class="recall-item"><div class="q">Q: What is the difference between allocation concealment and blinding?</div><div class="a">A: Allocation concealment prevents selection bias BEFORE randomisation (hides the sequence from enrolment staff). Blinding prevents performance/detection bias AFTER randomisation (hides allocation from participants and assessors).</div></li>
+      <li class="recall-item"><div class="q">Q: For which trial type is per-protocol analysis the primary analysis?</div><div class="a">A: Non-inferiority trials. ITT is primary for superiority. In NI trials, ITT biases toward showing NI by including non-compliers who narrow the difference between groups.</div></li>
+      <li class="recall-item"><div class="q">Q: Halving the effect size requires how much larger a sample?</div><div class="a">A: 4× larger. Sample size ∝ 1/δ². Halving δ means the denominator decreases by 4-fold, so n must increase 4-fold.</div></li>
+      <li class="recall-item"><div class="q">Q: What is Simpson's Paradox?</div><div class="a">A: An association in aggregated data reverses or disappears when a confounding variable is accounted for by stratification.</div></li>
+      <li class="recall-item"><div class="q">Q: When is FDR preferred over Bonferroni correction?</div><div class="a">A: In large-scale testing (genomics, transcriptomics) where Bonferroni is too conservative and would miss many true discoveries. FDR controls the expected proportion of false positives among rejections, not the probability of any false positive.</div></li>
+    </ul>
+
+    <!-- GLOSSARY -->
+    <div class="glossary-panel">
+      <h3>📖 Glossary</h3>
+      <div class="glossary-grid">
+        <div class="glossary-item"><div class="term">RCT</div><div class="def">Randomised controlled trial. Gold standard. Random allocation to treatment/control.</div></div>
+        <div class="glossary-item"><div class="term">Allocation concealment</div><div class="def">Hiding allocation sequence from enrollers. Prevents selection bias before randomisation.</div></div>
+        <div class="glossary-item"><div class="term">Double-blind</div><div class="def">Participants AND outcome assessors unaware of group allocation.</div></div>
+        <div class="glossary-item"><div class="term">ITT analysis</div><div class="def">Analyse in allocated group regardless of compliance. Primary for superiority.</div></div>
+        <div class="glossary-item"><div class="term">Per-protocol</div><div class="def">Only compliant patients analysed. Primary for non-inferiority trials.</div></div>
+        <div class="glossary-item"><div class="term">NI margin (δ)</div><div class="def">Pre-specified acceptable inferiority threshold. Upper CI must not exceed δ.</div></div>
+        <div class="glossary-item"><div class="term">Bonferroni</div><div class="def">α* = α/m. Most conservative multiple testing correction.</div></div>
+        <div class="glossary-item"><div class="term">FDR (BH)</div><div class="def">False discovery rate. Controls expected proportion of false positives. Less conservative than Bonferroni.</div></div>
+        <div class="glossary-item"><div class="term">Confounding</div><div class="def">Variable associated with both exposure and outcome, not in causal pathway.</div></div>
+        <div class="glossary-item"><div class="term">Simpson's Paradox</div><div class="def">Aggregated association reversed after stratification by confounder.</div></div>
+        <div class="glossary-item"><div class="term">Publication bias</div><div class="def">Positive studies preferentially published. Funnel plot asymmetry detects it.</div></div>
+        <div class="glossary-item"><div class="term">ICC</div><div class="def">Intraclass correlation. Within-cluster similarity in cluster-randomised trials.</div></div>
+      </div>
+    </div>
+
+  </div>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      <div>© 2025 FRCR 1 Study Hub</div>
+      <div class="footer-right">For educational use only · Not for clinical decisions</div>
+    </div>
+  </footer>
+
+  <script src="js/radbio.js"></script>
+</body>
+</html>

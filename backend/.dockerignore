@@ -9,3 +9,7 @@ __pycache__/
 .env
 *.db
 devstat_crash.log
+devstat-firebase-sa.json
+devstat_envvars.json
+*.bak*
+_archive

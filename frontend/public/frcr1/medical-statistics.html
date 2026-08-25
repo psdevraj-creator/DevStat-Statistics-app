@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Medical Statistics — Complete Guide | FRCR 1</title>
+  <link rel="stylesheet" href="css/medstat.css">
+</head>
+<body>
+  <nav class="navbar">
+    <div class="navbar-logo">
+      <span class="logo-main">FRCR 1</span>
+      <span class="logo-sub">· <a href="../FRCR1.html">Hub</a> · <a href="index.html">Medical Statistics</a> · Complete Guide</span>
+    </div>
+    <div class="navbar-badge">📊 Medical Statistics</div>
+  </nav>
+
+  <div class="breadcrumb">
+    <a href="../FRCR1.html">Home</a><span class="sep">›</span>
+    <a href="index.html">Medical Statistics</a><span class="sep">›</span>
+    <span>Complete Guide</span>
+  </div>
+
+  <section class="hero" style="padding:32px 24px 20px;">
+    <div class="hero-inner">
+      <h1 style="font-size:1.8rem;">Medical Statistics</h1>
+      <p>Data types, descriptive statistics, distributions, hypothesis testing, regression, survival analysis, diagnostic tests, and clinical trial design — GCSE to FRCR level.</p>
+    </div>
+  </section>
+
+  <div class="content">
+
+    <!-- ══════ TABS ══════ -->
+    <div class="tab-container">
+      <button class="tab active" data-tab="gcse">GCSE Level</button>
+      <button class="tab" data-tab="frcr">FRCR Level</button>
+      <button class="tab" data-tab="keyfacts">Key Facts</button>
+      <button class="tab" data-tab="clinical">Clinical Relevance</button>
+    </div>
+
+    <div class="tab-contents">
+
+      <!-- GCSE TAB -->
+      <div class="tab-content active" id="tab-gcse">
+        <div class="info-card">
+          <h3>Types of Data</h3>
+          <p>Data comes in different types, and the type determines what statistics you can calculate:</p>
+          <ul>
+            <li><strong>Categorical (Qualitative)</strong> — values are categories. <em>Nominal</em>: named categories with no order (e.g., blood group A, B, AB, O; alive/dead). <em>Ordinal</em>: ordered categories (e.g., tumour stage I, II, III, IV; pain score 0–10).</li>
+            <li><strong>Numerical (Quantitative)</strong> — values are numbers. <em>Discrete</em>: whole numbers (e.g., number of lymph nodes, number of hospital visits). <em>Continuous</em>: any value within a range (e.g., height, weight, blood pressure, dose in Gy).</li>
+          </ul>
+          <div class="warning-box">
+            <strong>⚠️ Key Distinction</strong>
+            <div>Always check: is the variable categorical or numerical? This is the first step in choosing the right statistical test. Ordinal data is often treated as categorical (using non-parametric tests) or as continuous depending on the analysis.</div>
+          </div>
+        </div>
+
+        <div class="info-card">
+          <h3>Describing Data — Averages & Spread</h3>
+          <p><strong>Measures of central tendency</strong> (where the "middle" is):</p>
+          <ul>
+            <li><strong>Mean</strong> — the arithmetic average (sum ÷ n). Sensitive to outliers.</li>
+            <li><strong>Median</strong> — the middle value when data is ordered. Not affected by outliers.</li>
+            <li><strong>Mode</strong> — the most frequent value.</li>
+          </ul>
+          <p><strong>Measures of spread</strong> (how variable the data is):</p>
+          <ul>
+            <li><strong>Range</strong> — max − min. Simple but very sensitive to outliers.</li>
+            <li><strong>Interquartile Range (IQR)</strong> — Q3 − Q1. Contains the middle 50% of data. Used with median.</li>
+            <li><strong>Variance</strong> — average of squared deviations from the mean.</li>
+            <li><strong>Standard Deviation (SD)</strong> — square root of variance. Describes spread of individual data points. Used with mean.</li>
+          </ul>
+          <p style="background:#dbeafe;padding:12px 16px;border-radius:10px;margin-top:10px;"><strong>Rule of thumb:</strong> If data is <strong>normally distributed</strong>, use mean ± SD. If <strong>skewed</strong>, use median (IQR). Always check the distribution first!</p>
+        </div>
+
+        <div class="info-card">
+          <h3>The Normal Distribution</h3>
+          <p>Many biological measurements follow a bell-shaped curve called the <strong>normal distribution</strong>. Key features:</p>
+          <ul>
+            <li>Symmetric about the mean.</li>
+            <li>Mean = median = mode (all at the centre).</li>
+            <li>68% of values lie within ±1 SD of the mean.</li>
+            <li>95% of values lie within ±1.96 SD (~2 SD) of the mean.</li>
+            <li>99.7% of values lie within ±3 SD of the mean.</li>
+          </ul>
+          <p><strong>Standard Normal Distribution</strong>: A normal distribution with mean = 0 and SD = 1. We convert any normal distribution to this using the z-score: <strong>z = (x − μ) / σ</strong>. The z-score tells you how many SDs a value is from the mean.</p>
+        </div>
+
+        <div class="info-card">
+          <h3>Standard Error & Confidence Intervals</h3>
+          <p><strong>Standard Error of the Mean (SEM)</strong> = SD / √n. It measures how precisely the sample mean estimates the population mean. Larger samples → smaller SEM.</p>
+          <p><strong>Confidence Interval (CI)</strong>: A range of values that is likely to contain the true population parameter. A <strong>95% CI</strong> for the mean is: <strong>mean ± 1.96 × SEM</strong>. This means: if you repeated the study 100 times, about 95 of the CIs would contain the true population mean.</p>
+          <div class="warning-box">
+            <strong>⚠️ Common Misunderstanding</strong>
+            <div>A 95% CI does NOT mean "there is a 95% chance the true value lies in this interval." It means "95% of intervals constructed this way will contain the true value." This is a subtle but important distinction for the FRCR exam.</div>
+          </div>
+        </div>
+
+        <div class="info-card">
+          <h3>Hypothesis Testing & p-values</h3>
+          <p><strong>Null hypothesis (H₀)</strong>: No difference / no effect (e.g., "the new drug is no different from placebo").</p>
+          <p><strong>Alternative hypothesis (H₁)</strong>: There is a difference / effect.</p>
+          <p><strong>p-value</strong>: The probability of observing the data (or more extreme) assuming H₀ is true. A small p-value (< 0.05) means the observed result is unlikely under H₀, so we "reject H₀" — the result is "statistically significant."</p>
+          <p><strong>Important:</strong> p < 0.05 does NOT mean the effect is clinically important. It only tells you the result is unlikely due to chance.</p>
+        </div>
+
+        <div class="info-card">
+          <h3>Common Statistical Tests — When to Use Them</h3>
+          <ul>
+            <li><strong>t-test</strong>: Comparing means of two groups (e.g., drug vs placebo). Paired version for before/after measurements.</li>
+            <li><strong>Chi-square (χ²) test</strong>: Comparing proportions between groups (e.g., survival rates in two treatment groups). For categorical data.</li>
+            <li><strong>ANOVA</strong>: Comparing means of three or more groups.</li>
+            <li><strong>Correlation</strong>: Measuring the strength of association between two continuous variables (Pearson for linear, Spearman for ranked).</li>
+            <li><strong>Regression</strong>: Modelling the relationship between a dependent variable and one or more independent variables.</li>
+          </ul>
+        </div>
+
+        <div class="info-card">
+          <h3>Diagnostic Tests — Sensitivity & Specificity</h3>
+          <ul>
+            <li><strong>Sensitivity</strong> = TP / (TP + FN) — proportion of truly diseased patients correctly identified. "How good is the test at picking up disease?"</li>
+            <li><strong>Specificity</strong> = TN / (TN + FP) — proportion of truly healthy patients correctly identified. "How good is the test at ruling out disease?"</li>
+            <li><strong>Positive Predictive Value (PPV)</strong> = TP / (TP + FP) — probability that a positive test truly indicates disease.</li>
+            <li><strong>Negative Predictive Value (NPV)</strong> = TN / (TN + FN) — probability that a negative test truly indicates no disease.</li>
+          </ul>
+          <p><strong>Key point:</strong> Sensitivity and specificity are intrinsic properties of the test. PPV and NPV depend on the <strong>prevalence</strong> of the disease in the population being tested.</p>
+        </div>
+
+        <div class="info-card">
+          <h3>Risk & Odds</h3>
+          <ul>
+            <li><strong>Risk</strong> = number of events ÷ total number of people. Ranges from 0 to 1.</li>
+            <li><strong>Odds</strong> = number of events ÷ number of non-events. Ranges from 0 to ∞.</li>
+            <li><strong>Relative Risk (RR)</strong> = risk in exposed ÷ risk in unexposed.</li>
+            <li><strong>Odds Ratio (OR)</strong> = odds in exposed ÷ odds in unexposed.</li>
+            <li><strong>Number Needed to Treat (NNT)</strong> = 1 / Absolute Risk Reduction. The number of patients you need to treat to prevent one adverse outcome.</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- FRCR TAB -->
+      <div class="tab-content" id="tab-frcr">
+        <div class="info-card">
+          <h3>Data Types & Measurement Scales</h3>
+          <p>Correct classification of data type determines choice of statistical method. The FRCR exam frequently tests this.</p>
+          <p><strong>Nominal data</strong>: Categories with no intrinsic order. Examples: blood group, sex, tumour histology. Analysis: proportions, chi-square test, logistic regression.</p>
+          <p><strong>Ordinal data</strong>: Ordered categories with unequal intervals. Examples: ECOG performance status (0–4), AJCC stage (I–IV), pain scale. Analysis: median + IQR, Mann-Whitney U, Wilcoxon signed-rank, Kruskal-Wallis, ordinal logistic regression.</p>
+          <p><strong>Interval data</strong>: Numerical with equal intervals but no true zero. Example: temperature in °C. Can calculate mean, but ratios are meaningless (20°C is not "twice as hot" as 10°C).</p>
+          <p><strong>Ratio data</strong>: Numerical with a true zero. Examples: height, weight, dose in Gy, tumour volume. All arithmetic operations possible. Most biological measurements are ratio data.</p>
+          <p><strong>Discrete vs Continuous</strong>: Discrete data takes integer values (number of metastases, number of fractions). Continuous data can take any value on a continuum (creatinine level, tumour diameter, PSA).</p>
+          <div class="warning-box">
+            <strong>⚠️ Exam Trap: Data Type Misclassification</strong>
+            <div>FRCR questions often present data and ask "Which test should be used?" The most common mistake is treating ordinal data as continuous (e.g., using mean ± SD for ECOG score) or treating continuous data that is non-normal as requiring a parametric test. Always check distribution first.</div>
+          </div>
+        </div>
+
+        <div class="info-card">
+          <h3>Descriptive Statistics & Distributions</h3>
+          <p><strong>Mean</strong> (μ for population, x̄ for sample): Sum of values divided by n. Optimal for symmetric distributions. The mean is the <strong>least squares</strong> estimator — it minimises the sum of squared deviations.</p>
+          <p><strong>Median</strong>: The 50th percentile. Robust to outliers. Preferred for skewed distributions (survival times, economic data, tumour sizes).</p>
+          <p><strong>Standard Deviation (SD)</strong>: √(Σ(xᵢ − x̄)² / (n − 1)) for sample. Describes dispersion of individual observations around the mean. SD is in the same units as the original data.</p>
+          <p><strong>Variance (σ² or s²)</strong>: The square of the SD. Used in ANOVA and regression. The denominator (n − 1) gives <strong>Bessel's correction</strong> for sample variance (unbiased estimator).</p>
+          <p><strong>Interquartile Range (IQR)</strong>: Q3 − Q1. Robust measure of spread used with median.</p>
+          <p><strong>Coefficient of Variation (CV)</strong>: (SD / mean) × 100%. Allows comparison of variability between datasets with different units or means. Example: comparing variability of tumour size measurements between different imaging modalities.</p>
+
+          <h4>Skewness & Kurtosis</h4>
+          <p><strong>Positive skew (right tail)</strong>: Mean > median. Examples: survival times, hospital stay durations, PSA levels. Use median ± IQR.</p>
+          <p><strong>Negative skew (left tail)</strong>: Mean < median. Examples: age at menopause, some quality-of-life scores.</p>
+          <p><strong>Kurtosis</strong>: Describes tail "heaviness." High kurtosis → more outliers. Leptokurtic (peaked), platykurtic (flat).</p>
+        </div>
+
+        <div class="info-card">
+          <h3>Normal Distribution & Sampling Distributions</h3>
+          <p>The <strong>Normal (Gaussian) distribution</strong> is defined by two parameters: N(μ, σ²). Probability density function: f(x) = (1 / σ√(2π)) × exp(−(x − μ)² / (2σ²)).</p>
+          <p><strong>Standard Normal (Z) distribution</strong>: N(0, 1). z = (x − μ) / σ. Key z-values: z = 1.96 corresponds to the 97.5th percentile (two-tailed 95% range). z = 2.58 corresponds to the 99.5th percentile (99% CI).</p>
+          <p><strong>Central Limit Theorem (CLT)</strong>: The sampling distribution of the sample mean approaches a normal distribution as n increases, <strong>regardless of the underlying population distribution</strong>. This is why parametric tests (t-test, ANOVA) are robust for n ≥ 30 even with non-normal data. However, for n < 30, the data itself should be approximately normal.</p>
+          <p><strong>Standard Error of the Mean (SEM)</strong>: SEM = σ / √n. The SEM is always smaller than the SD because the sample mean varies less than individual observations. SEM decreases with increasing sample size.</p>
+          <div class="warning-box">
+            <strong>⚠️ Exam Trap: SD vs SEM</strong>
+            <div>SD describes spread of observations (used for descriptive statistics of the sample). SEM describes precision of the mean estimate (used for confidence intervals). They are NOT interchangeable. In the FRCR exam, if a question asks for "variability of individual measurements," the answer is SD, not SEM.</div>
+          </div>
+        </div>
+
+        <div class="info-card">
+          <h3>Confidence Intervals</h3>
+          <p><strong>95% CI for the mean</strong> (when σ is known or n is large): x̄ ± 1.96 × SEM.</p>
+          <p><strong>95% CI for the mean</strong> (when σ is unknown, n small): x̄ ± t(n−1) × SEM, where t(n−1) is the critical value from the t-distribution with n−1 degrees of freedom. The t-distribution has fatter tails than the normal when n is small, producing wider CIs — accounting for the additional uncertainty of estimating σ from the sample.</p>
+          <p><strong>95% CI for a proportion</strong>: p̂ ± 1.96 × √(p̂(1 − p̂) / n). Only valid when np̂ and n(1−p̂) are both > 5.</p>
+          <p><strong>95% CI for RR or OR</strong>: Usually calculated on the log scale (ln OR ± 1.96 × SE(ln OR)) then exponentiated back. If the CI includes 1, the result is not statistically significant.</p>
+          <p><strong>Interpretation pitfalls</strong>:</p>
+          <ul>
+            <li>A 95% CI that does not include the null value (0 for differences, 1 for RR/OR) corresponds to p < 0.05.</li>
+            <li>The width of the CI reflects precision: wider CI = less precise estimate. Width is affected by sample size (larger n → narrower CI) and variability (larger SD → wider CI).</li>
+            <li>CIs are generally preferred over p-values because they show the range of plausible effect sizes, not just whether the result is "significant."</li>
+          </ul>
+        </div>
+
+        <div class="info-card">
+          <h3>Hypothesis Testing Framework</h3>
+          <p><strong>Steps in hypothesis testing</strong>:</p>
+          <ol>
+            <li>State H₀ and H₁.</li>
+            <li>Choose significance level α (usually 0.05).</li>
+            <li>Select appropriate test statistic.</li>
+            <li>Calculate test statistic and associated p-value.</li>
+            <li>Compare p-value to α. If p < α, reject H₀ (result statistically significant).</li>
+          </ol>
+
+          <h4>Type I and Type II Errors</h4>
+          <p><strong>Type I error (α)</strong>: Rejecting H₀ when it is true. "False positive." Probability = α (usually set at 0.05).</p>
+          <p><strong>Type II error (β)</strong>: Failing to reject H₀ when it is false. "False negative." Probability = β.</p>
+          <p><strong>Power (1 − β)</strong>: Probability of correctly rejecting H₀ when it is false (i.e., detecting a true effect). Power depends on: effect size (larger → more power), sample size (larger → more power), significance level (α larger → more power), variability (smaller → more power).</p>
+          <p><strong>One-tailed vs two-tailed tests</strong>: Two-tailed tests divide α between both tails. Use when the direction of effect is unknown. One-tailed tests put all α in one tail — use <strong>only</strong> when a difference in the opposite direction is impossible or clinically irrelevant. One-tailed tests have more power but are rarely justified in medical research.</p>
+          <div class="warning-box">
+            <strong>⚠️ Exam Trap: p-value Misinterpretation</strong>
+            <div>The p-value is NOT the probability that H₀ is true. It is P(data | H₀), not P(H₀ | data). Also, p > 0.05 does NOT mean "no difference" — it means "insufficient evidence to reject H₀." There may be a real effect that the study was too small to detect (low power).</div>
+          </div>
+        </div>
+
+        <div class="info-card">
+          <h3>Parametric vs Non-Parametric Tests</h3>
+          <p><strong>Parametric tests</strong> (t-test, ANOVA, Pearson correlation): Assume data follows a specific distribution (usually normal). More powerful when assumptions are met. Require: independence, normality (or large n), equal variances (homoscedasticity).</p>
+          <p><strong>Non-parametric tests</strong> (Mann-Whitney U, Wilcoxon signed-rank, Kruskal-Wallis, Spearman correlation): Make no distributional assumptions. Based on ranks rather than raw values. Less powerful (higher Type II error risk) but robust to outliers and skew.</p>
+
+          <h4>Test Selection Guide</h4>
+          <table style="width:100%;border-collapse:collapse;margin:10px 0;font-size:0.85rem;">
+            <thead>
+              <tr style="background:#f1f5f9;">
+                <th style="padding:8px 12px;border:1px solid #e2e8f0;text-align:left;">Comparison</th>
+                <th style="padding:8px 12px;border:1px solid #e2e8f0;text-align:left;">Parametric</th>
+                <th style="padding:8px 12px;border:1px solid #e2e8f0;text-align:left;">Non-Parametric</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td style="padding:6px 12px;border:1px solid #e2e8f0;">Two groups (independent)</td><td style="padding:6px 12px;border:1px solid #e2e8f0;">Independent t-test</td><td style="padding:6px 12px;border:1px solid #e2e8f0;">Mann-Whitney U</td></tr>
+              <tr><td style="padding:6px 12px;border:1px solid #e2e8f0;">Two groups (paired)</td><td style="padding:6px 12px;border:1px solid #e2e8f0;">Paired t-test</td><td style="padding:6px 12px;border:1px solid #e2e8f0;">Wilcoxon signed-rank</td></tr>
+              <tr><td style="padding:6px 12px;border:1px solid #e2e8f0;">Three+ groups</td><td style="padding:6px 12px;border:1px solid #e2e8f0;">One-way ANOVA</td><td style="padding:6px 12px;border:1px solid #e2e8f0;">Kruskal-Wallis</td></tr>
+              <tr><td style="padding:6px 12px;border:1px solid #e2e8f0;">Correlation</td><td style="padding:6px 12px;border:1px solid #e2e8f0;">Pearson r</td><td style="padding:6px 12px;border:1px solid #e2e8f0;">Spearman ρ</td></tr>
+              <tr><td style="padding:6px 12px;border:1px solid #e2e8f0;">Categorical association</td><td style="padding:6px 12px;border:1px solid #e2e8f0;">—</td><td style="padding:6px 12px;border:1px solid #e2e8f0;">Chi-square (χ²)</td></tr>
+              <tr><td style="padding:6px 12px;border:1px solid #e2e8f0;">Repeated measures</td><td style="padding:6px 12px;border:1px solid #e2e8f0;">Repeated measures ANOVA</td><td style="padding:6px 12px;border:1px solid #e2e8f0;">Friedman test</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="info-card">
+          <h3>t-tests in Detail</h3>
+          <p><strong>One-sample t-test</strong>: Compares sample mean to a known population mean. t = (x̄ − μ₀) / (s / √n). df = n − 1. Example: comparing mean tumour volume in a cohort to a known historical mean.</p>
+          <p><strong>Independent (two-sample) t-test</strong>: Compares means of two independent groups. t = (x̄₁ − x̄₂) / SE(x̄₁ − x̄₂). Two forms:</p>
+          <ul>
+            <li><strong>Equal variances assumed (Student's t)</strong>: Pooled variance estimate. Requires Levene's test to confirm equal variances.</li>
+            <li><strong>Unequal variances (Welch's t)</strong>: More robust. Does not assume equal variances. Adjusted degrees of freedom (Satterthwaite approximation). Preferred in modern practice.</li>
+          </ul>
+          <p><strong>Paired t-test</strong>: Compares means of related observations (before/after, matched pairs). t = d̄ / (sd / √n), where d̄ = mean of differences. More powerful than independent t-test because each subject acts as its own control, reducing variability.</p>
+          <p><strong>Assumptions</strong>: (1) Independence of observations, (2) Normality of data (or differences for paired test), (3) Equal variances (for independent t-test, unless using Welch's).</p>
+        </div>
+
+        <div class="info-card">
+          <h3>Chi-Square & Fisher's Exact Test</h3>
+          <p><strong>Chi-square (χ²) test for independence</strong>: Tests association between two categorical variables. χ² = Σ(O − E)² / E, where O = observed frequency, E = expected frequency. Expected = (row total × column total) / grand total.</p>
+          <p><strong>Degrees of freedom</strong>: (rows − 1) × (columns − 1). For a 2×2 table, df = 1. For 2 columns × 3 rows, df = 2.</p>
+          <p><strong>Assumptions</strong>: (1) No more than 20% of expected frequencies < 5. (2) All expected frequencies ≥ 1. (3) Independent observations (each person counted once).</p>
+          <p><strong>Fisher's Exact Test</strong>: Used when chi-square assumptions are violated (small expected frequencies). It calculates the exact probability of the observed table under H₀ using the hypergeometric distribution. Particularly useful for small samples (expected < 5).</p>
+          <p><strong>McNemar's Test</strong>: For paired categorical data (e.g., before/after on same subjects). Only counts discordant pairs (yes/no → no/yes). The matching removes between-subject variability.</p>
+          <p><strong>Yates' continuity correction</strong>: Applied to chi-square for 2×2 tables to reduce Type I error. Adjusts formula: Σ(|O − E| − 0.5)² / E. However, Yates' correction is conservative; Fisher's exact test is preferred for small samples.</p>
+        </div>
+
+        <div class="info-card">
+          <h3>ANOVA (Analysis of Variance)</h3>
+          <p><strong>One-way ANOVA</strong>: Compares means of ≥ 3 groups. F = MSB / MSW (Mean Square Between groups / Mean Square Within groups).</p>
+          <p><strong>Total variation</strong> = Between-group variation (explained by group differences) + Within-group variation (residual/error). If group means differ substantially, F is large → significant.</p>
+          <p><strong>Post-hoc tests</strong>: If ANOVA is significant, post-hoc (multiple comparison) tests identify which groups differ. Common options: Bonferroni (most conservative), Tukey HSD, Scheffé, Dunnett (if comparing all groups to a control).</p>
+          <p><strong>Two-way ANOVA</strong>: Tests effects of two factors and their interaction. Example: effect of treatment (drug vs placebo) AND sex (M vs F) on blood pressure. Interaction term tests whether treatment effect differs by sex.</p>
+          <p><strong>ANOVA assumptions</strong>: (1) Independence, (2) Normality of residuals, (3) Homogeneity of variances (Levene's test). If violated, use Kruskal-Wallis (non-parametric alternative).</p>
+        </div>
+
+        <div class="info-card">
+          <h3>Non-Parametric Tests</h3>
+          <p><strong>Mann-Whitney U test</strong> (Wilcoxon rank-sum): Ranks all values from both groups together, then sums ranks within each group. Tests if one group tends to have larger values than the other. Null: distributions are identical.</p>
+          <p><strong>Wilcoxon signed-rank test</strong>: For paired data. Calculates differences, ranks absolute differences, then sums ranks of positive and negative differences separately. Tests if median difference = 0.</p>
+          <p><strong>Kruskal-Wallis test</strong>: Non-parametric ANOVA for ≥ 3 independent groups. Ranks all data, then compares mean ranks between groups. H-statistic ≈ χ² distribution.</p>
+          <p><strong>Spearman's rank correlation (ρ)</strong>: Pearson correlation applied to ranks. Measures monotonic (not necessarily linear) relationship. Range: −1 to +1. Robust to outliers. Does not assume linearity.</p>
+          <p><strong>Efficiency</strong>: Non-parametric tests have ~95% efficiency of parametric tests when assumptions are met, but can be substantially more powerful when they are not.</p>
+        </div>
+
+        <div class="info-card">
+          <h3>Correlation & Linear Regression</h3>
+          <p><strong>Pearson correlation (r)</strong>: Measures strength of <strong>linear</strong> relationship between two continuous variables. r = cov(x,y) / (sx × sy). Range: −1 to +1. r² = coefficient of determination — proportion of variance in y explained by x.</p>
+          <p><strong>Assumptions</strong>: Both variables normally distributed (bivariate normality), linear relationship, no outliers (highly influential).</p>
+          <p><strong>Spearman's ρ</strong>: Rank-based. Measures monotonic relationship. Used when data is ordinal, non-normal, or contains outliers.</p>
+          <p><strong>Simple linear regression</strong>: Models y = β₀ + β₁x + ε. β₁ = slope (change in y per unit change in x). β₀ = intercept (value of y when x=0 — only interpretable if x=0 is meaningful).</p>
+          <p><strong>Least squares estimation</strong>: β₁ = Σ(xᵢ − x̄)(yᵢ − ȳ) / Σ(xᵢ − x̄)². Minimises sum of squared residuals.</p>
+          <p><strong>Regression assumptions (LINE)</strong>:</p>
+          <ul>
+            <li><strong>L</strong>inearity: relationship between x and y is linear.</li>
+            <li><strong>I</strong>ndependence: observations are independent.</li>
+            <li><strong>N</strong>ormality: residuals are normally distributed.</li>
+            <li><strong>E</strong>qual variance (homoscedasticity): variance of residuals is constant across x.</li>
+          </ul>
+          <p><strong>Multiple linear regression</strong>: y = β₀ + β₁x₁ + β₂x₂ + ... + βₖxₖ + ε. Each βᵢ is the effect of that predictor <strong>adjusted for</strong> all others. R² = overall proportion of variance explained. Adjusted R² penalises for adding predictors.</p>
+          <p><strong>Multicollinearity</strong>: When predictors are highly correlated with each other. Inflates standard errors of β coefficients, making estimates unstable. Detected by VIF (Variance Inflation Factor). VIF > 10 indicates serious collinearity.</p>
+        </div>
+
+        <div class="info-card">
+          <h3>Logistic Regression</h3>
+          <p>Used when the outcome variable is <strong>binary</strong> (e.g., died vs survived, recurrence vs no recurrence). Models the <strong>log-odds</strong> of the outcome:</p>
+          <p>log(p/(1−p)) = β₀ + β₁x₁ + β₂x₂ + ... + βₖxₖ</p>
+          <p><strong>Odds Ratio (OR)</strong> = exp(βᵢ). The multiplicative change in odds of the outcome per unit increase in predictor xᵢ, adjusted for other predictors.</p>
+          <p><strong>Key differences from linear regression</strong>:</p>
+          <ul>
+            <li>Logistic regression does NOT assume normality or homoscedasticity.</li>
+            <li>Maximum likelihood estimation (MLE) is used instead of least squares.</li>
+            <li>Goodness of fit: Hosmer-Lemeshow test. AIC, BIC for model comparison.</li>
+            <li>Pseudo-R² (McFadden's, Nagelkerke's) — typically much lower than linear R² and not directly comparable.</li>
+          </ul>
+          <p><strong>Multinomial logistic regression</strong>: For outcomes with > 2 unordered categories (e.g., tumour response: CR, PR, SD, PD).</p>
+          <p><strong>Ordinal logistic regression</strong>: For > 2 ordered categories. Assumes proportional odds (the effect of predictors is the same across all thresholds).</p>
+        </div>
+
+        <div class="info-card">
+          <h3>Relative Risk & Odds Ratio</h3>
+          <p><strong>Relative Risk (RR)</strong> = incidence in exposed / incidence in unexposed. Used in cohort studies (where we can calculate incidence).</p>
+          <ul>
+            <li>RR = 1: no association.</li>
+            <li>RR > 1: risk factor (increased risk).</li>
+            <li>RR < 1: protective factor.</li>
+          </ul>
+          <p><strong>Odds Ratio (OR)</strong> = (a/c) / (b/d) = ad/bc for a 2×2 table. Used in case-control studies (where incidence is unknown). Also the output of logistic regression.</p>
+          <ul>
+            <li>When the outcome is rare (< 10%), OR ≈ RR.</li>
+            <li>When the outcome is common, OR > RR for positive associations (exaggerates risk).</li>
+          </ul>
+          <p><strong>Absolute Risk Reduction (ARR)</strong> = risk(unexposed) − risk(exposed) = control event rate − experimental event rate.</p>
+          <p><strong>Number Needed to Treat (NNT)</strong> = 1 / ARR. Number of patients who must be treated to prevent one adverse outcome. A clinically intuitive measure of treatment effect.</p>
+          <p><strong>Number Needed to Harm (NNH)</strong> = 1 / attributable risk increase for adverse events.</p>
+
+          <div class="figure-container">
+            <svg viewBox="0 0 520 220" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:520px;display:block;margin:0 auto;">
+              <text x="260" y="20" text-anchor="middle" font-size="13" font-weight="700" fill="#1e293b">2×2 Contingency Table — RR & OR</text>
+              <rect x="100" y="45" width="320" height="150" rx="8" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1.5"/>
+              <line x1="240" y1="45" x2="240" y2="195" stroke="#e2e8f0" stroke-width="1.5"/>
+              <line x1="100" y1="110" x2="420" y2="110" stroke="#e2e8f0" stroke-width="1.5"/>
+              <text x="170" y="38" text-anchor="middle" font-size="10" font-weight="600" fill="#64748b">Disease +</text>
+              <text x="330" y="38" text-anchor="middle" font-size="10" font-weight="600" fill="#64748b">Disease −</text>
+              <text x="85" y="82" text-anchor="end" font-size="10" font-weight="600" fill="#64748b">Exposed</text>
+              <text x="85" y="158" text-anchor="end" font-size="10" font-weight="600" fill="#64748b">Unexposed</text>
+              <rect x="118" y="55" width="100" height="44" rx="6" fill="#fee2e2" stroke="#ef4444" stroke-width="1"/>
+              <text x="168" y="79" text-anchor="middle" font-size="14" font-weight="700" fill="#991b1b">a</text>
+              <text x="168" y="93" text-anchor="middle" font-size="10" fill="#991b1b">exposed + disease</text>
+              <rect x="262" y="55" width="100" height="44" rx="6" fill="#dcfce7" stroke="#22c55e" stroke-width="1"/>
+              <text x="312" y="79" text-anchor="middle" font-size="14" font-weight="700" fill="#166534">b</text>
+              <text x="312" y="93" text-anchor="middle" font-size="10" fill="#166534">exposed, no disease</text>
+              <rect x="118" y="125" width="100" height="44" rx="6" fill="#fee2e2" stroke="#ef4444" stroke-width="1"/>
+              <text x="168" y="149" text-anchor="middle" font-size="14" font-weight="700" fill="#991b1b">c</text>
+              <text x="168" y="163" text-anchor="middle" font-size="10" fill="#991b1b">unexposed + disease</text>
+              <rect x="262" y="125" width="100" height="44" rx="6" fill="#dcfce7" stroke="#22c55e" stroke-width="1"/>
+              <text x="312" y="149" text-anchor="middle" font-size="14" font-weight="700" fill="#166534">d</text>
+              <text x="312" y="163" text-anchor="middle" font-size="10" fill="#166534">unexposed, no disease</text>
+              <text x="470" y="82" font-size="9" fill="#64748b">RR = a/(a+b) ÷ c/(c+d)</text>
+              <text x="470" y="102" font-size="9" fill="#64748b">OR = ad / bc</text>
+            </svg>
+            <p class="figure-caption"><strong>Figure 1:</strong> 2×2 contingency table layout. RR and OR calculated from cell frequencies a, b, c, d.</p>
+          </div>
+        </div>
+
+        <div class="info-card">
+          <h3>Diagnostic Test Evaluation</h3>
+          <p><strong>Sensitivity</strong> = TP / (TP + FN). "Snout" — a highly <strong>Se</strong>nsitive test rules <strong>out</strong> disease (negative result rules it out).</p>
+          <p><strong>Specificity</strong> = TN / (TN + FP). "Spin" — a highly <strong>Sp</strong>ecific test rules <strong>in</strong> disease (positive result confirms it).</p>
+          <p><strong>Positive Predictive Value (PPV)</strong> = TP / (TP + FP). PPV decreases as disease <strong>prevalence</strong> decreases. This is why screening tests perform poorly in low-prevalence populations.</p>
+          <p><strong>Negative Predictive Value (NPV)</strong> = TN / (TN + FN). NPV increases as prevalence decreases.</p>
+          <p><strong>Likelihood Ratios</strong>:</p>
+          <ul>
+            <li><strong>LR+</strong> = sensitivity / (1 − specificity). How much more likely a positive test is in diseased vs non-diseased. LR+ > 10 strongly suggests disease.</li>
+            <li><strong>LR−</strong> = (1 − sensitivity) / specificity. How much less likely a negative test is in diseased vs non-diseased. LR− < 0.1 strongly rules out disease.</li>
+            <li><strong>Post-test odds</strong> = pre-test odds × LR. Pre-test odds = prevalence / (1 − prevalence).</li>
+            <li><strong>Bayes' theorem</strong> in diagnostic testing: P(disease | positive) = P(positive | disease) × P(disease) / P(positive).</li>
+          </ul>
+          <p><strong>ROC curves</strong>: Plot sensitivity (y-axis) vs 1 − specificity (x-axis) across all possible cut-off values. Area Under the Curve (AUC): 1.0 = perfect test, 0.5 = useless test (same as random). AUC 0.7–0.8 = fair, 0.8–0.9 = good, 0.9–1.0 = excellent. The optimal cut-off maximises sensitivity + specificity (Youden's index).</p>
+        </div>
+
+        <div class="info-card">
+          <h3>Survival Analysis</h3>
+          <p><strong>Censoring</strong>: Patients leave the study for reasons other than the event of interest (lost to follow-up, alive at study end). Survival analysis methods must handle censored data correctly.</p>
+          <p><strong>Kaplan-Meier (KM) estimator</strong>: S(t) = Π (nᵢ − dᵢ) / nᵢ, where nᵢ = number at risk just before time tᵢ, dᵢ = number of events at time tᵢ. The curve is a step function dropping at each event time. Censored observations are marked as ticks on the curve.</p>
+          <p><strong>KM assumptions</strong>:</p>
+          <ul>
+            <li>Censoring is non-informative (reason for censoring is unrelated to prognosis).</li>
+            <li>Survival probabilities are the same for subjects recruited early vs late.</li>
+          </ul>
+          <p><strong>Log-rank test</strong>: Compares survival curves between two (or more) groups. Tests H₀: no difference in survival. Calculates observed vs expected events in each group, summed across all time points. χ² distribution with (groups − 1) df.</p>
+          <p><strong>Median survival</strong>: Time at which S(t) = 0.5. Can be estimated from the KM curve. If the curve does not drop to 0.5, median survival cannot be reported.</p>
+          <p><strong>Hazard Ratio (HR)</strong>: From Cox proportional hazards model. HR = hazard in exposed / hazard in unexposed. HR > 1 = higher risk. HR is the survival analysis analogue of RR.</p>
+          <p><strong>Cox proportional hazards regression</strong>: h(t) = h₀(t) × exp(β₁x₁ + ... + βₖxₖ). h₀(t) is the baseline hazard (unspecified — "semi-parametric"). The <strong>proportional hazards assumption</strong>: the ratio of hazards is constant over time for any two groups. Checked by: log(−log(survival)) plots (should be parallel), Schoenfeld residuals test. If violated, consider stratified Cox or time-dependent covariates.</p>
+        </div>
+
+        <div class="info-card">
+          <h3>Sample Size & Power</h3>
+          <p><strong>Sample size calculation</strong> depends on:</p>
+          <ul>
+            <li><strong>Effect size</strong> (δ): the minimum clinically important difference.</li>
+            <li><strong>Significance level (α)</strong>: usually 0.05.</li>
+            <li><strong>Power (1 − β)</strong>: usually 0.80 or 0.90.</li>
+            <li><strong>Variability (σ)</strong>: SD of the outcome measure.</li>
+            <li><strong>Allocation ratio</strong>: e.g., 1:1 for equal groups.</li>
+          </ul>
+          <p>For a two-sample t-test: n per group = 2(Zα/₂ + Zβ)²σ² / δ². Where Zα/₂ = 1.96 (α = 0.05, two-tailed) and Zβ = 0.84 (power = 0.80).</p>
+          <p><strong>Key relationships</strong>:</p>
+          <ul>
+            <li>Doubling the effect size → sample size reduced 4× (inverse square relationship).</li>
+            <li>Doubling the variability → sample size increased 4×.</li>
+            <li>Increasing power from 0.80 to 0.90 → sample size increased ~30%.</li>
+            <li>Changing from two-tailed to one-tailed → modest reduction in sample size.</li>
+          </ul>
+          <p><strong>Common pitfalls</strong>:</p>
+          <ul>
+            <li>Post-hoc power calculations are meaningless — power should be calculated at the design stage.</li>
+            <li>Sample size for survival studies requires number of events, not number of patients.</li>
+            <li>Cluster-randomised trials require larger sample sizes due to intra-cluster correlation.</li>
+          </ul>
+        </div>
+
+        <div class="info-card">
+          <h3>Multiple Testing & Adjustment</h3>
+          <p><strong>Problem</strong>: When many hypothesis tests are performed, the probability of at least one Type I error inflates. Family-wise error rate (FWER) = 1 − (1 − α)^m for m independent tests.</p>
+          <p><strong>Bonferroni correction</strong>: α-adjusted = α / m. Most conservative (highest Type II error). Appropriate when tests are pre-planned and few in number.</p>
+          <p><strong>Holm-Bonferroni (step-down)</strong>: Less conservative. Sort p-values, compare smallest to α/m, next to α/(m−1), etc.</p>
+          <p><strong>False Discovery Rate (FDR)</strong>: Benjamini-Hochberg procedure. Controls expected proportion of false discoveries among rejected hypotheses. Less conservative than FWER methods. Common in genomics and exploratory analyses.</p>
+          <p><strong>Subgroup analyses</strong>: Should be pre-specified and tested for interaction (not separate p-values for each subgroup). Post-hoc subgroup findings are hypothesis-generating, not confirmatory.</p>
+        </div>
+
+        <div class="info-card">
+          <h3>Clinical Trial Designs</h3>
+          <p><strong>Randomised Controlled Trial (RCT)</strong>: Gold standard. Randomisation balances known and unknown confounders. Types: parallel group, crossover (each patient is own control — requires no carry-over effect), cluster (groups randomised, e.g., hospitals).</p>
+          <p><strong>Blinding</strong>: Single-blind (patient unaware), double-blind (patient + assessor unaware), triple-blind (patient + assessor + analyst unaware). Blinding reduces bias.</p>
+          <p><strong>Intention-to-Treat (ITT)</strong>: Analyse all patients in the groups they were randomised to, regardless of treatment received. Preserves randomisation, gives unbiased estimate of treatment effect in practice. The FRCR-friendly approach.</p>
+          <p><strong>Per-Protocol (PP)</strong>: Analyse only patients who completed treatment as allocated. More prone to bias (patients who complete may differ systematically).</p>
+          <p><strong>Superiority vs Non-inferiority vs Equivalence</strong>:</p>
+          <ul>
+            <li><strong>Superiority</strong>: H₀: new = control. Reject H₀ to show new better.</li>
+            <li><strong>Non-inferiority</strong>: H₀: new < control − δ (margin). Reject H₀ to show new not worse than control by more than δ. Requires pre-specified non-inferiority margin.</li>
+            <li><strong>Equivalence</strong>: H₀: |new − control| ≥ δ. Reject H₀ to show treatments are within δ of each other.</li>
+          </ul>
+        </div>
+
+        <div class="info-card">
+          <h3>Common Statistical Errors & Exam Traps</h3>
+          <ul>
+            <li><strong>Confounding</strong>: A variable associated with both exposure and outcome, distorting the true relationship. Example: age confounds the relationship between exercise and mortality. Controlled by randomisation, stratification, or multivariate adjustment.</li>
+            <li><strong>Effect modification (interaction)</strong>: The effect of exposure differs across levels of another variable. Example: treatment effect differs by sex. Reported as subgroup-specific estimates.</li>
+            <li><strong>Ecological fallacy</strong>: Assuming group-level associations apply at individual level.</li>
+            <li><strong>Simpson's paradox</strong>: A trend appears in several groups but disappears/reverses when groups are combined. Example: sex bias in university admissions (Berkeley case).</li>
+            <li><strong>Publication bias</strong>: "File drawer problem" — positive results more likely to be published.</li>
+            <li><strong>Confidence interval vs prediction interval</strong>: CI = precision of the mean. Prediction interval = range of individual future observations (always wider).</li>
+            <li><strong>Correlation ≠ causation</strong>: r = 0.8 does not mean x causes y. Consider reverse causation, confounding, coincidence.</li>
+            <li><strong>Regression to the mean</strong>: Extreme values tend to be closer to the mean on repeated measurement. Common trap in before/after studies without a control group.</li>
+            <li><strong>Data dredging (p-hacking)</strong>: Performing many analyses and reporting only significant results. Pre-registration of analysis plan helps prevent this.</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- KEY FACTS TAB -->
+      <div class="tab-content" id="tab-keyfacts">
+        <div class="info-card">
+          <h3>Essential Exam Facts</h3>
+          <div class="key-facts-grid">
+            <div class="fact-item">Types of data: Nominal (unordered), Ordinal (ordered), Interval (no true zero), Ratio (true zero).</div>
+            <div class="fact-item">Mean ± SD for normal data; Median ± IQR for skewed data.</div>
+            <div class="fact-item">SD = spread of observations; SEM = SD/√n = precision of mean.</div>
+            <div class="fact-item">95% CI for mean = mean ± 1.96 × SEM (large n) or ± t × SEM (small n).</div>
+            <div class="fact-item">p-value = P(data | H₀), NOT P(H₀ | data).</div>
+            <div class="fact-item">Type I error (α): false positive. Type II error (β): false negative. Power = 1 − β.</div>
+            <div class="fact-item">Independent t-test: 2 groups, normal data. Mann-Whitney: non-parametric alternative.</div>
+            <div class="fact-item">Paired t-test: before/after. Wilcoxon signed-rank: non-parametric alternative.</div>
+            <div class="fact-item">Chi-square: categorical association. Fisher's exact: small expected frequencies.</div>
+            <div class="fact-item">ANOVA: ≥3 group means. Post-hoc: Bonferroni, Tukey. Kruskal-Wallis: non-parametric.</div>
+            <div class="fact-item">Pearson: linear correlation. Spearman: monotonic (rank) correlation.</div>
+            <div class="fact-item">Linear regression: continuous outcome. Logistic regression: binary outcome.</div>
+            <div class="fact-item">RR = risk ratio (cohort studies). OR = odds ratio (case-control / logistic regression).</div>
+            <div class="fact-item">Sensitivity = TP/(TP+FN) — rules OUT. Specificity = TN/(TN+FP) — rules IN.</div>
+            <div class="fact-item">PPV depends on prevalence. LR+ tells how test changes disease probability.</div>
+            <div class="fact-item">Kaplan-Meier: survival with censoring. Log-rank: compare survival curves.</div>
+            <div class="fact-item">Cox regression: HR with covariates. Proportional hazards assumption required.</div>
+            <div class="fact-item">Sample size: larger effect = smaller n; larger variability = larger n.</div>
+            <div class="fact-item">ITT: analyse as randomised. PP: analyse as treated.</div>
+            <div class="fact-item">Bonferroni: α/m for multiple testing. FDR: controls expected false discovery rate.</div>
+          </div>
+        </div>
+
+        <div class="warning-box">
+          <strong>⚠️ Common Exam Traps</strong>
+          <div>• "SD vs SEM" — the question asks about variability of INDIVIDUAL observations → use SD. If about precision of MEAN → use SEM.</div>
+          <div>• "p > 0.05" does NOT mean "no difference" — only "insufficient evidence to reject H₀." The study may be underpowered.</div>
+          <div>• "95% CI includes 1" for RR/OR means NOT statistically significant (equivalent to p > 0.05).</div>
+          <div>• "Correlation does not imply causation" — a classic FRCR trap.</div>
+          <div>• Logistic regression gives ODDS ratios, not risk ratios. OR > RR when outcome is common.</div>
+          <div>• When the data is paired (matched/before-after), always use a paired test. Independent test loses power and is wrong.</div>
+          <div>• For contingency tables with expected < 5, use Fisher's exact, NOT chi-square.</div>
+          <div>• PPV decreases as prevalence decreases — screening in low-prevalence populations produces many false positives.</div>
+          <div>• Cox model gives HAZARD ratios (not risk ratios). HR > 1 means higher event rate over time.</div>
+        </div>
+      </div>
+
+      <!-- CLINICAL TAB -->
+      <div class="tab-content" id="tab-clinical">
+        <div class="clinical-box">
+          <strong>🏥 Why This Matters Clinically</strong>
+          <div>
+            <p><strong>Critical appraisal of the literature</strong>: Every published trial reports p-values, CIs, Kaplan-Meier curves, and hazard ratios. Understanding these concepts is essential to interpreting whether a new treatment truly benefits patients. For example, a trial may report a statistically significant p-value (p = 0.01) but a hazard ratio of 1.05 (clinically trivial). The distinction between statistical and clinical significance is fundamental.</p>
+            <p><strong>Number Needed to Treat (NNT)</strong>: Directly informs clinical decision-making. If NNT = 5, you need to treat 5 patients to prevent one adverse outcome. This is more clinically intuitive than RR or OR alone.</p>
+            <p><strong>Diagnostic tests in practice</strong>: Understanding PPV and prevalence dependence explains why the same PSA test performs differently in a screening population (low prevalence) vs a symptomatic urology clinic (high prevalence). This underpins rational test ordering.</p>
+            <p><strong>Survival analysis in oncology trials</strong>: Almost all oncology RCTs use progression-free survival (PFS) or overall survival (OS) as endpoints. Understanding KM curves and the log-rank test is essential for interpreting trial results at tumour boards and MDTs.</p>
+            <p><strong>Sample size and trial design</strong>: When designing a clinical trial or reviewing a grant application, sample size justification is mandatory. Trials that are too small (underpowered) cannot reliably answer the research question and are unethical (expose patients to risk without potential benefit).</p>
+            <p><strong>Intention-to-treat in practice</strong>: The MRC and NIHR require ITT analysis for all funded trials. When critically appraising a paper, check whether the analysis was ITT or PP — ITT is the gold standard for effectiveness; PP may overestimate benefit.</p>
+            <p><strong>Regression to the mean in clinical monitoring</strong>: When a patient returns with a "high" blood pressure reading, the next reading is likely to be lower even without treatment. This is why control groups are essential in clinical research.</p>
+            <p><strong>Multiple comparisons in subgroup analyses</strong>: When reading a paper that reports "treatment was effective in women but not men," check whether there was a formal test for interaction. Post-hoc subgroup analyses without interaction testing are hypothesis-generating only.</p>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /tab-contents -->
+
+    <!-- ══════ WORKED EXAMPLES ══════ -->
+    <div class="section-label"><h2>📐 Worked Examples</h2><div class="section-divider"></div></div>
+
+    <div class="accordion">
+      <button class="accordion-btn">Choosing the Correct Test</button>
+      <div class="accordion-panel">
+        <div class="accordion-inner">
+          <p><strong>Scenario:</strong> A study compares tumour shrinkage (continuous variable, % reduction in volume) between three treatment groups: radiotherapy alone, chemo-RT, and chemo-RT + immunotherapy. What test should be used?</p>
+          <p><strong>Solution:</strong> One-way ANOVA if data is normally distributed with equal variances. If significant, post-hoc Tukey test to identify which groups differ. If normality violated, Kruskal-Wallis test.</p>
+          <p><strong>Logic:</strong> Three independent groups, continuous outcome → ANOVA or Kruskal-Wallis depending on distribution.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="accordion">
+      <button class="accordion-btn">Interpreting a Hazard Ratio</button>
+      <div class="accordion-panel">
+        <div class="accordion-inner">
+          <p><strong>Scenario:</strong> A phase III trial reports HR = 0.65 (95% CI: 0.48–0.88, p = 0.004) for overall survival comparing new drug + SOC vs SOC alone. Interpret.</p>
+          <p><strong>Solution:</strong> The new drug reduces the hazard of death by 35% (1 − 0.65 = 0.35). The 95% CI (0.48 to 0.88) does not include 1, confirming statistical significance. The result is both statistically and clinically significant. NNT would need to be calculated from absolute survival differences.</p>
+          <p><strong>Logic:</strong> HR < 1 → benefit. CI excludes 1 → p < 0.05. Clinical significance depends on the magnitude of benefit and the absolute risk reduction.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="accordion">
+      <button class="accordion-btn">Sensitivity, Specificity & PPV</button>
+      <div class="accordion-panel">
+        <div class="accordion-inner">
+          <p><strong>Scenario:</strong> A new tumour marker for pancreatic cancer has sensitivity 90% and specificity 85%. Prevalence of pancreatic cancer in the tested population is 1%. Calculate PPV.</p>
+          <p><strong>Solution:</strong> In 10,000 patients: 100 have cancer (1%), 9,900 do not. TP = 90 (90% of 100). FP = 1,485 (15% of 9,900). PPV = 90 / (90 + 1,485) = 90 / 1,575 = 5.7%.</p>
+          <p><strong>Key insight:</strong> Despite high sensitivity and specificity, PPV is only 5.7% because prevalence is low. This illustrates why screening the general population with imperfect tests leads to many false positives.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="accordion">
+      <button class="accordion-btn">Calculating Sample Size</button>
+      <div class="accordion-panel">
+        <div class="accordion-inner">
+          <p><strong>Scenario:</strong> You are designing an RCT comparing two treatments. Minimum clinically important difference in mean tumour volume = 10 cm³. Estimated SD = 15 cm³. α = 0.05 (two-tailed), power = 0.80. How many patients per group?</p>
+          <p><strong>Solution:</strong> n = 2 × (1.96 + 0.84)² × 15² / 10² = 2 × 2.8² × 225 / 100 = 2 × 7.84 × 2.25 = 35.3. Round up → 36 patients per group (72 total).</p>
+          <p><strong>Logic:</strong> Larger effect size (10 vs 5) would reduce n. Larger SD increases n. Changing power to 0.90 would increase Zβ to 1.28 → larger n.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="accordion">
+      <button class="accordion-btn">Paired vs Independent t-test</button>
+      <div class="accordion-panel">
+        <div class="accordion-inner">
+          <p><strong>Scenario:</strong> A crossover trial gives 20 patients both treatment A and treatment B (with washout). Mean difference in pain score (A − B) = 2.1, SD of differences = 3.5. What test should be used?</p>
+          <p><strong>Solution:</strong> Paired t-test. t = 2.1 / (3.5 / √20) = 2.1 / 0.783 = 2.68. df = 19. Critical t(19) for α = 0.05 is 2.093. Since 2.68 > 2.093, p < 0.05 → statistically significant.</p>
+          <p><strong>Key insight:</strong> Using an independent t-test here would be incorrect because the observations are paired. It would use the wrong error term and likely produce a non-significant result (more variability).</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="accordion">
+      <button class="accordion-btn">Interpreting a Confidence Interval</button>
+      <div class="accordion-panel">
+        <div class="accordion-inner">
+          <p><strong>Scenario:</strong> A study reports the mean difference in survival between two treatments as 4.2 months (95% CI: −0.3 to 8.7 months). What can you conclude?</p>
+          <p><strong>Solution:</strong> The 95% CI includes zero (no difference). Therefore, the result is NOT statistically significant (p > 0.05). However, the upper limit suggests a potential benefit up to 8.7 months. The study may be underpowered. The clinical conclusion: insufficient evidence to conclude a difference exists, but the observed effect is compatible with a clinically meaningful benefit — a larger study is needed.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="accordion">
+      <button class="accordion-btn">Kaplan-Meier Survival Estimate</button>
+      <div class="accordion-panel">
+        <div class="accordion-inner">
+          <p><strong>Scenario:</strong> 10 patients receive treatment. Events occur at 3, 5, 8, and 12 months. Censoring at 6 months (1 patient), 10 months (1 patient), and 15 months (remaining patients). Calculate survival probability at 9 months.</p>
+          <p><strong>Solution:</strong> At time 3: 1 event, 10 at risk → S(3) = 9/10 = 0.900. At time 5: 1 event, 9 at risk → S(5) = 0.900 × 8/9 = 0.800. At time 6: 1 censored (lost to follow-up), 8 at risk left. At time 8: 1 event, 7 at risk → S(8) = 0.800 × 6/7 = 0.686. At time 9: no event, S(9) = S(8) = 0.686.</p>
+          <p><strong>Key insight:</strong> Censored patients are removed from the "at risk" set at the time of censoring but not counted as events. The survival curve only drops at event times.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="accordion">
+      <button class="accordion-btn">RR vs OR — When They Differ</button>
+      <div class="accordion-panel">
+        <div class="accordion-inner">
+          <p><strong>Scenario:</strong> In a study, 80/200 exposed patients developed disease vs 20/200 unexposed. Calculate RR and OR.</p>
+          <p><strong>Solution:</strong> Risk exposed = 80/200 = 0.40. Risk unexposed = 20/200 = 0.10. RR = 0.40/0.10 = 4.0. Odds exposed = 80/120 = 0.667. Odds unexposed = 20/180 = 0.111. OR = 0.667/0.111 = 6.0.</p>
+          <p><strong>Key insight:</strong> Here the outcome is common (overall 25%). OR = 6.0 is substantially larger than RR = 4.0. For rare outcomes (<10%), OR ≈ RR. For common outcomes, |OR| > |RR|.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════ ACTIVE RECALL ══════ -->
+    <div class="section-label"><h2>🧠 Active Recall Questions</h2><div class="section-divider"></div></div>
+
+    <ul class="recall-list">
+      <li class="recall-item"><div class="q">Q: What is the key difference between SD and SEM?</div><div class="a">A: SD describes the spread of individual observations around the mean. SEM = SD/√n describes how precisely the sample mean estimates the population mean. SEM is always ≤ SD.</div></li>
+      <li class="recall-item"><div class="q">Q: When should you use Fisher's exact test instead of chi-square?</div><div class="a">A: When >20% of expected cell frequencies are <5, or any expected frequency is <1. Fisher's exact test calculates the exact probability without relying on the chi-square approximation.</div></li>
+      <li class="recall-item"><div class="q">Q: What does the log-rank test compare?</div><div class="a">A: It compares the entire survival curves between two (or more) groups, testing H₀ that there is no difference in survival experience across groups. It calculates observed vs expected events at each time point.</div></li>
+      <li class="recall-item"><div class="q">Q: What is the proportional hazards assumption in Cox regression?</div><div class="a">A: The hazard ratio between any two groups is constant over time. Checked by log(−log(survival)) plots (parallel lines) or Schoenfeld residuals test. If violated, use stratified Cox or time-varying covariates.</div></li>
+      <li class="recall-item"><div class="q">Q: How does decreasing prevalence affect PPV and NPV?</div><div class="a">A: Lower prevalence → lower PPV (more false positives per true positive) and higher NPV (easier to rule out disease when it's rare). This is why screening in low-prevalence populations produces many false positives.</div></li>
+      <li class="recall-item"><div class="q">Q: What is the difference between ITT and PP analysis?</div><div class="a">A: ITT analyses patients as randomised regardless of treatment received — preserves randomisation, gives real-world effectiveness. PP analyses only those who completed allocated treatment — prone to selection bias, may overestimate efficacy.</div></li>
+      <li class="recall-item"><div class="q">Q: What is the central limit theorem and why does it matter?</div><div class="a">A: The sampling distribution of the mean approaches normality as n increases, regardless of underlying population distribution. This justifies parametric tests (t-test, ANOVA) for n ≥ 30 even when data is non-normal.</div></li>
+      <li class="recall-item"><div class="q">Q: When does OR approximate RR?</div><div class="a">A: When the outcome is rare (<10% prevalence). For common outcomes, OR overestimates RR for positive associations (OR > RR).</div></li>
+      <li class="recall-item"><div class="q">Q: Name the four LINE assumptions of linear regression.</div><div class="a">A: Linearity, Independence, Normality (of residuals), Equal variance (homoscedasticity).</div></li>
+      <li class="recall-item"><div class="q">Q: What is Simpson's paradox?</div><div class="a">A: A trend appears in several groups but disappears or reverses when the groups are combined due to a confounding variable. Example: the Berkeley sex bias case where each department admitted men and women equally, but overall rates showed apparent bias against women.</div></li>
+    </ul>
+
+    <!-- ══════ GLOSSARY ══════ -->
+    <div class="glossary-panel">
+      <h3>📖 Glossary</h3>
+      <div class="glossary-grid">
+        <div class="glossary-item"><div class="term">p-value</div><div class="def">Probability of observing the data (or more extreme) assuming H₀ is true. NOT the probability that H₀ is true.</div></div>
+        <div class="glossary-item"><div class="term">Confidence Interval</div><div class="def">Range of plausible values for a population parameter. 95% CI = if repeated 100 times, 95 intervals contain the true value.</div></div>
+        <div class="glossary-item"><div class="term">Type I Error</div><div class="def">False positive — rejecting H₀ when it is true. Probability = α (typically 0.05).</div></div>
+        <div class="glossary-item"><div class="term">Type II Error</div><div class="def">False negative — failing to reject H₀ when it is false. Probability = β. Power = 1 − β.</div></div>
+        <div class="glossary-item"><div class="term">Censoring</div><div class="def">In survival analysis, when a patient leaves the study without experiencing the event. Must be non-informative (unrelated to prognosis).</div></div>
+        <div class="glossary-item"><div class="term">Hazard Ratio</div><div class="def">Ratio of hazard rates (instantaneous risk of event) between two groups. From Cox regression. HR > 1 = higher risk.</div></div>
+        <div class="glossary-item"><div class="term">Number Needed to Treat</div><div class="def">NNT = 1/ARR. Number of patients to treat to prevent one adverse outcome. Lower NNT = more effective treatment.</div></div>
+        <div class="glossary-item"><div class="term">Confounding</div><div class="def">A variable associated with both exposure and outcome, distorting the true causal relationship.</div></div>
+        <div class="glossary-item"><div class="term">Effect Modification</div><div class="def">When the effect of an exposure differs across levels of another variable (interaction).</div></div>
+        <div class="glossary-item"><div class="term">Intention-to-Treat</div><div class="def">Analysing trial patients according to randomised group regardless of actual treatment received. Gold standard for effectiveness.</div></div>
+        <div class="glossary-item"><div class="term">Kaplan-Meier</div><div class="def">Non-parametric estimator of survival probability accounting for censored data. Produces a step-function survival curve.</div></div>
+        <div class="glossary-item"><div class="term">ROC Curve</div><div class="def">Plot of sensitivity vs 1−specificity across diagnostic cut-offs. AUC measures overall discriminative ability.</div></div>
+        <div class="glossary-item"><div class="term">Regression to the Mean</div><div class="def">Extreme values tend to be closer to the mean on repeated measurement. Common trap in uncontrolled before/after studies.</div></div>
+        <div class="glossary-item"><div class="term">Multiple Imputation</div><div class="def">Method for handling missing data by creating multiple complete datasets with imputed values, then pooling results.</div></div>
+        <div class="glossary-item"><div class="term">AIC / BIC</div><div class="def">Akaike Information Criterion / Bayesian Information Criterion. Model fit metrics that penalise complexity. Lower values = better fit.</div></div>
+      </div>
+    </div>
+
+  </div><!-- /content -->
+
+  <footer class="footer">
+    <div class="footer-inner">
+      <div>© 2025 FRCR 1 Study Hub</div>
+      <div class="footer-right">For educational use only · Not for clinical decisions</div>
+    </div>
+  </footer>
+
+  <script src="js/radbio.js"></script>
+</body>
+</html>

@@ -1,0 +1,101 @@
+- generic [ref=f10e3]:
+  - banner [ref=f10e4]:
+    - generic [ref=f10e5] [cursor=pointer]:
+      - img "radar-chart" [ref=f10e7]
+      - generic [ref=f10e11]:
+        - generic [ref=f10e12]: DevStat
+        - generic [ref=f10e13]: Medical Statistics
+    - generic [ref=f10e14]:
+      - img "save" [ref=f10e16] [cursor=pointer]
+      - img "folder-open" [ref=f10e20] [cursor=pointer]
+    - generic [ref=f10e23]:
+      - img "undo" [ref=f10e25]
+      - img "redo" [ref=f10e29]
+    - generic [ref=f10e32]:
+      - button "user devstat.e2e.20260824@example.com" [ref=f10e34] [cursor=pointer]:
+        - img "user" [ref=f10e36]
+        - generic [ref=f10e39]: devstat.e2e.20260824@example.com
+      - button "crown Upgrade" [active] [ref=f10e41] [cursor=pointer]:
+        - img "crown" [ref=f10e43]
+        - generic [ref=f10e46]: Upgrade
+      - img "question-circle" [ref=f10e48] [cursor=pointer]
+      - img "question-circle" [ref=f10e53] [cursor=pointer]
+  - menu [ref=f10e58]:
+    - menuitem [ref=f10e59] [cursor=pointer]:
+      - img "table" [ref=f10e60]
+      - text: Data
+    - menuitem [ref=f10e63] [cursor=pointer]:
+      - img "fund" [ref=f10e64]
+      - text: Analyze
+    - menuitem [ref=f10e67] [cursor=pointer]:
+      - img "apartment" [ref=f10e68]
+      - text: Survival
+    - menuitem [ref=f10e71] [cursor=pointer]:
+      - img "bar-chart" [ref=f10e72]
+      - text: Graphs
+    - menuitem [ref=f10e75] [cursor=pointer]:
+      - img "question-circle" [ref=f10e76]
+      - text: Wizard
+    - menuitem [ref=f10e80] [cursor=pointer]:
+      - img "file-text" [ref=f10e81]
+      - text: Output
+    - menuitem [disabled]
+  - alert [ref=f10e93]:
+    - img "exclamation-circle" [ref=f10e94]
+    - generic [ref=f10e97]:
+      - generic [ref=f10e98]: Online demo — exam practice only
+      - generic [ref=f10e99]: This online version runs on a shared public server. Use it for exam practice with the synthetic practice data only. Do NOT upload real, identifiable or confidential patient data — for real (anonymised) analysis, use the offline desktop app.
+  - main [ref=f10e84]:
+    - generic [ref=f10e100]:
+      - generic [ref=f10e103]:
+        - button "upload Upload Data" [ref=f10e108] [cursor=pointer]:
+          - img "upload" [ref=f10e110]
+          - generic [ref=f10e113]: Upload Data
+        - button "download Download" [disabled] [ref=f10e115]:
+          - generic:
+            - img "download"
+          - generic: Download
+        - button "reload Refresh" [ref=f10e117] [cursor=pointer]:
+          - img "reload" [ref=f10e119]
+          - generic [ref=f10e122]: Refresh
+        - button "undo Undo" [disabled] [ref=f10e124]:
+          - generic:
+            - img "undo"
+          - generic: Undo
+        - button "redo Redo" [disabled] [ref=f10e126]:
+          - generic:
+            - img "redo"
+          - generic: Redo
+        - button "plus Add Col" [disabled] [ref=f10e130]:
+          - generic:
+            - img "plus"
+          - generic: Add Col
+        - button "delete Del Col" [disabled] [ref=f10e132]:
+          - generic:
+            - img "delete"
+          - generic: Del Col
+        - button "calculator Compute" [disabled] [ref=f10e136]:
+          - generic:
+            - img "calculator"
+          - generic: Compute
+        - button "swap Recode" [disabled] [ref=f10e138]:
+          - generic:
+            - img "swap"
+          - generic: Recode
+        - button "Clear" [disabled] [ref=f10e142]
+      - generic [ref=f10e145]:
+        - tablist [ref=f10e146]:
+          - generic [ref=f10e148]:
+            - tab [selected] [ref=f10e150] [cursor=pointer]:
+              - generic [ref=f10e151]:
+                - img "table" [ref=f10e152]
+                - text: Data View
+            - tab [ref=f10e156] [cursor=pointer]:
+              - generic [ref=f10e157]:
+                - img "column-height" [ref=f10e158]
+                - text: Variable View
+        - tabpanel "table Data View" [ref=f10e163]:
+          - generic [ref=f10e165]:
+            - img "table" [ref=f10e166]
+            - generic [ref=f10e169]: No dataset loaded
+            - generic [ref=f10e170]: Upload a CSV or Excel file to begin

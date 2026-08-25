@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Non-Parametric & Categorical Tests — Medical Statistics | FRCR 1</title>
+  <link rel="stylesheet" href="css/medstat.css">
+</head>
+<body>
+  <nav class="navbar">
+    <div class="navbar-logo">
+      <span class="logo-main">FRCR 1</span>
+      <span class="logo-sub">· <a href="../FRCR1.html">Hub</a> · <a href="index.html">Medical Statistics</a> · Non-Parametric & Categorical Tests</span>
+    </div>
+    <div class="navbar-badge">📊 Chapter 5</div>
+  </nav>
+
+  <div class="breadcrumb">
+    <a href="../FRCR1.html">Home</a><span class="sep">›</span>
+    <a href="index.html">Medical Statistics</a><span class="sep">›</span>
+    <span>Non-Parametric &amp; Categorical Tests</span>
+  </div>
+
+  <section class="hero" style="padding:32px 24px 20px;">
+    <div class="hero-inner">
+      <h1 style="font-size:1.8rem;">Non-Parametric &amp; Categorical Tests</h1>
+      <p>Chi-square, Fisher's exact, McNemar's, Mann-Whitney, Wilcoxon, Kruskal-Wallis, Spearman, and Friedman tests — GCSE to FRCR level.</p>
+    </div>
+  </section>
+
+  <div class="content">
+
+    <!-- ══════ TABS ══════ -->
+    <div class="tab-container">
+      <button class="tab active" data-tab="gcse">GCSE Level</button>
+      <button class="tab" data-tab="frcr">FRCR Level</button>
+      <button class="tab" data-tab="keyfacts">Key Facts</button>
+      <button class="tab" data-tab="clinical">Clinical Relevance</button>
+    </div>
+
+    <div class="tab-contents">
+
+      <!-- GCSE TAB -->
+      <div class="tab-content active" id="tab-gcse">
+        <div class="info-card">
+          <h3>Chi-Square (χ²) Test for Association</h3>
+          <p>Used to test whether two categorical variables are associated. For example: is there a relationship between smoking (yes/no) and lung cancer (yes/no)?</p>
+          <p><strong>How it works</strong>: Compare observed frequencies in each cell of a contingency table to the frequencies expected if there were <em>no association</em>. If observed and expected differ substantially, the result is significant.</p>
+          <p><strong>Expected frequency</strong> = (row total × column total) / grand total.</p>
+          <p><strong>Test statistic</strong>: χ² = Σ(O − E)² / E.</p>
+        </div>
+
+        <div class="info-card">
+          <h3>Fisher's Exact Test</h3>
+          <p>Used instead of chi-square when sample sizes are small (expected frequency < 5 in any cell). It calculates the exact probability of the observed table under the null hypothesis — no approximation needed.</p>
+        </div>
+
+        <!-- Parametric vs Non-parametric comparison diagram -->
+        <div class="figure-container">
+          <svg viewBox="0 0 520 178" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:520px;display:block;margin:0 auto;">
+            <!-- Title -->
+            <text x="260" y="14" text-anchor="middle" font-size="11" font-weight="700" fill="#1e293b">When to Use Non-Parametric Tests</text>
+
+            <!-- Left column: Parametric -->
+            <rect x="10" y="20" width="230" height="90" rx="6" fill="#eff6ff" stroke="#3b82f6" stroke-width="1.5"/>
+            <text x="125" y="36" text-anchor="middle" font-size="10" font-weight="700" fill="#1d4ed8">Use PARAMETRIC when:</text>
+            <text x="20" y="52" font-size="9" fill="#1e40af">✓  Continuous data</text>
+            <text x="20" y="66" font-size="9" fill="#1e40af">✓  Normal distribution (or n ≥ 30)</text>
+            <text x="20" y="80" font-size="9" fill="#1e40af">✓  Homogeneous variances</text>
+            <text x="20" y="96" font-size="9" fill="#1e40af">✓  No influential outliers</text>
+            <text x="125" y="108" text-anchor="middle" font-size="7.5" fill="#3b82f6">More powerful when assumptions hold</text>
+
+            <!-- Right column: Non-parametric -->
+            <rect x="280" y="20" width="230" height="90" rx="6" fill="#fff7ed" stroke="#f59e0b" stroke-width="1.5"/>
+            <text x="395" y="36" text-anchor="middle" font-size="10" font-weight="700" fill="#b45309">Use NON-PARAMETRIC when:</text>
+            <text x="290" y="52" font-size="9" fill="#92400e">✓  Ordinal data (e.g., ECOG score)</text>
+            <text x="290" y="66" font-size="9" fill="#92400e">✓  Skewed distribution</text>
+            <text x="290" y="80" font-size="9" fill="#92400e">✓  Small n (&lt;30) + non-normal data</text>
+            <text x="290" y="96" font-size="9" fill="#92400e">✓  Outliers present</text>
+            <text x="395" y="108" text-anchor="middle" font-size="7.5" fill="#f59e0b">~95% efficiency of parametric tests</text>
+
+            <!-- Equivalents table -->
+            <rect x="10" y="117" width="500" height="54" rx="4" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1"/>
+            <text x="260" y="130" text-anchor="middle" font-size="9" font-weight="700" fill="#475569">Parametric ↔ Non-Parametric Equivalents</text>
+            <text x="72" y="143" text-anchor="middle" font-size="8.5" fill="#1d4ed8">Independent t-test</text>
+            <text x="180" y="143" text-anchor="middle" font-size="8.5" fill="#475569">↔</text>
+            <text x="260" y="143" text-anchor="middle" font-size="8.5" fill="#92400e">Mann-Whitney U</text>
+            <text x="370" y="143" text-anchor="middle" font-size="8.5" fill="#475569">↔</text>
+            <text x="455" y="143" text-anchor="middle" font-size="8.5" fill="#92400e">Wilcoxon SR</text>
+            <text x="72" y="157" text-anchor="middle" font-size="8" fill="#64748b">(Paired t-test)</text>
+            <text x="180" y="157" text-anchor="middle" font-size="8.5" fill="#475569">  </text>
+            <text x="260" y="157" text-anchor="middle" font-size="8.5" fill="#1d4ed8">ANOVA</text>
+            <text x="370" y="157" text-anchor="middle" font-size="8.5" fill="#475569">↔</text>
+            <text x="453" y="157" text-anchor="middle" font-size="8.5" fill="#92400e">Kruskal-Wallis</text>
+            <text x="72" y="171" text-anchor="middle" font-size="8" fill="#1d4ed8">Pearson r</text>
+            <text x="180" y="171" text-anchor="middle" font-size="8.5" fill="#475569">↔</text>
+            <text x="260" y="171" text-anchor="middle" font-size="8.5" fill="#92400e">Spearman ρ</text>
+            <text x="370" y="171" text-anchor="middle" font-size="8.5" fill="#475569">↔</text>
+            <text x="453" y="171" text-anchor="middle" font-size="8.5" fill="#92400e">Friedman</text>
+            <text x="68" y="171" text-anchor="middle" font-size="8" fill="#64748b">     </text>
+          </svg>
+          <p class="figure-caption"><strong>Figure 2:</strong> Decision guide for parametric vs non-parametric test selection. Each parametric test has a non-parametric equivalent. Non-parametric tests retain ~95% efficiency when normality holds, but are more robust when violated.</p>
+        </div>
+      </div>
+
+      <!-- FRCR TAB -->
+      <div class="tab-content" id="tab-frcr">
+        <div class="info-card">
+          <h3>Chi-Square (χ²) Test for Independence — Full Detail</h3>
+          <p><strong>Use</strong>: Tests association between two categorical variables in a contingency table. Example: treatment group (A vs B) vs outcome (alive vs dead).</p>
+          <p><strong>Formula</strong>: χ² = Σ(Oᵢⱼ − Eᵢⱼ)² / Eᵢⱼ, where O = observed frequency, E = expected frequency.</p>
+          <p><strong>Expected frequency</strong> Eᵢⱼ = (row total_i × column total_j) / grand total.</p>
+          <p><strong>Degrees of freedom</strong>: (rows − 1) × (columns − 1). For a 2×2 table, df = 1. For 3×2 table, df = 2.</p>
+          <p><strong>Assumptions</strong>:</p>
+          <ol>
+            <li>No more than 20% of expected frequencies < 5.</li>
+            <li>All expected frequencies ≥ 1.</li>
+            <li>Independent observations — each person counted once (no matched or paired data).</li>
+            <li>Data is a random sample from the population.</li>
+          </ol>
+          <p><strong>Yates' continuity correction</strong>: Applied to 2×2 tables to reduce Type I error. Adjusts formula: χ² = Σ(|O − E| − 0.5)² / E. However, Yates' correction is conservative — Fisher's exact test is preferred for small samples.</p>
+
+          <!-- Chi-square observed vs expected diagram -->
+          <div class="figure-container">
+            <svg viewBox="0 0 520 215" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:520px;display:block;margin:0 auto;">
+              <!-- Title -->
+              <text x="260" y="14" text-anchor="middle" font-size="11" font-weight="700" fill="#1e293b">Chi-Square — Observed (O) vs Expected (E) Frequencies</text>
+
+              <!-- Observed table -->
+              <text x="110" y="32" text-anchor="middle" font-size="10" font-weight="700" fill="#1e293b">Observed (O)</text>
+              <!-- Headers -->
+              <rect x="20" y="37" width="82" height="22" fill="#f1f5f9" stroke="#e2e8f0" stroke-width="1"/>
+              <rect x="102" y="37" width="60" height="22" fill="#f1f5f9" stroke="#e2e8f0" stroke-width="1"/>
+              <rect x="162" y="37" width="60" height="22" fill="#f1f5f9" stroke="#e2e8f0" stroke-width="1"/>
+              <rect x="222" y="37" width="44" height="22" fill="#f1f5f9" stroke="#e2e8f0" stroke-width="1"/>
+              <text x="61" y="52" text-anchor="middle" font-size="8" fill="#475569"></text>
+              <text x="132" y="52" text-anchor="middle" font-size="8" font-weight="700" fill="#475569">Exposed</text>
+              <text x="192" y="52" text-anchor="middle" font-size="8" font-weight="700" fill="#475569">Unexposed</text>
+              <text x="244" y="52" text-anchor="middle" font-size="8" font-weight="700" fill="#475569">Total</text>
+              <!-- Row 1: Cases -->
+              <rect x="20" y="59" width="82" height="24" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1"/>
+              <rect x="102" y="59" width="60" height="24" fill="#dcfce7" stroke="#e2e8f0" stroke-width="1"/>
+              <rect x="162" y="59" width="60" height="24" fill="#fed7aa" stroke="#e2e8f0" stroke-width="1"/>
+              <rect x="222" y="59" width="44" height="24" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1"/>
+              <text x="61" y="75" text-anchor="middle" font-size="8" font-weight="700" fill="#475569">Cases</text>
+              <text x="132" y="75" text-anchor="middle" font-size="11" font-weight="700" fill="#166534">40</text>
+              <text x="192" y="75" text-anchor="middle" font-size="11" font-weight="700" fill="#9a3412">10</text>
+              <text x="244" y="75" text-anchor="middle" font-size="9" fill="#475569">50</text>
+              <!-- Row 2: Controls -->
+              <rect x="20" y="83" width="82" height="24" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1"/>
+              <rect x="102" y="83" width="60" height="24" fill="#fed7aa" stroke="#e2e8f0" stroke-width="1"/>
+              <rect x="162" y="83" width="60" height="24" fill="#dcfce7" stroke="#e2e8f0" stroke-width="1"/>
+              <rect x="222" y="83" width="44" height="24" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1"/>
+              <text x="61" y="99" text-anchor="middle" font-size="8" font-weight="700" fill="#475569">Controls</text>
+              <text x="132" y="99" text-anchor="middle" font-size="11" font-weight="700" fill="#9a3412">15</text>
+              <text x="192" y="99" text-anchor="middle" font-size="11" font-weight="700" fill="#166534">35</text>
+              <text x="244" y="99" text-anchor="middle" font-size="9" fill="#475569">50</text>
+              <!-- Totals row -->
+              <rect x="20" y="107" width="82" height="20" fill="#f1f5f9" stroke="#e2e8f0" stroke-width="1"/>
+              <rect x="102" y="107" width="60" height="20" fill="#f1f5f9" stroke="#e2e8f0" stroke-width="1"/>
+              <rect x="162" y="107" width="60" height="20" fill="#f1f5f9" stroke="#e2e8f0" stroke-width="1"/>
+              <rect x="222" y="107" width="44" height="20" fill="#f1f5f9" stroke="#e2e8f0" stroke-width="1"/>
+              <text x="61" y="121" text-anchor="middle" font-size="8" font-weight="700" fill="#475569">Total</text>
+              <text x="132" y="121" text-anchor="middle" font-size="9" fill="#475569">55</text>
+              <text x="192" y="121" text-anchor="middle" font-size="9" fill="#475569">45</text>
+              <text x="244" y="121" text-anchor="middle" font-size="9" font-weight="700" fill="#475569">100</text>
+
+              <!-- Expected table -->
+              <text x="392" y="32" text-anchor="middle" font-size="10" font-weight="700" fill="#1e293b">Expected (E)</text>
+              <!-- Headers -->
+              <rect x="302" y="37" width="60" height="22" fill="#f1f5f9" stroke="#e2e8f0" stroke-width="1"/>
+              <rect x="362" y="37" width="60" height="22" fill="#f1f5f9" stroke="#e2e8f0" stroke-width="1"/>
+              <text x="332" y="52" text-anchor="middle" font-size="8" font-weight="700" fill="#475569">Exposed</text>
+              <text x="392" y="52" text-anchor="middle" font-size="8" font-weight="700" fill="#475569">Unexposed</text>
+              <!-- Row 1: Cases E -->
+              <rect x="302" y="59" width="60" height="24" fill="#fef3c7" stroke="#e2e8f0" stroke-width="1"/>
+              <rect x="362" y="59" width="60" height="24" fill="#fef3c7" stroke="#e2e8f0" stroke-width="1"/>
+              <text x="332" y="75" text-anchor="middle" font-size="10" font-weight="700" fill="#92400e">27.5</text>
+              <text x="392" y="75" text-anchor="middle" font-size="10" font-weight="700" fill="#92400e">22.5</text>
+              <!-- Row 2: Controls E -->
+              <rect x="302" y="83" width="60" height="24" fill="#fef3c7" stroke="#e2e8f0" stroke-width="1"/>
+              <rect x="362" y="83" width="60" height="24" fill="#fef3c7" stroke="#e2e8f0" stroke-width="1"/>
+              <text x="332" y="99" text-anchor="middle" font-size="10" font-weight="700" fill="#92400e">27.5</text>
+              <text x="392" y="99" text-anchor="middle" font-size="10" font-weight="700" fill="#92400e">22.5</text>
+              <!-- Formula note -->
+              <text x="362" y="121" text-anchor="middle" font-size="7.5" fill="#64748b">E = (row × col) / n</text>
+              <text x="332" y="113" text-anchor="middle" font-size="7" fill="#64748b">(50×55)/100</text>
+              <text x="392" y="113" text-anchor="middle" font-size="7" fill="#64748b">(50×45)/100</text>
+
+              <!-- Legend -->
+              <rect x="430" y="59" width="12" height="12" fill="#dcfce7" stroke="#e2e8f0"/>
+              <text x="445" y="70" font-size="7.5" fill="#475569">O &gt; E</text>
+              <rect x="430" y="75" width="12" height="12" fill="#fed7aa" stroke="#e2e8f0"/>
+              <text x="445" y="86" font-size="7.5" fill="#475569">O &lt; E</text>
+              <rect x="430" y="91" width="12" height="12" fill="#fef3c7" stroke="#e2e8f0"/>
+              <text x="445" y="102" font-size="7.5" fill="#475569">Expected</text>
+
+              <!-- χ² calculation -->
+              <rect x="20" y="133" width="480" height="36" rx="4" fill="#eff6ff" stroke="#3b82f6" stroke-width="1"/>
+              <text x="260" y="147" text-anchor="middle" font-size="9.5" font-weight="700" fill="#1e40af">χ² = (40−27.5)²/27.5 + (10−22.5)²/22.5 + (15−27.5)²/27.5 + (35−22.5)²/22.5</text>
+              <text x="260" y="162" text-anchor="middle" font-size="9.5" font-weight="700" fill="#1e40af">= 5.68 + 6.94 + 5.68 + 6.94 = 25.24     df = (2−1)(2−1) = 1     p &lt; 0.001</text>
+
+              <!-- Fisher note -->
+              <rect x="20" y="175" width="480" height="32" rx="4" fill="#fff7ed" stroke="#f59e0b" stroke-width="1"/>
+              <text x="30" y="188" font-size="9" font-weight="700" fill="#92400e">⚠️ If any expected cell &lt; 5 (shown in red border below) → use Fisher's Exact Test instead</text>
+              <text x="30" y="202" font-size="8.5" fill="#92400e">df = (rows − 1)(cols − 1) = 1 for a 2×2 table   |   Here all E = 27.5 or 22.5, so chi-square is valid ✓</text>
+            </svg>
+            <p class="figure-caption"><strong>Figure 1:</strong> Chi-square test. Compare observed (O) to expected (E) frequencies. Green cells: O &gt; E; orange cells: O &lt; E. Large differences produce a large χ² statistic. If any expected cell &lt; 5, use Fisher's exact test.</p>
+          </div>
+
+          <div class="warning-box">
+            <strong>⚠️ Exam Trap: Chi-Square Assumptions</strong>
+            <div>FRCR exam questions often test whether you know to use Fisher's exact test when chi-square assumptions are violated. Rule: if ANY expected frequency < 1, or >20% of expected frequencies < 5, use Fisher's exact test.</div>
+          </div>
+        </div>
+
+        <div class="info-card">
+          <h3>Fisher's Exact Test</h3>
+          <p><strong>Use</strong>: When chi-square assumptions are violated (small expected frequencies). Also appropriate for 2×2 tables regardless of sample size — some statisticians prefer it as the default for 2×2 tables.</p>
+          <p><strong>How it works</strong>: Calculates the exact probability of the observed table (and all more extreme tables) under H₀ using the <strong>hypergeometric distribution</strong>. No approximation — hence "exact."</p>
+          <p>The probability of a particular 2×2 table is: P = (a+b)! (c+d)! (a+c)! (b+d)! / (n! a! b! c! d!), where a, b, c, d are cell frequencies.</p>
+          <p><strong>One-tailed vs two-tailed</strong>: Fisher's test can compute both. Most software gives two-tailed p-value by summing probabilities of all tables as or more extreme in either direction.</p>
+          <p><strong>Computational limitation</strong>: With very large samples, the factorial calculations become computationally intensive — but this is rarely a problem with modern computers and is not testable in FRCR.</p>
+        </div>
+
+        <div class="info-card">
+          <h3>McNemar's Test for Paired Categorical Data</h3>
+          <p><strong>Use</strong>: For paired categorical data — before/after measurements on the same subjects, or matched case-control data. Example: testing whether a new diagnostic test agrees with the gold standard in the same set of patients.</p>
+          <p><strong>How it differs from chi-square</strong>: Chi-square assumes independence. McNemar's explicitly accounts for the pairing by focusing only on <strong>discordant pairs</strong> — subjects who changed from yes→no or no→yes. Concordant pairs (yes→yes, no→no) are ignored because they contribute no information about the change.</p>
+          <p><strong>Formula</strong>: χ² = (b − c)² / (b + c), where b = number of pairs that changed from no→yes, c = number that changed from yes→no. df = 1.</p>
+          <p><strong>Continuity correction</strong>: χ² = (|b − c| − 1)² / (b + c).</p>
+          <p><strong>Example</strong>: 100 patients tested before and after treatment. 30 improved (no→yes), 10 worsened (yes→no), 60 unchanged. χ² = (30−10)²/(30+10) = 400/40 = 10.0. df=1, critical = 3.84 → significant.</p>
+        </div>
+
+        <div class="info-card">
+          <h3>Non-Parametric Tests — Overview</h3>
+          <p><strong>What are they?</strong> Tests that make no assumptions about the underlying distribution of the data. They are based on <strong>ranks</strong> rather than raw values, so they are robust to outliers and skew.</p>
+          <table style="width:100%;border-collapse:collapse;margin:10px 0;font-size:0.85rem;">
+            <thead>
+              <tr style="background:#f1f5f9;">
+                <th style="padding:8px 12px;border:1px solid #e2e8f0;text-align:left;">Design</th>
+                <th style="padding:8px 12px;border:1px solid #e2e8f0;text-align:left;">Parametric</th>
+                <th style="padding:8px 12px;border:1px solid #e2e8f0;text-align:left;">Non-Parametric</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td style="padding:6px 12px;border:1px solid #e2e8f0;">Two groups (independent)</td><td style="padding:6px 12px;border:1px solid #e2e8f0;">Independent t-test</td><td style="padding:6px 12px;border:1px solid #e2e8f0;">Mann-Whitney U</td></tr>
+              <tr><td style="padding:6px 12px;border:1px solid #e2e8f0;">Two groups (paired)</td><td style="padding:6px 12px;border:1px solid #e2e8f0;">Paired t-test</td><td style="padding:6px 12px;border:1px solid #e2e8f0;">Wilcoxon signed-rank</td></tr>
+              <tr><td style="padding:6px 12px;border:1px solid #e2e8f0;">Three+ groups (independent)</td><td style="padding:6px 12px;border:1px solid #e2e8f0;">One-way ANOVA</td><td style="padding:6px 12px;border:1px solid #e2e8f0;">Kruskal-Wallis</td></tr>
+              <tr><td style="padding:6px 12px;border:1px solid #e2e8f0;">Three+ groups (repeated)</td><td style="padding:6px 12px;border:1px solid #e2e8f0;">Repeated measures ANOVA</td><td style="padding:6px 12px;border:1px solid #e2e8f0;">Friedman test</td></tr>
+              <tr><td style="padding:6px 12px;border:1px solid #e2e8f0;">Correlation</td><td style="padding:6px 12px;border:1px solid #e2e8f0;">Pearson r</td><td style="padding:6px 12px;border:1px solid #e2e8f0;">Spearman ρ</td></tr>
+            </tbody>
+          </table>
+          <p><strong>Efficiency</strong>: Non-parametric tests have ~95% of the power of parametric tests when assumptions are met, but can be substantially more powerful when they are not. This makes them a safe default for skewed or ordinal data.</p>
+        </div>
+
+        <div class="info-card">
+          <h3>Mann-Whitney U Test (Wilcoxon Rank-Sum)</h3>
+          <p><strong>Use</strong>: Non-parametric alternative to independent t-test. Compares two independent groups. Tests H₀: the distributions are identical (or the two groups come from the same population).</p>
+          <p><strong>How it works</strong>:</p>
+          <ol>
+            <li>Rank all values from both groups together (1 = smallest, N = largest).</li>
+            <li>Sum the ranks for each group (R₁ and R₂).</li>
+            <li>Calculate U = n₁n₂ + n₁(n₁+1)/2 − R₁ (or equivalent formula).</li>
+            <li>Compare U to its sampling distribution (or convert to z-score for large samples).</li>
+          </ol>
+          <p><strong>Interpretation</strong>: If one group tends to have higher ranks than the other, the U statistic is extreme and the result is significant.</p>
+          <p><strong>Effect size</strong>: Can report r = z / √N, where r ≈ 0.1 (small), 0.3 (medium), 0.5 (large). Or report the median difference with its CI.</p>
+        </div>
+
+        <div class="info-card">
+          <h3>Wilcoxon Signed-Rank Test</h3>
+          <p><strong>Use</strong>: Non-parametric alternative to paired t-test. For paired data (before/after, matched pairs). Tests H₀: median difference = 0.</p>
+          <p><strong>How it works</strong>:</p>
+          <ol>
+            <li>Calculate the difference for each pair.</li>
+            <li>Discard zeros.</li>
+            <li>Rank the absolute differences (1 = smallest absolute difference).</li>
+            <li>Separately sum ranks of positive differences (W⁺) and negative differences (W⁻).</li>
+            <li>The test statistic is the smaller of W⁺ and W⁻.</li>
+          </ol>
+          <p><strong>Assumption</strong>: The distribution of differences is symmetric (less stringent than normality).</p>
+        </div>
+
+        <div class="info-card">
+          <h3>Kruskal-Wallis Test</h3>
+          <p><strong>Use</strong>: Non-parametric alternative to one-way ANOVA. Compares ≥ 3 independent groups. Extends Mann-Whitney to more than two groups.</p>
+          <p><strong>How it works</strong>: Ranks all data from all groups together, then compares mean ranks between groups. H-statistic ≈ χ² distribution with (k−1) df.</p>
+          <p><strong>Post-hoc</strong>: If Kruskal-Wallis is significant, use Dunn's test with Bonferroni correction for pairwise comparisons (the non-parametric equivalent of Tukey HSD).</p>
+        </div>
+
+        <div class="info-card">
+          <h3>Spearman's Rank Correlation (ρ)</h3>
+          <p><strong>Use</strong>: Non-parametric alternative to Pearson correlation. Measures strength of <strong>monotonic</strong> (not necessarily linear) relationship between two variables.</p>
+          <p><strong>How it works</strong>: Apply Pearson correlation to the <strong>ranks</strong> of the data rather than raw values.</p>
+          <p><strong>Interpretation</strong>: ρ ranges from −1 to +1. ρ = 0.8 means strong positive monotonic relationship — as X increases, Y tends to increase, but the relationship need not be linear. Spearman can detect relationships that Pearson would miss (e.g., exponential or logarithmic relationships).</p>
+          <p><strong>When to use</strong>: Ordinal data, non-normal continuous data, or when outliers are present. Spearman is robust to outliers because it uses ranks.</p>
+        </div>
+
+        <div class="info-card">
+          <h3>Friedman Test</h3>
+          <p><strong>Use</strong>: Non-parametric alternative to repeated measures ANOVA. For ≥ 3 related samples (same subjects measured at ≥ 3 time points).</p>
+          <p><strong>How it works</strong>: Ranks each subject's values across conditions (1 to k per subject), then compares the sums of ranks across conditions.</p>
+          <p><strong>Post-hoc</strong>: If Friedman is significant, use Conover's test or Wilcoxon signed-rank with Bonferroni correction for pairwise comparisons.</p>
+        </div>
+      </div>
+
+      <!-- KEY FACTS TAB -->
+      <div class="tab-content" id="tab-keyfacts">
+        <div class="info-card">
+          <h3>Essential Exam Facts</h3>
+          <div class="key-facts-grid">
+            <div class="fact-item">Chi-square (χ²): tests categorical association. χ² = Σ(O−E)²/E.</div>
+            <div class="fact-item">χ² df = (rows−1) × (columns−1). 2×2 → df=1.</div>
+            <div class="fact-item">Fisher's exact: when expected < 5 in >20% of cells, or any expected < 1.</div>
+            <div class="fact-item">McNemar's test: for paired categorical data. Uses only discordant pairs.</div>
+            <div class="fact-item">Mann-Whitney U: non-parametric alternative to independent t-test. Rank-based.</div>
+            <div class="fact-item">Wilcoxon signed-rank: non-parametric paired t-test. Tests median difference = 0.</div>
+            <div class="fact-item">Kruskal-Wallis: non-parametric ANOVA for ≥3 independent groups.</div>
+            <div class="fact-item">Spearman ρ: rank correlation. Detects monotonic (not just linear) relationships.</div>
+            <div class="fact-item">Friedman test: non-parametric repeated measures ANOVA for ≥3 time points.</div>
+            <div class="fact-item">Non-parametric tests have ~95% efficiency of parametric when assumptions are met.</div>
+          </div>
+        </div>
+
+        <div class="warning-box">
+          <strong>⚠️ Common Exam Traps</strong>
+          <div>• For contingency tables with expected < 5, use Fisher's exact, NOT chi-square.</div>
+          <div>• McNemar's is for PAIRED categorical data (before/after, matched pairs). Regular chi-square is for independent categorical data.</div>
+          <div>• Mann-Whitney tests if distributions are identical, NOT just medians (though often interpreted as a test of medians).</div>
+          <div>• Spearman detects monotonic relationships — a perfect Spearman ρ = 1 does not mean a perfect LINEAR relationship, only a perfect monotonic one.</div>
+          <div>• Yates' continuity correction reduces Type I error for 2×2 chi-square but is conservative. Fisher's exact is preferred.</div>
+        </div>
+      </div>
+
+      <!-- CLINICAL TAB -->
+      <div class="tab-content" id="tab-clinical">
+        <div class="clinical-box">
+          <strong>🏥 Why This Matters Clinically</strong>
+          <div>
+            <p><strong>Treatment response (categorical outcomes)</strong>: Many oncology trials use categorical endpoints (complete response, partial response, stable disease, progressive disease). Chi-square or Fisher's exact test compares response rates between treatment arms.</p>
+            <p><strong>Diagnostic test agreement</strong>: McNemar's test compares paired proportions — e.g., comparing the proportion of positive results from a new diagnostic test vs the gold standard in the same patients. It tests whether the two tests differ in their classification rates.</p>
+            <p><strong>Quality of life scores</strong>: QoL data from Likert scales is ordinal — use Mann-Whitney or Kruskal-Wallis for group comparisons, not t-tests or ANOVA. This is a common error in published oncology research.</p>
+            <p><strong>Biomarker correlations</strong>: Spearman correlation is often more appropriate than Pearson for correlating biomarkers because biomarkers are often skewed and may have non-linear relationships (e.g., PSA and tumour volume).</p>
+            <p><strong>Critical appraisal</strong>: When reading a paper, check whether non-parametric tests were used when appropriate. Common errors: using t-tests for ordinal data, using chi-square without checking expected frequencies, and using Pearson for non-linear relationships.</p>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /tab-contents -->
+
+    <!-- ══════ WORKED EXAMPLES ══════ -->
+    <div class="section-label"><h2>📐 Worked Examples</h2><div class="section-divider"></div></div>
+
+    <div class="accordion">
+      <button class="accordion-btn">Chi-Square or Fisher's Exact?</button>
+      <div class="accordion-panel">
+        <div class="accordion-inner">
+          <p><strong>Scenario:</strong> A study of 40 patients compares two treatments. The 2×2 table shows: Treatment A: 2 improved, 18 not improved. Treatment B: 8 improved, 12 not improved. Can we use chi-square?</p>
+          <p><strong>Solution:</strong> Expected frequencies: Row totals = 10, 30. Column totals = 10, 30.</p>
+          <p>Cell (A, improved): E = (10×10)/40 = 2.5 (expected < 5!).</p>
+          <p>Since expected frequencies < 5 in >20% of cells, use <strong>Fisher's exact test</strong> instead of chi-square.</p>
+          <p>Fisher's exact p-value (two-tailed) = 0.065 — not statistically significant.</p>
+          <p><strong>Key insight:</strong> This is a classic FRCR exam scenario — always check expected frequencies before deciding between chi-square and Fisher's exact.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="accordion">
+      <button class="accordion-btn">McNemar's Test — Diagnostic Test Comparison</button>
+      <div class="accordion-panel">
+        <div class="accordion-inner">
+          <p><strong>Scenario:</strong> 100 patients are tested with both a new rapid test and the gold standard. Results: Both positive = 40, both negative = 35, rapid positive/gold negative = 5, rapid negative/gold positive = 20. Do the tests differ significantly?</p>
+          <p><strong>Solution:</strong> This is paired categorical data (two tests on same patients). McNemar's test: b = 5 (rapid +, gold −), c = 20 (rapid −, gold +).</p>
+          <p>χ² = (5 − 20)² / (5 + 20) = 225/25 = 9.0. df = 1. p = 0.003.</p>
+          <p>Conclusion: The two tests differ significantly. The rapid test misses 20 patients that the gold standard identifies — suggesting poor sensitivity.</p>
+          <p><strong>Key insight:</strong> Note that concordant pairs (40+35=75) provide no information about the difference between tests. Only discordant pairs (5+20=25) matter.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="accordion">
+      <button class="accordion-btn">Choosing the Right Test — Scenario Mix</button>
+      <div class="accordion-panel">
+        <div class="accordion-inner">
+          <p><strong>Scenario:</strong> A study compares ECOG performance status (0–4) between two treatment groups. What test should be used?</p>
+          <p><strong>Solution:</strong> ECOG is <strong>ordinal</strong> data. The appropriate test is <strong>Mann-Whitney U</strong> (non-parametric, for two independent groups with ordinal data).</p>
+          <p>Using an independent t-test (parametric) would be incorrect because ECOG is ordinal, not continuous. The mean and SD are inappropriate summary statistics for ordinal data.</p>
+          <p><strong>Key insight:</strong> Always consider the data type before choosing the test. Ordinal data → non-parametric tests. This is one of the most frequently tested concepts in the FRCR exam.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════ ACTIVE RECALL ══════ -->
+    <div class="section-label"><h2>🧠 Active Recall Questions</h2><div class="section-divider"></div></div>
+
+    <ul class="recall-list">
+      <li class="recall-item"><div class="q">Q: When should you use Fisher's exact test instead of chi-square?</div><div class="a">A: When >20% of expected cell frequencies are <5, or any expected frequency is <1. Fisher's calculates the exact probability without relying on the chi-square approximation.</div></li>
+      <li class="recall-item"><div class="q">Q: What does McNemar's test compare, and why does it ignore concordant pairs?</div><div class="a">A: It compares paired categorical data (before/after, or two tests on same subjects). Concordant pairs (both same) provide no information about CHANGE or DIFFERENCE — only discordant pairs matter.</div></li>
+      <li class="recall-item"><div class="q">Q: What is the non-parametric alternative to: a) independent t-test, b) paired t-test, c) one-way ANOVA?</div><div class="a">A: a) Mann-Whitney U, b) Wilcoxon signed-rank, c) Kruskal-Wallis.</div></li>
+      <li class="recall-item"><div class="q">Q: What is the key difference between Pearson and Spearman correlation?</div><div class="a">A: Pearson measures LINEAR relationships. Spearman measures MONOTONIC relationships (using ranks). Spearman can detect non-linear monotonic relationships and is robust to outliers.</div></li>
+      <li class="recall-item"><div class="q">Q: What is the Friedman test and when is it used?</div><div class="a">A: Non-parametric alternative to repeated measures ANOVA. Used for ≥3 related samples (same subjects measured at ≥3 time points or conditions).</div></li>
+    </ul>
+
+    <!-- ══════ GLOSSARY ══════ -->
+    <div class="glossary-panel">
+      <h3>📖 Glossary</h3>
+      <div class="glossary-grid">
+        <div class="glossary-item"><div class="term">Chi-square (χ²) test</div><div class="def">Tests association between two categorical variables. Σ(O−E)²/E.</div></div>
+        <div class="glossary-item"><div class="term">Fisher's exact test</div><div class="def">Exact test for 2×2 tables when chi-square assumptions are violated.</div></div>
+        <div class="glossary-item"><div class="term">McNemar's test</div><div class="def">For paired categorical data. Focuses on discordant pairs.</div></div>
+        <div class="glossary-item"><div class="term">Yates' correction</div><div class="def">Continuity correction for 2×2 chi-square. Conservative.</div></div>
+        <div class="glossary-item"><div class="term">Mann-Whitney U</div><div class="def">Non-parametric independent t-test. Rank-based.</div></div>
+        <div class="glossary-item"><div class="term">Wilcoxon signed-rank</div><div class="def">Non-parametric paired t-test. Tests median difference = 0.</div></div>
+        <div class="glossary-item"><div class="term">Kruskal-Wallis</div><div class="def">Non-parametric one-way ANOVA. H-statistic.</div></div>
+        <div class="glossary-item"><div class="term">Spearman ρ</div><div class="def">Rank correlation. Measures monotonic relationships.</div></div>
+        <div class="glossary-item"><div class="term">Friedman test</div><div class="def">Non-parametric repeated measures ANOVA.</div></div>
+        <div class="glossary-item"><div class="term">Dunn's test</div><div class="def">Post-hoc test for Kruskal-Wallis. Uses Bonferroni correction.</div></div>
+        <div class="glossary-item"><div class="term">Hypergeometric distribution</div><div class="def">Underlying distribution of Fisher's exact test.</div></div>
+      </div>
+    </div>
+
+  </div><!-- /content -->
+
+  <footer class="footer">
+    <div class="footer-inner">
+      <div>© 2025 FRCR 1 Study Hub</div>
+      <div class="footer-right">For educational use only · Not for clinical decisions</div>
+    </div>
+  </footer>
+
+  <script src="js/radbio.js"></script>
+</body>
+</html>

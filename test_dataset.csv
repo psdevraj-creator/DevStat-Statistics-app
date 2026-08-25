@@ -1,0 +1,121 @@
+patient_id,age,gender,bmi,systolic_bp,diastolic_bp,cholesterol,smoking_status,diabetes,treatment_group,outcome,pain_score,satisfaction,quality_of_life,exercise_freq,admission_date,discharge_date,followup_months,event_occurred,hemoglobin,wbc_count,blood_type,education,income_bracket,region,creatinine,anxiety_score,depression_score
+P001,32,Male,26.8,119.0,85.0,5.63,Non-smoker,No,Drug B,Improved,0,1,77.1,Weekly,2024-01-18,2024-01-22,34.7,1,14.2,5.1,AB,High School,25-50k,West,103.2,2,2
+P002,44,Female,24.7,108.0,95.0,5.94,Non-smoker,No,Drug B,Improved,6,3,93.5,Weekly,2024-02-22,2024-02-28,40.6,0,13.3,7.6,AB,PhD,50-75k,North,96.3,1,2
+,32,Male,27.0,104.0,78.0,6.04,Ex-smoker,Yes,Drug A,Improved,8,2,55.5,Daily,2024-03-27,2024-04-07,24.9,0,13.5,9.9,A,Bachelor,<25k,Central,124.7,2,3
+P004,33,Female,27.7,143.0,76.0,4.74,Ex-smoker,No,Drug A,Improved,3,1,97.8,Daily,2024-05-08,2024-05-13,32.4,0,11.5,3.6,A,Bachelor,75-100k,South,80.2,3,3
+P005,98,Male,45.0,210.0,79.0,5.44,Non-smoker,No,Drug A,Improved,7,3,20.5,Weekly,2024-06-23,2024-07-01,8.3,0,15.6,7.7,O,Bachelor,<25k,East,98.5,0,0
+P006,76,Male,43.7,130.0,88.0,5.57,Smoker,No,Placebo,Improved,3,3,60.3,Weekly,2024-06-10,2024-06-20,47.2,1,15.4,12.1,AB,High School,25-50k,East,92.3,0,0
+P007,73,Female,31.6,134.0,106.0,3.89,Non-smoker,No,Drug B,Not improved,10,1,49.5,,2024-05-24,2024-05-27,44.5,0,15.3,12.0,B,PhD,<25k,South,38.6,2,3
+P008,51,Male,31.1,140.0,81.0,4.17,Non-smoker,No,Drug A,Improved,9,2,64.1,Daily,2024-05-26,2024-06-04,33.3,0,16.3,6.9,O,Master,>100k,East,97.2,0,2
+P009,29,Female,25.3,121.0,83.0,5.45,Ex-smoker,Yes,Drug B,Improved,7,4,84.8,Daily,2024-06-13,2024-06-21,19.8,0,12.0,7.4,A,PhD,25-50k,South,87.8,3,0
+P010,28,,29.9,142.0,86.0,5.88,Non-smoker,Yes,Placebo,,7,4,,Never,2024-05-23,2024-05-24,41.3,1,14.8,7.3,AB,Master,75-100k,West,91.9,1,
+P011,24,Female,27.3,136.0,85.0,5.11,Non-smoker,No,Drug B,Improved,9,2,66.6,Daily,2024-05-07,2024-05-15,33.9,0,15.5,,O,High School,25-50k,East,119.7,0,0
+P012,40,Male,30.9,127.0,86.0,3.81,Non-smoker,Yes,Drug A,Not improved,4,3,87.5,Daily,,2024-03-19,36.3,1,10.8,5.6,A,PhD,50-75k,South,74.4,3,1
+P013,47,Male,26.2,117.0,81.0,2.26,Ex-smoker,No,Drug B,Improved,4,5,89.1,Rarely,2024-01-27,2024-01-31,14.9,0,13.2,7.7,A,Bachelor,50-75k,North,93.8,0,2
+P014,74,Female,36.7,95.0,77.0,6.77,Non-smoker,No,Drug B,Not improved,4,1,71.8,Daily,2024-02-01,2024-02-08,22.2,1,14.4,6.9,AB,Master,75-100k,North,91.2,1,2
+P015,20,Female,19.5,118.0,87.0,6.49,Non-smoker,No,Drug B,Not improved,6,4,87.1,Never,2024-03-11,2024-03-22,5.9,0,13.1,5.7,AB,PhD,>100k,North,123.7,3,0
+P016,32,Male,33.8,123.0,95.0,7.5,Smoker,No,Placebo,Improved,7,4,66.0,Never,2024-02-20,2024-02-29,36.1,0,15.8,8.8,O,Master,>100k,East,74.8,0,2
+P017,60,Male,30.8,119.0,71.0,4.98,Ex-smoker,Yes,Drug B,Improved,7,3,48.8,Daily,2024-01-28,2024-02-03,41.1,1,15.8,5.9,O,PhD,>100k,North,104.9,0,1
+P018,50,Male,31.5,120.0,79.0,6.67,Non-smoker,Yes,Placebo,Not improved,4,4,56.9,Rarely,2024-02-13,2024-02-27,23.7,0,11.6,5.8,AB,Master,<25k,West,106.0,2,0
+P019,34,Male,30.4,120.0,74.0,5.19,,No,Drug A,Improved,5,1,57.2,Weekly,2024-06-24,2024-07-05,47.1,1,13.6,4.6,A,Master,>100k,North,123.0,3,2
+P020,71,Male,26.9,121.0,78.0,5.48,Non-smoker,No,,Improved,0,,69.4,Weekly,2024-03-04,2024-03-15,18.3,0,,,A,PhD,<25k,South,97.5,0,0
+P021,26,Male,22.5,135.0,73.0,4.47,Ex-smoker,No,Drug A,Not improved,4,4,61.9,Never,2024-04-14,2024-04-25,6.1,0,13.1,8.4,A,Bachelor,<25k,South,94.6,2,2
+P022,34,Male,,144.0,68.0,4.52,Non-smoker,No,Drug A,Improved,4,5,61.4,Weekly,2024-02-05,2024-02-16,23.7,0,14.3,5.6,A,Master,>100k,South,115.8,3,0
+P023,74,Male,21.6,131.0,80.0,7.19,Non-smoker,No,Drug A,Improved,4,5,35.4,Daily,2024-02-13,2024-02-23,3.6,0,13.7,7.0,B,Master,50-75k,East,106.3,0,0
+P024,69,Male,35.9,144.0,82.0,4.35,Ex-smoker,No,Drug B,Improved,8,5,76.9,Rarely,2024-06-27,2024-07-08,39.3,0,16.4,9.0,B,Bachelor,25-50k,North,101.6,1,3
+P025,23,Male,32.5,119.0,87.0,6.71,Non-smoker,No,Drug A,Improved,1,3,73.3,Daily,2024-02-02,2024-02-06,34.3,0,13.4,4.1,AB,Master,50-75k,West,84.8,3,2
+P026,85,Male,23.8,118.0,76.0,6.07,Ex-smoker,No,Placebo,Improved,3,2,76.6,Rarely,2024-01-17,2024-01-30,26.4,1,13.5,9.7,A,Bachelor,>100k,West,95.3,1,1
+P027,,Male,20.6,106.0,78.0,5.01,Non-smoker,No,Placebo,Improved,2,3,,Never,2024-01-08,2024-01-22,22.2,0,14.2,9.8,O,Bachelor,50-75k,South,79.0,3,0
+P028,81,Male,,125.0,68.0,4.33,Smoker,Yes,Drug A,Not improved,5,2,53.4,Daily,2024-01-17,2024-01-23,4.2,1,13.0,3.3,A,Bachelor,<25k,West,78.0,3,0
+P029,83,Male,33.2,129.0,82.0,7.21,Ex-smoker,No,Placebo,Improved,10,3,59.8,Never,2024-04-24,2024-05-02,43.0,0,16.7,6.6,O,PhD,50-75k,Central,103.6,2,0
+P030,74,Male,29.6,138.0,76.0,4.3,Non-smoker,No,Drug B,Not improved,10,4,83.3,Daily,2024-05-05,2024-05-14,18.2,0,13.0,6.4,A,High School,25-50k,West,74.7,3,0
+P031,35,Female,27.3,127.0,73.0,4.82,Non-smoker,No,Drug B,Improved,1,3,39.5,Never,2024-05-14,2024-05-27,20.2,1,15.2,13.5,O,High School,75-100k,West,119.9,2,1
+P032,61,Male,36.7,138.0,103.0,6.63,Non-smoker,No,Drug B,Not improved,6,5,49.9,Daily,2024-05-10,2024-05-21,46.0,0,11.9,7.6,O,Master,75-100k,North,135.3,0,1
+P033,83,Male,22.7,130.0,106.0,5.62,Non-smoker,Yes,Drug B,Not improved,9,3,80.5,Weekly,2024-06-22,2024-06-30,14.4,0,13.9,9.0,AB,Master,75-100k,East,68.3,0,3
+P034,58,Female,21.6,143.0,89.0,3.85,Non-smoker,No,,Improved,9,3,61.4,Rarely,2024-06-04,2024-06-11,28.4,0,13.6,5.9,O,Bachelor,>100k,South,78.8,0,3
+P035,63,Female,24.5,124.0,82.0,6.73,Ex-smoker,No,Placebo,Not improved,7,3,39.6,Daily,2024-03-10,2024-03-12,28.0,1,13.8,,AB,Bachelor,50-75k,North,138.0,2,0
+P036,54,Female,26.6,135.0,84.0,3.47,Ex-smoker,No,Drug A,Not improved,6,2,70.0,Never,2024-04-06,2024-04-18,46.2,0,13.3,7.7,A,Bachelor,<25k,East,87.6,2,3
+P037,48,Male,27.3,93.0,77.0,7.02,Non-smoker,No,Placebo,Not improved,0,1,53.5,Daily,2024-05-23,2024-06-05,15.6,0,13.7,3.7,AB,Bachelor,25-50k,South,44.5,1,3
+P038,83,Male,29.0,115.0,71.0,5.09,Non-smoker,No,Drug A,Improved,0,4,65.0,Weekly,2024-05-03,2024-05-04,20.9,0,13.6,,,PhD,<25k,East,87.7,3,1
+P039,62,Female,25.1,165.0,81.0,4.62,Non-smoker,No,Drug A,Not improved,3,1,69.2,Weekly,2024-06-23,2024-07-07,3.3,0,13.8,6.0,B,High School,25-50k,Central,100.5,2,1
+P040,46,Female,28.7,123.0,79.0,5.3,Non-smoker,,Drug B,Not improved,2,4,65.6,Daily,2024-01-15,2024-01-29,18.4,1,14.7,7.2,AB,PhD,>100k,Central,74.0,0,0
+P041,78,Female,31.1,123.0,71.0,5.99,Ex-smoker,No,Drug A,Improved,8,5,46.7,Weekly,2024-02-11,2024-02-15,18.9,,12.6,3.9,O,Master,50-75k,West,90.2,,3
+P042,19,Male,23.1,128.0,84.0,5.17,Non-smoker,No,Drug A,Improved,8,2,66.6,Rarely,2024-03-09,2024-03-22,19.7,0,16.0,10.2,B,Bachelor,50-75k,North,,0,0
+P043,68,Male,25.0,148.0,64.0,4.25,Non-smoker,No,Drug A,Not improved,1,5,64.5,Daily,2024-04-08,2024-04-22,4.6,1,11.8,8.2,O,Master,<25k,East,28.2,3,3
+P044,59,,32.2,131.0,85.0,3.3,Non-smoker,No,Drug B,Not improved,2,4,72.7,Rarely,2024-04-05,2024-04-07,8.9,0,14.7,5.0,A,Master,50-75k,South,103.7,3,1
+P045,43,Male,30.1,130.0,82.0,4.92,Non-smoker,No,Drug A,Improved,1,4,59.9,Rarely,2024-02-09,2024-02-20,,0,12.6,7.7,A,PhD,>100k,West,80.5,3,0
+P046,62,Male,22.8,131.0,86.0,4.96,Ex-smoker,No,Placebo,Improved,7,2,46.7,,2024-04-24,2024-05-06,22.3,0,13.3,6.1,A,High School,50-75k,North,133.3,1,1
+P047,58,Male,23.2,140.0,89.0,5.94,Non-smoker,No,Drug B,Improved,,5,74.2,Daily,2024-02-10,2024-02-12,9.6,0,14.0,4.9,B,Bachelor,75-100k,West,88.2,1,3
+P048,76,Male,26.6,104.0,77.0,5.02,Non-smoker,No,Drug B,Improved,8,1,66.4,Weekly,2024-04-04,2024-04-16,40.0,0,11.6,4.7,O,Master,50-75k,North,181.2,3,0
+P049,34,Female,27.0,154.0,90.0,3.41,Non-smoker,Yes,Drug B,Not improved,10,3,51.5,Daily,2024-06-26,2024-07-09,5.4,1,12.2,7.5,AB,PhD,75-100k,,51.5,0,0
+P050,34,Female,33.3,159.0,80.0,12.5,Smoker,No,Placebo,Not improved,0,4,42.3,Weekly,2024-04-21,2024-04-23,34.1,,11.4,7.7,A,Bachelor,>100k,West,99.8,0,0
+P051,30,Female,27.1,110.0,63.0,7.25,Smoker,No,Drug B,Improved,10,1,65.3,Daily,2024-05-10,2024-05-23,45.2,0,15.9,,AB,Bachelor,>100k,Central,60.1,1,3
+P052,82,Male,22.5,137.0,74.0,4.05,Ex-smoker,No,Drug A,Improved,1,5,112.6,Weekly,2024-05-11,2024-05-18,28.6,0,,6.5,B,High School,25-50k,North,114.9,3,0
+P053,81,Male,28.5,138.0,85.0,2.68,Non-smoker,No,Drug B,Improved,0,,65.8,Never,2024-02-06,2024-02-20,2.7,0,15.5,7.8,O,Master,50-75k,North,,2,0
+P054,62,Male,27.3,130.0,71.0,3.25,Smoker,No,Drug B,Not improved,3,4,58.0,Weekly,2024-06-09,2024-06-11,3.1,0,13.5,9.9,O,Master,75-100k,North,71.8,0,1
+P055,56,Male,36.2,137.0,80.0,5.66,Ex-smoker,No,Drug A,Not improved,0,3,61.1,Daily,2024-04-28,2024-05-06,27.1,1,19.0,7.5,B,High School,<25k,North,117.8,1,1
+P056,37,Male,21.8,116.0,75.0,4.07,Non-smoker,Yes,Drug A,Improved,4,4,73.7,Weekly,2024-02-21,2024-03-05,26.6,0,14.4,11.9,AB,PhD,>100k,West,87.1,2,2
+P057,63,Male,34.6,134.0,94.0,4.7,Non-smoker,No,Drug A,Not improved,4,2,56.3,Weekly,2024-05-08,2024-05-09,25.7,0,13.5,5.8,B,Master,25-50k,East,120.1,0,0
+P058,40,Male,38.6,,57.0,7.63,Non-smoker,No,Drug B,Not improved,5,5,69.7,Never,2024-02-11,2024-02-23,4.7,0,15.8,9.0,A,Master,75-100k,North,88.3,2,1
+P059,,Female,21.3,118.0,80.0,5.23,Ex-smoker,No,Drug A,Not improved,0,1,38.6,Never,2024-06-18,2024-06-30,44.5,1,17.8,7.3,B,High School,<25k,West,110.2,3,1
+P060,30,Male,22.5,106.0,68.0,6.24,Ex-smoker,No,Drug A,Improved,8,4,94.8,Never,2024-05-08,2024-05-16,15.0,0,12.9,10.7,A,,>100k,Central,67.3,1,0
+,30,Male,24.9,127.0,79.0,6.65,Smoker,Yes,Placebo,Improved,10,4,44.6,Weekly,2024-03-13,2024-03-16,30.1,0,12.6,12.6,AB,Bachelor,<25k,West,102.7,2,2
+P062,21,Female,30.3,,86.0,4.42,Non-smoker,No,Placebo,Not improved,4,3,75.6,Daily,2024-01-22,2024-01-23,12.4,0,11.6,6.2,O,Bachelor,>100k,East,81.3,2,1
+P063,62,Male,26.9,147.0,74.0,3.19,Non-smoker,No,Drug A,Improved,8,3,40.1,Rarely,2024-03-22,2024-03-24,23.6,0,12.6,11.1,AB,Master,50-75k,South,87.4,1,1
+P064,34,Female,26.0,111.0,103.0,3.68,Smoker,No,Drug B,Improved,3,3,28.4,Rarely,2024-03-19,2024-03-24,22.8,0,,2.6,A,Bachelor,>100k,North,99.2,3,1
+P065,72,Male,21.9,137.0,94.0,5.24,Smoker,No,Placebo,Not improved,3,1,52.5,Weekly,2024-02-23,2024-02-29,15.7,0,11.2,5.0,B,High School,<25k,East,112.3,2,3
+P066,20,Male,25.1,116.0,73.0,6.23,Non-smoker,No,Drug B,Improved,,4,49.5,Rarely,2024-05-20,2024-06-01,7.4,0,11.2,4.0,AB,High School,<25k,West,87.5,1,1
+P067,55,Female,28.4,118.0,82.0,4.67,Non-smoker,No,Drug B,Not improved,5,,104.3,Rarely,2024-06-03,2024-06-09,39.3,0,10.7,9.4,O,Master,75-100k,West,106.6,3,1
+P068,61,Male,19.3,127.0,94.0,6.2,Ex-smoker,Yes,Placebo,Improved,2,,86.5,Daily,2024-06-06,2024-06-15,40.9,0,11.9,8.2,O,Master,25-50k,East,82.8,2,0
+P069,60,Male,27.7,110.0,80.0,4.08,Non-smoker,No,Drug A,Not improved,0,3,47.6,Rarely,2024-05-17,,34.0,0,15.5,9.8,O,PhD,<25k,East,72.4,1,1
+P070,59,Male,30.8,119.0,70.0,4.03,Ex-smoker,No,Drug A,Improved,4,4,68.7,Weekly,2024-06-24,2024-07-03,15.0,,12.6,10.0,A,Bachelor,25-50k,South,59.7,2,2
+P071,25,Female,28.8,148.0,75.0,6.22,Non-smoker,No,Drug B,Not improved,6,2,29.4,Daily,2024-03-23,2024-04-03,3.2,0,13.3,2.7,O,Master,>100k,,130.7,0,2
+P072,59,Male,38.0,141.0,71.0,,Non-smoker,No,Drug B,Improved,1,3,15.5,Weekly,2024-01-26,2024-02-04,8.5,1,12.8,6.4,B,Bachelor,50-75k,East,87.5,2,2
+P073,83,Male,29.9,127.0,94.0,4.8,Non-smoker,No,Drug B,Not improved,,4,72.0,Daily,2024-06-25,2024-07-02,31.4,0,12.5,7.5,O,Master,<25k,North,75.6,0,0
+P074,46,Female,26.8,103.0,87.0,4.39,Ex-smoker,No,Placebo,Improved,8,5,68.7,Weekly,2024-05-13,2024-05-22,26.7,0,13.9,6.1,O,Master,25-50k,West,129.1,1,1
+P075,64,Female,29.9,128.0,75.0,7.14,Non-smoker,No,Placebo,Not improved,10,3,81.1,Rarely,2024-03-16,2024-03-25,6.1,1,12.1,9.3,,Bachelor,25-50k,East,100.0,0,0
+P076,38,Female,21.1,122.0,86.0,4.71,Non-smoker,No,Drug A,Not improved,7,2,82.7,Daily,,2024-06-16,43.7,0,14.2,3.2,A,High School,50-75k,North,126.1,2,2
+P077,32,Male,24.4,115.0,70.0,4.26,Non-smoker,No,Drug B,Improved,2,5,56.0,Weekly,2024-01-19,2024-01-22,3.6,,13.0,10.2,O,Bachelor,>100k,North,75.9,2,0
+P078,82,Male,33.1,142.0,,4.34,Non-smoker,Yes,Drug B,Improved,5,1,58.2,Never,2024-04-12,2024-04-22,38.8,1,11.7,8.6,O,Bachelor,<25k,East,97.7,3,2
+P079,35,Male,26.9,114.0,80.0,4.52,Ex-smoker,No,Drug A,Improved,,5,54.8,Weekly,2024-04-21,2024-04-22,38.8,0,10.8,4.2,A,High School,50-75k,South,96.0,2,0
+P080,69,Male,27.3,133.0,76.0,2.62,Non-smoker,No,Drug B,Not improved,5,3,80.7,,2024-02-15,2024-02-22,28.0,0,13.2,8.8,A,High School,>100k,,116.5,2,0
+P081,61,Male,24.0,127.0,79.0,5.98,Non-smoker,No,Drug B,Not improved,7,2,66.4,Rarely,2024-02-08,2024-02-12,40.2,1,14.8,4.8,A,High School,75-100k,,124.1,0,0
+P082,64,Male,29.1,123.0,,6.15,Non-smoker,No,Placebo,Not improved,7,4,72.6,Rarely,2024-03-28,2024-04-04,14.1,0,16.2,1.2,O,Bachelor,<25k,East,59.8,1,3
+P083,70,Male,22.5,148.0,72.0,4.23,Non-smoker,No,Placebo,Improved,5,5,32.4,Daily,2024-04-20,2024-04-25,22.8,0,13.7,9.9,AB,PhD,>100k,Central,63.7,3,0
+P084,28,Male,26.8,139.0,70.0,3.14,Smoker,No,Drug B,Improved,7,2,90.9,,2024-01-22,2024-01-28,41.4,0,16.0,9.3,A,Master,>100k,West,68.9,1,1
+P085,65,Female,21.5,,77.0,5.64,Non-smoker,Yes,Drug B,Improved,1,4,48.0,Weekly,2024-06-22,2024-06-27,14.4,1,12.0,8.4,A,Bachelor,25-50k,East,65.9,0,3
+P086,42,Female,30.8,104.0,94.0,6.62,Ex-smoker,,Drug A,Not improved,0,2,31.7,Weekly,2024-06-07,2024-06-15,19.3,0,14.3,8.9,O,High School,>100k,Central,84.3,0,2
+P087,31,Female,22.6,131.0,69.0,4.58,Smoker,Yes,Drug B,Improved,6,3,62.6,Daily,2024-04-23,2024-05-01,27.3,1,12.2,7.0,B,Bachelor,50-75k,East,74.7,3,2
+P088,26,Male,28.3,123.0,87.0,4.62,Non-smoker,No,Drug A,Improved,9,4,51.6,Daily,2024-05-09,2024-05-10,18.2,1,11.7,7.4,B,PhD,<25k,West,86.0,0,2
+,39,Female,,125.0,75.0,,Non-smoker,Yes,Placebo,Improved,8,3,76.6,Daily,2024-04-27,2024-05-09,16.2,0,12.0,5.9,A,Master,50-75k,West,83.3,3,3
+P090,27,Female,27.8,121.0,89.0,3.57,Non-smoker,No,Drug B,Improved,0,5,39.4,Rarely,2024-01-15,2024-06-20,20.6,0,15.6,8.7,O,Bachelor,<25k,West,76.9,0,2
+P091,85,Female,27.2,142.0,68.0,5.98,Non-smoker,No,Drug A,,6,3,54.8,,2024-01-15,2024-06-20,15.3,0,14.8,1.8,O,Bachelor,25-50k,,39.3,0,1
+P092,39,Male,25.1,156.0,80.0,4.93,,No,Drug A,Improved,10,3,67.6,Daily,2024-01-15,2024-06-20,24.9,0,13.2,9.9,A,Bachelor,<25k,South,73.7,1,3
+P093,47,Male,,139.0,104.0,4.72,Smoker,Yes,Drug B,Not improved,3,2,38.5,Weekly,2024-01-15,2024-06-20,34.1,1,12.2,9.7,B,,25-50k,East,75.7,0,0
+P094,65,Female,30.5,116.0,86.0,5.8,Non-smoker,Yes,Drug A,Improved,6,2,62.1,Weekly,2024-01-15,2024-06-20,41.8,0,8.1,5.6,B,PhD,75-100k,North,43.6,3,2
+P095,77,Male,32.0,140.0,88.0,6.64,Non-smoker,No,Drug A,Improved,5,4,86.7,Daily,2024-01-15,2024-06-20,12.8,0,13.8,7.2,A,PhD,,North,77.4,3,1
+P096,70,Male,32.9,140.0,82.0,6.71,Non-smoker,No,Drug B,Improved,2,2,82.4,Weekly,2024-01-22,2024-02-01,40.4,0,14.1,7.0,A,PhD,25-50k,South,99.4,2,1
+P097,58,,10.9,122.0,79.0,5.7,Non-smoker,Yes,,Improved,7,2,75.8,,2024-02-01,2024-02-03,2.1,0,12.6,7.4,A,PhD,75-100k,North,73.0,2,2
+P098,70,Male,29.1,119.0,81.0,4.17,Non-smoker,No,Drug B,Not improved,10,3,77.8,Rarely,2024-01-05,2024-01-10,,0,9.9,11.0,B,Bachelor,>100k,West,86.4,1,0
+P099,84,Female,27.4,134.0,67.0,,Non-smoker,No,Placebo,Improved,10,5,77.5,Daily,2024-01-17,2024-01-30,32.0,0,12.3,11.7,O,Bachelor,50-75k,South,95.9,1,2
+P100,75,Male,24.2,141.0,87.0,7.12,Non-smoker,No,Drug A,Not improved,2,1,82.3,Never,2024-01-15,2024-01-20,33.2,0,9.8,1.5,B,Bachelor,50-75k,East,101.2,3,1
+P101,73,Male,22.8,,80.0,4.51,Non-smoker,No,Drug A,Improved,9,5,40.2,Never,2024-02-10,2024-02-17,4.3,0,14.0,6.2,,Master,75-100k,North,59.0,0,1
+,24,Male,24.3,103.0,69.0,7.04,Non-smoker,No,Drug A,Not improved,6,3,60.1,Never,2024-05-07,2024-05-18,9.2,0,11.7,,AB,PhD,25-50k,East,112.8,1,1
+P103,22,Male,22.2,132.0,60.0,3.72,Non-smoker,No,Drug B,Improved,7,5,102.0,Daily,2024-02-16,2024-02-27,35.9,0,15.3,6.2,A,Master,>100k,North,61.5,2,0
+P104,19,Male,18.3,110.0,81.0,3.44,Smoker,No,Placebo,Not improved,7,2,77.2,Rarely,2024-01-05,2024-01-15,44.9,0,10.1,9.7,O,PhD,25-50k,West,54.4,1,1
+P105,,Female,25.9,157.0,82.0,6.79,Non-smoker,No,Drug B,Not improved,8,3,37.3,Rarely,2024-05-01,2024-05-12,1.4,0,8.4,8.6,A,PhD,50-75k,South,90.9,2,2
+P106,38,Male,26.7,135.0,57.0,7.77,Smoker,No,Drug B,Improved,1,4,78.3,Never,2024-02-21,2024-02-29,6.1,1,13.3,7.7,,High School,75-100k,East,72.6,0,0
+,56,Male,43.0,147.0,76.0,4.29,Smoker,No,Drug A,,10,2,67.5,Never,2024-06-07,2024-06-12,33.7,0,14.0,5.9,A,PhD,25-50k,South,72.7,,1
+P108,23,Female,26.2,122.0,84.0,5.54,Smoker,No,Drug A,Not improved,2,5,98.9,Daily,2024-04-20,2024-05-03,,0,,8.4,O,PhD,50-75k,North,65.2,1,2
+P109,44,Female,23.1,116.0,62.0,6.69,Non-smoker,No,Drug B,Not improved,7,5,91.7,Rarely,2024-03-14,2024-03-15,27.2,0,12.7,9.8,A,Bachelor,50-75k,Central,110.7,1,3
+P110,43,Female,27.3,137.0,83.0,6.07,Non-smoker,No,Drug A,Not improved,1,4,59.2,Never,2024-02-07,2024-02-17,22.4,0,13.2,5.6,B,,50-75k,South,109.7,2,1
+,37,Male,31.2,121.0,112.0,6.21,Non-smoker,No,Drug A,Not improved,6,4,76.3,,2024-04-16,2024-04-20,4.9,0,10.9,6.6,B,Bachelor,50-75k,East,66.1,1,0
+P112,25,Male,34.1,122.0,86.0,4.82,Smoker,Yes,Drug B,Improved,5,3,76.6,Daily,2024-05-23,2024-06-05,10.6,0,15.6,7.6,O,Bachelor,25-50k,South,102.2,2,2
+P113,37,Female,20.0,127.0,75.0,8.26,Non-smoker,No,Drug A,Improved,6,4,64.7,Weekly,2024-01-01,2024-01-15,38.7,1,13.1,5.9,AB,Master,75-100k,Central,69.7,3,3
+P114,58,Female,30.3,143.0,94.0,4.97,Non-smoker,No,Drug A,Improved,2,4,75.5,Daily,,2024-05-23,31.4,0,13.0,5.5,A,Bachelor,>100k,West,93.4,2,0
+P115,72,Female,26.4,132.0,77.0,6.05,Non-smoker,No,Drug A,Not improved,7,4,70.5,Daily,2024-04-24,2024-05-01,,,12.1,6.4,AB,PhD,>100k,East,82.0,0,3
+P116,49,Male,29.9,138.0,86.0,5.18,Smoker,No,Drug A,Not improved,6,3,49.2,Daily,2024-01-12,2024-01-21,35.4,0,12.0,8.3,A,Bachelor,,West,77.7,1,2
+P117,38,Male,28.2,147.0,91.0,3.34,Non-smoker,No,Drug B,Not improved,,1,26.4,Daily,2024-02-01,2024-02-09,17.4,0,15.5,9.2,A,,50-75k,South,110.7,2,0
+P118,62,Male,35.1,146.0,105.0,4.15,Smoker,No,Drug B,Not improved,9,2,57.5,Weekly,2024-01-17,2024-01-21,34.6,0,13.5,9.5,A,High School,25-50k,Central,126.9,3,2
+P119,26,Male,31.4,125.0,97.0,5.34,Non-smoker,Yes,Drug A,Not improved,10,1,79.7,Daily,2024-05-04,2024-05-16,44.5,0,14.7,13.7,AB,Bachelor,>100k,West,116.9,0,1
+P120,30,Male,23.8,115.0,71.0,5.27,Smoker,Yes,Drug A,Not improved,4,5,43.0,Weekly,2024-01-25,2024-01-26,47.6,0,16.5,5.9,O,PhD,,North,104.5,0,1

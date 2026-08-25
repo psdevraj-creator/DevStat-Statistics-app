@@ -1,0 +1,154 @@
+- generic [ref=f2e1]:
+  - generic [ref=f2e3]:
+    - banner [ref=f2e4]:
+      - generic [ref=f2e5] [cursor=pointer]:
+        - img "radar-chart" [ref=f2e7]
+        - generic [ref=f2e11]:
+          - generic [ref=f2e12]: DevStat
+          - generic [ref=f2e13]: Medical Statistics
+      - generic [ref=f2e14]:
+        - img "save" [ref=f2e16] [cursor=pointer]
+        - img "folder-open" [ref=f2e20] [cursor=pointer]
+      - generic [ref=f2e23]:
+        - img "undo" [ref=f2e25]
+        - img "redo" [ref=f2e29]
+      - generic [ref=f2e32]:
+        - button "login Sign in" [ref=f2e34] [cursor=pointer]:
+          - img "login" [ref=f2e36]
+          - generic [ref=f2e39]: Sign in
+        - img "question-circle" [ref=f2e41] [cursor=pointer]
+        - img "question-circle" [ref=f2e46] [cursor=pointer]
+    - menu [ref=f2e51]:
+      - menuitem [ref=f2e52] [cursor=pointer]:
+        - img "table" [ref=f2e53]
+        - text: Data
+      - menuitem [expanded] [ref=f2e56] [cursor=pointer]:
+        - img "fund" [ref=f2e57]
+        - text: Analyze
+      - menuitem [ref=f2e60] [cursor=pointer]:
+        - img "apartment" [ref=f2e61]
+        - text: Survival
+      - menuitem [ref=f2e64] [cursor=pointer]:
+        - img "bar-chart" [ref=f2e65]
+        - text: Graphs
+      - menuitem [ref=f2e68] [cursor=pointer]:
+        - img "question-circle" [ref=f2e69]
+        - text: Wizard
+      - menuitem [ref=f2e73] [cursor=pointer]:
+        - img "file-text" [ref=f2e74]
+        - text: Output
+      - menuitem [disabled]
+    - alert [ref=f2e86]:
+      - img "exclamation-circle" [ref=f2e87]
+      - generic [ref=f2e90]:
+        - generic [ref=f2e91]: Online demo — exam practice only
+        - generic [ref=f2e92]: This online version runs on a shared public server. Use it for exam practice with the synthetic practice data only. Do NOT upload real, identifiable or confidential patient data — for real (anonymised) analysis, use the offline desktop app.
+    - main [ref=f2e77]:
+      - generic [ref=f2e646]:
+        - heading "Descriptive Statistics" [level=4] [ref=f2e647]
+        - generic [ref=f2e648]:
+          - generic [ref=f2e649]: Variable Selection
+          - generic [ref=f2e653]:
+            - generic [ref=f2e655]:
+              - generic [ref=f2e656]: "Dataset:"
+              - generic [ref=f2e660] [cursor=pointer]:
+                - combobox [ref=f2e662]
+                - generic: Select dataset
+            - generic [ref=f2e664]:
+              - strong [ref=f2e667]: Available Variables
+              - generic [ref=f2e669]:
+                - button [ref=f2e671] [cursor=pointer]:
+                  - img "double-right" [ref=f2e673]
+                - button [ref=f2e677] [cursor=pointer]:
+                  - img "arrow-right" [ref=f2e679]
+                - button [ref=f2e683] [cursor=pointer]:
+                  - img "arrow-left" [ref=f2e685]
+                - button [ref=f2e689] [cursor=pointer]:
+                  - img "double-left" [ref=f2e691]
+              - strong [ref=f2e696]: Selected Variables
+            - generic [ref=f2e699]:
+              - generic [ref=f2e700]: "Group by:"
+              - generic [ref=f2e704] [cursor=pointer]:
+                - combobox [ref=f2e706]
+                - generic: None
+        - generic [ref=f2e707]:
+          - generic [ref=f2e708]: Analysis Options
+          - generic [ref=f2e711]:
+            - generic [ref=f2e712]:
+              - tablist [ref=f2e713]:
+                - generic [ref=f2e715]:
+                  - tab "Descriptives" [selected] [ref=f2e717] [cursor=pointer]
+                  - tab "Frequencies" [ref=f2e719] [cursor=pointer]
+                  - tab "Crosstabs" [ref=f2e721] [cursor=pointer]
+                  - tab "Explore" [ref=f2e723] [cursor=pointer]
+              - tabpanel "Descriptives" [ref=f2e726]:
+                - generic [ref=f2e727]:
+                  - strong [ref=f2e729]: "Statistics to compute:"
+                  - generic [ref=f2e730]:
+                    - generic [ref=f2e731] [cursor=pointer]:
+                      - checkbox "Mean" [checked] [ref=f2e733]
+                      - generic [ref=f2e735]: Mean
+                    - generic [ref=f2e736] [cursor=pointer]:
+                      - checkbox "Median" [ref=f2e738]
+                      - generic [ref=f2e740]: Median
+                    - generic [ref=f2e741] [cursor=pointer]:
+                      - checkbox "Std Deviation" [checked] [ref=f2e743]
+                      - generic [ref=f2e745]: Std Deviation
+                    - generic [ref=f2e746] [cursor=pointer]:
+                      - checkbox "Variance" [ref=f2e748]
+                      - generic [ref=f2e750]: Variance
+                    - generic [ref=f2e751] [cursor=pointer]:
+                      - checkbox "Minimum" [checked] [ref=f2e753]
+                      - generic [ref=f2e755]: Minimum
+                    - generic [ref=f2e756] [cursor=pointer]:
+                      - checkbox "Maximum" [checked] [ref=f2e758]
+                      - generic [ref=f2e760]: Maximum
+                    - generic [ref=f2e761] [cursor=pointer]:
+                      - checkbox "Range" [ref=f2e763]
+                      - generic [ref=f2e765]: Range
+                    - generic [ref=f2e766] [cursor=pointer]:
+                      - checkbox "Skewness" [ref=f2e768]
+                      - generic [ref=f2e770]: Skewness
+                    - generic [ref=f2e771] [cursor=pointer]:
+                      - checkbox "Kurtosis" [ref=f2e773]
+                      - generic [ref=f2e775]: Kurtosis
+                    - generic [ref=f2e776] [cursor=pointer]:
+                      - checkbox "Sum" [ref=f2e778]
+                      - generic [ref=f2e780]: Sum
+                    - generic [ref=f2e781] [cursor=pointer]:
+                      - checkbox "Count" [checked] [ref=f2e783]
+                      - generic [ref=f2e785]: Count
+            - separator [ref=f2e786]
+            - button "play-circle Run Analysis" [ref=f2e787] [cursor=pointer]:
+              - img "play-circle" [ref=f2e789]
+              - generic [ref=f2e793]: Run Analysis
+  - menu [ref=f2e616]:
+    - menuitem "Descriptive" [active] [ref=f2e617] [cursor=pointer]
+    - menuitem "Frequencies" [ref=f2e618] [cursor=pointer]
+    - menuitem "Crosstabs" [ref=f2e619] [cursor=pointer]
+    - menuitem "Explore" [ref=f2e620] [cursor=pointer]
+    - separator [ref=f2e621]
+    - menuitem "Compare Means" [ref=f2e622] [cursor=pointer]
+    - menuitem "One-way ANOVA" [ref=f2e623] [cursor=pointer]
+    - menuitem "Means" [ref=f2e624] [cursor=pointer]
+    - menuitem "Factorial ANOVA" [ref=f2e625] [cursor=pointer]
+    - separator [ref=f2e626]
+    - menuitem "Non-parametric Tests" [ref=f2e627] [cursor=pointer]
+    - menuitem "Chi-square Test" [ref=f2e628] [cursor=pointer]
+    - separator [ref=f2e629]
+    - menuitem "Correlation" [ref=f2e630] [cursor=pointer]
+    - menuitem "Partial Correlation" [ref=f2e631] [cursor=pointer]
+    - separator [ref=f2e632]
+    - menuitem "Linear Regression" [ref=f2e633] [cursor=pointer]
+    - menuitem "Logistic Regression" [ref=f2e634] [cursor=pointer]
+    - menuitem "Mixed Model" [ref=f2e635] [cursor=pointer]
+    - separator [ref=f2e636]
+    - menuitem "Factor Analysis" [ref=f2e637] [cursor=pointer]
+    - menuitem "Reliability" [ref=f2e638] [cursor=pointer]
+    - menuitem "Cluster Analysis" [ref=f2e639] [cursor=pointer]
+    - menuitem "Power Analysis" [ref=f2e640] [cursor=pointer]
+    - separator [ref=f2e641]
+    - menuitem "Diagnostic Test" [ref=f2e642] [cursor=pointer]
+    - menuitem "ROC Curve" [ref=f2e643] [cursor=pointer]
+    - separator [ref=f2e644]
+    - menuitem "Suggest Test" [ref=f2e645] [cursor=pointer]

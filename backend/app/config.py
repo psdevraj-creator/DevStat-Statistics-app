@@ -33,6 +33,12 @@ ALLOWED_EXTENSIONS = {".csv", ".xlsx", ".xls", ".sav"}
 # ── Analysis engine ─────────────────────────────────────────────────────
 DEVSTAT_ENGINE = "py"
 
+# ── Desktop Edition (offline) ───────────────────────────────────────────
+# Set by the desktop launcher (DEVSTAT_OFFLINE=1). When on, the app serves the
+# Desktop Edition: no Firebase/Stripe, mandatory local registration, and a free
+# 5-analysis / 5-chart trial with a machine-bound paid activation key.
+OFFLINE = os.environ.get("DEVSTAT_OFFLINE", "") == "1"
+
 # ── Firebase (DevStat own project) ─────────────────────────────────────
 FIREBASE_PROJECT_ID = os.environ.get("DEVSTAT_FIREBASE_PROJECT_ID", "")
 FIREBASE_SERVICE_ACCOUNT = os.environ.get("DEVSTAT_FIREBASE_SERVICE_ACCOUNT", "")

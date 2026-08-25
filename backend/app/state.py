@@ -11,9 +11,18 @@ _session_id_var: contextvars.ContextVar[str] = contextvars.ContextVar("session_i
 # When a user signs in, the session is keyed by their Firebase uid so one
 # account can NEVER collide with another's data (real per-user isolation).
 _uid_var: contextvars.ContextVar[str] = contextvars.ContextVar("uid", default="")
-# Stable guest/machine identifier (from the client's device id or client IP),
-# used for the lifetime 3-analysis free-trial gate before registration.
+# Stable guest/machine identifier (from the client's device id), used together
+# with the client IP for the free-tier gate (machine+IP bound, not session-bound).
 _device_var: contextvars.ContextVar[str] = contextvars.ContextVar("device", default="")
+_client_ip_var: contextvars.ContextVar[str] = contextvars.ContextVar("client_ip", default="")
+# App mode: 'exam' (default) or 'live'. In LIVE (confidential) mode no dataset is
+# ever persisted to Firestore — data lives only in the in-memory session for the
+# calculation and is then discarded. Enforced here so it holds even with the API
+# called directly (it is a server-side guarantee, not just a UI banner).
+_mode_var: contextvars.ContextVar[str] = contextvars.ContextVar("mode", default="exam")
+# 'teaching' flag: a run originating inside the guided Teaching mode. Teaching
+# requires a sign-in but does NOT consume the free-tier analysis/chart credits.
+_teaching_var: contextvars.ContextVar[bool] = contextvars.ContextVar("teaching", default=False)
 _sessions: Dict[str, dict] = {}
 
 
@@ -31,6 +40,47 @@ def set_device(dev: str) -> None:
 
 def get_device() -> str:
     return _device_var.get() or ""
+
+
+def set_client_ip(ip: str) -> None:
+    _client_ip_var.set(ip or "")
+
+
+def get_client_ip() -> str:
+    return _client_ip_var.get() or ""
+
+
+def set_mode(mode: str) -> None:
+    _mode_var.set((mode or "exam").lower())
+
+
+def get_mode() -> str:
+    return _mode_var.get() or "exam"
+
+
+def set_teaching(active: bool) -> None:
+    _teaching_var.set(bool(active))
+
+
+def get_teaching() -> bool:
+    return _teaching_var.get()
+
+
+def set_teaching_session(sid: str, free: bool) -> None:
+    """Mark the in-memory session as hold a loaded teaching scenario.
+
+    Used so a teaching analysis run knows the dataset is an authored lesson (and
+    whether it is the free case). Cleared whenever the user changes their own data.
+    """
+    _session()["teaching_session"] = {"sid": sid, "free": bool(free)}
+
+
+def get_teaching_session() -> Optional[Dict[str, Any]]:
+    return _session().get("teaching_session")
+
+
+def clear_teaching_session() -> None:
+    _session().pop("teaching_session", None)
 
 
 _DUMMY_SESSION = {"current_data": None, "current_filename": "", "variable_metadata": {}, "_undo_stack": [], "_redo_stack": []}
@@ -64,6 +114,9 @@ def __getattr__(name: str) -> Any:
 
 
 def set_current_data(df):
+    # Loading new user data ends any prior teaching context (so a guest cannot
+    # reuse the teaching flag to run free analysis on their own dataset).
+    clear_teaching_session()
     _session()["current_data"] = df
     _persist_user_dataset()
 
@@ -77,8 +130,9 @@ def clear_current_data():
     s = _session()
     s["current_data"] = None
     s["current_filename"] = ""
+    clear_teaching_session()
     _uid = _uid_var.get() or ""
-    if _uid:
+    if _uid and get_mode() != "live":  # never clear the persisted copy in confidential mode
         try:
             from app.services.firebase_store import clear_user_dataset
             clear_user_dataset(_uid)
@@ -87,6 +141,9 @@ def clear_current_data():
 
 
 def _persist_user_dataset() -> None:
+    # In LIVE (confidential) mode we never write the dataset to Firestore.
+    if get_mode() == "live":
+        return
     uid = _uid_var.get() or ""
     if not uid:
         return
@@ -110,6 +167,10 @@ def restore_user_dataset() -> None:
     s = _session()
     if s.get("current_data") is not None:
         return
+    # In LIVE (confidential) mode do NOT re-load previously stored data into the
+    # session — the user expects only what they upload this time.
+    if get_mode() == "live":
+        return
     try:
         import json
         from io import StringIO
@@ -118,6 +179,7 @@ def restore_user_dataset() -> None:
         if d.get("csv"):
             s["current_data"] = pd.read_csv(StringIO(d["csv"]))
             s["current_filename"] = d.get("filename", "")
+            clear_teaching_session()
             if d.get("meta"):
                 try:
                     s["variable_metadata"] = json.loads(d["meta"])

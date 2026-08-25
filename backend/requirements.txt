@@ -50,7 +50,11 @@ weasyprint>=62
 # python-dotenv>=1.0
 
 # -- Auth (DevStat own Firebase project) -------------------------------
-firebase-admin>=6.0
+# Pin to the known-good local versions: newer google-cloud-firestore versions
+# can reject the default database id "(default)" on Cloud Run with
+# "400 Invalid database id (default)".
+firebase-admin==7.5.0
+google-cloud-firestore==2.27.0
 
 # -- Billing (DevStat Stripe, shared account) -------------------------
 stripe>=8.0

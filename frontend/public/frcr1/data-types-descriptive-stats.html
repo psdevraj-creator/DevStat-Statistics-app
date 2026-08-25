@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Data Types & Descriptive Statistics — Medical Statistics | FRCR 1</title>
+  <link rel="stylesheet" href="css/medstat.css">
+</head>
+<body>
+  <nav class="navbar">
+    <div class="navbar-logo">
+      <span class="logo-main">FRCR 1</span>
+      <span class="logo-sub">· <a href="../FRCR1.html">Hub</a> · <a href="index.html">Medical Statistics</a> · Data Types & Descriptive Stats</span>
+    </div>
+    <div class="navbar-badge">📊 Chapter 1</div>
+  </nav>
+
+  <div class="breadcrumb">
+    <a href="../FRCR1.html">Home</a><span class="sep">›</span>
+    <a href="index.html">Medical Statistics</a><span class="sep">›</span>
+    <span>Data Types & Descriptive Statistics</span>
+  </div>
+
+  <section class="hero" style="padding:32px 24px 20px;">
+    <div class="hero-inner">
+      <h1 style="font-size:1.8rem;">Data Types & Descriptive Statistics</h1>
+      <p>Measurement scales, data classification, central tendency, dispersion, skewness, and kurtosis — GCSE to FRCR level.</p>
+    </div>
+  </section>
+
+  <div class="content">
+
+    <!-- ══════ TABS ══════ -->
+    <div class="tab-container">
+      <button class="tab active" data-tab="gcse">GCSE Level</button>
+      <button class="tab" data-tab="frcr">FRCR Level</button>
+      <button class="tab" data-tab="keyfacts">Key Facts</button>
+      <button class="tab" data-tab="clinical">Clinical Relevance</button>
+    </div>
+
+    <div class="tab-contents">
+
+      <!-- GCSE TAB -->
+      <div class="tab-content active" id="tab-gcse">
+        <div class="info-card">
+          <h3>Types of Data</h3>
+          <p>Data comes in different types, and the type determines what statistics you can calculate:</p>
+          <ul>
+            <li><strong>Categorical (Qualitative)</strong> — values are categories. <em>Nominal</em>: named categories with no order (e.g., blood group A, B, AB, O; alive/dead). <em>Ordinal</em>: ordered categories (e.g., tumour stage I, II, III, IV; pain score 0–10).</li>
+            <li><strong>Numerical (Quantitative)</strong> — values are numbers. <em>Discrete</em>: whole numbers (e.g., number of lymph nodes, number of hospital visits). <em>Continuous</em>: any value within a range (e.g., height, weight, blood pressure, dose in Gy).</li>
+          </ul>
+          <div class="warning-box">
+            <strong>⚠️ Key Distinction</strong>
+            <div>Always check: is the variable categorical or numerical? This is the first step in choosing the right statistical test. Ordinal data is often treated as categorical (using non-parametric tests) or as continuous depending on the analysis.</div>
+          </div>
+          <!-- Measurement scales staircase -->
+          <div class="figure-container">
+            <svg viewBox="0 0 520 180" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:520px;display:block;margin:0 auto;">
+              <text x="260" y="16" text-anchor="middle" font-size="12" font-weight="700" fill="#1e293b">Measurement Scales — Staircase of Information</text>
+              <!-- Step 1: Nominal -->
+              <rect x="20" y="140" width="105" height="32" rx="6" fill="#dbeafe" stroke="#93c5fd" stroke-width="1.5"/>
+              <text x="72" y="158" text-anchor="middle" font-size="10" font-weight="700" fill="#1e40af">Nominal</text>
+              <text x="72" y="170" text-anchor="middle" font-size="8" fill="#1e40af">Named categories</text>
+              <!-- Step 2: Ordinal -->
+              <rect x="135" y="108" width="105" height="64" rx="6" fill="#ccfbf1" stroke="#5eead4" stroke-width="1.5"/>
+              <text x="187" y="126" text-anchor="middle" font-size="10" font-weight="700" fill="#0f766e">Ordinal</text>
+              <text x="187" y="140" text-anchor="middle" font-size="8" fill="#0f766e">Ordered categories</text>
+              <text x="187" y="152" text-anchor="middle" font-size="8" fill="#0f766e">Unequal intervals</text>
+              <text x="187" y="164" text-anchor="middle" font-size="8" fill="#0f766e">e.g. ECOG, tumour stage</text>
+              <!-- Step 3: Interval -->
+              <rect x="250" y="76" width="105" height="96" rx="6" fill="#d1fae5" stroke="#6ee7b7" stroke-width="1.5"/>
+              <text x="302" y="94" text-anchor="middle" font-size="10" font-weight="700" fill="#065f46">Interval</text>
+              <text x="302" y="108" text-anchor="middle" font-size="8" fill="#065f46">Equal intervals</text>
+              <text x="302" y="120" text-anchor="middle" font-size="8" fill="#065f46">No true zero</text>
+              <text x="302" y="132" text-anchor="middle" font-size="8" fill="#065f46">Ratios meaningless</text>
+              <text x="302" y="144" text-anchor="middle" font-size="8" fill="#065f46">e.g. Temperature °C</text>
+              <!-- Step 4: Ratio -->
+              <rect x="365" y="28" width="130" height="144" rx="6" fill="#fef3c7" stroke="#fcd34d" stroke-width="1.5"/>
+              <text x="430" y="48" text-anchor="middle" font-size="10" font-weight="700" fill="#92400e">Ratio</text>
+              <text x="430" y="64" text-anchor="middle" font-size="8" fill="#92400e">Equal intervals</text>
+              <text x="430" y="78" text-anchor="middle" font-size="8" fill="#92400e">True zero</text>
+              <text x="430" y="92" text-anchor="middle" font-size="8" fill="#92400e">All arithmetic valid</text>
+              <text x="430" y="106" text-anchor="middle" font-size="8" fill="#92400e">e.g. Dose (Gy)</text>
+              <text x="430" y="120" text-anchor="middle" font-size="8" fill="#92400e">height, weight</text>
+              <text x="430" y="134" text-anchor="middle" font-size="8" fill="#92400e">tumour volume</text>
+              <!-- Arrow -->
+              <defs><marker id="sc-arr" markerWidth="7" markerHeight="7" refX="3.5" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 Z" fill="#475569"/></marker></defs>
+              <line x1="20" y1="165" x2="490" y2="165" stroke="none"/>
+              <text x="260" y="25" text-anchor="middle" font-size="8" fill="#64748b">← Less information                                         More information →</text>
+            </svg>
+            <p class="figure-caption"><strong>Figure 1:</strong> The measurement scale staircase. Each step adds more information — ratio data permits all arithmetic operations, while nominal data only permits counting.</p>
+          </div>
+        </div>
+
+        <div class="info-card">
+          <h3>Describing Data — Averages & Spread</h3>
+          <p><strong>Measures of central tendency</strong> (where the "middle" is):</p>
+          <ul>
+            <li><strong>Mean</strong> — the arithmetic average (sum ÷ n). Sensitive to outliers.</li>
+            <li><strong>Median</strong> — the middle value when data is ordered. Not affected by outliers.</li>
+            <li><strong>Mode</strong> — the most frequent value.</li>
+          </ul>
+          <p><strong>Measures of spread</strong> (how variable the data is):</p>
+          <ul>
+            <li><strong>Range</strong> — max − min. Simple but very sensitive to outliers.</li>
+            <li><strong>Interquartile Range (IQR)</strong> — Q3 − Q1. Contains the middle 50% of data. Used with median.</li>
+            <li><strong>Variance</strong> — average of squared deviations from the mean.</li>
+            <li><strong>Standard Deviation (SD)</strong> — square root of variance. Describes spread of individual data points. Used with mean.</li>
+          </ul>
+          <p style="background:#dbeafe;padding:12px 16px;border-radius:10px;margin-top:10px;"><strong>Rule of thumb:</strong> If data is <strong>normally distributed</strong>, use mean ± SD. If <strong>skewed</strong>, use median (IQR). Always check the distribution first!</p>
+        </div>
+
+        <div class="info-card">
+          <h3>Frequency Distributions & Box Plots</h3>
+          <p>Data can be summarised using frequency tables, bar charts (for categorical data), histograms (for numerical data), and box plots (showing median, IQR, and outliers). A <strong>histogram</strong> shows the shape of the distribution: symmetric, skewed left, or skewed right.</p>
+          <!-- Box plot anatomy diagram -->
+          <div class="figure-container">
+            <svg viewBox="0 0 500 180" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:500px;display:block;margin:0 auto;">
+              <defs><marker id="bp-arr" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#475569"/></marker>
+              <marker id="bp-arr2" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto-start-reverse"><path d="M0,0 L6,3 L0,6 Z" fill="#3b82f6"/></marker></defs>
+              <text x="250" y="15" text-anchor="middle" font-size="12" font-weight="700" fill="#1e293b">Box-and-Whisker Plot — Anatomy</text>
+              <!-- Min whisker -->
+              <line x1="100" y1="85" x2="100" y2="115" stroke="#475569" stroke-width="2"/>
+              <line x1="100" y1="100" x2="160" y2="100" stroke="#475569" stroke-width="2"/>
+              <!-- Box Q1 to Q3 -->
+              <rect x="160" y="78" width="120" height="44" fill="#dbeafe" stroke="#3b82f6" stroke-width="2.5"/>
+              <!-- Median line -->
+              <line x1="220" y1="78" x2="220" y2="122" stroke="#1e293b" stroke-width="3"/>
+              <!-- Max whisker -->
+              <line x1="280" y1="100" x2="360" y2="100" stroke="#475569" stroke-width="2"/>
+              <line x1="360" y1="85" x2="360" y2="115" stroke="#475569" stroke-width="2"/>
+              <!-- Outlier -->
+              <circle cx="410" cy="100" r="5" fill="none" stroke="#ef4444" stroke-width="2"/>
+              <!-- Labels -->
+              <text x="100" y="130" text-anchor="middle" font-size="9" fill="#475569">Min</text>
+              <text x="160" y="130" text-anchor="middle" font-size="9" fill="#1e40af">Q1</text>
+              <text x="220" y="134" text-anchor="middle" font-size="10" font-weight="700" fill="#1e293b">Median</text>
+              <text x="280" y="130" text-anchor="middle" font-size="9" fill="#1e40af">Q3</text>
+              <text x="360" y="130" text-anchor="middle" font-size="9" fill="#475569">Max</text>
+              <text x="410" y="130" text-anchor="middle" font-size="9" fill="#ef4444">Outlier</text>
+              <!-- IQR annotation -->
+              <line x1="160" y1="148" x2="280" y2="148" stroke="#3b82f6" stroke-width="1.5" marker-start="url(#bp-arr2)" marker-end="url(#bp-arr2)"/>
+              <text x="220" y="162" text-anchor="middle" font-size="9" fill="#3b82f6" font-weight="700">IQR = Q3 − Q1 (middle 50%)</text>
+              <!-- Whisker annotation -->
+              <text x="130" y="70" text-anchor="middle" font-size="8" fill="#64748b">Whisker</text>
+              <text x="320" y="70" text-anchor="middle" font-size="8" fill="#64748b">Whisker</text>
+              <text x="220" y="58" text-anchor="middle" font-size="8" fill="#1e40af">Box spans IQR</text>
+            </svg>
+            <p class="figure-caption"><strong>Figure 2:</strong> Box-and-whisker plot anatomy. The box spans Q1 to Q3 (IQR). The central line is the median. Whiskers extend to min/max (or 1.5×IQR). Circles beyond whiskers are outliers.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- FRCR TAB -->
+      <div class="tab-content" id="tab-frcr">
+        <div class="info-card">
+          <h3>Measurement Scales — The Full Classification</h3>
+          <p>Correct classification of data type determines choice of statistical method. The FRCR exam frequently tests this.</p>
+          <p><strong>Nominal data</strong>: Categories with no intrinsic order. Examples: blood group, sex, tumour histology (squamous, adenocarcinoma, small cell). Analysis: proportions, chi-square test, logistic regression.</p>
+          <p><strong>Ordinal data</strong>: Ordered categories with unequal intervals. Examples: ECOG performance status (0–4), AJCC stage (I–IV), pain scale, Likert items. Analysis: median + IQR, Mann-Whitney U, Wilcoxon signed-rank, Kruskal-Wallis, ordinal logistic regression.</p>
+          <p><strong>Interval data</strong>: Numerical with equal intervals but no true zero. Example: temperature in °C. Can calculate mean, but ratios are meaningless (20°C is not "twice as hot" as 10°C).</p>
+          <p><strong>Ratio data</strong>: Numerical with a true zero. Examples: height, weight, dose in Gy, tumour volume, creatinine level. All arithmetic operations possible. Most biological measurements are ratio data.</p>
+          <p><strong>Discrete vs Continuous</strong>: Discrete data takes integer values (number of metastases, number of fractions, number of hospital admissions). Continuous data can take any value on a continuum (creatinine level, tumour diameter, PSA, time to event).</p>
+          <div class="warning-box">
+            <strong>⚠️ Exam Trap: Data Type Misclassification</strong>
+            <div>FRCR questions often present data and ask "Which test should be used?" The most common mistake is treating ordinal data as continuous (e.g., using mean ± SD for ECOG score) or treating continuous data that is non-normal as requiring a parametric test. Always check distribution first.</div>
+          </div>
+        </div>
+
+        <div class="info-card">
+          <h3>The Mean — Properties & Limitations</h3>
+          <p><strong>Population mean (μ)</strong>: μ = Σxᵢ / N. <strong>Sample mean (x̄)</strong>: x̄ = Σxᵢ / n.</p>
+          <p>The mean is the <strong>least squares</strong> estimator — it minimises the sum of squared deviations (Σ(xᵢ − x̄)²). This property makes it the foundation for ANOVA and regression.</p>
+          <p><strong>Limitations</strong>:</p>
+          <ul>
+            <li>The mean is highly sensitive to <strong>outliers</strong>. A single extreme value can shift the mean substantially.</li>
+            <li>For <strong>skewed distributions</strong>, the mean is pulled towards the tail and no longer represents the "typical" value.</li>
+            <li>For <strong>bimodal distributions</strong>, the mean may fall between the two peaks and represent no one.</li>
+          </ul>
+          <p><strong>Weighted mean</strong>: Used when observations have different importance. x̄_w = Σ(wᵢ × xᵢ) / Σwᵢ. Example: calculating overall exam score when different components have different weightings.</p>
+        </div>
+
+        <div class="info-card">
+          <h3>The Median — Properties & Use Cases</h3>
+          <p><strong>Median</strong>: The 50th percentile — the value below which 50% of observations fall. For n ordered values: if n is odd, median = value at position (n+1)/2. If n is even, median = average of values at positions n/2 and n/2+1.</p>
+          <p><strong>Advantages</strong>: Robust to outliers — the median is unaffected by extreme values. Preferred for skewed distributions (survival times, economic data, tumour sizes, hospital stay durations).</p>
+          <p><strong>Other percentiles</strong>: Q1 (25th percentile), Q3 (75th percentile). Together with the median, these form the <strong>five-number summary</strong>: minimum, Q1, median, Q3, maximum.</p>
+          <p><strong>When to use mean vs median in FRCR</strong>: Survival times are nearly always reported as <strong>median survival</strong> (not mean), because survival data is right-skewed (a few patients live much longer, pulling the mean up). Tumour sizes should use mean ± SD if normally distributed, but median ± IQR if skewed.</p>
+        </div>
+
+        <div class="info-card">
+          <h3>Standard Deviation & Variance</h3>
+          <p><strong>Population variance (σ²)</strong>: σ² = Σ(xᵢ − μ)² / N.</p>
+          <p><strong>Sample variance (s²)</strong>: s² = Σ(xᵢ − x̄)² / (n − 1). The denominator (n − 1) gives <strong>Bessel's correction</strong> for sample variance — it corrects the bias introduced because we estimated the mean from the sample.</p>
+          <p><strong>Standard Deviation (SD)</strong>: √(variance). SD is in the same units as the original data, making it directly interpretable.</p>
+          <p><strong>Coefficient of Variation (CV)</strong>: (SD / mean) × 100%. Allows comparison of variability between datasets with different units or means. Example: comparing variability of tumour size measurements between different imaging modalities (CT vs MRI), or comparing variability of PSA to variability of tumour diameter.</p>
+          <p><strong>Properties of SD</strong>:</p>
+          <ul>
+            <li>If data is normally distributed: ~68% within ±1 SD, ~95% within ±1.96 SD, ~99.7% within ±3 SD.</li>
+            <li>SD is always ≥ 0. SD = 0 means all values are identical.</li>
+            <li>SD is sensitive to outliers (because it uses squared deviations).</li>
+          </ul>
+        </div>
+
+        <div class="info-card">
+          <h3>Skewness & Kurtosis</h3>
+          <p><strong>Skewness</strong> measures asymmetry of a distribution:</p>
+          <ul>
+            <li><strong>Positive skew (right tail)</strong>: Mean > median. The tail extends to the right. Examples: survival times, PSA levels, hospital stay durations, radiation dose to organs at risk (many low values, few high values). Use median ± IQR.</li>
+            <li><strong>Negative skew (left tail)</strong>: Mean < median. The tail extends to the left. Examples: age at menopause, some quality-of-life scores, time to complete a task after training.</li>
+            <li><strong>Zero skew</strong>: Symmetric. Mean = median = mode. Normally distributed data.</li>
+          </ul>
+          <p><strong>Kurtosis</strong> measures the "tailedness" of a distribution:</p>
+          <ul>
+            <li><strong>Leptokurtic</strong> (high kurtosis): Heavy tails, more outliers. Example: financial returns data.</li>
+            <li><strong>Platykurtic</strong> (low kurtosis): Light tails, fewer outliers. Example: uniform distribution.</li>
+            <li><strong>Mesokurtic</strong>: Normal distribution (kurtosis = 3).</li>
+          </ul>
+          <p><strong>Exam relevance</strong>: Skewness determines whether to use mean ± SD or median ± IQR. Kurtosis is less commonly tested but may appear in the context of outlier detection and model assumptions.</p>
+          <!-- Skewness shapes diagram -->
+          <div class="figure-container">
+            <svg viewBox="0 0 540 175" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:540px;display:block;margin:0 auto;">
+              <text x="270" y="14" text-anchor="middle" font-size="12" font-weight="700" fill="#1e293b">Skewness — Effect on Mean vs Median</text>
+              <!-- Panel 1: Negative skew (left tail) -->
+              <text x="90" y="32" text-anchor="middle" font-size="10" font-weight="700" fill="#ef4444">Negative Skew</text>
+              <text x="90" y="44" text-anchor="middle" font-size="8.5" fill="#475569">(left tail)</text>
+              <path d="M20,140 Q30,140 40,135 Q55,125 70,105 Q85,80 95,60 Q105,45 115,55 Q130,75 145,105 Q155,125 165,138 Q170,140 175,140" stroke="#ef4444" stroke-width="2.5" fill="none"/>
+              <line x1="20" y1="141" x2="176" y2="141" stroke="#cbd5e1" stroke-width="1"/>
+              <!-- Median & Mean lines for neg skew -->
+              <line x1="105" y1="55" x2="105" y2="141" stroke="#1e293b" stroke-width="1.5" stroke-dasharray="3,2"/>
+              <line x1="92" y1="70" x2="92" y2="141" stroke="#3b82f6" stroke-width="1.5" stroke-dasharray="3,2"/>
+              <text x="105" y="152" text-anchor="middle" font-size="8" fill="#1e293b">Md</text>
+              <text x="85" y="152" text-anchor="middle" font-size="8" fill="#3b82f6">Mean</text>
+              <text x="90" y="165" text-anchor="middle" font-size="8" fill="#ef4444" font-weight="700">Mean &lt; Median</text>
+
+              <!-- Panel 2: Symmetric -->
+              <text x="270" y="32" text-anchor="middle" font-size="10" font-weight="700" fill="#10b981">Symmetric (Normal)</text>
+              <text x="270" y="44" text-anchor="middle" font-size="8.5" fill="#475569">(no skew)</text>
+              <path d="M200,140 Q215,140 230,130 Q248,110 260,85 Q270,65 280,65 Q290,65 300,85 Q312,110 330,130 Q345,140 360,140" stroke="#10b981" stroke-width="2.5" fill="none"/>
+              <line x1="200" y1="141" x2="361" y2="141" stroke="#cbd5e1" stroke-width="1"/>
+              <!-- Mean/Median same -->
+              <line x1="280" y1="63" x2="280" y2="141" stroke="#1e293b" stroke-width="1.5" stroke-dasharray="3,2"/>
+              <text x="280" y="152" text-anchor="middle" font-size="8" fill="#1e293b">Mean = Median = Mode</text>
+              <text x="280" y="165" text-anchor="middle" font-size="8" fill="#10b981" font-weight="700">Use Mean ± SD</text>
+
+              <!-- Panel 3: Positive skew (right tail) -->
+              <text x="453" y="32" text-anchor="middle" font-size="10" font-weight="700" fill="#f59e0b">Positive Skew</text>
+              <text x="453" y="44" text-anchor="middle" font-size="8.5" fill="#475569">(right tail)</text>
+              <path d="M380,140 Q385,140 395,135 Q405,120 415,100 Q425,80 435,65 Q445,55 455,63 Q465,78 478,105 Q488,125 498,138 Q502,140 520,140" stroke="#f59e0b" stroke-width="2.5" fill="none"/>
+              <line x1="380" y1="141" x2="521" y2="141" stroke="#cbd5e1" stroke-width="1"/>
+              <!-- Mean pulled right -->
+              <line x1="450" y1="60" x2="450" y2="141" stroke="#1e293b" stroke-width="1.5" stroke-dasharray="3,2"/>
+              <line x1="465" y1="80" x2="465" y2="141" stroke="#3b82f6" stroke-width="1.5" stroke-dasharray="3,2"/>
+              <text x="450" y="152" text-anchor="middle" font-size="8" fill="#1e293b">Md</text>
+              <text x="470" y="152" text-anchor="middle" font-size="8" fill="#3b82f6">Mean</text>
+              <text x="453" y="165" text-anchor="middle" font-size="8" fill="#f59e0b" font-weight="700">Mean &gt; Median</text>
+            </svg>
+            <p class="figure-caption"><strong>Figure 3:</strong> Skewness and its effect on mean vs median. For skewed data, the mean is pulled toward the tail; the median remains a better measure of centre. Use median ± IQR for skewed data.</p>
+          </div>
+        </div>
+
+        <div class="info-card">
+          <h3>Choosing the Right Summary</h3>
+          <table style="width:100%;border-collapse:collapse;margin:10px 0;font-size:0.85rem;">
+            <thead>
+              <tr style="background:#f1f5f9;">
+                <th style="padding:8px 12px;border:1px solid #e2e8f0;text-align:left;">Distribution</th>
+                <th style="padding:8px 12px;border:1px solid #e2e8f0;text-align:left;">Central Tendency</th>
+                <th style="padding:8px 12px;border:1px solid #e2e8f0;text-align:left;">Spread</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td style="padding:6px 12px;border:1px solid #e2e8f0;">Normal (symmetric)</td><td style="padding:6px 12px;border:1px solid #e2e8f0;">Mean</td><td style="padding:6px 12px;border:1px solid #e2e8f0;">SD</td></tr>
+              <tr><td style="padding:6px 12px;border:1px solid #e2e8f0;">Skewed</td><td style="padding:6px 12px;border:1px solid #e2e8f0;">Median</td><td style="padding:6px 12px;border:1px solid #e2e8f0;">IQR</td></tr>
+              <tr><td style="padding:6px 12px;border:1px solid #e2e8f0;">Ordinal</td><td style="padding:6px 12px;border:1px solid #e2e8f0;">Median</td><td style="padding:6px 12px;border:1px solid #e2e8f0;">IQR</td></tr>
+              <tr><td style="padding:6px 12px;border:1px solid #e2e8f0;">Nominal</td><td style="padding:6px 12px;border:1px solid #e2e8f0;">Mode</td><td style="padding:6px 12px;border:1px solid #e2e8f0;">Proportions</td></tr>
+              <tr><td style="padding:6px 12px;border:1px solid #e2e8f0;">Bimodal</td><td style="padding:6px 12px;border:1px solid #e2e8f0;">Both modes</td><td style="padding:6px 12px;border:1px solid #e2e8f0;">Range or IQR</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- KEY FACTS TAB -->
+      <div class="tab-content" id="tab-keyfacts">
+        <div class="info-card">
+          <h3>Essential Exam Facts</h3>
+          <div class="key-facts-grid">
+            <div class="fact-item">Nominal: unordered categories (sex, blood group).</div>
+            <div class="fact-item">Ordinal: ordered categories (ECOG, tumour stage).</div>
+            <div class="fact-item">Interval: no true zero (temperature °C). Ratios meaningless.</div>
+            <div class="fact-item">Ratio: true zero (height, dose in Gy, weight). All arithmetic valid.</div>
+            <div class="fact-item">Mean ± SD for normal data; Median ± IQR for skewed data.</div>
+            <div class="fact-item">Mean is least-squares estimator — basis for ANOVA & regression.</div>
+            <div class="fact-item">SD = √(variance). Variance uses (n−1) for sample (Bessel's correction).</div>
+            <div class="fact-item">CV = (SD/mean) × 100% — compares variability across different units.</div>
+            <div class="fact-item">Skewed right (positive): mean > median. Skewed left: mean < median.</div>
+            <div class="fact-item">IQR = Q3 − Q1 — robust to outliers, used with median.</div>
+          </div>
+        </div>
+
+        <div class="warning-box">
+          <strong>⚠️ Common Exam Traps</strong>
+          <div>• ECOG performance status (0–4) is ORDINAL, not continuous — use median ± IQR, NOT mean ± SD.</div>
+          <div>• Tumour stage I–IV is ordinal, not interval — the difference between I and II may not equal II and III.</div>
+          <div>• "SD vs SEM" — if the question asks for variability of individual observations, answer SD, not SEM.</div>
+          <div>• Bessel's correction (n−1) applies to sample variance, not population variance (which uses N).</div>
+          <div>• The coefficient of variation is meaningless when the mean is near zero.</div>
+          <div>• For ordinal data, you CANNOT calculate a mean — only median and mode are appropriate.</div>
+        </div>
+      </div>
+
+      <!-- CLINICAL TAB -->
+      <div class="tab-content" id="tab-clinical">
+        <div class="clinical-box">
+          <strong>🏥 Why This Matters Clinically</strong>
+          <div>
+            <p><strong>Reporting tumour response</strong>: When a clinical trial reports "mean tumour size reduction," check whether the data was normally distributed. If it was skewed (e.g., some patients had dramatic responses while most had modest ones), the mean may overstate the typical response. Median reduction is often more clinically representative.</p>
+            <p><strong>Quality of life data</strong>: QoL scores (EORTC QLQ-C30, FACT-G) produce ordinal data from Likert scales. These should be summarised as median ± IQR, not mean ± SD, yet many published papers incorrectly use parametric summaries for ordinal QoL data.</p>
+            <p><strong>ECOG performance status</strong>: This ordinal scale (0–5) is a powerful predictor of outcomes in oncology. It must be analysed using non-parametric methods or ordinal logistic regression. Treating ECOG as continuous (e.g., "mean ECOG = 1.3") is statistically incorrect.</p>
+            <p><strong>Cost data in health economics</strong>: Healthcare costs are almost always right-skewed (most patients cost little, a few cost a lot). Summary statistics must use median ± IQR, and cost comparisons typically use non-parametric tests or logarithmic transformations.</p>
+            <p><strong>When critically appraising a paper</strong>: Always check whether the authors used the correct summary measure for the data type. Incorrect use of mean ± SD for skewed data is one of the most common statistical errors in medical literature.</p>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /tab-contents -->
+
+    <!-- ══════ WORKED EXAMPLES ══════ -->
+    <div class="section-label"><h2>📐 Worked Examples</h2><div class="section-divider"></div></div>
+
+    <div class="accordion">
+      <button class="accordion-btn">Classifying Data Types — FRCR Exam Style</button>
+      <div class="accordion-panel">
+        <div class="accordion-inner">
+          <p><strong>Scenario:</strong> A study records the following variables. Classify each by measurement scale:</p>
+          <p>a) Blood group (A, B, AB, O)<br>
+          b) ECOG performance status (0, 1, 2, 3, 4)<br>
+          c) Temperature in °C<br>
+          d) Tumour volume in cm³<br>
+          e) Number of positive lymph nodes<br>
+          f) Pain score (none = 0, mild = 1, moderate = 2, severe = 3)</p>
+          <p><strong>Solution:</strong></p>
+          <p>a) <strong>Nominal</strong> — categories with no natural order. Blood groups are named, not ranked.<br>
+          b) <strong>Ordinal</strong> — ordered categories. The difference between ECOG 0 and 1 is not the same as between 1 and 2.<br>
+          c) <strong>Interval</strong> — equal intervals but no true zero. 0°C does not mean "no temperature."<br>
+          d) <strong>Ratio</strong> — true zero. A tumour of 0 cm³ means no tumour. Ratios meaningful (20 cm³ is twice 10 cm³).<br>
+          e) <strong>Discrete numerical (ratio)</strong> — counts are whole numbers with a true zero.<br>
+          f) <strong>Ordinal</strong> — ordered categories with unequal intervals. Do NOT treat as continuous.</p>
+          <p><strong>Logic:</strong> Always ask: (1) Is it categorical or numerical? (2) If categorical, is there a natural order? (3) If numerical, does it have a true zero?</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="accordion">
+      <button class="accordion-btn">Mean vs Median in Skewed Data</button>
+      <div class="accordion-panel">
+        <div class="accordion-inner">
+          <p><strong>Scenario:</strong> Five patients have hospital stay durations (days): 2, 3, 4, 5, 20. Calculate mean and median. Which is more representative?</p>
+          <p><strong>Solution:</strong> Mean = (2+3+4+5+20)/5 = 34/5 = 6.8 days. Median = 4 days (the 3rd ordered value).</p>
+          <p>The median (4 days) better represents the typical stay for most patients. The mean (6.8 days) is pulled up by the single outlier (20 days). Most patients stayed 2–5 days, so the median is more clinically representative.</p>
+          <p><strong>Key insight:</strong> Mean ± SD should only be used for symmetric, approximately normally distributed data. For skewed data (like hospital stays), always report median ± IQR.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="accordion">
+      <button class="accordion-btn">SD, Variance & CV Calculation</button>
+      <div class="accordion-panel">
+        <div class="accordion-inner">
+          <p><strong>Scenario:</strong> Tumour diameters (cm): 2.1, 2.5, 2.8, 3.0, 3.6. Calculate SD, variance, and CV.</p>
+          <p><strong>Solution:</strong></p>
+          <p>Mean = (2.1+2.5+2.8+3.0+3.6)/5 = 14.0/5 = 2.8 cm.</p>
+          <p>Deviations: −0.7, −0.3, 0, 0.2, 0.8. Squared: 0.49, 0.09, 0, 0.04, 0.64. Sum = 1.26.</p>
+          <p>Sample variance (s²) = 1.26 / (5−1) = 1.26 / 4 = 0.315 cm².</p>
+          <p>Sample SD (s) = √0.315 = 0.561 cm (≈0.56 cm).</p>
+          <p>CV = (0.561 / 2.8) × 100% = 20.0%.</p>
+          <p><strong>Interpretation:</strong> The SD of 0.56 cm means typical individual tumours vary by ~0.56 cm from the mean. The CV of 20% allows comparison with other tumour size datasets (e.g., if another study reports CV = 30%, that study's data is more variable relative to its mean).</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════ ACTIVE RECALL ══════ -->
+    <div class="section-label"><h2>🧠 Active Recall Questions</h2><div class="section-divider"></div></div>
+
+    <ul class="recall-list">
+      <li class="recall-item"><div class="q">Q: Name the four levels of measurement and give an example of each.</div><div class="a">A: Nominal (blood group), Ordinal (ECOG performance status), Interval (temperature °C), Ratio (tumour volume cm³).</div></li>
+      <li class="recall-item"><div class="q">Q: What summary statistic should you use for skewed data?</div><div class="a">A: Median ± IQR (interquartile range). The mean is inappropriate because it is pulled towards the tail of the distribution.</div></li>
+      <li class="recall-item"><div class="q">Q: What is Bessel's correction and why is it used?</div><div class="a">A: Dividing by (n−1) instead of n when calculating sample variance. It corrects the bias introduced by estimating the population mean from the sample.</div></li>
+      <li class="recall-item"><div class="q">Q: What does the coefficient of variation tell you?</div><div class="a">A: CV = (SD/mean) × 100%. It allows comparison of variability between datasets with different units or means. Higher CV = more relative variability.</div></li>
+      <li class="recall-item"><div class="q">Q: Why is ECOG performance status considered ordinal and not continuous?</div><div class="a">A: The difference between ECOG 0 and 1 is not necessarily the same as between 1 and 2. The intervals are not equal, so it cannot be treated as continuous/interval data.</div></li>
+    </ul>
+
+    <!-- ══════ GLOSSARY ══════ -->
+    <div class="glossary-panel">
+      <h3>📖 Glossary</h3>
+      <div class="glossary-grid">
+        <div class="glossary-item"><div class="term">Nominal data</div><div class="def">Categories with no intrinsic order (blood group, sex, histology)</div></div>
+        <div class="glossary-item"><div class="term">Ordinal data</div><div class="def">Ordered categories with unequal intervals (ECOG, tumour stage, pain score)</div></div>
+        <div class="glossary-item"><div class="term">Interval data</div><div class="def">Numerical with equal intervals, no true zero (°C)</div></div>
+        <div class="glossary-item"><div class="term">Ratio data</div><div class="def">Numerical with true zero (height, dose, volume)</div></div>
+        <div class="glossary-item"><div class="term">Mean</div><div class="def">Arithmetic average — least squares estimator, sensitive to outliers</div></div>
+        <div class="glossary-item"><div class="term">Median</div><div class="def">50th percentile — robust to outliers</div></div>
+        <div class="glossary-item"><div class="term">Standard Deviation</div><div class="def">Spread of individual observations around the mean</div></div>
+        <div class="glossary-item"><div class="term">Variance</div><div class="def">SD². Uses n−1 for sample (Bessel's correction)</div></div>
+        <div class="glossary-item"><div class="term">Interquartile Range</div><div class="def">Q3 − Q1. Middle 50% of data. Used with median.</div></div>
+        <div class="glossary-item"><div class="term">Coefficient of Variation</div><div class="def">(SD/mean) × 100%. Relative variability measure.</div></div>
+        <div class="glossary-item"><div class="term">Skewness</div><div class="def">Asymmetry of distribution. Positive = right tail, negative = left tail.</div></div>
+        <div class="glossary-item"><div class="term">Kurtosis</div><div class="def">Tail heaviness of distribution. Leptokurtic = heavy tails.</div></div>
+        <div class="glossary-item"><div class="term">Bessel's correction</div><div class="def">Using n−1 denominator in sample variance to correct bias</div></div>
+      </div>
+    </div>
+
+  </div><!-- /content -->
+
+  <footer class="footer">
+    <div class="footer-inner">
+      <div>© 2025 FRCR 1 Study Hub</div>
+      <div class="footer-right">For educational use only · Not for clinical decisions</div>
+    </div>
+  </footer>
+
+  <script src="js/radbio.js"></script>
+</body>
+</html>

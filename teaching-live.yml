@@ -1,0 +1,101 @@
+- generic [ref=e1]:
+  - generic [ref=e3]:
+    - banner [ref=e4]:
+      - generic [ref=e5] [cursor=pointer]:
+        - img "radar-chart" [ref=e7]
+        - generic [ref=e11]:
+          - generic [ref=e12]: DevStat
+          - generic [ref=e13]: Medical Statistics
+      - generic [ref=e14]:
+        - img "save" [ref=e16] [cursor=pointer]
+        - img "folder-open" [ref=e20] [cursor=pointer]
+      - generic [ref=e23]:
+        - img "undo" [ref=e25]
+        - img "redo" [ref=e29]
+      - generic [ref=e32]:
+        - radiogroup "segmented control" [ref=e34]:
+          - generic [ref=e35]:
+            - generic [ref=e36] [cursor=pointer]:
+              - radio "Exam" [checked]
+              - generic "Exam" [ref=e37]
+            - generic [ref=e38] [cursor=pointer]:
+              - radio "Live"
+              - generic "Live" [ref=e39]
+        - button "login Sign in" [ref=e41] [cursor=pointer]:
+          - img "login" [ref=e43]
+          - generic [ref=e46]: Sign in
+        - img "question-circle" [ref=e48] [cursor=pointer]
+        - img "question-circle" [ref=e53] [cursor=pointer]
+    - menu [ref=e58]:
+      - menuitem [ref=e59] [cursor=pointer]:
+        - img "table" [ref=e60]
+        - text: Data
+      - menuitem [ref=e63] [cursor=pointer]:
+        - img "fund" [ref=e64]
+        - text: Analyze
+      - menuitem [ref=e67] [cursor=pointer]:
+        - img "apartment" [ref=e68]
+        - text: Survival
+      - menuitem [ref=e71] [cursor=pointer]:
+        - img "bar-chart" [ref=e72]
+        - text: Graphs
+      - menuitem [ref=e75] [cursor=pointer]:
+        - img "question-circle" [ref=e76]
+        - text: Wizard
+      - menuitem [ref=e80] [cursor=pointer]:
+        - img "crown" [ref=e81]
+        - text: Teaching
+      - menuitem [ref=e84] [cursor=pointer]:
+        - img "file-text" [ref=e85]
+        - text: Output
+      - menuitem [disabled]
+    - alert [ref=e97]:
+      - img "exclamation-circle" [ref=e98]
+      - generic [ref=e101]:
+        - generic [ref=e102]: Exam mode — synthetic data only
+        - generic [ref=e103]: This online version runs on a shared public server. Use it for exam practice with the synthetic practice data only. Switch to Live mode (or use the offline app) for confidential data.
+    - main [ref=e88]:
+      - generic [ref=e104]:
+        - heading "Teaching mode" [level=3] [ref=e105]
+        - generic [ref=e106]: Learn medical statistics by doing — each case walks you from the hypothesis, through choosing the right test, to reading the results. The first case is free; extra cases are £1 each.
+        - generic [ref=e107]:
+          - generic [ref=e111]:
+            - generic [ref=e113]:
+              - generic [ref=e114]: 🫀
+              - 'heading "A new blood-pressure drug: does it work?" [level=4] [ref=e116]'
+              - generic [ref=e117]: Free
+            - generic [ref=e119]: An RCT of a new antihypertensive. Walk the whole path — hypothesis, data, the right test, results, meaning.
+            - generic [ref=e122]:
+              - generic [ref=e123]: 10 steps
+              - button "Start lesson" [ref=e126] [cursor=pointer]
+          - generic [ref=e131]:
+            - generic [ref=e133]:
+              - generic [ref=e134]: 🕰️
+              - heading "Does a new agent help before and after surgery?" [level=4] [ref=e136]
+              - generic [ref=e137]: £1
+            - generic [ref=e139]: "A de-identified resectable-cancer trial. Master survival analysis: event-free survival, censoring, log-rank, Cox regression, hazard ratios."
+            - generic [ref=e142]:
+              - generic [ref=e143]: 14 steps
+              - button "Sign in to unlock" [ref=e146] [cursor=pointer]
+          - generic [ref=e151]:
+            - generic [ref=e153]:
+              - generic [ref=e154]: 🎯
+              - heading "Two ways to give radiotherapy" [level=4] [ref=e156]
+              - generic [ref=e157]: £1
+            - generic [ref=e159]: A de-identified head-and-neck trial. Compare patient-reported quality of life and toxicity — continuous, ordinal and binary outcomes in one study.
+            - generic [ref=e162]:
+              - generic [ref=e163]: 12 steps
+              - button "Sign in to unlock" [ref=e166] [cursor=pointer]
+  - generic [ref=e168]:
+    - dialog:
+      - generic [ref=e169]:
+        - button "Close" [ref=e170] [cursor=pointer]:
+          - generic "Close" [ref=e171]:
+            - img "close" [ref=e172]
+        - generic [ref=e176]:
+          - generic [ref=e177]: 👋
+          - heading "A warm hello!" [level=4] [ref=e178]
+          - generic [ref=e179]: Pop in with a quick free account and we'll save your work and keep it safe for you. Your first 5 analyses and 5 charts are free, no card needed.And if you ever want more? It's just £25 a year — that's less than a barista coffee each week. Less than two takeaway lunches a month. Pocket change, honestly, and you can use it all you like.
+          - generic [ref=e180]:
+            - button "Create your free account" [ref=e182] [cursor=pointer]
+            - button "Maybe later" [ref=e185] [cursor=pointer]

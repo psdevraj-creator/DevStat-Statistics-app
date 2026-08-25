@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Correlation & Linear Regression — Medical Statistics | FRCR 1</title>
+  <link rel="stylesheet" href="css/medstat.css">
+</head>
+<body>
+  <nav class="navbar">
+    <div class="navbar-logo">
+      <span class="logo-main">FRCR 1</span>
+      <span class="logo-sub">· <a href="../FRCR1.html">Hub</a> · <a href="index.html">Medical Statistics</a> · Correlation & Regression</span>
+    </div>
+    <div class="navbar-badge">📊 Chapter 6</div>
+  </nav>
+
+  <div class="breadcrumb">
+    <a href="../FRCR1.html">Home</a><span class="sep">›</span>
+    <a href="index.html">Medical Statistics</a><span class="sep">›</span>
+    <span>Correlation &amp; Linear Regression</span>
+  </div>
+
+  <section class="hero" style="padding:32px 24px 20px;">
+    <div class="hero-inner">
+      <h1 style="font-size:1.8rem;">Correlation &amp; Linear Regression</h1>
+      <p>Pearson and Spearman correlation, simple and multiple linear regression, assumptions, interpretation, and multicollinearity — GCSE to FRCR level.</p>
+    </div>
+  </section>
+
+  <div class="content">
+
+    <!-- ══════ TABS ══════ -->
+    <div class="tab-container">
+      <button class="tab active" data-tab="gcse">GCSE Level</button>
+      <button class="tab" data-tab="frcr">FRCR Level</button>
+      <button class="tab" data-tab="keyfacts">Key Facts</button>
+      <button class="tab" data-tab="clinical">Clinical Relevance</button>
+    </div>
+
+    <div class="tab-contents">
+
+      <!-- GCSE TAB -->
+      <div class="tab-content active" id="tab-gcse">
+        <div class="info-card">
+          <h3>Correlation — Measuring Relationships</h3>
+          <p>Correlation measures the strength and direction of a relationship between two variables. For example: is there a relationship between age and blood pressure? As age increases, does blood pressure tend to increase?</p>
+          <p><strong>Pearson correlation coefficient (r)</strong>: Ranges from −1 to +1.</p>
+          <ul>
+            <li>r = +1: perfect positive linear relationship (as X increases, Y increases proportionally).</li>
+            <li>r = 0: no linear relationship.</li>
+            <li>r = −1: perfect negative linear relationship (as X increases, Y decreases proportionally).</li>
+          </ul>
+          <p><strong>Scatter plots</strong>: The best way to visualise correlation. Plot X on the horizontal axis and Y on the vertical axis. The closer points lie to a straight line, the stronger the correlation.</p>
+          <div class="warning-box">
+            <strong>⚠️ Key Warning</strong>
+            <div>Correlation does NOT imply causation. Just because two variables are correlated does not mean one causes the other. There may be a third variable (confounder) explaining the relationship, or the correlation may be coincidental.</div>
+          </div>
+
+          <!-- Scatter plots showing correlation strengths -->
+          <div class="figure-container">
+            <svg viewBox="0 0 520 250" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:520px;display:block;margin:0 auto;">
+              <!-- Title -->
+              <text x="260" y="14" text-anchor="middle" font-size="11" font-weight="700" fill="#1e293b">Pearson r — Scatter Plot Examples</text>
+
+              <!-- Panel 1: r = +1.0 (top-left) -->
+              <rect x="10" y="20" width="115" height="105" rx="4" fill="#f0fdf4" stroke="#10b981" stroke-width="1.5"/>
+              <text x="67" y="33" text-anchor="middle" font-size="9" font-weight="700" fill="#065f46">r = +1.0 Perfect positive</text>
+              <line x1="20" y1="115" x2="115" y2="115" stroke="#94a3b8" stroke-width="1"/>
+              <line x1="20" y1="115" x2="20" y2="40" stroke="#94a3b8" stroke-width="1"/>
+              <!-- Perfect positive dots & line -->
+              <line x1="20" y1="115" x2="115" y2="40" stroke="#10b981" stroke-width="1.5" stroke-dasharray="3,2"/>
+              <circle cx="28" cy="107" r="3" fill="#059669"/>
+              <circle cx="42" cy="96" r="3" fill="#059669"/>
+              <circle cx="56" cy="85" r="3" fill="#059669"/>
+              <circle cx="70" cy="74" r="3" fill="#059669"/>
+              <circle cx="84" cy="63" r="3" fill="#059669"/>
+              <circle cx="98" cy="52" r="3" fill="#059669"/>
+              <circle cx="112" cy="41" r="3" fill="#059669"/>
+
+              <!-- Panel 2: r = +0.6 (top-right) -->
+              <rect x="140" y="20" width="115" height="105" rx="4" fill="#f0fdf4" stroke="#0d9488" stroke-width="1.5"/>
+              <text x="197" y="33" text-anchor="middle" font-size="9" font-weight="700" fill="#0f766e">r = +0.6 Moderate positive</text>
+              <line x1="150" y1="115" x2="245" y2="115" stroke="#94a3b8" stroke-width="1"/>
+              <line x1="150" y1="115" x2="150" y2="40" stroke="#94a3b8" stroke-width="1"/>
+              <line x1="150" y1="108" x2="245" y2="50" stroke="#0d9488" stroke-width="1.5" stroke-dasharray="3,2"/>
+              <circle cx="158" cy="104" r="3" fill="#0d9488"/>
+              <circle cx="168" cy="98" r="3" fill="#0d9488"/>
+              <circle cx="178" cy="88" r="3" fill="#0d9488"/>
+              <circle cx="190" cy="95" r="3" fill="#0d9488"/>
+              <circle cx="200" cy="78" r="3" fill="#0d9488"/>
+              <circle cx="212" cy="72" r="3" fill="#0d9488"/>
+              <circle cx="222" cy="65" r="3" fill="#0d9488"/>
+              <circle cx="232" cy="60" r="3" fill="#0d9488"/>
+              <circle cx="175" cy="105" r="3" fill="#0d9488"/>
+              <circle cx="240" cy="55" r="3" fill="#0d9488"/>
+
+              <!-- Panel 3: r = 0 (bottom-left) -->
+              <rect x="10" y="140" width="115" height="105" rx="4" fill="#fefce8" stroke="#f59e0b" stroke-width="1.5"/>
+              <text x="67" y="153" text-anchor="middle" font-size="9" font-weight="700" fill="#92400e">r = 0  No relationship</text>
+              <line x1="20" y1="235" x2="115" y2="235" stroke="#94a3b8" stroke-width="1"/>
+              <line x1="20" y1="235" x2="20" y2="160" stroke="#94a3b8" stroke-width="1"/>
+              <line x1="20" y1="197" x2="115" y2="197" stroke="#f59e0b" stroke-width="1.5" stroke-dasharray="3,2"/>
+              <circle cx="28" cy="190" r="3" fill="#f59e0b"/>
+              <circle cx="40" cy="210" r="3" fill="#f59e0b"/>
+              <circle cx="52" cy="170" r="3" fill="#f59e0b"/>
+              <circle cx="64" cy="225" r="3" fill="#f59e0b"/>
+              <circle cx="76" cy="178" r="3" fill="#f59e0b"/>
+              <circle cx="88" cy="215" r="3" fill="#f59e0b"/>
+              <circle cx="100" cy="165" r="3" fill="#f59e0b"/>
+              <circle cx="110" cy="200" r="3" fill="#f59e0b"/>
+
+              <!-- Panel 4: r = -1.0 (bottom-right) -->
+              <rect x="140" y="140" width="115" height="105" rx="4" fill="#fff1f2" stroke="#ef4444" stroke-width="1.5"/>
+              <text x="197" y="153" text-anchor="middle" font-size="9" font-weight="700" fill="#b91c1c">r = −1.0 Perfect negative</text>
+              <line x1="150" y1="235" x2="245" y2="235" stroke="#94a3b8" stroke-width="1"/>
+              <line x1="150" y1="235" x2="150" y2="160" stroke="#94a3b8" stroke-width="1"/>
+              <line x1="150" y1="163" x2="245" y2="232" stroke="#ef4444" stroke-width="1.5" stroke-dasharray="3,2"/>
+              <circle cx="158" cy="163" r="3" fill="#ef4444"/>
+              <circle cx="170" cy="172" r="3" fill="#ef4444"/>
+              <circle cx="183" cy="181" r="3" fill="#ef4444"/>
+              <circle cx="196" cy="190" r="3" fill="#ef4444"/>
+              <circle cx="209" cy="199" r="3" fill="#ef4444"/>
+              <circle cx="222" cy="208" r="3" fill="#ef4444"/>
+              <circle cx="235" cy="217" r="3" fill="#ef4444"/>
+
+              <!-- r² note -->
+              <rect x="270" y="20" width="240" height="225" rx="6" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1"/>
+              <text x="390" y="36" text-anchor="middle" font-size="9.5" font-weight="700" fill="#1e293b">r² = Variance Explained</text>
+              <text x="280" y="56" font-size="9" fill="#475569">r = 1.0  →  r² = 1.00  →  100% explained</text>
+              <text x="280" y="72" font-size="9" fill="#059669">r = 0.9  →  r² = 0.81  →  81% explained</text>
+              <text x="280" y="88" font-size="9" fill="#0d9488">r = 0.8  →  r² = 0.64  →  64% explained</text>
+              <text x="280" y="104" font-size="9" fill="#0d9488">r = 0.7  →  r² = 0.49  →  49% explained</text>
+              <text x="280" y="120" font-size="9" fill="#f59e0b">r = 0.5  →  r² = 0.25  →  25% explained</text>
+              <text x="280" y="136" font-size="9" fill="#ef4444">r = 0.3  →  r² = 0.09  →   9% explained</text>
+              <line x1="278" y1="145" x2="502" y2="145" stroke="#e2e8f0" stroke-width="1"/>
+              <text x="390" y="160" text-anchor="middle" font-size="8.5" font-weight="700" fill="#b91c1c">⚠️ Even r = 0.6 leaves</text>
+              <text x="390" y="174" text-anchor="middle" font-size="8.5" font-weight="700" fill="#b91c1c">64% of variance unexplained!</text>
+              <text x="390" y="195" text-anchor="middle" font-size="8" fill="#64748b">Strength guide (medical research):</text>
+              <text x="390" y="210" text-anchor="middle" font-size="8" fill="#475569">0.1–0.3 weak | 0.3–0.5 moderate</text>
+              <text x="390" y="224" text-anchor="middle" font-size="8" fill="#475569">0.5–0.7 strong | &gt;0.7 very strong</text>
+            </svg>
+            <p class="figure-caption"><strong>Figure 1:</strong> Scatter plots showing different Pearson correlation strengths. Note that r² (not r) gives the proportion of variance explained — even r = 0.8 leaves 36% unexplained.</p>
+          </div>
+        </div>
+
+        <div class="info-card">
+          <h3>Introduction to Linear Regression</h3>
+          <p>Linear regression finds the <strong>line of best fit</strong> through a scatter plot. The equation is: <strong>y = β₀ + β₁x</strong>, where β₁ is the <strong>slope</strong> (change in y per unit change in x) and β₀ is the <strong>intercept</strong> (value of y when x = 0).</p>
+          <p>The line is calculated using the <strong>least squares method</strong> — it minimises the sum of squared vertical distances between the data points and the line.</p>
+        </div>
+      </div>
+
+      <!-- FRCR TAB -->
+      <div class="tab-content" id="tab-frcr">
+        <div class="info-card">
+          <h3>Pearson Correlation Coefficient — Full Detail</h3>
+          <p><strong>Formula</strong>: r = cov(x,y) / (sx × sy) = Σ(xᵢ − x̄)(yᵢ − ȳ) / √[Σ(xᵢ − x̄)² × Σ(yᵢ − ȳ)²].</p>
+          <p><strong>Properties</strong>:</p>
+          <ul>
+            <li>Dimensionless — not affected by units of measurement.</li>
+            <li>Symmetric — r(x,y) = r(y,x).</li>
+            <li>r² = <strong>coefficient of determination</strong> — proportion of variance in y explained by x. If r = 0.8, then r² = 0.64, meaning 64% of the variability in y is explained by x.</li>
+            <li>r is sensitive to outliers — a single extreme point can dramatically inflate or deflate r.</li>
+          </ul>
+          <p><strong>Assumptions for Pearson's r</strong>:</p>
+          <ol>
+            <li><strong>Bivariate normality</strong>: Both variables should be approximately normally distributed.</li>
+            <li><strong>Linear relationship</strong>: The relationship should be linear (check scatter plot).</li>
+            <li><strong>No outliers</strong>: r is sensitive to extreme values.</li>
+            <li><strong>Homoscedasticity</strong>: The spread of y should be similar across values of x.</li>
+          </ol>
+          <p><strong>Testing H₀: ρ = 0</strong>: t = r√(n−2) / √(1−r²), with df = n−2. Tests whether the true population correlation is zero.</p>
+          <div class="warning-box">
+            <strong>⚠️ Exam Trap: Correlation Strength</strong>
+            <div>r = 0.3 is often considered "weak," 0.5 "moderate," and 0.7 "strong" in medical research. However, r² tells you the variance explained: r = 0.5 → r² = 0.25 → only 25% of variance explained. Even "strong" correlations often leave most variance unexplained.</div>
+          </div>
+        </div>
+
+        <div class="info-card">
+          <h3>Simple Linear Regression</h3>
+          <p><strong>Model</strong>: yᵢ = β₀ + β₁xᵢ + εᵢ, where εᵢ ~ N(0, σ²) are independent errors.</p>
+          <p><strong>Least squares estimation</strong>:</p>
+          <ul>
+            <li>β₁ = Σ(xᵢ − x̄)(yᵢ − ȳ) / Σ(xᵢ − x̄)²</li>
+            <li>β₀ = ȳ − β₁x̄</li>
+          </ul>
+          <p><strong>Interpretation of β₁</strong>: For each one-unit increase in x, y changes by β₁ units on average. Example: β₁ = 2.3 mmHg per year means blood pressure increases by 2.3 mmHg per year of age (if the model is age → blood pressure).</p>
+          <p><strong>Interpretation of β₀</strong>: The predicted value of y when x = 0. This is often not clinically meaningful (e.g., predicted blood pressure at age 0). Only interpret when x = 0 is within the range of the data.</p>
+          <p><strong>R² (coefficient of determination)</strong>: Proportion of variance in y explained by x. R² = 1 − SS_residual / SS_total. Ranges from 0 to 1. A model with R² = 0.40 explains 40% of the variability in the outcome.</p>
+        </div>
+
+        <!-- Regression line diagram -->
+        <div class="figure-container">
+          <svg viewBox="0 0 520 230" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:520px;display:block;margin:0 auto;">
+            <defs><marker id="reg-arr" markerWidth="7" markerHeight="7" refX="3.5" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 Z" fill="#475569"/></marker></defs>
+            <!-- Title -->
+            <text x="195" y="14" text-anchor="middle" font-size="11" font-weight="700" fill="#1e293b">Linear Regression — Line of Best Fit and Residuals</text>
+
+            <!-- Plot axes -->
+            <line x1="40" y1="200" x2="360" y2="200" stroke="#475569" stroke-width="1.5" marker-end="url(#reg-arr)"/>
+            <line x1="40" y1="200" x2="40" y2="25" stroke="#475569" stroke-width="1.5" marker-end="url(#reg-arr)"/>
+            <text x="200" y="215" text-anchor="middle" font-size="9" fill="#64748b">x (predictor)</text>
+            <text x="15" y="115" text-anchor="middle" font-size="9" fill="#64748b" transform="rotate(-90,15,115)">y (outcome)</text>
+
+            <!-- Regression line: y = 30 + 0.48x, from x=40 to x=360 -->
+            <!-- At x=40: y=200-30=170 (plot y) | At x=360: y=200-(30+0.48*320)=200-183.6=16.4 -->
+            <line x1="40" y1="170" x2="360" y2="24" stroke="#3b82f6" stroke-width="2"/>
+
+            <!-- β₁ triangle annotation -->
+            <line x1="220" y1="104" x2="270" y2="104" stroke="#3b82f6" stroke-width="1" stroke-dasharray="3,2"/>
+            <line x1="270" y1="104" x2="270" y2="80" stroke="#3b82f6" stroke-width="1" stroke-dasharray="3,2"/>
+            <text x="245" y="115" text-anchor="middle" font-size="7.5" fill="#3b82f6">run</text>
+            <text x="278" y="93" font-size="7.5" fill="#3b82f6">rise</text>
+            <text x="295" y="73" font-size="8" font-weight="700" fill="#3b82f6">slope = β₁</text>
+
+            <!-- β₀ annotation -->
+            <circle cx="40" cy="170" r="4" fill="none" stroke="#8b5cf6" stroke-width="2"/>
+            <text x="5" y="168" font-size="7.5" fill="#8b5cf6">β₀</text>
+            <text x="10" y="178" font-size="7" fill="#8b5cf6">(intercept)</text>
+
+            <!-- Data points -->
+            <!-- (x_plot, y_data) then residual line to reg line y -->
+            <!-- reg line: y_plot = 170 - 0.4875*(x_plot - 40) -->
+            <!-- Point 1 -->
+            <circle cx="65" cy="168" r="4" fill="#1e293b"/>
+            <line x1="65" y1="168" x2="65" y2="158" stroke="#ef4444" stroke-width="1.5" stroke-dasharray="2,1"/>
+            <!-- Point 2 -->
+            <circle cx="90" cy="148" r="4" fill="#1e293b"/>
+            <line x1="90" y1="148" x2="90" y2="145" stroke="#ef4444" stroke-width="1.5" stroke-dasharray="2,1"/>
+            <!-- Point 3 -->
+            <circle cx="120" cy="130" r="4" fill="#1e293b"/>
+            <line x1="120" y1="130" x2="120" y2="121" stroke="#ef4444" stroke-width="1.5" stroke-dasharray="2,1"/>
+            <!-- Point 4 (below line) -->
+            <circle cx="155" cy="115" r="4" fill="#1e293b"/>
+            <line x1="155" y1="115" x2="155" y2="103" stroke="#ef4444" stroke-width="1.5" stroke-dasharray="2,1"/>
+            <!-- Point 5 -->
+            <circle cx="190" cy="96" r="4" fill="#1e293b"/>
+            <!-- Point 6 (above line) -->
+            <circle cx="220" cy="115" r="4" fill="#1e293b"/>
+            <line x1="220" y1="115" x2="220" y2="104" stroke="#ef4444" stroke-width="1.5" stroke-dasharray="2,1"/>
+            <!-- Point 7 -->
+            <circle cx="260" cy="85" r="4" fill="#1e293b"/>
+            <!-- Point 8 (below line) -->
+            <circle cx="295" cy="73" r="4" fill="#1e293b"/>
+            <line x1="295" y1="73" x2="295" y2="62" stroke="#ef4444" stroke-width="1.5" stroke-dasharray="2,1"/>
+            <!-- Point 9 -->
+            <circle cx="330" cy="48" r="4" fill="#1e293b"/>
+            <!-- residual label -->
+            <text x="165" y="96" font-size="8" fill="#ef4444">ε (residual)</text>
+            <line x1="158" y1="93" x2="157" y2="109" stroke="#ef4444" stroke-width="1" marker-end="url(#reg-arr)"/>
+
+            <!-- Formula box -->
+            <rect x="370" y="20" width="140" height="200" rx="6" fill="#eff6ff" stroke="#3b82f6" stroke-width="1"/>
+            <text x="440" y="36" text-anchor="middle" font-size="9.5" font-weight="700" fill="#1d4ed8">Regression Model</text>
+            <text x="380" y="52" font-size="9" fill="#1e40af">y = β₀ + β₁x + ε</text>
+            <line x1="378" y1="58" x2="502" y2="58" stroke="#bfdbfe" stroke-width="1"/>
+            <text x="440" y="71" text-anchor="middle" font-size="8.5" font-weight="700" fill="#1d4ed8">Least squares:</text>
+            <text x="380" y="84" font-size="8" fill="#1e40af">Minimise Σε²</text>
+            <text x="380" y="97" font-size="8" fill="#1e40af">= Σ(y − ŷ)²</text>
+            <line x1="378" y1="104" x2="502" y2="104" stroke="#bfdbfe" stroke-width="1"/>
+            <text x="440" y="117" text-anchor="middle" font-size="8.5" font-weight="700" fill="#1d4ed8">R² = fit quality:</text>
+            <text x="380" y="130" font-size="8" fill="#1e40af">R² = 1 − SS_res</text>
+            <text x="395" y="142" font-size="8" fill="#1e40af">/ SS_tot</text>
+            <text x="380" y="157" font-size="8" fill="#1e40af">R²=0.80 → 80%</text>
+            <text x="380" y="169" font-size="8" fill="#1e40af">of y variation</text>
+            <text x="380" y="181" font-size="8" fill="#1e40af">explained by x</text>
+            <line x1="378" y1="187" x2="502" y2="187" stroke="#bfdbfe" stroke-width="1"/>
+            <text x="380" y="200" font-size="7.5" fill="#64748b">Residuals must be</text>
+            <text x="380" y="212" font-size="7.5" fill="#64748b">normal + homosced.</text>
+          </svg>
+          <p class="figure-caption"><strong>Figure 2:</strong> Regression line of best fit. Residuals (red dashed lines) are vertical distances between observed points and the predicted line. Least squares minimises Σ(residuals)². R² indicates how much variation in y is explained by x.</p>
+        </div>
+
+        <div class="info-card">
+          <h3>LINE Assumptions of Linear Regression</h3>
+          <p><strong>L</strong>inearity: The relationship between x and y is linear. Check: scatter plot of y vs x should show no clear curvature. Residuals vs fitted values plot should show no pattern.</p>
+          <p><strong>I</strong>ndependence: Observations are independent. Especially important in clustered or longitudinal data (e.g., multiple measurements per patient). Use mixed models if violated.</p>
+          <p><strong>N</strong>ormality: Residuals (εᵢ) are normally distributed. Check: Q-Q plot of residuals, histogram of residuals. The original y variable does NOT need to be normal — only the residuals.</p>
+          <p><strong>E</strong>qual variance (homoscedasticity): The variance of residuals is constant across all values of x. Check: residuals vs fitted values plot should show a horizontal band with constant width. Fan-shape indicates heteroscedasticity.</p>
+          <p><strong>What to do if assumptions are violated</strong>:</p>
+          <ul>
+            <li>Non-linearity: Transform x (log, polynomial) or add non-linear terms.</li>
+            <li>Non-normality (residuals): Transform y (log, Box-Cox) or use robust regression.</li>
+            <li>Heteroscedasticity: Use robust (sandwich) standard errors or transform y.</li>
+            <li>Non-independence: Use mixed models or generalised estimating equations (GEE).</li>
+          </ul>
+        </div>
+
+        <div class="info-card">
+          <h3>Multiple Linear Regression</h3>
+          <p><strong>Model</strong>: y = β₀ + β₁x₁ + β₂x₂ + ... + βₖxₖ + ε.</p>
+          <p>Each βᵢ is the effect of predictor xᵢ <strong>adjusted for</strong> (holding constant) all other predictors in the model. This is what makes regression so powerful — it allows us to estimate the independent effect of each variable while controlling for confounders.</p>
+          <p><strong>Interpretation example</strong>: y = tumour shrinkage (%), x₁ = radiation dose (Gy), x₂ = age (years), x₃ = smoking (0/1).</p>
+          <p>β₁ = 1.5 means: for each 1 Gy increase in dose, tumour shrinkage increases by 1.5%, <strong>holding age and smoking constant</strong>.</p>
+          <p><strong>R² vs Adjusted R²</strong>: Adding more predictors always increases R² (or keeps it the same). Adjusted R² penalises for adding useless predictors: R²_adj = 1 − [(1−R²)(n−1)/(n−k−1)].</p>
+        </div>
+
+        <div class="info-card">
+          <h3>Multicollinearity</h3>
+          <p><strong>Problem</strong>: When two or more predictors are highly correlated with each other, it becomes difficult to estimate their individual effects. The coefficients become unstable (large standard errors), and the model cannot separate their contributions.</p>
+          <p><strong>Detection</strong>: <strong>Variance Inflation Factor (VIF)</strong>. VIF = 1 / (1 − R²ⱼ), where R²ⱼ is the R² from regressing predictor j on all other predictors. VIF > 5 indicates moderate collinearity; VIF > 10 indicates serious collinearity requiring action.</p>
+          <p><strong>Solutions</strong>:</p>
+          <ul>
+            <li>Remove one of the correlated predictors.</li>
+            <li>Combine them (e.g., mean, sum, or principal component).</li>
+            <li>Ridge regression (penalised regression).</li>
+          </ul>
+          <p><strong>Example</strong>: Including both total dose and dose per fraction in the same model — these are highly correlated since total dose = dose per fraction × number of fractions.</p>
+        </div>
+
+        <div class="info-card">
+          <h3>Interaction Terms in Regression</h3>
+          <p><strong>Model with interaction</strong>: y = β₀ + β₁x₁ + β₂x₂ + β₁₂(x₁×x₂) + ε.</p>
+          <p>The interaction term (β₁₂) tests whether the effect of x₁ on y depends on the level of x₂.</p>
+          <p><strong>Example</strong>: Effect of radiation dose (x₁) on tumour control (y) may depend on tumour hypoxia status (x₂: 0 = normoxic, 1 = hypoxic). A significant β₁₂ means the dose-response slope differs between normoxic and hypoxic tumours.</p>
+          <p><strong>Centering</strong>: When including interaction terms, centre continuous predictors (subtract the mean) to reduce collinearity between the main effects and the interaction term.</p>
+        </div>
+      </div>
+
+      <!-- KEY FACTS TAB -->
+      <div class="tab-content" id="tab-keyfacts">
+        <div class="info-card">
+          <h3>Essential Exam Facts</h3>
+          <div class="key-facts-grid">
+            <div class="fact-item">Pearson r: measures LINEAR relationship. Range −1 to +1.</div>
+            <div class="fact-item">r² = coefficient of determination. Proportion of variance in y explained by x.</div>
+            <div class="fact-item">Spearman ρ: rank correlation. Detects MONOTONIC relationships.</div>
+            <div class="fact-item">Simple linear regression: y = β₀ + β₁x + ε. Least squares estimation.</div>
+            <div class="fact-item">LINE assumptions: Linearity, Independence, Normality (of residuals), Equal variance.</div>
+            <div class="fact-item">Multiple regression: each β is adjusted for all other predictors in the model.</div>
+            <div class="fact-item">Adjusted R²: penalises for adding useless predictors.</div>
+            <div class="fact-item">VIF > 10: serious multicollinearity. VIF = 1/(1−R²ⱼ).</div>
+            <div class="fact-item">Interaction: effect of x₁ depends on level of x₂. Centring reduces collinearity.</div>
+            <div class="fact-item">Correlation ≠ causation. Confounding, reverse causation, and coincidence can produce spurious correlations.</div>
+          </div>
+        </div>
+
+        <div class="warning-box">
+          <strong>⚠️ Common Exam Traps</strong>
+          <div>• "r = 0.8" means r² = 0.64 — 64% of variance explained, not 80%.</div>
+          <div>• Regression residuals must be normal, NOT the original y variable.</div>
+          <div>• The intercept (β₀) is only interpretable when x = 0 is meaningful.</div>
+          <div>• Adding more predictors always increases R² — use adjusted R² for model comparison.</div>
+          <div>• Correlation does NOT imply causation — this is the single most important statistical trap.</div>
+          <div>• A significant β in multiple regression means the variable has an effect AFTER controlling for other variables — not necessarily a causal effect.</div>
+        </div>
+      </div>
+
+      <!-- CLINICAL TAB -->
+      <div class="tab-content" id="tab-clinical">
+        <div class="clinical-box">
+          <strong>🏥 Why This Matters Clinically</strong>
+          <div>
+            <p><strong>Dose-response modelling</strong>: Linear regression is the foundation for modelling radiation dose-response relationships. The slope (β₁) tells you how much tumour control probability changes per unit dose — the basis for dose-escalation studies.</p>
+            <p><strong>Prognostic factor analysis</strong>: Multiple regression is used to identify independent prognostic factors for outcomes. For example, is tumour stage an independent predictor of survival after controlling for age, performance status, and treatment received?</p>
+            <p><strong>Confounding in observational studies</strong>: Multiple regression allows adjustment for confounders. For instance, when studying whether exercise affects heart disease risk, regression can adjust for age, smoking, and BMI — isolating the independent effect of exercise.</p>
+            <p><strong>Critical appraisal</strong>: When reading a paper using regression: (1) Did they check the LINE assumptions? (2) Did they assess multicollinearity (VIF)? (3) Did they test for interactions? (4) Did they report adjusted R²? (5) Did they acknowledge that regression does not prove causation? Common flaws include ignoring interaction terms and reporting raw R² without adjustment.</p>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /tab-contents -->
+
+    <!-- ══════ WORKED EXAMPLES ══════ -->
+    <div class="section-label"><h2>📐 Worked Examples</h2><div class="section-divider"></div></div>
+
+    <div class="accordion">
+      <button class="accordion-btn">Interpreting Pearson r and r²</button>
+      <div class="accordion-panel">
+        <div class="accordion-inner">
+          <p><strong>Scenario:</strong> A study reports Pearson r = 0.6 between radiation dose and tumour shrinkage (p < 0.001). Interpret the result.</p>
+          <p><strong>Solution:</strong> r = 0.6 indicates a moderate-to-strong positive linear relationship — higher dose is associated with greater shrinkage. r² = 0.36, meaning 36% of the variability in tumour shrinkage is explained by dose. While statistically significant, 64% of the variance is due to other factors (tumour heterogeneity, patient factors, measurement error). Clinical implication: dose is an important but not sole determinant of tumour response.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="accordion">
+      <button class="accordion-btn">Multiple Regression — Adjusted Effects</button>
+      <div class="accordion-panel">
+        <div class="accordion-inner">
+          <p><strong>Scenario:</strong> A multiple regression models survival time (months) on: treatment (0=standard, 1=new), age (years), and ECOG (0–4). Results: β_treatment = 3.2 (p = 0.01), β_age = −0.15 (p = 0.03), β_ECOG = −4.1 (p < 0.001). Interpret.</p>
+          <p><strong>Solution:</strong> Adjusted for age and ECOG, the new treatment is associated with 3.2 months longer survival (p = 0.01). Each additional year of age reduces survival by 0.15 months, holding treatment and ECOG constant. Each one-point increase in ECOG reduces survival by 4.1 months, holding treatment and age constant. ECOG is the strongest predictor (largest standardised coefficient).</p>
+          <p><strong>Key insight:</strong> The "adjusted for" language is crucial — these effects are independent of the other variables in the model.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="accordion">
+      <button class="accordion-btn">Checking Regression Assumptions</button>
+      <div class="accordion-panel">
+        <div class="accordion-inner">
+          <p><strong>Scenario:</strong> After fitting a linear regression, you plot residuals vs fitted values and see a funnel shape — variance increases with fitted values. What assumption is violated and what can you do?</p>
+          <p><strong>Solution:</strong> This shows <strong>heteroscedasticity</strong> — violation of the "Equal variance" (E) assumption. The variance of residuals is not constant.</p>
+          <p>Options: (1) Transform the outcome variable (log or Box-Cox transformation). (2) Use robust (sandwich) standard errors that are valid even with heteroscedasticity. (3) Use weighted least squares.</p>
+          <p><strong>Key insight:</strong> Heteroscedasticity does not bias the coefficients but inflates the standard errors, leading to invalid p-values and CIs. Robust SEs are a simple fix in most software.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════ ACTIVE RECALL ══════ -->
+    <div class="section-label"><h2>🧠 Active Recall Questions</h2><div class="section-divider"></div></div>
+
+    <ul class="recall-list">
+      <li class="recall-item"><div class="q">Q: What does r² = 0.64 mean?</div><div class="a">A: 64% of the variance in the outcome variable is explained by the predictor variable(s). The correlation r = √0.64 = 0.8.</div></li>
+      <li class="recall-item"><div class="q">Q: What are the four LINE assumptions of linear regression?</div><div class="a">A: Linearity, Independence, Normality (of residuals), Equal variance (homoscedasticity).</div></li>
+      <li class="recall-item"><div class="q">Q: What is multicollinearity and how is it detected?</div><div class="a">A: When predictors are highly correlated. Detected by VIF (Variance Inflation Factor). VIF > 5 moderate, VIF > 10 serious.</div></li>
+      <li class="recall-item"><div class="q">Q: What is the difference between R² and adjusted R²?</div><div class="a">A: R² always increases when you add predictors. Adjusted R² penalises for adding useless predictors, allowing fair comparison between models with different numbers of predictors.</div></li>
+      <li class="recall-item"><div class="q">Q: Can regression prove causation?</div><div class="a">A: No. Regression can show association and adjust for measured confounders, but cannot prove causation. Unmeasured confounders, reverse causation, and selection bias may still produce spurious associations.</div></li>
+    </ul>
+
+    <!-- ══════ GLOSSARY ══════ -->
+    <div class="glossary-panel">
+      <h3>📖 Glossary</h3>
+      <div class="glossary-grid">
+        <div class="glossary-item"><div class="term">Pearson r</div><div class="def">Linear correlation coefficient. Range −1 to +1.</div></div>
+        <div class="glossary-item"><div class="term">Coefficient of determination (R²)</div><div class="def">Variance in y explained by x. r² for simple, R² for multiple regression.</div></div>
+        <div class="glossary-item"><div class="term">Least squares</div><div class="def">Method estimating β by minimising sum of squared residuals.</div></div>
+        <div class="glossary-item"><div class="term">Residual</div><div class="def">Difference between observed and predicted y value.</div></div>
+        <div class="glossary-item"><div class="term">β (beta coefficient)</div><div class="def">Change in y per unit change in x, holding other variables constant.</div></div>
+        <div class="glossary-item"><div class="term">Adjusted R²</div><div class="def">R² penalised for number of predictors. For model comparison.</div></div>
+        <div class="glossary-item"><div class="term">VIF</div><div class="def">Variance Inflation Factor. Detects multicollinearity. VIF > 10 serious.</div></div>
+        <div class="glossary-item"><div class="term">Homoscedasticity</div><div class="def">Constant variance of residuals across fitted values. LINE assumption.</div></div>
+        <div class="glossary-item"><div class="term">Interaction</div><div class="def">Effect of x₁ depends on level of x₂. Moderation effect.</div></div>
+        <div class="glossary-item"><div class="term">Centering</div><div class="def">Subtracting the mean from predictors before creating interaction terms.</div></div>
+      </div>
+    </div>
+
+  </div><!-- /content -->
+
+  <footer class="footer">
+    <div class="footer-inner">
+      <div>© 2025 FRCR 1 Study Hub</div>
+      <div class="footer-right">For educational use only · Not for clinical decisions</div>
+    </div>
+  </footer>
+
+  <script src="js/radbio.js"></script>
+</body>
+</html>

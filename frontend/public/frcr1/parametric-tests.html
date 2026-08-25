@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Parametric Tests — t-tests & ANOVA | Medical Statistics | FRCR 1</title>
+  <link rel="stylesheet" href="css/medstat.css">
+</head>
+<body>
+  <nav class="navbar">
+    <div class="navbar-logo">
+      <span class="logo-main">FRCR 1</span>
+      <span class="logo-sub">· <a href="../FRCR1.html">Hub</a> · <a href="index.html">Medical Statistics</a> · Parametric Tests</span>
+    </div>
+    <div class="navbar-badge">📊 Chapter 4</div>
+  </nav>
+
+  <div class="breadcrumb">
+    <a href="../FRCR1.html">Home</a><span class="sep">›</span>
+    <a href="index.html">Medical Statistics</a><span class="sep">›</span>
+    <span>Parametric Tests — t-tests & ANOVA</span>
+  </div>
+
+  <section class="hero" style="padding:32px 24px 20px;">
+    <div class="hero-inner">
+      <h1 style="font-size:1.8rem;">Parametric Tests — t-tests & ANOVA</h1>
+      <p>One-sample, independent and paired t-tests; one-way and two-way ANOVA; assumptions, post-hoc tests, and interpretation — GCSE to FRCR level.</p>
+    </div>
+  </section>
+
+  <div class="content">
+
+    <!-- ══════ TABS ══════ -->
+    <div class="tab-container">
+      <button class="tab active" data-tab="gcse">GCSE Level</button>
+      <button class="tab" data-tab="frcr">FRCR Level</button>
+      <button class="tab" data-tab="keyfacts">Key Facts</button>
+      <button class="tab" data-tab="clinical">Clinical Relevance</button>
+    </div>
+
+    <div class="tab-contents">
+
+      <!-- GCSE TAB -->
+      <div class="tab-content active" id="tab-gcse">
+        <div class="info-card">
+          <h3>Comparing Groups — The Basic Idea</h3>
+          <p>In medical research, we often want to compare groups. Did the treatment group do better than the control group? Is the new drug more effective than the standard treatment?</p>
+          <p><strong>t-test</strong>: Used to compare the means of two groups. For example, comparing blood pressure between a drug group and a placebo group.</p>
+          <p><strong>Paired t-test</strong>: Used when the same subjects are measured twice (before and after treatment). Each subject acts as their own control.</p>
+          <p><strong>ANOVA</strong>: Used to compare means of three or more groups. For example, comparing tumour shrinkage across three treatment regimens.</p>
+        </div>
+
+        <div class="info-card">
+          <h3>When to Use Which Test</h3>
+          <ul>
+            <li><strong>Two groups, independent</strong> (e.g., drug vs placebo, different patients) → Independent t-test.</li>
+            <li><strong>Two groups, paired</strong> (e.g., before vs after in same patients) → Paired t-test.</li>
+            <li><strong>Three+ groups</strong> (e.g., low dose, high dose, placebo) → ANOVA.</li>
+          </ul>
+          <p>All these tests assume the data is approximately <strong>normally distributed</strong> and the groups have <strong>similar variability</strong>.</p>
+          <!-- Test selection flowchart -->
+          <div class="figure-container">
+            <svg viewBox="0 0 540 310" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:540px;display:block;margin:0 auto;">
+              <defs><marker id="ts-arr" markerWidth="7" markerHeight="7" refX="3.5" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 Z" fill="#475569"/></marker></defs>
+              <text x="270" y="14" text-anchor="middle" font-size="12" font-weight="700" fill="#1e293b">Statistical Test Selection — Continuous Outcome</text>
+              <!-- Start -->
+              <rect x="190" y="22" width="160" height="30" rx="8" fill="#1e293b"/>
+              <text x="270" y="42" text-anchor="middle" font-size="9.5" font-weight="700" fill="white">Continuous outcome variable?</text>
+              <!-- Arrow down -->
+              <line x1="270" y1="52" x2="270" y2="70" stroke="#475569" stroke-width="1.5" marker-end="url(#ts-arr)"/>
+
+              <!-- Normal? -->
+              <polygon points="270,70 340,92 270,114 200,92" fill="#dbeafe" stroke="#3b82f6" stroke-width="1.5"/>
+              <text x="270" y="89" text-anchor="middle" font-size="9" font-weight="700" fill="#1e40af">Normal data</text>
+              <text x="270" y="101" text-anchor="middle" font-size="9" fill="#1e40af">(or n ≥ 30)?</text>
+
+              <!-- No → Non-parametric -->
+              <line x1="200" y1="92" x2="80" y2="92" stroke="#475569" stroke-width="1.5" marker-end="url(#ts-arr)"/>
+              <text x="142" y="86" text-anchor="middle" font-size="8" fill="#64748b">No / ordinal</text>
+              <rect x="10" y="78" width="70" height="28" rx="6" fill="#fef3c7" stroke="#fcd34d" stroke-width="1.5"/>
+              <text x="45" y="92" text-anchor="middle" font-size="8" font-weight="700" fill="#92400e">See Ch 5</text>
+              <text x="45" y="103" text-anchor="middle" font-size="7.5" fill="#92400e">Non-parametric</text>
+
+              <!-- Yes → How many groups? -->
+              <line x1="270" y1="114" x2="270" y2="134" stroke="#475569" stroke-width="1.5" marker-end="url(#ts-arr)"/>
+              <text x="282" y="127" font-size="8" fill="#64748b">Yes</text>
+              <polygon points="270,134 345,152 270,170 195,152" fill="#dcfce7" stroke="#10b981" stroke-width="1.5"/>
+              <text x="270" y="149" text-anchor="middle" font-size="9" font-weight="700" fill="#166534">How many</text>
+              <text x="270" y="161" text-anchor="middle" font-size="9" fill="#166534">groups?</text>
+
+              <!-- 2 groups -->
+              <line x1="195" y1="152" x2="120" y2="152" stroke="#475569" stroke-width="1.5" marker-end="url(#ts-arr)"/>
+              <text x="158" y="146" text-anchor="middle" font-size="8" fill="#64748b">2 groups</text>
+
+              <!-- Paired? -->
+              <polygon points="90,152 130,168 90,184 50,168" fill="#ede9fe" stroke="#8b5cf6" stroke-width="1.5"/>
+              <text x="90" y="165" text-anchor="middle" font-size="8.5" font-weight="700" fill="#5b21b6">Paired?</text>
+              <text x="90" y="177" text-anchor="middle" font-size="8" fill="#5b21b6">(before/after)</text>
+
+              <!-- Paired yes → Paired t -->
+              <line x1="90" y1="184" x2="90" y2="210" stroke="#475569" stroke-width="1.5" marker-end="url(#ts-arr)"/>
+              <text x="102" y="200" font-size="8" fill="#64748b">Yes</text>
+              <rect x="38" y="210" width="104" height="28" rx="6" fill="#ede9fe" stroke="#8b5cf6" stroke-width="1.5"/>
+              <text x="90" y="224" text-anchor="middle" font-size="9" font-weight="700" fill="#5b21b6">Paired t-test</text>
+              <text x="90" y="235" text-anchor="middle" font-size="7.5" fill="#5b21b6">d̄ / (sd/√n)</text>
+
+              <!-- Paired no → Equal var? -->
+              <line x1="50" y1="168" x2="22" y2="168" stroke="#475569" stroke-width="1.5"/>
+              <line x1="22" y1="168" x2="22" y2="260" stroke="#475569" stroke-width="1.5" marker-end="url(#ts-arr)"/>
+              <text x="12" y="162" font-size="8" fill="#64748b">No</text>
+              <rect x="10" y="260" width="104" height="40" rx="6" fill="#dbeafe" stroke="#3b82f6" stroke-width="1.5"/>
+              <text x="62" y="275" text-anchor="middle" font-size="8.5" font-weight="700" fill="#1e40af">Independent t-test</text>
+              <text x="62" y="287" text-anchor="middle" font-size="7.5" fill="#1e40af">Student's (equal var)</text>
+              <text x="62" y="297" text-anchor="middle" font-size="7.5" fill="#1e40af">Welch's (unequal var)</text>
+
+              <!-- 3+ groups → ANOVA -->
+              <line x1="345" y1="152" x2="410" y2="152" stroke="#475569" stroke-width="1.5" marker-end="url(#ts-arr)"/>
+              <text x="377" y="146" text-anchor="middle" font-size="8" fill="#64748b">≥3 groups</text>
+              <rect x="410" y="136" width="116" height="32" rx="6" fill="#dcfce7" stroke="#10b981" stroke-width="1.5"/>
+              <text x="468" y="151" text-anchor="middle" font-size="9" font-weight="700" fill="#065f46">One-way ANOVA</text>
+              <text x="468" y="162" text-anchor="middle" font-size="7.5" fill="#065f46">F = MSB / MSW</text>
+
+              <!-- Post-hoc -->
+              <line x1="468" y1="168" x2="468" y2="190" stroke="#475569" stroke-width="1.5" marker-end="url(#ts-arr)"/>
+              <text x="480" y="183" font-size="8" fill="#64748b">Sig.</text>
+              <rect x="410" y="190" width="116" height="32" rx="6" fill="#fef3c7" stroke="#fcd34d" stroke-width="1.5"/>
+              <text x="468" y="205" text-anchor="middle" font-size="8.5" font-weight="700" fill="#92400e">Post-hoc tests</text>
+              <text x="468" y="216" text-anchor="middle" font-size="7.5" fill="#92400e">Tukey / Bonferroni / Dunnett</text>
+
+              <!-- Check assumptions note -->
+              <rect x="200" y="250" width="240" height="52" rx="8" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1"/>
+              <text x="320" y="265" text-anchor="middle" font-size="8.5" font-weight="700" fill="#475569">Always check assumptions first:</text>
+              <text x="320" y="279" text-anchor="middle" font-size="8" fill="#64748b">• Normality (Shapiro-Wilk or Q-Q plot)</text>
+              <text x="320" y="292" text-anchor="middle" font-size="8" fill="#64748b">• Equal variances (Levene's test)</text>
+            </svg>
+            <p class="figure-caption"><strong>Figure 1:</strong> Statistical test selection flowchart for continuous outcomes. Always check normality and equal variance assumptions before selecting the parametric test version.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- FRCR TAB -->
+      <div class="tab-content" id="tab-frcr">
+        <div class="info-card">
+          <h3>One-sample t-test</h3>
+          <p><strong>Use</strong>: Compares a sample mean to a known population mean (or hypothesised value).</p>
+          <p><strong>Formula</strong>: t = (x̄ − μ₀) / (s / √n), where μ₀ is the hypothesised population mean.</p>
+          <p><strong>Degrees of freedom</strong>: df = n − 1.</p>
+          <p><strong>Example</strong>: Comparing mean tumour volume in a cohort of 25 patients to a known historical mean of 50 cm³. If x̄ = 45 cm³ and s = 15 cm³, t = (45−50) / (15/√25) = −5/3 = −1.67. For a two-tailed test with df=24, critical t at α=0.05 is ±2.064 — not significant (|t| < critical value).</p>
+          <p><strong>Assumptions</strong>: Data approximately normally distributed (or n ≥ 30). Independence of observations.</p>
+        </div>
+
+        <div class="info-card">
+          <h3>Independent (Two-sample) t-test</h3>
+          <p><strong>Use</strong>: Compares means of two independent groups.</p>
+          <p><strong>Formula</strong>: t = (x̄₁ − x̄₂) / SE(x̄₁ − x̄₂).</p>
+          <p><strong>Two forms</strong>:</p>
+          <ul>
+            <li><strong>Equal variances assumed (Student's t)</strong>: Uses pooled variance estimate. s²_pooled = [(n₁−1)s₁² + (n₂−1)s₂²] / (n₁ + n₂ − 2). Requires Levene's test to confirm equal variances.</li>
+            <li><strong>Unequal variances (Welch's t)</strong>: More robust. Does not assume equal variances. Adjusted degrees of freedom (Satterthwaite approximation). Preferred in modern practice — most statistical software defaults to Welch's t.</li>
+          </ul>
+          <p><strong>Assumptions</strong>:</p>
+          <ol>
+            <li>Independence of observations (both within and between groups).</li>
+            <li>Normality of data in each group (or n ≥ 30 per group — CLT applies to each mean).</li>
+            <li>Equal variances (if using Student's t — check with Levene's test).</li>
+          </ol>
+          <div class="warning-box">
+            <strong>⚠️ Exam Trap: Equal Variance Assumption</strong>
+            <div>If Levene's test is significant (p < 0.05), variances are unequal. Use Welch's t-test, NOT Student's t. Many FRCR questions test whether you know to check this assumption before choosing the test version.</div>
+          </div>
+        </div>
+
+        <div class="info-card">
+          <h3>Paired t-test</h3>
+          <p><strong>Use</strong>: Compares means of related observations — before/after measurements, matched pairs, or crossover designs.</p>
+          <p><strong>Formula</strong>: t = d̄ / (sd / √n), where d̄ = mean of the paired differences, sd = SD of the differences, n = number of pairs.</p>
+          <p><strong>Degrees of freedom</strong>: df = n − 1 (where n = number of pairs).</p>
+          <p><strong>Key advantage</strong>: More powerful than independent t-test because each subject acts as their own control, reducing between-subject variability. The paired t-test effectively removes the "noise" of individual differences.</p>
+          <p><strong>Assumptions</strong>: Differences (not the original values) should be approximately normally distributed. Independence between pairs (but not within pairs — they are matched by design).</p>
+        </div>
+
+        <div class="info-card">
+          <h3>One-way ANOVA</h3>
+          <p><strong>Use</strong>: Compares means of ≥ 3 independent groups. Example: comparing mean pain scores across three treatment groups (drug A, drug B, placebo).</p>
+          <p><strong>Logic</strong>: Total variation in the data is partitioned into:</p>
+          <ul>
+            <li><strong>Between-group variation (SSB)</strong>: Variation explained by group differences.</li>
+            <li><strong>Within-group variation (SSW)</strong>: Residual/error variation unexplained by group membership.</li>
+          </ul>
+          <p><strong>F-statistic</strong>: F = MSB / MSW = (SSB / dfB) / (SSW / dfW), where dfB = k−1 and dfW = N−k (k = number of groups, N = total observations).</p>
+          <p>If group means differ substantially, F is large and the p-value is small.</p>
+
+          <!-- ANOVA variance decomposition diagram -->
+          <div class="figure-container">
+            <svg viewBox="0 0 520 195" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:520px;display:block;margin:0 auto;">
+              <defs><marker id="av-arr" markerWidth="7" markerHeight="7" refX="3.5" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 Z" fill="#475569"/></marker></defs>
+
+              <!-- Title -->
+              <text x="260" y="14" text-anchor="middle" font-size="11" font-weight="700" fill="#1e293b">ANOVA — Partitioning Total Variation</text>
+
+              <!-- SST bar -->
+              <rect x="20" y="22" width="480" height="26" rx="4" fill="#1e293b"/>
+              <text x="260" y="39" text-anchor="middle" font-size="10" font-weight="700" fill="white">Total Variation — SST (Sum of Squares Total)</text>
+
+              <!-- Arrow down -->
+              <line x1="260" y1="48" x2="260" y2="62" stroke="#475569" stroke-width="1.5" marker-end="url(#av-arr)"/>
+              <text x="260" y="59" text-anchor="middle" font-size="8" fill="#64748b">ANOVA splits into</text>
+
+              <!-- SSB bar (left half) -->
+              <rect x="20" y="65" width="230" height="26" rx="4" fill="#0d9488"/>
+              <text x="135" y="77" text-anchor="middle" font-size="9" font-weight="700" fill="white">Between-group (SSB)</text>
+              <text x="135" y="88" text-anchor="middle" font-size="8" fill="#ccfbf1">explained by group differences</text>
+
+              <!-- SSW bar (right half) -->
+              <rect x="270" y="65" width="230" height="26" rx="4" fill="#ef4444"/>
+              <text x="385" y="77" text-anchor="middle" font-size="9" font-weight="700" fill="white">Within-group (SSW)</text>
+              <text x="385" y="88" text-anchor="middle" font-size="8" fill="#fee2e2">residual / error variation</text>
+
+              <!-- Group dot clusters -->
+              <!-- Group A (blue) -->
+              <text x="80" y="110" text-anchor="middle" font-size="8" font-weight="700" fill="#1d4ed8">Group A</text>
+              <circle cx="60" cy="122" r="4" fill="#3b82f6" opacity="0.8"/>
+              <circle cx="70" cy="118" r="4" fill="#3b82f6" opacity="0.8"/>
+              <circle cx="78" cy="124" r="4" fill="#3b82f6" opacity="0.8"/>
+              <circle cx="88" cy="119" r="4" fill="#3b82f6" opacity="0.8"/>
+              <circle cx="98" cy="123" r="4" fill="#3b82f6" opacity="0.8"/>
+              <!-- Group A mean line -->
+              <line x1="52" y1="121" x2="106" y2="121" stroke="#1d4ed8" stroke-width="1.5" stroke-dasharray="3,2"/>
+              <text x="108" y="125" font-size="7" fill="#1d4ed8">x̄ₐ</text>
+
+              <!-- Group B (teal) -->
+              <text x="240" y="110" text-anchor="middle" font-size="8" font-weight="700" fill="#0f766e">Group B</text>
+              <circle cx="218" cy="130" r="4" fill="#0d9488" opacity="0.8"/>
+              <circle cx="228" cy="126" r="4" fill="#0d9488" opacity="0.8"/>
+              <circle cx="238" cy="131" r="4" fill="#0d9488" opacity="0.8"/>
+              <circle cx="248" cy="127" r="4" fill="#0d9488" opacity="0.8"/>
+              <circle cx="260" cy="130" r="4" fill="#0d9488" opacity="0.8"/>
+              <!-- Group B mean line -->
+              <line x1="210" y1="129" x2="268" y2="129" stroke="#0f766e" stroke-width="1.5" stroke-dasharray="3,2"/>
+              <text x="270" y="133" font-size="7" fill="#0f766e">x̄ᵦ</text>
+
+              <!-- Group C (red) -->
+              <text x="410" y="110" text-anchor="middle" font-size="8" font-weight="700" fill="#b91c1c">Group C</text>
+              <circle cx="388" cy="138" r="4" fill="#ef4444" opacity="0.8"/>
+              <circle cx="398" cy="135" r="4" fill="#ef4444" opacity="0.8"/>
+              <circle cx="408" cy="140" r="4" fill="#ef4444" opacity="0.8"/>
+              <circle cx="418" cy="136" r="4" fill="#ef4444" opacity="0.8"/>
+              <circle cx="430" cy="139" r="4" fill="#ef4444" opacity="0.8"/>
+              <!-- Group C mean line -->
+              <line x1="380" y1="138" x2="438" y2="138" stroke="#b91c1c" stroke-width="1.5" stroke-dasharray="3,2"/>
+              <text x="440" y="142" font-size="7" fill="#b91c1c">x̄꜀</text>
+
+              <!-- Grand mean line -->
+              <line x1="20" y1="150" x2="500" y2="150" stroke="#64748b" stroke-width="1" stroke-dasharray="4,3"/>
+              <text x="260" y="147" text-anchor="middle" font-size="7.5" fill="#64748b">Grand mean (x̄)</text>
+
+              <!-- Annotation box -->
+              <rect x="20" y="158" width="480" height="30" rx="4" fill="#f0fdf4" stroke="#10b981" stroke-width="1"/>
+              <text x="260" y="171" text-anchor="middle" font-size="9" font-weight="700" fill="#065f46">F = MSB / MSW = (SSB / df꜀) / (SSW / df꜈)   where df꜀ = k−1,  df꜈ = N−k</text>
+              <text x="260" y="183" text-anchor="middle" font-size="8.5" fill="#065f46">Large F → SSB dominates → group means differ significantly → small p-value</text>
+            </svg>
+            <p class="figure-caption"><strong>Figure 2:</strong> ANOVA partitions total variation (SST) into between-group variation (SSB, explained by group membership) and within-group variation (SSW, residual error). A large F-statistic means between-group variation dominates.</p>
+          </div>
+
+          <p><strong>Assumptions</strong>:</p>
+          <ol>
+            <li>Independence of observations.</li>
+            <li>Normality of residuals (not the original data, but the residuals).</li>
+            <li>Homogeneity of variances across groups (Levene's test).</li>
+          </ol>
+          <p><strong>Post-hoc tests</strong>: If ANOVA is significant, it tells you at least one group differs — but not which ones. Post-hoc tests identify specific group differences while controlling for multiple comparisons:</p>
+          <ul>
+            <li><strong>Bonferroni</strong>: Most conservative (highest Type II error). Adjusts α by number of comparisons: α/m.</li>
+            <li><strong>Tukey HSD</strong>: Controls family-wise error rate for all pairwise comparisons. Less conservative than Bonferroni when comparing all pairs.</li>
+            <li><strong>Scheffé</strong>: Most conservative, for complex contrasts (not just pairwise comparisons).</li>
+            <li><strong>Dunnett</strong>: Compares all groups to a single control group — more powerful than Bonferroni for this specific situation.</li>
+          </ul>
+        </div>
+
+        <div class="info-card">
+          <h3>Two-way ANOVA</h3>
+          <p><strong>Use</strong>: Tests effects of two categorical factors and their interaction on a continuous outcome.</p>
+          <p><strong>Example</strong>: Effect of treatment (drug vs placebo) AND sex (male vs female) on blood pressure reduction. The <strong>interaction term</strong> tests whether the treatment effect differs between males and females.</p>
+          <p><strong>Sources of variation</strong>: Factor A, Factor B, A×B interaction, and residual error.</p>
+          <p><strong>Interpretation</strong>:</p>
+          <ul>
+            <li><strong>Main effect of A</strong>: Is there an overall difference between levels of A, averaging over B?</li>
+            <li><strong>Main effect of B</strong>: Is there an overall difference between levels of B, averaging over A?</li>
+            <li><strong>Interaction (A×B)</strong>: Does the effect of A depend on the level of B? If significant, main effects are difficult to interpret independently — report subgroup effects separately.</li>
+          </ul>
+          <p><strong>Repeated measures ANOVA</strong>: Extension of paired t-test to ≥ 3 time points or conditions. Accounts for correlation between repeated observations on the same subject. Assumption of <strong>sphericity</strong> (equal variances of differences between all pairs of time points) — checked by Mauchly's test. If violated, use Greenhouse-Geisser or Huynh-Feldt correction.</p>
+        </div>
+
+        <div class="info-card">
+          <h3>What to Do When ANOVA Assumptions Are Violated</h3>
+          <ul>
+            <li><strong>Non-normal residuals</strong>: Transform the data (log, square root) or use non-parametric alternative (Kruskal-Wallis test).</li>
+            <li><strong>Unequal variances</strong>: Use Welch's ANOVA (does not assume equal variances) or transform the data.</li>
+            <li><strong>Non-independence</strong>: Use mixed models (random effects) or repeated measures ANOVA.</li>
+          </ul>
+          <p><strong>Kruskal-Wallis test</strong>: Non-parametric alternative to one-way ANOVA. Based on ranks. Does not assume normality or equal variances. Less powerful when assumptions are met but more robust when they are violated.</p>
+        </div>
+      </div>
+
+      <!-- KEY FACTS TAB -->
+      <div class="tab-content" id="tab-keyfacts">
+        <div class="info-card">
+          <h3>Essential Exam Facts</h3>
+          <div class="key-facts-grid">
+            <div class="fact-item">One-sample t-test: compares sample mean to hypothesised population mean. df = n−1.</div>
+            <div class="fact-item">Independent t-test: two groups. Use Welch's t if variances unequal (Levene's test).</div>
+            <div class="fact-item">Paired t-test: before/after or matched pairs. More powerful than independent t-test.</div>
+            <div class="fact-item">Paired t-test analyses DIFFERENCES: t = d̄ / (sd/√n).</div>
+            <div class="fact-item">One-way ANOVA: ≥3 groups. F = MSB/MSW. Post-hoc: Tukey, Bonferroni, Dunnett.</div>
+            <div class="fact-item">Two-way ANOVA: two factors + interaction. Significant interaction → report subgroups.</div>
+            <div class="fact-item">ANOVA assumptions: independence, normality of residuals, equal variances.</div>
+            <div class="fact-item">Kruskal-Wallis: non-parametric alternative to one-way ANOVA.</div>
+            <div class="fact-item">Repeated measures ANOVA: ≥3 time points. Assumes sphericity (Mauchly's test).</div>
+            <div class="fact-item">Post-hoc tests control for multiple comparisons after significant ANOVA.</div>
+          </div>
+        </div>
+
+        <div class="warning-box">
+          <strong>⚠️ Common Exam Traps</strong>
+          <div>• Paired vs independent: if the data is paired (matched/before-after), use a PAIRED test. Using an independent test loses power and is statistically incorrect.</div>
+          <div>• ANOVA does NOT tell you which groups differ — only that at least one differs from the rest. You need post-hoc tests for pairwise comparisons.</div>
+          <div>• Equal variances (Levene's test p > 0.05) are required for Student's t and standard ANOVA. If violated, use Welch's version.</div>
+          <div>• A significant interaction in two-way ANOVA means "the effect of factor A depends on the level of factor B." Do not interpret main effects in isolation.</div>
+          <div>• Repeated measures ANOVA assumes sphericity — check Mauchly's test before reporting results.</div>
+        </div>
+      </div>
+
+      <!-- CLINICAL TAB -->
+      <div class="tab-content" id="tab-clinical">
+        <div class="clinical-box">
+          <strong>🏥 Why This Matters Clinically</strong>
+          <div>
+            <p><strong>RCT analysis</strong>: The independent t-test is the standard method for analysing continuous endpoints (blood pressure, tumour size, QoL scores) in two-arm randomised trials. The paired t-test is used for within-patient comparisons (crossover trials, before-after studies).</p>
+            <p><strong>Dose-finding studies</strong>: ANOVA with post-hoc tests is used in phase II dose-ranging studies to identify which dose level(s) differ significantly from placebo and from each other. Dunnett's test is particularly useful for comparing multiple doses to a single control.</p>
+            <p><strong>Subgroup analysis by centre</strong>: Two-way ANOVA with treatment-by-centre interaction tests whether treatment effects are consistent across centres in multicentre trials. A significant interaction would suggest the treatment works differently in different centres — important for generalisability.</p>
+            <p><strong>Critical appraisal</strong>: When reviewing a paper: (1) Did they check the normality assumption? (2) Did they use the correct version of the t-test (equal vs unequal variances)? (3) Did they do post-hoc tests after ANOVA? (4) If repeated measures were used, was sphericity checked? Common errors in published papers include using independent t-test for paired data and omitting post-hoc tests after ANOVA.</p>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /tab-contents -->
+
+    <!-- ══════ WORKED EXAMPLES ══════ -->
+    <div class="section-label"><h2>📐 Worked Examples</h2><div class="section-divider"></div></div>
+
+    <div class="accordion">
+      <button class="accordion-btn">Paired vs Independent t-test — FRCR Scenario</button>
+      <div class="accordion-panel">
+        <div class="accordion-inner">
+          <p><strong>Scenario:</strong> A crossover trial gives 20 patients both treatment A and treatment B (with washout period). Mean difference in pain score (A − B) = 2.1, SD of differences = 3.5. What test should be used? Calculate the test statistic.</p>
+          <p><strong>Solution:</strong> Paired t-test (each patient receives both treatments — observations are paired).</p>
+          <p>t = d̄ / (sd / √n) = 2.1 / (3.5 / √20) = 2.1 / 0.783 = 2.68. df = 19.</p>
+          <p>Critical t(19) for α = 0.05 (two-tailed) = 2.093. Since 2.68 > 2.093, p < 0.05.</p>
+          <p>Conclusion: Statistically significant difference in pain scores between treatments A and B.</p>
+          <p><strong>Key insight:</strong> Using an independent t-test here would be incorrect because it treats the data as 40 independent observations, ignoring the pairing. This inflates the error term (because between-subject variability is not removed) and would likely produce a non-significant result.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="accordion">
+      <button class="accordion-btn">ANOVA with Post-hoc Testing</button>
+      <div class="accordion-panel">
+        <div class="accordion-inner">
+          <p><strong>Scenario:</strong> A study compares tumour shrinkage (%, continuous) across three treatments: RT alone (n=15), chemo-RT (n=15), and chemo-RT + immunotherapy (n=15). ANOVA gives F = 5.42, p = 0.008. What do you conclude?</p>
+          <p><strong>Solution:</strong> p = 0.008 < 0.05 → at least one group differs significantly from the others. ANOVA does NOT tell which groups differ — you need <strong>post-hoc tests</strong>.</p>
+          <p>Using Tukey HSD: compare all three pairs (RT vs chemo-RT, RT vs combo, chemo-RT vs combo). The significant pair(s) will have adjusted p-values < 0.05. The Tukey test controls the family-wise error rate for all pairwise comparisons.</p>
+          <p><strong>Clinical importance:</strong> Without post-hoc tests, you cannot say whether the combination is better than chemo-RT alone, or whether both are better than RT. The ANOVA only tells you the overall model is significant.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="accordion">
+      <button class="accordion-btn">Independent t-test — Choosing the Correct Version</button>
+      <div class="accordion-panel">
+        <div class="accordion-inner">
+          <p><strong>Scenario:</strong> Two groups: group 1 (n=12, mean 8.2, SD 2.1), group 2 (n=14, mean 10.5, SD 4.3). Levene's test for equal variances gives p = 0.03. Which t-test version should you use?</p>
+          <p><strong>Solution:</strong> Since Levene's test is significant (p = 0.03 < 0.05), variances are <strong>unequal</strong> (SD 2.1² vs 4.3²). Use <strong>Welch's t-test</strong> (unequal variances), NOT Student's t. Welch's t adjusts the degrees of freedom downward (Satterthwaite approximation) to account for the variance inequality.</p>
+          <p><strong>Key insight:</strong> Many published papers incorrectly use Student's t without checking the equal variance assumption. Welch's t is robust and should be the default in modern practice.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════ ACTIVE RECALL ══════ -->
+    <div class="section-label"><h2>🧠 Active Recall Questions</h2><div class="section-divider"></div></div>
+
+    <ul class="recall-list">
+      <li class="recall-item"><div class="q">Q: What is the difference between Student's t and Welch's t?</div><div class="a">A: Student's t assumes equal variances between groups. Welch's t does not assume equal variances and adjusts df accordingly. Welch's is preferred in modern practice.</div></li>
+      <li class="recall-item"><div class="q">Q: Why is a paired t-test more powerful than an independent t-test?</div><div class="a">A: Each subject acts as their own control, removing between-subject variability from the error term. This reduces the SE and increases the chance of detecting a true difference.</div></li>
+      <li class="recall-item"><div class="q">Q: What does a significant ANOVA tell you, and what does it not tell you?</div><div class="a">A: It tells you at least one group mean differs from the others. It does NOT tell you which groups differ — you need post-hoc tests (Tukey, Bonferroni, Dunnett).</div></li>
+      <li class="recall-item"><div class="q">Q: What is an interaction in two-way ANOVA?</div><div class="a">A: The effect of one factor depends on the level of the other factor. If significant, do not interpret main effects separately — report subgroup-specific effects.</div></li>
+      <li class="recall-item"><div class="q">Q: What is sphericity in repeated measures ANOVA?</div><div class="a">A: The assumption that variances of the differences between all pairs of time points are equal. Checked by Mauchly's test. Corrected by Greenhouse-Geisser or Huynh-Feldt if violated.</div></li>
+    </ul>
+
+    <!-- ══════ GLOSSARY ══════ -->
+    <div class="glossary-panel">
+      <h3>📖 Glossary</h3>
+      <div class="glossary-grid">
+        <div class="glossary-item"><div class="term">One-sample t-test</div><div class="def">Compares sample mean to hypothesised population mean. df = n−1.</div></div>
+        <div class="glossary-item"><div class="term">Independent t-test</div><div class="def">Compares means of two independent groups. Student's (equal var) or Welch's (unequal).</div></div>
+        <div class="glossary-item"><div class="term">Paired t-test</div><div class="def">Compares means of paired observations. More powerful than independent t-test.</div></div>
+        <div class="glossary-item"><div class="term">Levene's test</div><div class="def">Tests equality of variances between groups. If p < 0.05, use Welch's t.</div></div>
+        <div class="glossary-item"><div class="term">One-way ANOVA</div><div class="def">Compares means of ≥3 groups. F = MSB/MSW.</div></div>
+        <div class="glossary-item"><div class="term">Two-way ANOVA</div><div class="def">Tests two factors and their interaction.</div></div>
+        <div class="glossary-item"><div class="term">Post-hoc test</div><div class="def">Follows significant ANOVA. Identifies which groups differ. Controls for multiple comparisons.</div></div>
+        <div class="glossary-item"><div class="term">Tukey HSD</div><div class="def">Post-hoc test for all pairwise comparisons. Controls family-wise error rate.</div></div>
+        <div class="glossary-item"><div class="term">Dunnett's test</div><div class="def">Post-hoc test comparing all groups to a single control.</div></div>
+        <div class="glossary-item"><div class="term">Repeated measures ANOVA</div><div class="def">For ≥3 time points / conditions on same subjects. Assumes sphericity.</div></div>
+        <div class="glossary-item"><div class="term">Mauchly's test</div><div class="def">Tests sphericity assumption in repeated measures ANOVA.</div></div>
+        <div class="glossary-item"><div class="term">Kruskal-Wallis</div><div class="def">Non-parametric alternative to one-way ANOVA. Rank-based.</div></div>
+      </div>
+    </div>
+
+  </div><!-- /content -->
+
+  <footer class="footer">
+    <div class="footer-inner">
+      <div>© 2025 FRCR 1 Study Hub</div>
+      <div class="footer-right">For educational use only · Not for clinical decisions</div>
+    </div>
+  </footer>
+
+  <script src="js/radbio.js"></script>
+</body>
+</html>

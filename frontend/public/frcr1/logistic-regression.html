@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Logistic Regression — Medical Statistics | FRCR 1</title>
+  <link rel="stylesheet" href="css/medstat.css">
+</head>
+<body>
+  <nav class="navbar">
+    <div class="navbar-logo">
+      <span class="logo-main">FRCR 1</span>
+      <span class="logo-sub">· <a href="../FRCR1.html">Hub</a> · <a href="index.html">Medical Statistics</a> · Logistic Regression</span>
+    </div>
+    <div class="navbar-badge">📊 Chapter 7</div>
+  </nav>
+
+  <div class="breadcrumb">
+    <a href="../FRCR1.html">Home</a><span class="sep">›</span>
+    <a href="index.html">Medical Statistics</a><span class="sep">›</span>
+    <span>Logistic Regression</span>
+  </div>
+
+  <section class="hero" style="padding:32px 24px 20px;">
+    <div class="hero-inner">
+      <h1 style="font-size:1.8rem;">Logistic Regression</h1>
+      <p>Binary, multinomial and ordinal logistic regression; odds ratios; maximum likelihood estimation; goodness-of-fit; model comparison — GCSE to FRCR level.</p>
+    </div>
+  </section>
+
+  <div class="content">
+
+    <!-- ══════ TABS ══════ -->
+    <div class="tab-container">
+      <button class="tab active" data-tab="gcse">GCSE Level</button>
+      <button class="tab" data-tab="frcr">FRCR Level</button>
+      <button class="tab" data-tab="keyfacts">Key Facts</button>
+      <button class="tab" data-tab="clinical">Clinical Relevance</button>
+    </div>
+
+    <div class="tab-contents">
+
+      <!-- GCSE TAB -->
+      <div class="tab-content active" id="tab-gcse">
+        <div class="info-card">
+          <h3>What is Logistic Regression?</h3>
+          <p>Logistic regression is used when the outcome variable is <strong>binary</strong> (yes/no, alive/dead, recurrence/no recurrence). Unlike linear regression which predicts a continuous number, logistic regression predicts the <strong>probability</strong> of an event occurring.</p>
+          <p><strong>Example</strong>: Can we predict whether a patient will have a tumour recurrence (yes/no) based on radiation dose, age, and tumour stage?</p>
+          <p><strong>Key idea</strong>: Instead of predicting "yes" or "no" directly, logistic regression predicts the <strong>log-odds</strong> of the event, then converts this back to a probability. This keeps the prediction between 0 and 1 (valid for probabilities).</p>
+
+          <!-- Sigmoid function diagram -->
+          <div class="figure-container">
+            <svg viewBox="0 0 520 215" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:520px;display:block;margin:0 auto;">
+              <defs><marker id="sig-arr" markerWidth="7" markerHeight="7" refX="3.5" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 Z" fill="#475569"/></marker></defs>
+              <!-- Title -->
+              <text x="185" y="14" text-anchor="middle" font-size="11" font-weight="700" fill="#1e293b">Logistic Function — Converting Log-odds to Probability</text>
+
+              <!-- Axes -->
+              <line x1="40" y1="170" x2="330" y2="170" stroke="#475569" stroke-width="1.5" marker-end="url(#sig-arr)"/>
+              <line x1="40" y1="175" x2="40" y2="20" stroke="#475569" stroke-width="1.5" marker-end="url(#sig-arr)"/>
+              <!-- x-axis labels -->
+              <text x="40" y="183" text-anchor="middle" font-size="7.5" fill="#64748b">−6</text>
+              <text x="88" y="183" text-anchor="middle" font-size="7.5" fill="#64748b">−4</text>
+              <text x="136" y="183" text-anchor="middle" font-size="7.5" fill="#64748b">−2</text>
+              <text x="184" y="183" text-anchor="middle" font-size="7.5" fill="#64748b">0</text>
+              <text x="232" y="183" text-anchor="middle" font-size="7.5" fill="#64748b">+2</text>
+              <text x="280" y="183" text-anchor="middle" font-size="7.5" fill="#64748b">+4</text>
+              <text x="185" y="195" text-anchor="middle" font-size="9" fill="#64748b">Log-odds (β₀ + β₁x₁ + ...)</text>
+              <!-- y-axis labels -->
+              <text x="32" y="173" text-anchor="end" font-size="7.5" fill="#64748b">0</text>
+              <text x="32" y="130" text-anchor="end" font-size="7.5" fill="#64748b">0.5</text>
+              <text x="32" y="28" text-anchor="end" font-size="7.5" fill="#64748b">1.0</text>
+              <text x="14" y="100" text-anchor="middle" font-size="9" fill="#64748b" transform="rotate(-90,14,100)">Probability p</text>
+
+              <!-- Sigmoid curve: p = 1/(1+e^-x). x in range -6 to 6, mapped to SVG x=40..330 (24px per unit), y: 0→170, 1→28 (range 142px) -->
+              <!-- Key points: x=-6→p≈0.002, x=-4→p≈0.018, x=-2→p≈0.12, x=0→p=0.5, x=2→p=0.88, x=4→p=0.982, x=6→p=0.998 -->
+              <!-- SVG x = 40 + (logodds+6)*24; SVG y = 170 - p*142 -->
+              <path d="M40,169.7 C55,169 70,165 90,158 C108,151 120,143 136,123 C152,103 165,88 184,87 C203,86 216,103 232,123 C248,143 260,151 278,158 C298,165 313,169 328,169.7"
+                    fill="none" stroke="#3b82f6" stroke-width="2.5"/>
+
+              <!-- Dashed lines at x=0, p=0.5 -->
+              <line x1="184" y1="170" x2="184" y2="87" stroke="#64748b" stroke-width="1" stroke-dasharray="4,3"/>
+              <line x1="40" y1="87" x2="184" y2="87" stroke="#64748b" stroke-width="1" stroke-dasharray="4,3"/>
+              <circle cx="184" cy="87" r="4" fill="#3b82f6"/>
+              <text x="190" y="83" font-size="7.5" fill="#475569">log-odds=0, p=0.5</text>
+
+              <!-- Annotations -->
+              <text x="52" y="158" font-size="8" fill="#64748b">p → 0</text>
+              <text x="285" y="158" font-size="8" fill="#64748b">p → 1</text>
+
+              <!-- Comparison boxes -->
+              <rect x="340" y="20" width="170" height="185" rx="6" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1"/>
+              <text x="425" y="35" text-anchor="middle" font-size="9" font-weight="700" fill="#1e293b">Linear vs Logistic</text>
+              <rect x="348" y="42" width="154" height="50" rx="4" fill="#eff6ff" stroke="#3b82f6" stroke-width="1"/>
+              <text x="425" y="55" text-anchor="middle" font-size="8.5" font-weight="700" fill="#1d4ed8">Linear Regression</text>
+              <text x="425" y="68" text-anchor="middle" font-size="8" fill="#1e40af">y = β₀ + β₁x</text>
+              <text x="425" y="80" text-anchor="middle" font-size="7.5" fill="#ef4444">Range: −∞ to +∞ ✗</text>
+              <rect x="348" y="100" width="154" height="50" rx="4" fill="#f0fdf4" stroke="#10b981" stroke-width="1"/>
+              <text x="425" y="113" text-anchor="middle" font-size="8.5" font-weight="700" fill="#065f46">Logistic Regression</text>
+              <text x="425" y="126" text-anchor="middle" font-size="7.5" fill="#065f46">p = 1/(1+e^(−Xβ))</text>
+              <text x="425" y="138" text-anchor="middle" font-size="7.5" fill="#10b981">Range: 0 to 1 ✓</text>
+              <text x="425" y="158" text-anchor="middle" font-size="8.5" font-weight="700" fill="#0f766e">OR = exp(β₁)</text>
+              <text x="425" y="170" text-anchor="middle" font-size="8" fill="#475569">β₁=1 → OR=e¹=2.72</text>
+              <text x="425" y="182" text-anchor="middle" font-size="8" fill="#475569">odds doubles per</text>
+              <text x="425" y="194" text-anchor="middle" font-size="8" fill="#475569">unit ↑ in x</text>
+            </svg>
+            <p class="figure-caption"><strong>Figure 1:</strong> The logistic (sigmoid) function maps any log-odds value to a probability between 0 and 1. At log-odds = 0, p = 0.5. The OR = exp(β₁) gives the multiplicative change in odds per unit increase in the predictor.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- FRCR TAB -->
+      <div class="tab-content" id="tab-frcr">
+        <div class="info-card">
+          <h3>Logistic Regression Model — Full Detail</h3>
+          <p><strong>Model equation</strong> (predicting log-odds of outcome):</p>
+          <p style="text-align:center;font-size:1.05rem;font-weight:600;color:#1e293b;margin:10px 0;">log(p / (1−p)) = β₀ + β₁x₁ + β₂x₂ + ... + βₖxₖ</p>
+          <p>where p = P(Y = 1 | X), the probability of the outcome given the predictors.</p>
+          <p><strong>Converting log-odds to probability</strong>: p = exp(β₀ + β₁x₁ + ...) / (1 + exp(β₀ + β₁x₁ + ...))</p>
+          <p><strong>Odds Ratio (OR)</strong> = exp(βᵢ). The multiplicative change in odds of the outcome per unit increase in predictor xᵢ, adjusted for other predictors.</p>
+          <ul>
+            <li>OR = 1: no association.</li>
+            <li>OR > 1: predictor increases odds of outcome (risk factor).</li>
+            <li>OR < 1: predictor decreases odds of outcome (protective factor).</li>
+          </ul>
+          <p><strong>Example interpretation</strong>: If β_smoking = 1.5, then OR = exp(1.5) = 4.48. Smokers have 4.48 times the odds of lung cancer compared to non-smokers, <strong>adjusted for other predictors in the model</strong>.</p>
+          <div class="warning-box">
+            <strong>⚠️ Exam Trap: OR vs RR</strong>
+            <div>Logistic regression gives ODDS ratios, not risk ratios. When the outcome is common (>10%), OR is larger than RR. Many researchers mistakenly interpret OR as RR — this is a common error in the literature. For rare outcomes (<10%), OR ≈ RR.</div>
+          </div>
+
+          <!-- OR interpretation visual -->
+          <div class="figure-container">
+            <svg viewBox="0 0 520 130" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:520px;display:block;margin:0 auto;">
+              <!-- Title -->
+              <text x="260" y="14" text-anchor="middle" font-size="11" font-weight="700" fill="#1e293b">Odds Ratio (OR) — Visual Interpretation</text>
+
+              <!-- Number line -->
+              <line x1="30" y1="75" x2="490" y2="75" stroke="#cbd5e1" stroke-width="2"/>
+              <!-- Tick marks -->
+              <line x1="30" y1="70" x2="30" y2="80" stroke="#94a3b8" stroke-width="1.5"/>
+              <text x="30" y="90" text-anchor="middle" font-size="8" fill="#64748b">0</text>
+              <line x1="110" y1="70" x2="110" y2="80" stroke="#94a3b8" stroke-width="1.5"/>
+              <text x="110" y="90" text-anchor="middle" font-size="8" fill="#64748b">0.5</text>
+              <line x1="190" y1="70" x2="190" y2="80" stroke="#94a3b8" stroke-width="1.5"/>
+              <text x="190" y="90" text-anchor="middle" font-size="8" fill="#64748b">1.0</text>
+              <line x1="270" y1="70" x2="270" y2="80" stroke="#94a3b8" stroke-width="1.5"/>
+              <text x="270" y="90" text-anchor="middle" font-size="8" fill="#64748b">1.5</text>
+              <line x1="350" y1="70" x2="350" y2="80" stroke="#94a3b8" stroke-width="1.5"/>
+              <text x="350" y="90" text-anchor="middle" font-size="8" fill="#64748b">2.0</text>
+              <line x1="430" y1="70" x2="430" y2="80" stroke="#94a3b8" stroke-width="1.5"/>
+              <text x="430" y="90" text-anchor="middle" font-size="8" fill="#64748b">2.5</text>
+
+              <!-- Null line at OR=1 (x=190) -->
+              <line x1="190" y1="22" x2="190" y2="95" stroke="#475569" stroke-width="1.5" stroke-dasharray="4,3"/>
+              <text x="190" y="105" text-anchor="middle" font-size="8" font-weight="700" fill="#475569">Null (no effect)</text>
+
+              <!-- OR = 0.4: x = 30 + 0.4*160 = 94 -->
+              <rect x="30" y="55" width="64" height="10" rx="2" fill="#10b981" opacity="0.8"/>
+              <circle cx="94" cy="60" r="5" fill="#10b981"/>
+              <text x="30" y="42" font-size="8.5" font-weight="700" fill="#065f46">OR = 0.40 — Protective (60% lower odds)</text>
+              <line x1="94" y1="50" x2="94" y2="53" stroke="#10b981" stroke-width="1"/>
+
+              <!-- OR = 1.0: x = 190, dot only -->
+              <!-- already shown as null line -->
+
+              <!-- OR = 2.5: x = 30 + 2.5*160 = 430 -->
+              <rect x="190" y="62" width="240" height="10" rx="2" fill="#ef4444" opacity="0.8"/>
+              <circle cx="430" cy="67" r="5" fill="#ef4444"/>
+              <text x="430" y="42" text-anchor="middle" font-size="8.5" font-weight="700" fill="#b91c1c">OR = 2.50 — Risk factor (2.5× higher odds)</text>
+              <line x1="430" y1="50" x2="430" y2="60" stroke="#ef4444" stroke-width="1"/>
+
+              <!-- Grey dot at OR=1 -->
+              <circle cx="190" cy="75" r="5" fill="#94a3b8"/>
+
+              <!-- Note -->
+              <rect x="30" y="110" width="460" height="16" rx="3" fill="#fef3c7" stroke="#f59e0b" stroke-width="1"/>
+              <text x="260" y="121" text-anchor="middle" font-size="8.5" fill="#92400e">95% CI including 1 → not statistically significant (p &gt; 0.05). If CI entirely &lt;1 or &gt;1 → significant.</text>
+            </svg>
+            <p class="figure-caption"><strong>Figure 2:</strong> Odds ratio interpretation. OR &lt; 1 = protective, OR = 1 = no association, OR &gt; 1 = increased odds. If the 95% CI crosses 1, the result is not statistically significant.</p>
+          </div>
+        </div>
+
+        <div class="info-card">
+          <h3>Maximum Likelihood Estimation (MLE)</h3>
+          <p>Unlike linear regression which uses <strong>least squares</strong> (minimising sum of squared residuals), logistic regression uses <strong>maximum likelihood estimation</strong>.</p>
+          <p><strong>How MLE works</strong>: The computer searches for the β values that maximise the <strong>likelihood</strong> — the probability of observing the data given the model. The likelihood function is: L(β) = Π p(xᵢ)^yᵢ × (1−p(xᵢ))^(1−yᵢ).</p>
+          <p>In practice, we maximise the <strong>log-likelihood</strong> (easier computationally). Iterative algorithms (Newton-Raphson, Fisher scoring) are used because there is no closed-form solution.</p>
+          <p><strong>Why not least squares?</strong> The response is binary (0 or 1), so residuals are not normally distributed and variance is not constant. MLE handles these properties naturally.</p>
+        </div>
+
+        <div class="info-card">
+          <h3>Goodness-of-Fit for Logistic Regression</h3>
+          <p>R² in linear regression cannot be directly applied. Instead, we use <strong>pseudo-R²</strong> measures:</p>
+          <ul>
+            <li><strong>McFadden's R²</strong> = 1 − (logL_model / logL_null). Typically 0.2–0.4 indicates excellent fit (much lower than linear R²).</li>
+            <li><strong>Nagelkerke's R²</strong>: Scaled to range 0–1. More familiar interpretation but still not directly comparable to linear R².</li>
+          </ul>
+          <p><strong>Hosmer-Lemeshow test</strong>: Groups observations by predicted probability, then tests whether observed vs expected event rates differ within groups. A significant test (p < 0.05) indicates poor fit. However, it is sensitive to sample size — may detect trivial misfit in large samples.</p>
+          <p><strong>Model comparison</strong>:</p>
+          <ul>
+            <li><strong>AIC (Akaike Information Criterion)</strong>: −2logL + 2k (k = number of parameters). Lower AIC = better fit, penalising complexity. Used for model selection.</li>
+            <li><strong>BIC (Bayesian Information Criterion)</strong>: −2logL + k×ln(n). Penalises complexity more than AIC. Prefers simpler models.</li>
+            <li><strong>Likelihood ratio test</strong>: Compares nested models. LR = −2(logL_reduced − logL_full). Follows χ² distribution with df = difference in number of parameters.</li>
+          </ul>
+        </div>
+
+        <div class="info-card">
+          <h3>Key Differences from Linear Regression</h3>
+          <table style="width:100%;border-collapse:collapse;margin:10px 0;font-size:0.85rem;">
+            <thead>
+              <tr style="background:#f1f5f9;">
+                <th style="padding:8px 12px;border:1px solid #e2e8f0;text-align:left;">Feature</th>
+                <th style="padding:8px 12px;border:1px solid #e2e8f0;text-align:left;">Linear Regression</th>
+                <th style="padding:8px 12px;border:1px solid #e2e8f0;text-align:left;">Logistic Regression</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td style="padding:6px 12px;border:1px solid #e2e8f0;">Outcome</td><td style="padding:6px 12px;border:1px solid #e2e8f0;">Continuous</td><td style="padding:6px 12px;border:1px solid #e2e8f0;">Binary (0/1)</td></tr>
+              <tr><td style="padding:6px 12px;border:1px solid #e2e8f0;">Estimation</td><td style="padding:6px 12px;border:1px solid #e2e8f0;">Least squares</td><td style="padding:6px 12px;border:1px solid #e2e8f0;">Maximum likelihood</td></tr>
+              <tr><td style="padding:6px 12px;border:1px solid #e2e8f0;">Normality assumption</td><td style="padding:6px 12px;border:1px solid #e2e8f0;">Residuals ~ N</td><td style="padding:6px 12px;border:1px solid #e2e8f0;">None</td></tr>
+              <tr><td style="padding:6px 12px;border:1px solid #e2e8f0;">Homoscedasticity</td><td style="padding:6px 12px;border:1px solid #e2e8f0;">Required</td><td style="padding:6px 12px;border:1px solid #e2e8f0;">Not required</td></tr>
+              <tr><td style="padding:6px 12px;border:1px solid #e2e8f0;">Coefficient</td><td style="padding:6px 12px;border:1px solid #e2e8f0;">β (change in y)</td><td style="padding:6px 12px;border:1px solid #e2e8f0;">exp(β) = OR</td></tr>
+              <tr><td style="padding:6px 12px;border:1px solid #e2e8f0;">Goodness-of-fit</td><td style="padding:6px 12px;border:1px solid #e2e8f0;">R², adjusted R²</td><td style="padding:6px 12px;border:1px solid #e2e8f0;">Pseudo-R², AIC, BIC, Hosmer-Lemeshow</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="info-card">
+          <h3>Multinomial & Ordinal Logistic Regression</h3>
+          <p><strong>Multinomial logistic regression</strong>: For outcomes with > 2 <strong>unordered</strong> categories (e.g., tumour response: CR, PR, SD, PD). One category is chosen as the reference, and separate log-odds equations are estimated for each other category vs the reference.</p>
+          <p><strong>Ordinal logistic regression</strong>: For > 2 <strong>ordered</strong> categories (e.g., ECOG 0, 1, 2, 3). Uses the <strong>proportional odds assumption</strong>: the effect of each predictor is assumed to be the same across all thresholds (e.g., the OR for being in a higher ECOG category vs a lower one is constant regardless of which threshold you consider).</p>
+          <p><strong>Checking proportional odds</strong>: Brant test (or likelihood ratio test comparing constrained vs unconstrained model). If violated (p < 0.05), use multinomial logistic regression (which does not assume proportional odds) or partial proportional odds models.</p>
+        </div>
+
+        <div class="info-card">
+          <h3>Sample Size for Logistic Regression</h3>
+          <p><strong>Rule of thumb</strong>: Minimum 10 events per predictor variable (EPV). The "event" is the less frequent outcome category. If you have 50 events and 30 non-events, the event count is 50 — you can support ~5 predictors.</p>
+          <p>Low EPV leads to <strong>overfitting</strong>, inflated coefficients, and poor generalisability. Some simulation studies suggest EPV ≥ 20 for reliable estimation.</p>
+        </div>
+      </div>
+
+      <!-- KEY FACTS TAB -->
+      <div class="tab-content" id="tab-keyfacts">
+        <div class="info-card">
+          <h3>Essential Exam Facts</h3>
+          <div class="key-facts-grid">
+            <div class="fact-item">Logistic regression: binary outcome. Models log-odds of event.</div>
+            <div class="fact-item">OR = exp(β). Multiplicative change in odds per unit increase in predictor.</div>
+            <div class="fact-item">OR is adjusted for all other predictors in the model.</div>
+            <div class="fact-item">Maximum likelihood estimation (MLE) — not least squares.</div>
+            <div class="fact-item">No normality assumption. No homoscedasticity assumption.</div>
+            <div class="fact-item">Pseudo-R²: McFadden's, Nagelkerke's. Much lower than linear R².</div>
+            <div class="fact-item">Hosmer-Lemeshow test: tests goodness-of-fit. Significant = poor fit.</div>
+            <div class="fact-item">AIC/BIC for model comparison. Lower = better fit, penalising complexity.</div>
+            <div class="fact-item">Multinomial: >2 unordered categories. Ordinal: >2 ordered categories.</div>
+            <div class="fact-item">Proportional odds assumption for ordinal logistic regression.</div>
+            <div class="fact-item">10 events per predictor variable (EPV) minimum.</div>
+          </div>
+        </div>
+
+        <div class="warning-box">
+          <strong>⚠️ Common Exam Traps</strong>
+          <div>• Logistic regression gives OR, NOT RR. OR > RR when outcome is common (>10%).</div>
+          <div>• The coefficients are log-odds — you must exponentiate them to get OR.</div>
+          <div>• Pseudo-R² values are NOT comparable to linear R². A "good" pseudo-R² may be 0.2–0.4.</div>
+          <div>• The proportional odds assumption must be checked for ordinal logistic regression.</div>
+          <div>• Inadequate EPV leads to overfitting — coefficients may be unreliable.</div>
+          <div>• "Adjusted OR" means the OR controls for other variables — important for confounder control.</div>
+        </div>
+      </div>
+
+      <!-- CLINICAL TAB -->
+      <div class="tab-content" id="tab-clinical">
+        <div class="clinical-box">
+          <strong>🏥 Why This Matters Clinically</strong>
+          <div>
+            <p><strong>Risk factor identification</strong>: Logistic regression is the standard method for identifying independent risk factors for binary outcomes (post-operative complications, tumour recurrence, treatment response). A multivariable model can show which factors are independently predictive after controlling for confounders.</p>
+            <p><strong>Prognostic models in oncology</strong>: The TNM staging system and many prognostic indices are derived from logistic regression or Cox regression. Understanding how adjusted ORs are computed is essential for interpreting published prognostic models.</p>
+            <p><strong>Propensity score analysis</strong>: Logistic regression is used to estimate propensity scores — the probability of receiving treatment given baseline covariates. This is a key method for reducing confounding in observational studies.</p>
+            <p><strong>Critical appraisal</strong>: When reading a paper using logistic regression: (1) Did they check the EPV rule? (2) Did they report pseudo-R²? (3) Did they do a Hosmer-Lemeshow test? (4) Did they interpret ORs correctly (not as RR)? (5) Did they check the proportional odds assumption for ordinal outcomes? (6) Did they report AIC/BIC for model comparison?</p>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /tab-contents -->
+
+    <!-- ══════ WORKED EXAMPLES ══════ -->
+    <div class="section-label"><h2>📐 Worked Examples</h2><div class="section-divider"></div></div>
+
+    <div class="accordion">
+      <button class="accordion-btn">Interpreting Logistic Regression Output</button>
+      <div class="accordion-panel">
+        <div class="accordion-inner">
+          <p><strong>Scenario:</strong> A logistic regression models tumour recurrence (yes/no) on dose (Gy), age (years), and smoking (0/1). Output: β_dose = −0.05 (p = 0.02), β_age = 0.02 (p = 0.30), β_smoking = 1.2 (p = 0.004). Interpret.</p>
+          <p><strong>Solution:</strong> For dose: OR = exp(−0.05) = 0.95 per Gy. Each additional Gy reduces the odds of recurrence by 5% (95% CI would show if this is clinically meaningful), adjusted for age and smoking. Significant (p = 0.02).</p>
+          <p>For age: OR = exp(0.02) = 1.02 per year. Not significant (p = 0.30) — insufficient evidence that age affects recurrence after adjusting for dose and smoking.</p>
+          <p>For smoking: OR = exp(1.2) = 3.32. Smokers have 3.32 times the odds of recurrence compared to non-smokers, adjusted for dose and age. Significant (p = 0.004).</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="accordion">
+      <button class="accordion-btn">Sample Size — Events Per Variable</button>
+      <div class="accordion-panel">
+        <div class="accordion-inner">
+          <p><strong>Scenario:</strong> A study plans to include 6 predictors in a logistic regression model predicting post-operative mortality. The anticipated event rate is 15%. How many patients are needed?</p>
+          <p><strong>Solution:</strong> Minimum 10 events per predictor → 6 × 10 = 60 events needed. With 15% event rate: n = 60 / 0.15 = 400 patients.</p>
+          <p>For more reliable estimates (EPV ≥ 20): 6 × 20 = 120 events. n = 120 / 0.15 = 800 patients.</p>
+          <p><strong>Key insight:</strong> The sample size calculation depends on the number of EVENTS, not the total sample size. A study with 400 patients but only 30 events (7.5% rate) and 6 predictors has EPV = 5 — inadequate.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════ ACTIVE RECALL ══════ -->
+    <div class="section-label"><h2>🧠 Active Recall Questions</h2><div class="section-divider"></div></div>
+
+    <ul class="recall-list">
+      <li class="recall-item"><div class="q">Q: What does logistic regression model?</div><div class="a">A: The log-odds of a binary outcome. log(p/(1-p)) = β₀ + β₁x₁ + ... The OR = exp(β) gives multiplicative change in odds.</div></li>
+      <li class="recall-item"><div class="q">Q: How does estimation differ between linear and logistic regression?</div><div class="a">A: Linear regression uses least squares. Logistic regression uses maximum likelihood estimation (MLE) because the outcome is binary.</div></li>
+      <li class="recall-item"><div class="q">Q: What is the 10 EPV rule?</div><div class="a">A: Minimum 10 events per predictor variable in logistic regression. Inadequate EPV leads to overfitting and unreliable coefficients.</div></li>
+      <li class="recall-item"><div class="q">Q: What is the proportional odds assumption?</div><div class="a">A: In ordinal logistic regression, the effect of each predictor is the same across all thresholds. Checked by Brant test. If violated, use multinomial logistic regression.</div></li>
+      <li class="recall-item"><div class="q">Q: Compare AIC and BIC.</div><div class="a">A: Both are model fit metrics that penalise complexity. AIC = −2logL + 2k. BIC = −2logL + k×ln(n). BIC penalises complexity more heavily. Lower values = better fit.</div></li>
+    </ul>
+
+    <!-- ══════ GLOSSARY ══════ -->
+    <div class="glossary-panel">
+      <h3>📖 Glossary</h3>
+      <div class="glossary-grid">
+        <div class="glossary-item"><div class="term">Logistic regression</div><div class="def">Regression for binary outcomes. Models log-odds. MLE estimation.</div></div>
+        <div class="glossary-item"><div class="term">Odds Ratio (OR)</div><div class="def">exp(β). Multiplicative change in odds per unit x. Adjusted for other predictors.</div></div>
+        <div class="glossary-item"><div class="term">Maximum Likelihood (MLE)</div><div class="def">Finds β that maximise probability of observed data. Used in logistic regression.</div></div>
+        <div class="glossary-item"><div class="term">Log-likelihood</div><div class="def">Log of the likelihood function. Maximised during model fitting.</div></div>
+        <div class="glossary-item"><div class="term">Pseudo-R²</div><div class="def">Goodness-of-fit for logistic regression. McFadden's, Nagelkerke's.</div></div>
+        <div class="glossary-item"><div class="term">Hosmer-Lemeshow</div><div class="def">Test of goodness-of-fit. Groups by predicted probability. p < 0.05 = poor fit.</div></div>
+        <div class="glossary-item"><div class="term">AIC</div><div class="def">Akaike Information Criterion. −2logL + 2k. Lower = better.</div></div>
+        <div class="glossary-item"><div class="term">BIC</div><div class="def">Bayesian Information Criterion. −2logL + k×ln(n). Penalises complexity more than AIC.</div></div>
+        <div class="glossary-item"><div class="term">Multinomial logistic</div><div class="def">For >2 unordered categories (CR, PR, SD, PD). One reference category.</div></div>
+        <div class="glossary-item"><div class="term">Ordinal logistic</div><div class="def">For >2 ordered categories. Assumes proportional odds.</div></div>
+        <div class="glossary-item"><div class="term">Proportional odds</div><div class="def">Assumption: predictor effects are same across all thresholds in ordinal regression.</div></div>
+        <div class="glossary-item"><div class="term">Events per variable</div><div class="def">EPV. Minimum 10 events per predictor for reliable logistic regression.</div></div>
+      </div>
+    </div>
+
+  </div><!-- /content -->
+
+  <footer class="footer">
+    <div class="footer-inner">
+      <div>© 2025 FRCR 1 Study Hub</div>
+      <div class="footer-right">For educational use only · Not for clinical decisions</div>
+    </div>
+  </footer>
+
+  <script src="js/radbio.js"></script>
+</body>
+</html>

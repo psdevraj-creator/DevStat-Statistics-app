@@ -1,0 +1,10 @@
+@import url("../../assets/frcr.css");
+:root {
+  --accent: #d97706;
+  --accent-strong: #b45309;
+  --accent-soft: #fffbeb;
+  --accent-border: #fde68a;
+  --accent-glow-a: rgba(217,119,6, 0.07);
+  --accent-glow-b: rgba(217,119,6, 0.05);
+  --accent-shadow: rgba(217,119,6, 0.3);
+}

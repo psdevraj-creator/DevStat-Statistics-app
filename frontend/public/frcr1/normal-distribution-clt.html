@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Normal Distribution & CLT — Medical Statistics | FRCR 1</title>
+  <link rel="stylesheet" href="css/medstat.css">
+</head>
+<body>
+  <nav class="navbar">
+    <div class="navbar-logo">
+      <span class="logo-main">FRCR 1</span>
+      <span class="logo-sub">· <a href="../FRCR1.html">Hub</a> · <a href="index.html">Medical Statistics</a> · Normal Distribution & CLT</span>
+    </div>
+    <div class="navbar-badge">📊 Chapter 2</div>
+  </nav>
+
+  <div class="breadcrumb">
+    <a href="../FRCR1.html">Home</a><span class="sep">›</span>
+    <a href="index.html">Medical Statistics</a><span class="sep">›</span>
+    <span>Normal Distribution & Central Limit Theorem</span>
+  </div>
+
+  <section class="hero" style="padding:32px 24px 20px;">
+    <div class="hero-inner">
+      <h1 style="font-size:1.8rem;">Normal Distribution & Central Limit Theorem</h1>
+      <p>The normal distribution, z-scores, standard error, and the central limit theorem — the foundation of parametric statistics.</p>
+    </div>
+  </section>
+
+  <div class="content">
+
+    <!-- ══════ TABS ══════ -->
+    <div class="tab-container">
+      <button class="tab active" data-tab="gcse">GCSE Level</button>
+      <button class="tab" data-tab="frcr">FRCR Level</button>
+      <button class="tab" data-tab="keyfacts">Key Facts</button>
+      <button class="tab" data-tab="clinical">Clinical Relevance</button>
+    </div>
+
+    <div class="tab-contents">
+
+      <!-- GCSE TAB -->
+      <div class="tab-content active" id="tab-gcse">
+        <div class="info-card">
+          <h3>The Normal Distribution</h3>
+          <p>Many biological measurements follow a bell-shaped curve called the <strong>normal (Gaussian) distribution</strong>. Key features:</p>
+          <ul>
+            <li>Symmetric about the mean.</li>
+            <li>Mean = median = mode (all at the centre).</li>
+            <li>68% of values lie within ±1 SD of the mean.</li>
+            <li>95% of values lie within ±1.96 SD (~2 SD) of the mean.</li>
+            <li>99.7% of values lie within ±3 SD of the mean.</li>
+          </ul>
+          <p><strong>Standard Normal Distribution</strong>: A normal distribution with mean = 0 and SD = 1. We convert any normal distribution to this using the z-score: <strong>z = (x − μ) / σ</strong>. The z-score tells you how many SDs a value is from the mean.</p>
+          <div class="figure-container">
+            <svg viewBox="0 0 560 200" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:560px;display:block;margin:0 auto;">
+              <text x="280" y="18" text-anchor="middle" font-size="13" font-weight="700" fill="#1e293b">The Normal Distribution — Percentage of Values Within SDs</text>
+              <!-- Bell curve (simplified) -->
+              <path d="M20,170 Q60,170 100,160 Q140,140 180,110 Q220,70 260,50 Q280,40 280,40 Q280,40 300,50 Q340,70 380,110 Q420,140 460,160 Q500,170 540,170" stroke="#3b82f6" stroke-width="2.5" fill="none"/>
+              <!-- Baseline -->
+              <line x1="20" y1="170" x2="540" y2="170" stroke="#cbd5e1" stroke-width="1"/>
+              <!-- SD markers -->
+              <line x1="280" y1="170" x2="280" y2="178" stroke="#64748b" stroke-width="1.5"/>
+              <text x="280" y="190" text-anchor="middle" font-size="10" fill="#64748b">μ</text>
+              <!-- −1 SD -->
+              <line x1="219" y1="164" x2="219" y2="178" stroke="#64748b" stroke-width="1"/>
+              <text x="219" y="190" text-anchor="middle" font-size="9" fill="#64748b">−1σ</text>
+              <!-- +1 SD -->
+              <line x1="341" y1="164" x2="341" y2="178" stroke="#64748b" stroke-width="1"/>
+              <text x="341" y="190" text-anchor="middle" font-size="9" fill="#64748b">+1σ</text>
+              <!-- −1.96 SD -->
+              <line x1="160" y1="148" x2="160" y2="178" stroke="#94a3b8" stroke-width="1" stroke-dasharray="3,2"/>
+              <text x="160" y="190" text-anchor="middle" font-size="9" fill="#64748b">−1.96σ</text>
+              <!-- +1.96 SD -->
+              <line x1="400" y1="148" x2="400" y2="178" stroke="#94a3b8" stroke-width="1" stroke-dasharray="3,2"/>
+              <text x="400" y="190" text-anchor="middle" font-size="9" fill="#64748b">+1.96σ</text>
+              <!-- 68% label -->
+              <path d="M219,90 Q250,75 280,75 Q310,75 341,90" stroke="#10b981" stroke-width="1.5" fill="none" stroke-dasharray="3,2"/>
+              <text x="280" y="70" text-anchor="middle" font-size="11" font-weight="700" fill="#065f46">68%</text>
+              <!-- 95% label -->
+              <path d="M160,115 Q220,95 280,95 Q340,95 400,115" stroke="#3b82f6" stroke-width="1.5" fill="none" stroke-dasharray="3,2"/>
+              <text x="280" y="92" text-anchor="middle" font-size="11" font-weight="700" fill="#1e40af">95%</text>
+              <!-- 99.7% label -->
+              <path d="M100,135 Q190,115 280,115 Q370,115 460,135" stroke="#8b5cf6" stroke-width="1.5" fill="none" stroke-dasharray="3,2"/>
+              <text x="280" y="110" text-anchor="middle" font-size="11" font-weight="700" fill="#5b21b6">99.7%</text>
+            </svg>
+            <p class="figure-caption"><strong>Figure 1:</strong> The normal distribution showing the percentage of values within 1, 1.96, and 3 standard deviations of the mean.</p>
+          </div>
+        </div>
+
+        <div class="info-card">
+          <h3>Empirical Rule (68-95-99.7 Rule)</h3>
+          <p>For any normally distributed dataset:</p>
+          <ul>
+            <li>~68% of data falls within 1 SD of the mean.</li>
+            <li>~95% of data falls within 2 SD (actually 1.96) of the mean.</li>
+            <li>~99.7% of data falls within 3 SD of the mean.</li>
+          </ul>
+          <p>This rule allows you to quickly estimate whether a value is unusual. For example, if mean height = 170 cm and SD = 10 cm, then a person 200 cm tall (3 SD above the mean) is in the top 0.15% of the population.</p>
+        </div>
+      </div>
+
+      <!-- FRCR TAB -->
+      <div class="tab-content" id="tab-frcr">
+        <div class="info-card">
+          <h3>Normal (Gaussian) Distribution — Formal Definition</h3>
+          <p>The normal distribution is defined by two parameters: N(μ, σ²). The probability density function is:</p>
+          <p style="text-align:center;font-size:1.1rem;font-weight:600;color:#1e293b;margin:12px 0;">f(x) = (1 / σ√(2π)) × exp(−(x − μ)² / (2σ²))</p>
+          <p><strong>Properties</strong>:</p>
+          <ul>
+            <li>Domain: −∞ to +∞ (theoretical — but practical values lie within ±3 SD).</li>
+            <li>Total area under the curve = 1.</li>
+            <li>Inflection points at μ ± σ.</li>
+            <li>Median, mode, and mean are equal.</li>
+            <li>The distribution is fully described by μ and σ² — no third or fourth parameters needed.</li>
+          </ul>
+          <p><strong>Standard Normal (Z) distribution</strong>: N(0, 1). Convert using z = (x − μ) / σ.</p>
+          <p><strong>Key z-values to memorise for FRCR</strong>:</p>
+          <ul>
+            <li>z = 1.645 → 90% of values (two-tailed). One-tailed 95%.</li>
+            <li>z = 1.96 → 95% of values (two-tailed). This is the most important z-value for 95% CIs.</li>
+            <li>z = 2.58 → 99% of values (two-tailed).</li>
+            <li>z = 3.29 → 99.9% of values (two-tailed).</li>
+          </ul>
+        </div>
+
+        <div class="info-card">
+          <h3>Central Limit Theorem (CLT)</h3>
+          <p>The <strong>Central Limit Theorem</strong> is arguably the most important theorem in statistics for medical research. It states:</p>
+          <p style="background:#dbeafe;padding:14px 18px;border-radius:10px;margin:10px 0;font-weight:600;color:#1e40af;">The sampling distribution of the sample mean approaches a normal distribution as sample size (n) increases, regardless of the underlying population distribution.</p>
+          <p><strong>What this means in practice</strong>:</p>
+          <ul>
+            <li>Even if the original data is skewed (e.g., survival times, PSA levels), the <strong>mean of many samples</strong> will be approximately normally distributed.</li>
+            <li>This justifies using parametric tests (t-test, ANOVA) for n ≥ 30 even when the data is non-normal.</li>
+            <li>The approximation improves as n increases. For n = 30, the approximation is usually adequate. For n = 100, it is very good.</li>
+            <li>For n < 30, the data itself should be approximately normal for parametric tests to be valid.</li>
+          </ul>
+          <p><strong>Mathematical form</strong>: If X₁, X₂, ..., Xₙ are independent random variables from a distribution with mean μ and variance σ², then:</p>
+          <p style="text-align:center;font-size:1rem;font-weight:600;color:#1e293b;margin:10px 0;">X̄ ~ N(μ, σ²/n) as n → ∞</p>
+          <p>This means: the mean of the sample means = μ (unbiased). The variance of the sample means = σ²/n (smaller for larger samples).</p>
+          <!-- CLT illustration -->
+          <div class="figure-container">
+            <svg viewBox="0 0 540 195" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:540px;display:block;margin:0 auto;">
+              <defs><marker id="clt-arr" markerWidth="7" markerHeight="7" refX="3.5" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 Z" fill="#475569"/></marker></defs>
+              <text x="270" y="14" text-anchor="middle" font-size="12" font-weight="700" fill="#1e293b">Central Limit Theorem — How It Works</text>
+              <!-- Panel 1: Original skewed population -->
+              <rect x="10" y="22" width="140" height="130" rx="8" fill="#fef3c7" stroke="#fcd34d" stroke-width="1.5"/>
+              <text x="80" y="38" text-anchor="middle" font-size="9" font-weight="700" fill="#92400e">Population Distribution</text>
+              <text x="80" y="50" text-anchor="middle" font-size="8" fill="#92400e">(right-skewed, e.g. survival)</text>
+              <!-- Skewed curve -->
+              <path d="M22,135 Q32,135 42,120 Q52,100 62,78 Q72,60 82,55 Q92,58 102,75 Q115,100 128,120 Q138,132 148,135" stroke="#f59e0b" stroke-width="2.5" fill="none"/>
+              <line x1="22" y1="136" x2="148" y2="136" stroke="#e2e8f0" stroke-width="1"/>
+              <text x="80" y="157" text-anchor="middle" font-size="8" fill="#92400e">μ (any shape)</text>
+              <text x="80" y="145" text-anchor="middle" font-size="7" fill="#92400e">Individual values</text>
+
+              <!-- Arrow 1 -->
+              <line x1="155" y1="88" x2="190" y2="88" stroke="#475569" stroke-width="1.5" marker-end="url(#clt-arr)"/>
+              <text x="172" y="82" text-anchor="middle" font-size="7.5" fill="#64748b">Take many</text>
+              <text x="172" y="93" text-anchor="middle" font-size="7.5" fill="#64748b">samples n≥30</text>
+
+              <!-- Panel 2: Many sample means -->
+              <rect x="195" y="22" width="140" height="130" rx="8" fill="#dbeafe" stroke="#93c5fd" stroke-width="1.5"/>
+              <text x="265" y="38" text-anchor="middle" font-size="9" font-weight="700" fill="#1e40af">Sample Means</text>
+              <text x="265" y="50" text-anchor="middle" font-size="8" fill="#1e40af">(calculate x̄ for each)</text>
+              <!-- Dots representing sample means -->
+              <circle cx="228" cy="120" r="3" fill="#3b82f6" opacity="0.7"/>
+              <circle cx="242" cy="100" r="3" fill="#3b82f6" opacity="0.7"/>
+              <circle cx="252" cy="85" r="3" fill="#3b82f6" opacity="0.7"/>
+              <circle cx="265" cy="76" r="3" fill="#3b82f6" opacity="0.7"/>
+              <circle cx="275" cy="82" r="3" fill="#3b82f6" opacity="0.7"/>
+              <circle cx="283" cy="92" r="3" fill="#3b82f6" opacity="0.7"/>
+              <circle cx="295" cy="108" r="3" fill="#3b82f6" opacity="0.7"/>
+              <circle cx="308" cy="122" r="3" fill="#3b82f6" opacity="0.7"/>
+              <circle cx="240" cy="112" r="3" fill="#3b82f6" opacity="0.7"/>
+              <circle cx="258" cy="90" r="3" fill="#3b82f6" opacity="0.7"/>
+              <circle cx="270" cy="79" r="3" fill="#3b82f6" opacity="0.7"/>
+              <circle cx="288" cy="98" r="3" fill="#3b82f6" opacity="0.7"/>
+              <circle cx="300" cy="116" r="3" fill="#3b82f6" opacity="0.7"/>
+              <line x1="207" y1="136" x2="328" y2="136" stroke="#e2e8f0" stroke-width="1"/>
+              <text x="265" y="157" text-anchor="middle" font-size="8" fill="#1e40af">Distribution of x̄</text>
+              <text x="265" y="145" text-anchor="middle" font-size="7" fill="#1e40af">Many samples, each size n</text>
+
+              <!-- Arrow 2 -->
+              <line x1="340" y1="88" x2="375" y2="88" stroke="#475569" stroke-width="1.5" marker-end="url(#clt-arr)"/>
+              <text x="357" y="82" text-anchor="middle" font-size="7.5" fill="#64748b">Forms a</text>
+              <text x="357" y="93" text-anchor="middle" font-size="7.5" fill="#64748b">bell curve</text>
+
+              <!-- Panel 3: Normal sampling distribution -->
+              <rect x="380" y="22" width="148" height="130" rx="8" fill="#dcfce7" stroke="#86efac" stroke-width="1.5"/>
+              <text x="454" y="38" text-anchor="middle" font-size="9" font-weight="700" fill="#166534">Sampling Distribution</text>
+              <text x="454" y="50" text-anchor="middle" font-size="8" fill="#166534">(approximately normal)</text>
+              <path d="M392,136 Q404,136 416,126 Q428,110 440,88 Q450,70 456,62 Q462,70 468,88 Q480,110 492,126 Q504,136 520,136" stroke="#10b981" stroke-width="2.5" fill="none"/>
+              <line x1="392" y1="137" x2="520" y2="137" stroke="#e2e8f0" stroke-width="1"/>
+              <line x1="456" y1="62" x2="456" y2="137" stroke="#1e293b" stroke-width="1.5" stroke-dasharray="3,2"/>
+              <text x="456" y="150" text-anchor="middle" font-size="8" fill="#166534">μ, SD = σ/√n</text>
+              <text x="454" y="162" text-anchor="middle" font-size="7" fill="#166534">~N(μ, σ²/n)</text>
+              <!-- SEM annotation -->
+              <line x1="415" y1="175" x2="497" y2="175" stroke="#10b981" stroke-width="1.5" marker-start="url(#clt-arr)" marker-end="url(#clt-arr)"/>
+              <text x="456" y="188" text-anchor="middle" font-size="7.5" fill="#10b981" font-weight="700">Width = SEM = σ/√n</text>
+            </svg>
+            <p class="figure-caption"><strong>Figure 2:</strong> The Central Limit Theorem. Even if the original population is skewed, the distribution of sample means (the sampling distribution) approaches a normal distribution as n increases. The spread of this normal distribution is the Standard Error of the Mean (SEM = σ/√n).</p>
+          </div>
+        </div>
+
+        <div class="info-card">
+          <h3>Standard Error of the Mean (SEM)</h3>
+          <p><strong>SEM</strong> = σ / √n (population) or s / √n (sample estimate).</p>
+          <p>The SEM measures how precisely the sample mean estimates the population mean. It is the <strong>standard deviation of the sampling distribution of the mean</strong>.</p>
+          <p><strong>Key relationships</strong>:</p>
+          <ul>
+            <li>SEM is always smaller than SD (because √n > 1 for n > 1).</li>
+            <li>SEM decreases as n increases — larger samples give more precise estimates.</li>
+            <li>SEM decreases as variability (σ) decreases — more homogeneous populations give more precise estimates.</li>
+            <li>To halve the SEM, you need to quadruple the sample size (because SEM = σ/√n).</li>
+          </ul>
+          <div class="warning-box">
+            <strong>⚠️ Exam Trap: SD vs SEM</strong>
+            <div>SD describes spread of individual observations (used for descriptive statistics of the sample). SEM describes precision of the mean estimate (used for confidence intervals). They are NOT interchangeable. In the FRCR exam, if a question asks for "variability of individual measurements," the answer is SD, not SEM.</div>
+          </div>
+          <!-- SD vs SEM visual -->
+          <div class="figure-container">
+            <svg viewBox="0 0 520 160" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:520px;display:block;margin:0 auto;">
+              <text x="260" y="14" text-anchor="middle" font-size="12" font-weight="700" fill="#1e293b">SD vs SEM — What Each Describes</text>
+              <!-- Left panel: SD -->
+              <rect x="10" y="22" width="230" height="125" rx="10" fill="#fef3c7" stroke="#fcd34d" stroke-width="1.5"/>
+              <text x="125" y="40" text-anchor="middle" font-size="10" font-weight="700" fill="#92400e">Standard Deviation (SD)</text>
+              <!-- Wide bell for individual values -->
+              <path d="M22,120 Q40,120 58,105 Q76,85 94,68 Q110,55 125,52 Q140,55 156,68 Q174,85 192,105 Q210,120 228,120" stroke="#f59e0b" stroke-width="2.5" fill="none"/>
+              <line x1="22" y1="121" x2="228" y2="121" stroke="#e2e8f0" stroke-width="1"/>
+              <line x1="125" y1="52" x2="125" y2="121" stroke="#1e293b" stroke-width="1.5" stroke-dasharray="3,2"/>
+              <!-- SD bracket -->
+              <line x1="88" y1="108" x2="162" y2="108" stroke="#ef4444" stroke-width="2"/>
+              <line x1="88" y1="104" x2="88" y2="112" stroke="#ef4444" stroke-width="2"/>
+              <line x1="162" y1="104" x2="162" y2="112" stroke="#ef4444" stroke-width="2"/>
+              <text x="125" y="138" text-anchor="middle" font-size="9" fill="#ef4444" font-weight="700">±1 SD (wide)</text>
+              <text x="125" y="142" text-anchor="middle" font-size="0" fill="none"/>
+              <text x="125" y="138" text-anchor="middle" font-size="9" fill="#ef4444" font-weight="700">±1 SD</text>
+              <text x="125" y="150" text-anchor="middle" font-size="8" fill="#92400e">Spread of individual patients</text>
+
+              <!-- Right panel: SEM -->
+              <rect x="280" y="22" width="230" height="125" rx="10" fill="#dbeafe" stroke="#93c5fd" stroke-width="1.5"/>
+              <text x="395" y="40" text-anchor="middle" font-size="10" font-weight="700" fill="#1e40af">Standard Error of Mean (SEM)</text>
+              <!-- Narrow bell for sample means -->
+              <path d="M292,120 Q310,120 328,112 Q346,98 364,80 Q378,66 395,62 Q412,66 426,80 Q444,98 462,112 Q480,120 498,120" stroke="#3b82f6" stroke-width="2.5" fill="none"/>
+              <line x1="292" y1="121" x2="498" y2="121" stroke="#e2e8f0" stroke-width="1"/>
+              <line x1="395" y1="62" x2="395" y2="121" stroke="#1e293b" stroke-width="1.5" stroke-dasharray="3,2"/>
+              <!-- SEM bracket (narrower) -->
+              <line x1="370" y1="108" x2="420" y2="108" stroke="#3b82f6" stroke-width="2"/>
+              <line x1="370" y1="104" x2="370" y2="112" stroke="#3b82f6" stroke-width="2"/>
+              <line x1="420" y1="104" x2="420" y2="112" stroke="#3b82f6" stroke-width="2"/>
+              <text x="395" y="138" text-anchor="middle" font-size="9" fill="#3b82f6" font-weight="700">±1 SEM (narrow)</text>
+              <text x="395" y="150" text-anchor="middle" font-size="8" fill="#1e40af">Precision of the mean estimate</text>
+
+              <!-- Formula -->
+              <text x="260" y="158" text-anchor="middle" font-size="9" fill="#475569" font-weight="600">SEM = SD / √n — always smaller than SD. Halve SEM: need 4× more patients.</text>
+            </svg>
+            <p class="figure-caption"><strong>Figure 3:</strong> SD describes spread of individual observations (wide bell). SEM = SD/√n describes how precisely the sample mean estimates the population mean (narrower bell, shrinks with larger n).</p>
+          </div>
+        </div>
+
+        <div class="info-card">
+          <h3>Checking Normality — How to Assess</h3>
+          <p>Before using parametric tests, you need to check whether the data is approximately normally distributed. Methods include:</p>
+          <p><strong>Visual methods</strong>:</p>
+          <ul>
+            <li><strong>Histogram</strong>: Look for symmetric bell shape. Skew or multiple peaks suggest non-normality.</li>
+            <li><strong>Q-Q plot (Quantile-Quantile plot)</strong>: Plot sample quantiles against theoretical normal quantiles. Points should lie approximately on the diagonal line. Systematic deviations (curvature, S-shape) indicate non-normality.</li>
+            <li><strong>Box plot</strong>: Look for symmetry around the median and presence of outliers.</li>
+          </ul>
+          <p><strong>Statistical tests</strong> (formal but may be oversensitive with large n):</p>
+          <ul>
+            <li><strong>Shapiro-Wilk test</strong>: Best for n < 50. Tests H₀: data is normally distributed. Small p-value → reject normality.</li>
+            <li><strong>Kolmogorov-Smirnov test</strong>: Can be used for larger samples but less powerful than Shapiro-Wilk.</li>
+            <li><strong>D'Agostino-Pearson test</strong>: Tests both skewness and kurtosis simultaneously.</li>
+          </ul>
+          <p><strong>Practical rule</strong>: For FRCR purposes, histograms + Q-Q plots are usually sufficient. Formal tests are overly sensitive for large n (may detect trivial deviations) and underpowered for small n (fail to detect important deviations).</p>
+        </div>
+
+        <div class="info-card">
+          <h3>Transformations for Non-Normal Data</h3>
+          <p>When data is non-normal, you have options:</p>
+          <ul>
+            <li><strong>Log transformation</strong>: y = ln(x). Used for right-skewed data (survival times, biomarker levels). After transformation, data may become approximately normal.</li>
+            <li><strong>Square root transformation</strong>: y = √x. Used for count data (number of metastases).</li>
+            <li><strong>Box-Cox transformation</strong>: A family of power transformations (y = x^λ − 1 / λ for λ ≠ 0, y = ln(x) for λ = 0). The optimal λ is estimated from the data.</li>
+            <li><strong>Non-parametric tests</strong>: If transformation fails, use the non-parametric alternative (Mann-Whitney instead of t-test, Spearman instead of Pearson).</li>
+          </ul>
+          <p><strong>Important</strong>: When you log-transform data for analysis, report results on the original scale by exponentiating back (geometric mean, ratio of geometric means). The geometric mean is always ≤ the arithmetic mean for positively skewed data.</p>
+        </div>
+      </div>
+
+      <!-- KEY FACTS TAB -->
+      <div class="tab-content" id="tab-keyfacts">
+        <div class="info-card">
+          <h3>Essential Exam Facts</h3>
+          <div class="key-facts-grid">
+            <div class="fact-item">Normal distribution: N(μ, σ²). Symmetric, bell-shaped.</div>
+            <div class="fact-item">68% within ±1σ, 95% within ±1.96σ, 99.7% within ±3σ of mean.</div>
+            <div class="fact-item">z = (x − μ)/σ. z = 1.96 gives two-tailed 95% range.</div>
+            <div class="fact-item">CLT: sample mean ~ N(μ, σ²/n) as n → ∞, regardless of underlying distribution.</div>
+            <div class="fact-item">SEM = σ/√n. SEM < SD. SEM decreases as n increases.</div>
+            <div class="fact-item">To halve SEM, quadruple the sample size.</div>
+            <div class="fact-item">SD = spread of observations. SEM = precision of mean estimate.</div>
+            <div class="fact-item">CLT justifies parametric tests for n ≥ 30 even with non-normal data.</div>
+            <div class="fact-item">Log transformation: for right-skewed data. Geometric mean after back-transform.</div>
+            <div class="fact-item">Shapiro-Wilk: formal test of normality. Q-Q plot: visual check.</div>
+          </div>
+        </div>
+
+        <div class="warning-box">
+          <strong>⚠️ Common Exam Traps</strong>
+          <div>• SEM is NOT the standard deviation of the sample — it is the SD of the sampling distribution of the mean.</div>
+          <div>• The CLT applies to the SAMPLE MEAN, not to the original data. The original data can be highly non-normal.</div>
+          <div>• z = 1.96 gives the 95% RANGE (two-tailed). For a one-tailed 95% CI, z = 1.645.</div>
+          <div>• The normal distribution is theoretical — real data is never perfectly normal, only approximately so.</div>
+          <div>• For n < 30, the CLT provides weak protection — check normality of the original data before using parametric tests.</div>
+        </div>
+      </div>
+
+      <!-- CLINICAL TAB -->
+      <div class="tab-content" id="tab-clinical">
+        <div class="clinical-box">
+          <strong>🏥 Why This Matters Clinically</strong>
+          <div>
+            <p><strong>Reference ranges</strong>: Clinical reference ranges (e.g., normal creatinine 60–110 μmol/L) are typically calculated as mean ± 1.96 SD from a healthy population. This assumes the biomarker is normally distributed. If it is skewed (like PSA), reference ranges use percentiles directly.</p>
+            <p><strong>Understanding SEM in trial reports</strong>: When a trial reports "mean survival improved by 3.2 months (SEM 1.1)," the SEM tells you about precision. A smaller SEM (from a larger sample or less variable endpoint) gives more confidence in the estimate. Always check whether the paper reports SD or SEM — they convey different information.</p>
+            <p><strong>Sample size and precision</strong>: The relationship SEM = σ/√n explains why underpowered studies produce imprecise estimates. A study with n = 25 has SEM twice as large as a study with n = 100 — meaning the CI will be twice as wide and the result less informative.</p>
+            <p><strong>Log transformation of biomarkers</strong>: Many clinical biomarkers (PSA, CRP, viral load) are log-normally distributed. When analysing these, researchers should log-transform before using parametric tests. Reporting the geometric mean is more clinically meaningful than the arithmetic mean for such data.</p>
+            <p><strong>Critically appraising normality claims</strong>: When reading a paper, look for: (1) Did they check normality? (2) What method did they use (visual or formal)? (3) For small n (<30), did they verify the normality assumption or use a non-parametric alternative? Many published papers use parametric tests without checking assumptions — this can lead to invalid conclusions.</p>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /tab-contents -->
+
+    <!-- ══════ WORKED EXAMPLES ══════ -->
+    <div class="section-label"><h2>📐 Worked Examples</h2><div class="section-divider"></div></div>
+
+    <div class="accordion">
+      <button class="accordion-btn">Calculating z-scores and Percentiles</button>
+      <div class="accordion-panel">
+        <div class="accordion-inner">
+          <p><strong>Scenario:</strong> Mean creatinine in a healthy population = 85 μmol/L, SD = 15 μmol/L. A patient has creatinine = 120 μmol/L. What is the z-score? What percentage of healthy people have creatinine below this level?</p>
+          <p><strong>Solution:</strong> z = (120 − 85) / 15 = 35/15 = 2.33. From z-table: z = 2.33 corresponds to the 99.0th percentile. So ~99% of healthy people have creatinine below 120 μmol/L, and ~1% have values above this.</p>
+          <p><strong>Clinical interpretation:</strong> A creatinine of 120 is well above normal (z > 1.96), suggesting possible renal impairment — but only 1% of healthy people would have this value, so specificity for disease depends on the clinical context.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="accordion">
+      <button class="accordion-btn">SEM Calculation and Interpretation</button>
+      <div class="accordion-panel">
+        <div class="accordion-inner">
+          <p><strong>Scenario:</strong> A study measures blood pressure in 64 patients. Mean SBP = 135 mmHg, SD = 20 mmHg. Calculate SEM and 95% CI for the mean.</p>
+          <p><strong>Solution:</strong> SEM = 20/√64 = 20/8 = 2.5 mmHg. 95% CI = 135 ± 1.96 × 2.5 = 135 ± 4.9 = (130.1, 139.9) mmHg.</p>
+          <p><strong>Interpretation:</strong> We are 95% confident the true population mean SBP lies between 130.1 and 139.9 mmHg. If the study had only 16 patients (SEM = 20/4 = 5 mmHg), the CI would be ±9.8 — almost twice as wide, giving a much less precise estimate.</p>
+          <p><strong>Key insight:</strong> The sample size has a square-root relationship with precision. Quadrupling n halves the SEM and narrows the CI by half.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="accordion">
+      <button class="accordion-btn">CLT in Action — Skewed Data Example</button>
+      <div class="accordion-panel">
+        <div class="accordion-inner">
+          <p><strong>Scenario:</strong> Hospital stay durations follow a right-skewed distribution (median 4 days, range 1–60 days). You take 100 random samples of n = 40 each and calculate the mean of each sample. What shape will the distribution of these sample means have?</p>
+          <p><strong>Solution:</strong> The distribution of sample means will be approximately <strong>normally distributed</strong> (by the CLT) with mean ≈ population mean (about 5.5 days given the skew) and SD ≈ population SD / √40.</p>
+          <p><strong>Clinical importance:</strong> This is why we can use a t-test to compare mean hospital stays between two groups, even though the individual stay durations are highly skewed — as long as each group has at least 30 patients. The CLT ensures the sample means are approximately normal.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════ ACTIVE RECALL ══════ -->
+    <div class="section-label"><h2>🧠 Active Recall Questions</h2><div class="section-divider"></div></div>
+
+    <ul class="recall-list">
+      <li class="recall-item"><div class="q">Q: State the Central Limit Theorem in your own words.</div><div class="a">A: The sampling distribution of the sample mean approaches a normal distribution as sample size increases, regardless of the shape of the underlying population distribution.</div></li>
+      <li class="recall-item"><div class="q">Q: What is the difference between SD and SEM?</div><div class="a">A: SD describes spread of individual observations around the mean. SEM = SD/√n describes how precisely the sample mean estimates the population mean. SEM is always ≤ SD.</div></li>
+      <li class="recall-item"><div class="q">Q: What z-value corresponds to a two-tailed 95% confidence interval?</div><div class="a">A: z = 1.96. This means 95% of values in a standard normal distribution lie between −1.96 and +1.96.</div></li>
+      <li class="recall-item"><div class="q">Q: How does sample size affect the SEM?</div><div class="a">A: SEM = σ/√n. Larger n gives smaller SEM. To halve the SEM, you need to quadruple n.</div></li>
+      <li class="recall-item"><div class="q">Q: What is a Q-Q plot and what does it assess?</div><div class="a">A: A Q-Q plot (quantile-quantile plot) compares sample quantiles to theoretical normal quantiles. Points should lie on the diagonal line if the data is normally distributed. Systematic deviations suggest non-normality.</div></li>
+    </ul>
+
+    <!-- ══════ GLOSSARY ══════ -->
+    <div class="glossary-panel">
+      <h3>📖 Glossary</h3>
+      <div class="glossary-grid">
+        <div class="glossary-item"><div class="term">Normal distribution</div><div class="def">Symmetric, bell-shaped distribution defined by μ and σ².</div></div>
+        <div class="glossary-item"><div class="term">Standard Normal (Z)</div><div class="def">N(0, 1). Obtained by z = (x−μ)/σ.</div></div>
+        <div class="glossary-item"><div class="term">z-score</div><div class="def">Number of standard deviations a value is from the mean.</div></div>
+        <div class="glossary-item"><div class="term">Central Limit Theorem</div><div class="def">Sample mean ~ N(μ, σ²/n) as n→∞, for any underlying distribution.</div></div>
+        <div class="glossary-item"><div class="term">Standard Error (SEM)</div><div class="def">σ/√n. Precision of the sample mean estimate.</div></div>
+        <div class="glossary-item"><div class="term">Sampling distribution</div><div class="def">Distribution of a statistic (e.g., mean) across many samples.</div></div>
+        <div class="glossary-item"><div class="term">Q-Q plot</div><div class="def">Plot of sample quantiles vs theoretical normal quantiles. Tests normality.</div></div>
+        <div class="glossary-item"><div class="term">Shapiro-Wilk test</div><div class="def">Formal statistical test for normality. Best for n < 50.</div></div>
+        <div class="glossary-item"><div class="term">Log transformation</div><div class="def">y = ln(x). Used to normalise right-skewed data.</div></div>
+        <div class="glossary-item"><div class="term">Geometric mean</div><div class="def">Back-transformed mean of log-transformed data. ≤ arithmetic mean for skewed data.</div></div>
+      </div>
+    </div>
+
+  </div><!-- /content -->
+
+  <footer class="footer">
+    <div class="footer-inner">
+      <div>© 2025 FRCR 1 Study Hub</div>
+      <div class="footer-right">For educational use only · Not for clinical decisions</div>
+    </div>
+  </footer>
+
+  <script src="js/radbio.js"></script>
+</body>
+</html>

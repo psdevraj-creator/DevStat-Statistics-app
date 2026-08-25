@@ -24,8 +24,9 @@ export function getToken(): string | null {
   }
 }
 
-// Stable per-machine/device id (persisted) so the 3-use free trial is a
-// LIFETIME limit per machine — not reset every time the web app is opened.
+// Stable per-machine/device id, sent on every request. Together with the
+// client IP this forms the machine+IP identity used for the free-tier gate
+// (bound to the physical machine/address, NOT the session).
 export function getDeviceId(): string {
   const KEY = 'devstat_device_id'
   try {
@@ -40,18 +41,54 @@ export function getDeviceId(): string {
   }
 }
 
+// App mode: 'exam' (default) or 'live'. Live/confidential mode makes the backend
+// hold data only in memory for a calculation and never persist it.
+export function getMode(): string {
+  try { return localStorage.getItem('devstat_mode') || 'exam' } catch { return 'exam' }
+}
+export function setMode(mode: string): void {
+  try { localStorage.setItem('devstat_mode', mode === 'live' ? 'live' : 'exam') } catch {}
+}
+
+// Guided Teaching-mode flag (set by the TeachingPage). Teaching runs are free
+// (they don't consume the free-tier credits) but still require a sign-in.
+let _teachingActive = false
+export function setTeachingActive(active: boolean): void { _teachingActive = !!active }
+export function isTeachingActive(): boolean { return _teachingActive }
+
+// Desktop Edition (fully-offline) flag — set from /api/health.desktop. In the
+// Desktop Edition there is NO account/sign-in: it uses a local registration +
+// free 5-analysis/5-chart trial + a paid activation key, so we must bypass the
+// "sign in to compute" guard below.
+let _desktop = false
+export function setDesktopMode(v: boolean): void { _desktop = !!v }
+export function isDesktopMode(): boolean { return _desktop }
+
 // ── Logging interceptors — log EVERY API call ─────────────────────────
 api.interceptors.request.use(
   config => {
     const requestId = `${Date.now()}_${Math.random().toString(36).slice(2, 8)}`
     ;(config as any)._logRequestId = requestId
     ;(config as any)._logStartTime = Date.now()
-    // Send the stable machine/device id so the free-trial gate is per-machine.
+    // Send the stable machine/device id so the free-tier gate is per machine+IP.
     config.headers = (config.headers || {}) as any
     config.headers['X-Devstat-Device'] = getDeviceId()
+    config.headers['X-Devstat-Mode'] = getMode()
+    if (_teachingActive) config.headers['X-Devstat-Teaching'] = '1'
     if (typeof getToken === 'function') {
       const t = getToken()
       if (t && !config.headers['Authorization']) config.headers['Authorization'] = `Bearer ${t}`
+    }
+
+    // No anonymous compute: if a signed-out visitor tries to run an analysis or
+    // chart, reopen the sign-in prompt and cancel the request (the backend also
+    // blocks this, so this is a frontend UX shortcut + defence in depth).
+    // The Desktop Edition requires an account too (register/subscription are
+    // online; only the data analysis runs locally), so the same rule applies.
+    const ctUrl: string = (config.url || '')
+    if ((ctUrl.includes('/api/analysis') || ctUrl.includes('/api/charts')) && !getToken()) {
+      if (typeof window !== 'undefined') window.dispatchEvent(new CustomEvent('devstat:auth-required'))
+      return Promise.reject(Object.assign(new Error('Sign in required to use DevStat.'), { _authRequired: true }))
     }
 
     let body = config.data
@@ -95,6 +132,11 @@ api.interceptors.response.use(
     return response
   },
   error => {
+    // A 402 means the free-tier allowance on this machine+IP was exhausted
+    // (e.g. adding a chart after the free 5). Let the app surface the paywall.
+    if (error.response?.status === 402) {
+      if (typeof window !== 'undefined') window.dispatchEvent(new CustomEvent('devstat:paywall'))
+    }
     const requestId = (error.config as any)?._logRequestId || '?'
     const startTime = (error.config as any)?._logStartTime || Date.now()
     const elapsed = Date.now() - startTime
@@ -147,6 +189,9 @@ export const datasetApi = {
       headers: { 'Content-Type': 'multipart/form-data' },
     })
   },
+
+  /** Preload the bundled synthetic practice dataset (Exam mode). */
+  sample: () => api.post('/api/data/sample'),
 
   /** List available datasets (single-item in single-dataset mode) */
   list: () => api.get('/api/data/datasets'),
@@ -625,18 +670,22 @@ export const powerApi = {
     api.post('/api/analysis/power', params),
 }
 
-export const aiApi = {
-  scan: () => api.get('/api/ai/scan'),
-  parse: (question: string, maxTests = 5) =>
-    api.post('/api/ai/parse', { question, max_tests: maxTests }),
-  execute: (plan: any, autoFallback = true) =>
-    api.post('/api/ai/execute', { plan, auto_fallback: autoFallback }),
-  synthesize: (question: string, results: any[]) =>
-    api.post('/api/ai/synthesize', { question, results }),
-  analyze: (question: string, autoFallback = true, maxTests = 5) =>
-    api.post('/api/ai/analyze', { question, auto_fallback: autoFallback, max_tests: maxTests }),
-  history: (limit = 20) => api.get(`/api/ai/history?limit=${limit}`),
-  getHistory: (id: string) => api.get(`/api/ai/history/${id}`),
+export const questionbankApi = {
+  list: () => api.get('/api/questionbank/list'),
+  owned: () => api.get('/api/questionbank/owned'),
+  get: (qid: string) => api.get(`/api/questionbank/${qid}`),
+  load: (qid: string) => api.post(`/api/questionbank/${qid}/load`),
+  checkout: (qid: string) => api.post(`/api/questionbank/checkout/${qid}`),
+}
+
+// Region-adjusted GBP prices.
+export const pricingApi = {
+  status: () => api.get('/api/pricing'),
+}
+
+// Format a GBP amount in pence, e.g. 1250 -> "£12.50", 2500 -> "£25.00".
+export function gbp(pence: number): string {
+  return '£' + (pence / 100).toFixed(pence % 100 === 0 ? 0 : 2)
 }
 
 export default api

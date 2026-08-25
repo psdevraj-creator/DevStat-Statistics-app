@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Confidence Intervals & Hypothesis Testing — Medical Statistics | FRCR 1</title>
+  <link rel="stylesheet" href="css/medstat.css">
+</head>
+<body>
+  <nav class="navbar">
+    <div class="navbar-logo">
+      <span class="logo-main">FRCR 1</span>
+      <span class="logo-sub">· <a href="../FRCR1.html">Hub</a> · <a href="index.html">Medical Statistics</a> · CIs & Hypothesis Testing</span>
+    </div>
+    <div class="navbar-badge">📊 Chapter 3</div>
+  </nav>
+
+  <div class="breadcrumb">
+    <a href="../FRCR1.html">Home</a><span class="sep">›</span>
+    <a href="index.html">Medical Statistics</a><span class="sep">›</span>
+    <span>Confidence Intervals & Hypothesis Testing</span>
+  </div>
+
+  <section class="hero" style="padding:32px 24px 20px;">
+    <div class="hero-inner">
+      <h1 style="font-size:1.8rem;">Confidence Intervals & Hypothesis Testing</h1>
+      <p>Estimation, confidence intervals, p-values, Type I & II errors, power, and one-tailed vs two-tailed tests — from GCSE to FRCR level.</p>
+    </div>
+  </section>
+
+  <div class="content">
+
+    <!-- ══════ TABS ══════ -->
+    <div class="tab-container">
+      <button class="tab active" data-tab="gcse">GCSE Level</button>
+      <button class="tab" data-tab="frcr">FRCR Level</button>
+      <button class="tab" data-tab="keyfacts">Key Facts</button>
+      <button class="tab" data-tab="clinical">Clinical Relevance</button>
+    </div>
+
+    <div class="tab-contents">
+
+      <!-- GCSE TAB -->
+      <div class="tab-content active" id="tab-gcse">
+        <div class="info-card">
+          <h3>Standard Error & Confidence Intervals</h3>
+          <p><strong>Standard Error of the Mean (SEM)</strong> = SD / √n. It measures how precisely the sample mean estimates the population mean. Larger samples → smaller SEM.</p>
+          <p><strong>Confidence Interval (CI)</strong>: A range of values that is likely to contain the true population parameter. A <strong>95% CI</strong> for the mean is: <strong>mean ± 1.96 × SEM</strong>.</p>
+          <p><strong>Interpretation</strong>: If you repeated the study 100 times, about 95 of the CIs would contain the true population mean.</p>
+          <div class="warning-box">
+            <strong>⚠️ Common Misunderstanding</strong>
+            <div>A 95% CI does NOT mean "there is a 95% chance the true value lies in this interval." It means "95% of intervals constructed this way will contain the true value." This is a subtle but important distinction for the FRCR exam.</div>
+          </div>
+        </div>
+
+        <div class="info-card">
+          <h3>Hypothesis Testing & p-values</h3>
+          <p><strong>Null hypothesis (H₀)</strong>: No difference / no effect (e.g., "the new drug is no different from placebo").</p>
+          <p><strong>Alternative hypothesis (H₁)</strong>: There is a difference / effect (e.g., "the new drug is different from placebo").</p>
+          <p><strong>p-value</strong>: The probability of observing the data (or more extreme) assuming H₀ is true. A small p-value (< 0.05) means the observed result is unlikely under H₀, so we "reject H₀" — the result is "statistically significant."</p>
+          <p><strong>Important:</strong> p < 0.05 does NOT mean the effect is clinically important. It only tells you the result is unlikely due to chance.</p>
+        </div>
+      </div>
+
+      <!-- FRCR TAB -->
+      <div class="tab-content" id="tab-frcr">
+        <div class="info-card">
+          <h3>Confidence Intervals in Detail</h3>
+          <p><strong>95% CI for the mean</strong> (when σ is known or n is large): x̄ ± 1.96 × SEM.</p>
+          <p><strong>95% CI for the mean</strong> (when σ is unknown, n small): x̄ ± t(n−1) × SEM, where t(n−1) is the critical value from the t-distribution with n−1 degrees of freedom. The t-distribution has fatter tails than the normal when n is small, producing wider CIs — accounting for the additional uncertainty of estimating σ from the sample.</p>
+          <p><strong>95% CI for a proportion</strong>: p̂ ± 1.96 × √(p̂(1 − p̂) / n). Only valid when np̂ and n(1−p̂) are both > 5.</p>
+          <p><strong>95% CI for RR or OR</strong>: Usually calculated on the log scale (ln OR ± 1.96 × SE(ln OR)) then exponentiated back. If the CI includes 1, the result is not statistically significant.</p>
+          <p><strong>Factors affecting CI width</strong>:</p>
+          <ul>
+            <li><strong>Sample size (n)</strong>: Larger n → narrower CI (SEM decreases).</li>
+            <li><strong>Variability (SD)</strong>: Larger SD → wider CI.</li>
+            <li><strong>Confidence level</strong>: 99% CI is wider than 95% CI.</li>
+          </ul>
+          <!-- CI width comparison diagram -->
+          <div class="figure-container">
+            <svg viewBox="0 0 520 190" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:520px;display:block;margin:0 auto;">
+              <defs><marker id="ci-arr" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#475569"/></marker>
+              <marker id="ci-arr2" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto-start-reverse"><path d="M0,0 L6,3 L0,6 Z" fill="#3b82f6"/></marker></defs>
+              <text x="260" y="14" text-anchor="middle" font-size="12" font-weight="700" fill="#1e293b">Factors Affecting CI Width</text>
+              <!-- Null line -->
+              <line x1="260" y1="24" x2="260" y2="170" stroke="#1e293b" stroke-width="1.5" stroke-dasharray="5,3"/>
+              <text x="260" y="178" text-anchor="middle" font-size="9" fill="#1e293b" font-weight="700">0 (null)</text>
+
+              <!-- Row labels -->
+              <text x="10" y="50" font-size="8.5" fill="#475569">n = 25</text>
+              <text x="10" y="78" font-size="8.5" fill="#475569">n = 100</text>
+              <text x="10" y="106" font-size="8.5" fill="#475569">n = 400</text>
+              <text x="10" y="138" font-size="8.5" fill="#475569">99% CI</text>
+              <text x="10" y="160" font-size="8.5" fill="#475569">95% CI</text>
+
+              <!-- CI 1: n=25 (wide) -->
+              <line x1="150" y1="46" x2="370" y2="46" stroke="#ef4444" stroke-width="3"/>
+              <circle cx="260" cy="46" r="5" fill="#ef4444"/>
+              <line x1="150" y1="40" x2="150" y2="52" stroke="#ef4444" stroke-width="2"/>
+              <line x1="370" y1="40" x2="370" y2="52" stroke="#ef4444" stroke-width="2"/>
+              <text x="480" y="50" font-size="8" fill="#ef4444">Wide — imprecise</text>
+
+              <!-- CI 2: n=100 (medium) -->
+              <line x1="195" y1="74" x2="325" y2="74" stroke="#f59e0b" stroke-width="3"/>
+              <circle cx="260" cy="74" r="5" fill="#f59e0b"/>
+              <line x1="195" y1="68" x2="195" y2="80" stroke="#f59e0b" stroke-width="2"/>
+              <line x1="325" y1="68" x2="325" y2="80" stroke="#f59e0b" stroke-width="2"/>
+              <text x="480" y="78" font-size="8" fill="#f59e0b">Moderate</text>
+
+              <!-- CI 3: n=400 (narrow) -->
+              <line x1="228" y1="102" x2="292" y2="102" stroke="#10b981" stroke-width="3"/>
+              <circle cx="260" cy="102" r="5" fill="#10b981"/>
+              <line x1="228" y1="96" x2="228" y2="108" stroke="#10b981" stroke-width="2"/>
+              <line x1="292" y1="96" x2="292" y2="108" stroke="#10b981" stroke-width="2"/>
+              <text x="480" y="106" font-size="8" fill="#10b981">Narrow — precise ✓</text>
+
+              <!-- Separator -->
+              <line x1="100" y1="120" x2="500" y2="120" stroke="#f1f5f9" stroke-width="1.5"/>
+
+              <!-- CI 4: 99% (wider than 95%) -->
+              <line x1="160" y1="134" x2="360" y2="134" stroke="#8b5cf6" stroke-width="3"/>
+              <circle cx="260" cy="134" r="5" fill="#8b5cf6"/>
+              <line x1="160" y1="128" x2="160" y2="140" stroke="#8b5cf6" stroke-width="2"/>
+              <line x1="360" y1="128" x2="360" y2="140" stroke="#8b5cf6" stroke-width="2"/>
+              <text x="480" y="138" font-size="8" fill="#8b5cf6">99% CI (z=2.58)</text>
+
+              <!-- CI 5: 95% same n -->
+              <line x1="195" y1="156" x2="325" y2="156" stroke="#3b82f6" stroke-width="3"/>
+              <circle cx="260" cy="156" r="5" fill="#3b82f6"/>
+              <line x1="195" y1="150" x2="195" y2="162" stroke="#3b82f6" stroke-width="2"/>
+              <line x1="325" y1="150" x2="325" y2="162" stroke="#3b82f6" stroke-width="2"/>
+              <text x="480" y="160" font-size="8" fill="#3b82f6">95% CI (z=1.96)</text>
+            </svg>
+            <p class="figure-caption"><strong>Figure 2:</strong> Factors affecting CI width. Larger n narrows the CI (top three). Higher confidence level widens the CI (bottom two, same n). All CIs with the point estimate to the right of zero are statistically significant.</p>
+          </div>
+          <p><strong>CIs vs p-values</strong>: CIs are generally preferred because they show the range of plausible effect sizes, not just whether the result is "significant." A CI can tell you both whether the result is statistically significant (does it exclude the null?) and clinically important (is the smallest plausible effect meaningful?).</p>
+          <div class="warning-box">
+            <strong>⚠️ Exam Trap: CI Width Interpretation</strong>
+            <div>A wide CI does not necessarily mean "no effect" — it may mean the study was too small to estimate the effect precisely. Always look at the CI width as a measure of precision, not just whether it includes the null.</div>
+          </div>
+        </div>
+
+        <div class="info-card">
+          <h3>Hypothesis Testing Framework — Step by Step</h3>
+          <p><strong>The five formal steps</strong>:</p>
+          <ol>
+            <li><strong>State H₀ and H₁</strong>: Clearly define the null and alternative hypotheses. For a two-tailed test: H₀: μ₁ = μ₂, H₁: μ₁ ≠ μ₂.</li>
+            <li><strong>Choose significance level α</strong>: Usually 0.05 (5% chance of Type I error).</li>
+            <li><strong>Select appropriate test statistic</strong>: Depends on data type, distribution, number of groups, and whether data is paired or independent.</li>
+            <li><strong>Calculate test statistic and associated p-value</strong>: Compare observed statistic to theoretical distribution.</li>
+            <li><strong>Make a decision</strong>: If p < α, reject H₀ (result statistically significant). If p ≥ α, fail to reject H₀ (insufficient evidence to conclude a difference).</li>
+          </ol>
+          <p><strong>Never say "accept H₀"</strong> — we only "fail to reject" it. The absence of evidence is not evidence of absence.</p>
+        </div>
+
+        <div class="info-card">
+          <h3>Type I and Type II Errors</h3>
+          <table style="width:100%;border-collapse:collapse;margin:10px 0;font-size:0.85rem;">
+            <thead>
+              <tr style="background:#f1f5f9;">
+                <th style="padding:8px 12px;border:1px solid #e2e8f0;"></th>
+                <th style="padding:8px 12px;border:1px solid #e2e8f0;">H₀ is TRUE</th>
+                <th style="padding:8px 12px;border:1px solid #e2e8f0;">H₀ is FALSE</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td style="padding:6px 12px;border:1px solid #e2e8f0;"><strong>Reject H₀</strong></td><td style="padding:6px 12px;border:1px solid #e2e8f0;background:#fee2e2;">Type I Error (α)<br>False positive</td><td style="padding:6px 12px;border:1px solid #e2e8f0;background:#dcfce7;">Correct!<br>Power = 1−β</td></tr>
+              <tr><td style="padding:6px 12px;border:1px solid #e2e8f0;"><strong>Fail to reject H₀</strong></td><td style="padding:6px 12px;border:1px solid #e2e8f0;background:#dcfce7;">Correct!</td><td style="padding:6px 12px;border:1px solid #e2e8f0;background:#fef3c7;">Type II Error (β)<br>False negative</td></tr>
+            </tbody>
+          </table>
+          <p><strong>Type I error (α)</strong>: Rejecting H₀ when it is true. "False positive." Conventionally set at 0.05. The risk of concluding a difference exists when it does not.</p>
+          <p><strong>Type II error (β)</strong>: Failing to reject H₀ when it is false. "False negative." Probability depends on effect size, sample size, and α.</p>
+          <p><strong>Power (1 − β)</strong>: Probability of correctly rejecting H₀ when it is false (i.e., detecting a true effect). Adequate power (≥ 0.80) is essential for study design.</p>
+          <p><strong>Trade-off</strong>: Decreasing α reduces Type I error but increases Type II error (reduces power). The only way to reduce both errors is to increase sample size.</p>
+        </div>
+
+        <div class="info-card">
+          <h3>One-tailed vs Two-tailed Tests</h3>
+          <p><strong>Two-tailed test</strong> (most common in medical research): Divides α equally between both tails. H₁: μ₁ ≠ μ₂. Tests for a difference in either direction. More conservative — requires a larger effect to reach significance.</p>
+          <p><strong>One-tailed test</strong>: Places all α in one tail. H₁: μ₁ > μ₂ (or μ₁ < μ₂). Tests for a difference in a specified direction. More powerful (lower p-value for same effect) but rarely justified in medical research.</p>
+          <p><strong>When to use one-tailed</strong>: Only when a difference in the opposite direction is <strong>impossible</strong> or <strong>clinically irrelevant</strong>. Example: comparing a new drug to placebo where the drug cannot possibly be worse (though this is almost never true — drugs can have harmful effects).</p>
+          <!-- One vs two tailed diagram -->
+          <div class="figure-container">
+            <svg viewBox="0 0 520 165" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:520px;display:block;margin:0 auto;">
+              <text x="260" y="14" text-anchor="middle" font-size="12" font-weight="700" fill="#1e293b">One-tailed vs Two-tailed Tests (α = 0.05)</text>
+              <!-- Left: Two-tailed -->
+              <text x="130" y="32" text-anchor="middle" font-size="10" font-weight="700" fill="#3b82f6">Two-tailed (default)</text>
+              <path d="M15,125 Q28,125 42,115 Q56,100 70,82 Q84,60 98,45 Q110,35 130,35 Q150,35 162,45 Q176,60 190,82 Q204,100 218,115 Q232,125 245,125" stroke="#3b82f6" stroke-width="2.5" fill="none"/>
+              <line x1="15" y1="126" x2="245" y2="126" stroke="#e2e8f0" stroke-width="1"/>
+              <!-- Left rejection region -->
+              <path d="M15,125 Q28,125 42,115 Q48,108 54,100 L54,126 Z" fill="#ef4444" opacity="0.35"/>
+              <text x="35" y="119" text-anchor="middle" font-size="7.5" fill="#ef4444" font-weight="700">α/2</text>
+              <text x="35" y="110" text-anchor="middle" font-size="7.5" fill="#ef4444">2.5%</text>
+              <!-- Right rejection region -->
+              <path d="M205,100 Q211,108 218,115 Q232,125 245,125 L245,126 L205,126 Z" fill="#ef4444" opacity="0.35"/>
+              <text x="228" y="119" text-anchor="middle" font-size="7.5" fill="#ef4444" font-weight="700">α/2</text>
+              <text x="228" y="110" text-anchor="middle" font-size="7.5" fill="#ef4444">2.5%</text>
+              <!-- Middle -->
+              <text x="130" y="145" text-anchor="middle" font-size="8" fill="#3b82f6">Reject H₀ in EITHER tail</text>
+              <text x="130" y="157" text-anchor="middle" font-size="8" fill="#475569">H₁: μ₁ ≠ μ₂ (no direction assumed)</text>
+              <line x1="54" y1="100" x2="54" y2="126" stroke="#ef4444" stroke-width="1" stroke-dasharray="3,2"/>
+              <text x="54" y="136" text-anchor="middle" font-size="7.5" fill="#64748b">−1.96</text>
+              <line x1="205" y1="100" x2="205" y2="126" stroke="#ef4444" stroke-width="1" stroke-dasharray="3,2"/>
+              <text x="205" y="136" text-anchor="middle" font-size="7.5" fill="#64748b">+1.96</text>
+
+              <!-- Right: One-tailed -->
+              <text x="390" y="32" text-anchor="middle" font-size="10" font-weight="700" fill="#f59e0b">One-tailed (rarely justified)</text>
+              <path d="M275,125 Q288,125 302,115 Q316,100 330,82 Q344,60 358,45 Q370,35 390,35 Q410,35 422,45 Q436,60 450,82 Q464,100 478,115 Q492,125 505,125" stroke="#f59e0b" stroke-width="2.5" fill="none"/>
+              <line x1="275" y1="126" x2="505" y2="126" stroke="#e2e8f0" stroke-width="1"/>
+              <!-- Right rejection only -->
+              <path d="M462,92 Q468,102 475,112 Q482,120 490,125 L505,125 L505,126 L462,126 Z" fill="#ef4444" opacity="0.45"/>
+              <text x="488" y="118" text-anchor="middle" font-size="7.5" fill="#ef4444" font-weight="700">α</text>
+              <text x="488" y="108" text-anchor="middle" font-size="7.5" fill="#ef4444">5%</text>
+              <line x1="462" y1="92" x2="462" y2="126" stroke="#ef4444" stroke-width="1" stroke-dasharray="3,2"/>
+              <text x="462" y="136" text-anchor="middle" font-size="7.5" fill="#64748b">+1.645</text>
+              <text x="390" y="145" text-anchor="middle" font-size="8" fill="#f59e0b">Reject H₀ in ONE tail only</text>
+              <text x="390" y="157" text-anchor="middle" font-size="8" fill="#475569">H₁: μ₁ &gt; μ₂ (direction pre-specified)</text>
+            </svg>
+            <p class="figure-caption"><strong>Figure 1:</strong> Two-tailed test splits α equally between both tails (critical value ±1.96). One-tailed places all α in one tail (critical value 1.645) — more powerful but requires strong pre-specified justification.</p>
+          </div>
+          <div class="warning-box">
+            <strong>⚠️ Exam Trap: One-tailed misuse</strong>
+            <div>FRCR exam questions often test this: if a study uses a one-tailed test without strong justification, it is considered a methodological flaw. Two-tailed tests are the default in medical research. A paper that switches from two-tailed to one-tailed after seeing the results is committing p-hacking.</div>
+          </div>
+        </div>
+
+        <div class="info-card">
+          <h3>p-value Misinterpretations</h3>
+          <p>The p-value is one of the most misunderstood concepts in statistics. Common misinterpretations to avoid:</p>
+          <ul>
+            <li><strong>NOT</strong> the probability that H₀ is true — it is P(data | H₀), not P(H₀ | data).</li>
+            <li><strong>NOT</strong> the probability that the result occurred by chance — it is the probability of observing this result (or more extreme) if chance alone is operating.</li>
+            <li><strong>NOT</strong> a measure of effect size — a tiny p-value can occur with a trivial effect if the sample is large enough.</li>
+            <li><strong>NOT</strong> a measure of clinical importance — p < 0.001 does not mean the treatment is clinically meaningful.</li>
+            <li><strong>p > 0.05 does NOT mean "no difference"</strong> — it means "insufficient evidence to reject H₀." The study may be underpowered.</li>
+          </ul>
+          <p><strong>Better alternatives</strong>: Report CIs and effect sizes alongside p-values. The CI gives the range of plausible effects, which is far more informative than a binary "significant/not significant."</p>
+        </div>
+      </div>
+
+      <!-- KEY FACTS TAB -->
+      <div class="tab-content" id="tab-keyfacts">
+        <div class="info-card">
+          <h3>Essential Exam Facts</h3>
+          <div class="key-facts-grid">
+            <div class="fact-item">95% CI for mean = mean ± 1.96 × SEM (large n) or ± t × SEM (small n).</div>
+            <div class="fact-item">CI width reflects precision: wider = less precise.</div>
+            <div class="fact-item">If 95% CI for RR/OR includes 1: NOT statistically significant.</div>
+            <div class="fact-item">p-value = P(data | H₀), NOT P(H₀ | data).</div>
+            <div class="fact-item">Type I error (α): false positive (reject true H₀). Usually α = 0.05.</div>
+            <div class="fact-item">Type II error (β): false negative (fail to reject false H₀).</div>
+            <div class="fact-item">Power = 1 − β. Minimum acceptable power = 0.80.</div>
+            <div class="fact-item">Two-tailed: preferred default. One-tailed: needs strong justification.</div>
+            <div class="fact-item">p > 0.05 = insufficient evidence, NOT "no difference."</div>
+            <div class="fact-item">CIs preferred over p-values — show range of plausible effects.</div>
+          </div>
+        </div>
+
+        <div class="warning-box">
+          <strong>⚠️ Common Exam Traps</strong>
+          <div>• "95% CI includes the null" is equivalent to p > 0.05 — but the CI tells you more because it shows how wide the range of plausible effects is.</div>
+          <div>• Switching from two-tailed to one-tailed post hoc is p-hacking.</div>
+          <div>• A significant p-value from a small study may be a false positive (underpowered studies that happen to be significant often have inflated effect sizes — the "winner's curse").</div>
+          <div>• p = 0.04 in a study with 20 subgroup analyses is NOT significant after multiple testing correction.</div>
+        </div>
+      </div>
+
+      <!-- CLINICAL TAB -->
+      <div class="tab-content" id="tab-clinical">
+        <div class="clinical-box">
+          <strong>🏥 Why This Matters Clinically</strong>
+          <div>
+            <p><strong>Interpreting trial results</strong>: When a paper reports "HR = 0.75 (95% CI: 0.60–0.94, p = 0.01)", the CI tells you the true hazard ratio could be as low as 0.60 (very beneficial) or as high as 0.94 (barely beneficial). Both are clinically meaningful, but the range matters for clinical decision-making.</p>
+            <p><strong>The problem with "p < 0.05" as a threshold</strong>: Many clinicians equate "statistically significant" with "clinically important." A large study might find p < 0.001 for a 0.5 mmHg blood pressure reduction — statistically significant but clinically trivial. Conversely, a small study might show p = 0.07 for a clinically meaningful survival benefit — not significant statistically but worth further investigation.</p>
+            <p><strong>Non-inferiority trials</strong>: These flip the hypothesis testing framework. H₀ is that the new treatment is WORSE than the control by more than a pre-specified margin. Rejecting H₀ shows non-inferiority. The CI approach is essential: if the upper bound of the 95% CI for the difference does not exceed the non-inferiority margin, non-inferiority is demonstrated.</p>
+            <p><strong>Bayesian vs frequentist</strong>: The p-value framework is frequentist — probability is defined as long-run frequency. Bayesian approaches (posterior probabilities, credible intervals) are increasingly used in medical research but are not yet standard in FRCR.</p>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /tab-contents -->
+
+    <!-- ══════ WORKED EXAMPLES ══════ -->
+    <div class="section-label"><h2>📐 Worked Examples</h2><div class="section-divider"></div></div>
+
+    <div class="accordion">
+      <button class="accordion-btn">Interpreting a Confidence Interval</button>
+      <div class="accordion-panel">
+        <div class="accordion-inner">
+          <p><strong>Scenario:</strong> A study reports the mean difference in survival between two treatments as 4.2 months (95% CI: −0.3 to 8.7 months). What can you conclude?</p>
+          <p><strong>Solution:</strong> The 95% CI includes zero (no difference). Therefore, the result is NOT statistically significant (p > 0.05). However, the upper limit suggests a potential benefit up to 8.7 months. The study may be underpowered. The clinical conclusion: insufficient evidence to conclude a difference exists, but the observed effect is compatible with a clinically meaningful benefit — a larger study is needed.</p>
+          <p><strong>Key insight:</strong> Do NOT say "the treatment doesn't work." Say "we cannot conclude the treatment is effective based on this study." These are different statements.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="accordion">
+      <button class="accordion-btn">Type I and Type II Errors in Practice</button>
+      <div class="accordion-panel">
+        <div class="accordion-inner">
+          <p><strong>Scenario:</strong> A small pilot study (n = 20 per group) compares a new drug to placebo and finds p = 0.30 for the primary endpoint. The researchers conclude "the drug has no effect." What error might they be making?</p>
+          <p><strong>Solution:</strong> They may be making a <strong>Type II error</strong> (false negative). With n = 20 per group, the study likely has low power to detect a clinically meaningful effect. p = 0.30 does NOT mean the drug has no effect — it means the study could not detect a statistically significant difference. The drug might still be effective; a larger study is needed.</p>
+          <p><strong>Clinical relevance:</strong> Many potentially useful treatments have been abandoned based on underpowered studies. Conversely, many ineffective treatments have been adopted based on underpowered studies that happened to show significant results (Type I error).</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="accordion">
+      <button class="accordion-btn">One-tailed vs Two-tailed — Spot the Flaw</button>
+      <div class="accordion-panel">
+        <div class="accordion-inner">
+          <p><strong>Scenario:</strong> A trial compares a new analgesic to placebo for post-operative pain. The protocol specified a two-tailed test. After the results came in showing a pain reduction of 1.2 points (p = 0.08 two-tailed), the authors re-analysed using a one-tailed test (p = 0.04) and reported "significant pain reduction." Is this valid?</p>
+          <p><strong>Solution:</strong> No — this is post-hoc switching to one-tailed, a form of p-hacking. If the effect was in the opposite direction (pain worse), they would not have reported it as significant. A one-tailed test must be pre-specified in the protocol. The correct conclusion is p = 0.08, not significant.</p>
+          <p><strong>FRCR exam point:</strong> One-tailed tests are pre-specified, not data-driven. If a study switches from two-tailed to one-tailed after seeing the data, it introduces bias.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════ ACTIVE RECALL ══════ -->
+    <div class="section-label"><h2>🧠 Active Recall Questions</h2><div class="section-divider"></div></div>
+
+    <ul class="recall-list">
+      <li class="recall-item"><div class="q">Q: What is the correct interpretation of a 95% CI?</div><div class="a">A: If you repeated the study 100 times, approximately 95 of the CIs would contain the true population parameter. It is NOT the probability that the true value lies in this particular interval.</div></li>
+      <li class="recall-item"><div class="q">Q: What is the relationship between a 95% CI and a p-value?</div><div class="a">A: If the 95% CI does not include the null value (0 for differences, 1 for RR/OR), then p < 0.05. If the CI includes the null, then p > 0.05.</div></li>
+      <li class="recall-item"><div class="q">Q: Define Type I and Type II errors.</div><div class="a">A: Type I (α): rejecting H₀ when true — false positive. Type II (β): failing to reject H₀ when false — false negative. Power = 1 − β.</div></li>
+      <li class="recall-item"><div class="q">Q: Why are two-tailed tests preferred in medical research?</div><div class="a">A: They are more conservative and test for effects in either direction. One-tailed tests require strong prior justification that a difference in the opposite direction is impossible.</div></li>
+      <li class="recall-item"><div class="q">Q: What does p = 0.06 mean?</div><div class="a">A: There is a 6% probability of observing the data (or more extreme) if H₀ is true. It is NOT statistically significant at the 0.05 threshold, but it does NOT mean "no effect" — the study may be underpowered.</div></li>
+    </ul>
+
+    <!-- ══════ GLOSSARY ══════ -->
+    <div class="glossary-panel">
+      <h3>📖 Glossary</h3>
+      <div class="glossary-grid">
+        <div class="glossary-item"><div class="term">Confidence Interval</div><div class="def">Range of plausible values for a population parameter. 95% = repeated sampling interpretation.</div></div>
+        <div class="glossary-item"><div class="term">p-value</div><div class="def">P(observed data or more extreme | H₀ true). NOT P(H₀ | data).</div></div>
+        <div class="glossary-item"><div class="term">Null hypothesis (H₀)</div><div class="def">Default assumption: no difference, no effect, no association.</div></div>
+        <div class="glossary-item"><div class="term">Type I Error</div><div class="def">False positive. Rejecting H₀ when true. Probability = α (usually 0.05).</div></div>
+        <div class="glossary-item"><div class="term">Type II Error</div><div class="def">False negative. Failing to reject H₀ when false. Probability = β.</div></div>
+        <div class="glossary-item"><div class="term">Power</div><div class="def">1 − β. Probability of detecting a true effect. Minimum 0.80.</div></div>
+        <div class="glossary-item"><div class="term">Significance level (α)</div><div class="def">Threshold for rejecting H₀. Usually 0.05.</div></div>
+        <div class="glossary-item"><div class="term">One-tailed test</div><div class="def">Tests effect in one direction. All α in one tail. Needs pre-specification.</div></div>
+        <div class="glossary-item"><div class="term">Two-tailed test</div><div class="def">Tests effect in either direction. α split between tails. Default in medical research.</div></div>
+        <div class="glossary-item"><div class="term">Effect size</div><div class="def">Magnitude of the difference or association. Clinically important regardless of p-value.</div></div>
+        <div class="glossary-item"><div class="term">p-hacking</div><div class="def">Repeated analyses, data dredging, or post-hoc test switching to achieve p < 0.05.</div></div>
+      </div>
+    </div>
+
+  </div><!-- /content -->
+
+  <footer class="footer">
+    <div class="footer-inner">
+      <div>© 2025 FRCR 1 Study Hub</div>
+      <div class="footer-right">For educational use only · Not for clinical decisions</div>
+    </div>
+  </footer>
+
+  <script src="js/radbio.js"></script>
+</body>
+</html>

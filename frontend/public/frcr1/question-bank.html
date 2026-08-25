@@ -1,0 +1,80 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Question Bank — Medical Statistics | FRCR 1</title>
+  <link rel="stylesheet" href="css/medstat.css">
+</head>
+<body>
+  <nav class="navbar">
+    <div class="navbar-logo">
+      <span class="logo-main">FRCR 1</span>
+      <span class="logo-sub">· <a href="../FRCR1.html">Hub</a> · <a href="index.html">Medical Statistics</a> · Question Bank</span>
+    </div>
+    <div class="navbar-badge">📝 Question Bank</div>
+  </nav>
+
+  <div class="breadcrumb">
+    <a href="../FRCR1.html">Home</a><span class="sep">›</span>
+    <a href="index.html">Medical Statistics</a><span class="sep">›</span>
+    <span>Question Bank</span>
+  </div>
+
+  <section class="hero" style="padding:32px 24px 20px;">
+    <div class="hero-inner">
+      <h1 style="font-size:1.8rem;">📝 Medical Statistics Question Bank</h1>
+      <p>Search, filter, and test yourself. Includes MCQs, short-answer questions, and flashcards. All questions derived from the FRCR medical statistics syllabus.</p>
+    </div>
+  </section>
+
+  <!-- Stats -->
+  <div id="qb-stats" class="content" style="max-width:1000px;margin:0 auto;padding:0 24px 8px;"></div>
+
+  <!-- Mode Buttons -->
+  <div class="content" style="max-width:1000px;margin:0 auto;padding:0 24px 16px;">
+    <button id="flashcard-toggle" class="flashcard-mode-btn" style="margin-right:10px;">📇 Flashcard Mode</button>
+    <button id="self-test-toggle" class="flashcard-mode-btn" >✍️ Self-Test Mode</button>
+  </div>
+
+  <!-- Flashcard Container -->
+  <div class="content" style="max-width:1000px;margin:0 auto;">
+    <div class="flashcard-container">
+      <div class="flashcard">
+        <div class="flashcard-face flashcard-front">
+          <div class="fc-stem">Click to see question...</div>
+        </div>
+        <div class="flashcard-face flashcard-back">
+          <div class="fc-answer">Answer</div>
+          <div class="fc-explain">Explanation</div>
+        </div>
+      </div>
+      <div class="flashcard-nav">
+        <button class="fc-prev">← Previous</button>
+        <button class="fc-next">Next →</button>
+      </div>
+      <div class="flashcard-counter">0 of 0</div>
+    </div>
+  </div>
+
+  <!-- Filter Bar -->
+  <div id="filter-container" class="filter-bar"></div>
+
+  <!-- Question List -->
+  <div class="content" id="question-list" style="max-width:1000px;margin:0 auto;padding:0 24px 60px;">
+    <div class="info-card"><p style="text-align:center;color:#94a3b8;">Loading question bank...</p></div>
+  </div>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      <div>© 2025 FRCR 1 Study Hub</div>
+      <div class="footer-right">For educational use only · Not for clinical decisions</div>
+    </div>
+  </footer>
+
+  <script src="js/radbio.js"></script>
+  <script src="../assets/data-loader.js"></script>
+  <script src="js/question-engine.js"></script>
+<script src="../assets/qb-ux.js"></script>
+</body>
+</html>

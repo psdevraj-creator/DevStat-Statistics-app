@@ -1,0 +1,183 @@
+- generic [ref=f3e3]:
+  - banner [ref=f3e4]:
+    - generic [ref=f3e5] [cursor=pointer]:
+      - img "radar-chart" [ref=f3e7]
+      - generic [ref=f3e11]:
+        - generic [ref=f3e12]: DevStat
+        - generic [ref=f3e13]: Medical Statistics
+    - generic [ref=f3e14]:
+      - img "save" [ref=f3e16] [cursor=pointer]
+      - img "folder-open" [ref=f3e20] [cursor=pointer]
+    - generic [ref=f3e23]:
+      - img "undo" [ref=f3e25]
+      - img "redo" [ref=f3e29]
+    - generic [ref=f3e32]:
+      - button "login Sign in" [ref=f3e34] [cursor=pointer]:
+        - img "login" [ref=f3e36]
+        - generic [ref=f3e39]: Sign in
+      - img "question-circle" [ref=f3e41] [cursor=pointer]
+      - img "question-circle" [ref=f3e46] [cursor=pointer]
+  - menu [ref=f3e51]:
+    - menuitem [ref=f3e52] [cursor=pointer]:
+      - img "table" [ref=f3e53]
+      - text: Data
+    - menuitem [ref=f3e56] [cursor=pointer]:
+      - img "fund" [ref=f3e57]
+      - text: Analyze
+    - menuitem [ref=f3e60] [cursor=pointer]:
+      - img "apartment" [ref=f3e61]
+      - text: Survival
+    - menuitem [active] [ref=f3e64] [cursor=pointer]:
+      - img "bar-chart" [ref=f3e65]
+      - text: Graphs
+    - menuitem [ref=f3e68] [cursor=pointer]:
+      - img "question-circle" [ref=f3e69]
+      - text: Wizard
+    - menuitem [ref=f3e73] [cursor=pointer]:
+      - img "file-text" [ref=f3e74]
+      - text: Output
+    - menuitem [disabled]
+  - alert [ref=f3e86]:
+    - img "exclamation-circle" [ref=f3e87]
+    - generic [ref=f3e90]:
+      - generic [ref=f3e91]: Online demo — exam practice only
+      - generic [ref=f3e92]: This online version runs on a shared public server. Use it for exam practice with the synthetic practice data only. Do NOT upload real, identifiable or confidential patient data — for real (anonymised) analysis, use the offline desktop app.
+  - main [ref=f3e77]:
+    - generic [ref=f3e615]:
+      - heading "Graphs & Charts" [level=4] [ref=f3e616]
+      - generic [ref=f3e617]:
+        - generic [ref=f3e621]:
+          - generic [ref=f3e622]: Chart Builder Gallery
+          - generic [ref=f3e624]:
+            - img "fund" [ref=f3e625]
+            - text: Histogram
+        - generic [ref=f3e629]:
+          - generic [ref=f3e632] [cursor=pointer]:
+            - img "fund" [ref=f3e633]
+            - strong [ref=f3e637]: Histogram
+            - text: Distribution of a continuous variable
+          - generic [ref=f3e640] [cursor=pointer]:
+            - img "fund" [ref=f3e641]
+            - strong [ref=f3e645]: Boxplot
+            - text: Distribution summary with quartiles
+          - generic [ref=f3e648] [cursor=pointer]:
+            - img "dot-chart" [ref=f3e649]
+            - strong [ref=f3e653]: Scatter
+            - text: Relationship between two variables
+          - generic [ref=f3e656] [cursor=pointer]:
+            - img "bar-chart" [ref=f3e657]
+            - strong [ref=f3e661]: Bar Chart
+            - text: Category frequencies or means
+          - generic [ref=f3e664] [cursor=pointer]:
+            - img "experiment" [ref=f3e665]
+            - strong [ref=f3e669]: ROC Curve
+            - text: Diagnostic test performance
+          - generic [ref=f3e672] [cursor=pointer]:
+            - img "apartment" [ref=f3e673]
+            - strong [ref=f3e677]: KM Curve
+            - text: Survival / time-to-event
+          - generic [ref=f3e680] [cursor=pointer]:
+            - img "fund" [ref=f3e681]
+            - strong [ref=f3e685]: Violin
+            - text: Distribution density across groups
+          - generic [ref=f3e688] [cursor=pointer]:
+            - img "dot-chart" [ref=f3e689]
+            - strong [ref=f3e693]: Strip Plot
+            - text: Individual data points across groups
+          - generic [ref=f3e696] [cursor=pointer]:
+            - img "fund" [ref=f3e697]
+            - strong [ref=f3e701]: ECDF
+            - text: Cumulative distribution
+          - generic [ref=f3e704] [cursor=pointer]:
+            - img "dot-chart" [ref=f3e705]
+            - strong [ref=f3e709]: Q-Q Plot
+            - text: Compare to normal distribution
+          - generic [ref=f3e712] [cursor=pointer]:
+            - img "bar-chart" [ref=f3e713]
+            - strong [ref=f3e717]: Pareto
+            - text: Sorted bar with cumulative line
+          - generic [ref=f3e720] [cursor=pointer]:
+            - img "dot-chart" [ref=f3e721]
+            - strong [ref=f3e725]: Cleveland Dot
+            - text: Ranked dot comparisons
+          - generic [ref=f3e728] [cursor=pointer]:
+            - img "dot-chart" [ref=f3e729]
+            - strong [ref=f3e733]: Lollipop
+            - text: Dots with stems
+          - generic [ref=f3e736] [cursor=pointer]:
+            - img "dot-chart" [ref=f3e737]
+            - strong [ref=f3e741]: Dumbbell
+            - text: Pre/post change
+          - generic [ref=f3e744] [cursor=pointer]:
+            - img "dot-chart" [ref=f3e745]
+            - strong [ref=f3e749]: SPLOM
+            - text: Scatter matrix (3+ vars)
+          - generic [ref=f3e752] [cursor=pointer]:
+            - img "fund" [ref=f3e753]
+            - strong [ref=f3e757]: Control Chart
+            - text: Process control limits
+          - generic [ref=f3e760] [cursor=pointer]:
+            - img "fund" [ref=f3e761]
+            - strong [ref=f3e765]: Run Chart
+            - text: Time-ordered values
+          - generic [ref=f3e768] [cursor=pointer]:
+            - img "bar-chart" [ref=f3e769]
+            - strong [ref=f3e773]: Gantt
+            - text: Task timeline
+          - generic [ref=f3e776] [cursor=pointer]:
+            - img "fund" [ref=f3e777]
+            - strong [ref=f3e781]: Calendar Heatmap
+            - text: Values by date
+          - generic [ref=f3e784] [cursor=pointer]:
+            - img "fund" [ref=f3e785]
+            - strong [ref=f3e789]: Parallel Coords
+            - text: Multi-dim data
+          - generic [ref=f3e792] [cursor=pointer]:
+            - img "fund" [ref=f3e793]
+            - strong [ref=f3e797]: Radar
+            - text: Multi-attribute profiles
+          - generic [ref=f3e800] [cursor=pointer]:
+            - img "fund" [ref=f3e801]
+            - strong [ref=f3e805]: Treemap
+            - text: Hierarchical proportions
+          - generic [ref=f3e808] [cursor=pointer]:
+            - img "fund" [ref=f3e809]
+            - strong [ref=f3e813]: Sankey
+            - text: Flow between categories
+          - generic [ref=f3e816] [cursor=pointer]:
+            - img "bar-chart" [ref=f3e817]
+            - strong [ref=f3e821]: Waterfall
+            - text: Sequential total
+          - generic [ref=f3e824] [cursor=pointer]:
+            - img "dot-chart" [ref=f3e825]
+            - strong [ref=f3e829]: Funnel
+            - text: Effect size vs precision
+          - generic [ref=f3e832] [cursor=pointer]:
+            - img "dot-chart" [ref=f3e833]
+            - strong [ref=f3e837]: Bland-Altman
+            - text: Method comparison
+          - generic [ref=f3e840] [cursor=pointer]:
+            - img "dot-chart" [ref=f3e841]
+            - strong [ref=f3e845]: Forest Plot
+            - text: Estimates with CI
+      - generic [ref=f3e846]:
+        - generic [ref=f3e847]: Chart Configuration
+        - generic [ref=f3e851]:
+          - generic [ref=f3e853]:
+            - generic [ref=f3e854]: "Dataset:"
+            - generic [ref=f3e858] [cursor=pointer]:
+              - combobox [ref=f3e860]
+              - generic "devstat-practice-data.csv" [ref=f3e861]
+          - generic [ref=f3e863]:
+            - generic [ref=f3e864]: "X-Axis:"
+            - generic [ref=f3e868] [cursor=pointer]:
+              - combobox [ref=f3e870]
+              - generic: Select variable
+          - generic [ref=f3e872]:
+            - generic [ref=f3e873]: "Bins:"
+            - generic [ref=f3e877] [cursor=pointer]:
+              - combobox [ref=f3e879]
+              - generic "20" [ref=f3e880]
+      - button "play-circle Generate Chart" [ref=f3e883] [cursor=pointer]:
+        - img "play-circle" [ref=f3e885]
+        - generic [ref=f3e889]: Generate Chart

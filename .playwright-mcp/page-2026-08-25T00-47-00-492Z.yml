@@ -1,0 +1,68 @@
+- generic [ref=f20e3]:
+  - banner [ref=f20e4]:
+    - generic [ref=f20e5] [cursor=pointer]:
+      - img "radar-chart" [ref=f20e7]
+      - generic [ref=f20e11]:
+        - generic [ref=f20e12]: DevStat
+        - generic [ref=f20e13]: Medical Statistics
+    - generic [ref=f20e14]:
+      - img "save" [ref=f20e16] [cursor=pointer]
+      - img "folder-open" [ref=f20e20] [cursor=pointer]
+    - generic [ref=f20e23]:
+      - img "undo" [ref=f20e25]
+      - img "redo" [ref=f20e29]
+    - generic [ref=f20e32]:
+      - radiogroup "segmented control" [ref=f20e34]:
+        - generic [ref=f20e35]:
+          - generic [ref=f20e36] [cursor=pointer]:
+            - radio "Exam" [checked]
+            - generic "Exam" [ref=f20e37]
+          - generic [ref=f20e38] [cursor=pointer]:
+            - radio "Live"
+            - generic "Live" [ref=f20e39]
+          - generic [ref=f20e40] [cursor=pointer]:
+            - radio "Teaching"
+            - generic "Teaching" [ref=f20e41]
+      - button "question-circle Learn as you do" [ref=f20e43] [cursor=pointer]:
+        - img "question-circle" [ref=f20e45]
+        - generic [ref=f20e49]: Learn as you do
+      - button "login Sign in" [ref=f20e51] [cursor=pointer]:
+        - img "login" [ref=f20e53]
+        - generic [ref=f20e56]: Sign in
+      - img "question-circle" [ref=f20e58] [cursor=pointer]
+      - img "question-circle" [ref=f20e63] [cursor=pointer]
+  - menu [ref=f20e68]:
+    - menuitem [ref=f20e69] [cursor=pointer]:
+      - img "table" [ref=f20e70]
+      - text: Data
+    - menuitem [ref=f20e73] [cursor=pointer]:
+      - img "fund" [ref=f20e74]
+      - text: Analyze
+    - menuitem [ref=f20e77] [cursor=pointer]:
+      - img "apartment" [ref=f20e78]
+      - text: Survival
+    - menuitem [ref=f20e81] [cursor=pointer]:
+      - img "bar-chart" [ref=f20e82]
+      - text: Graphs
+    - menuitem [ref=f20e85] [cursor=pointer]:
+      - img "question-circle" [ref=f20e86]
+      - text: Wizard
+    - menuitem [ref=f20e90] [cursor=pointer]:
+      - img "crown" [ref=f20e91]
+      - text: Teaching
+    - menuitem [ref=f20e94] [cursor=pointer]:
+      - img "file-text" [ref=f20e95]
+      - text: Output
+    - menuitem [disabled]
+  - generic [ref=f20e98]:
+    - main [ref=f20e99]
+    - generic [ref=f20e108]:
+      - generic [ref=f20e109]:
+        - strong [ref=f20e112]: Learn as you do — choose a dataset
+        - button "✕" [ref=f20e114] [cursor=pointer]
+      - generic [ref=f20e116]:
+        - generic [ref=f20e117]: Learn by doing
+        - generic [ref=f20e121]:
+          - strong [ref=f20e124]: Datasets
+          - button "Load practice data (synthetic) — free" [ref=f20e128] [cursor=pointer]
+          - strong [ref=f20e132]: Question datasets (100 Qs · £5 each, adjusted to your region)

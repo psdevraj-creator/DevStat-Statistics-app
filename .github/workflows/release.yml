@@ -1,53 +1,49 @@
-name: Release
+name: Release Desktop Edition
+
+# On a version tag push (v*), build the Windows + macOS Desktop Edition
+# (offline analysis engine + Chrome app-mode launcher) and publish the
+# runnable installers as download-only release assets.
 on:
   push:
-    tags: ['v*']
-permissions:
-  contents: write
+    tags:
+      - 'v*'
+
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   release:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
-        with:
-          python-version: '3.12'
-      - name: Generate practice dataset
-        run: |
-          pip install --quiet numpy pandas
-          python scripts/gen_practice_data.py
-      - name: Publish GitHub Release
+      - name: Create release shell
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          cat > /tmp/release_body.md <<'EOF'
-          ## DevStat — download & install
+          cat > RELEASE_BODY.md <<'EOF'
+          # DevStat Desktop Edition
 
-          **Installers** (offline desktop app): Windows `.msi`/`.exe` and macOS `.dmg`.
-          The analysis runs 100% on your machine; data never leaves your computer.
+          Fully offline medical statistics, in your browser window (Chrome/Edge/Safari app mode — no address bar).
 
-          ### ⚠️ Trust / install note (please read)
-          These installers are **not code-signed** (no signing certificate is set up).
-          Your OS may warn you — **the app is clean and safe to install.** Simply:
-          - **Windows:** SmartScreen → “More info” → **Run anyway**.
-          - **macOS:** right-click the app → **Open** → **Open** (or System Settings → Privacy & Security → Open Anyway).
+          - **Offline analysis** — the statistics engine runs entirely on your machine. Your data never leaves it.
+          - **Register / subscription online** — sign in, register and upgrade through the normal DevStat account (works on the online app too).
+          - **Free 5 analyses + 5 charts** per account, then a £25/year licence.
 
-          If you’d rather not install, use the **online app** instead:
-          https://devstat-statistics-app-991466352708.europe-west1.run.app
-          (online version is for exam/synthetic data only; licence £25/yr).
+          > ⚠️ **Not code-signed.** It's clean, but Windows may show SmartScreen and macOS may show Gatekeeper because there is no paid signing certificate.
+          > - **Windows**: click **More info → Run anyway**.
+          > - **macOS**: right-click the app → **Open**, then **Open** again.
+
+          Download the zip for your system below. Extract anywhere, then double-click **DevStatDesktopLauncher** (Windows) or **DevStat Desktop Edition.app** (macOS).
           EOF
-          gh release create "$GITHUB_REF_NAME" \
-            data/devstat-practice-data.csv \
-            data/README_practice_dataset.md \
-            --notes-file /tmp/release_body.md
+          gh release create "$GITHUB_REF_NAME" --title "DevStat Desktop Edition $GITHUB_REF_NAME" --notes-file RELEASE_BODY.md || echo "release already exists"
 
-  # Build the Windows desktop installer (offline app) + attach to the release.
   installer:
     needs: release
     runs-on: windows-latest
-    env:
-      GH_TOKEN: ${{ github.token }}
-      DEVSTAT_API_URL: https://devstat-statistics-app-991466352708.europe-west1.run.app
+    permissions:
+      contents: write
     steps:
       - uses: actions/checkout@v4
 
@@ -59,70 +55,64 @@ jobs:
         with:
           node-version: '22'
 
-      - name: Build frontend (SPA -> backend/static)
-        run: |
-          cd frontend
-          npm install
-          npm run build
+      - name: Build frontend SPA (backend/static)
+        working-directory: frontend
+        run: npm install && npm run build
 
-      - name: Install backend deps + PyInstaller
-        run: |
-          cd backend
-          python -m pip install --upgrade pip
-          pip install -r requirements.txt pyinstaller
+      - name: Install backend deps
+        run: pip install -r requirements.txt pyinstaller
 
-      - name: Bundle offline engine with PyInstaller
-        run: |
-          cd backend
-          python -m PyInstaller devstat_engine.spec --noconfirm
+      - name: Bundle engine
+        working-directory: backend
+        run: python -m PyInstaller devstat_engine.spec --noconfirm
 
-      - name: Build Windows installer (MSI + NSIS)
-        run: |
-          cd frontend
-          npm run desktop:build
+      - name: Bundle launcher
+        working-directory: desktop
+        run: python -m PyInstaller launcher.spec --noconfirm
 
-      - name: Attach installer to release
-        shell: pwsh
-        run: |
-          Get-ChildItem "frontend\release" -Filter "*.msi","*.exe" -ErrorAction SilentlyContinue | ForEach-Object {
-            gh release upload "$env:GITHUB_REF_NAME" $_.FullName --clobber
-          }
+      - name: Package Windows zip
+        run: python desktop/package.py --os win --engine-dir backend/dist/DevStatEngine --launcher desktop/dist/DevStatDesktopLauncher.exe --out desktop/release
 
-  # macOS offline desktop installer (.dmg).
+      - name: Upload artifact
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh release upload "$GITHUB_REF_NAME" desktop/release/DevStat-Desktop-win.zip --clobber
+
   installer-mac:
     needs: release
     runs-on: macos-latest
-    env:
-      GH_TOKEN: ${{ github.token }}
-      DEVSTAT_API_URL: https://devstat-statistics-app-991466352708.europe-west1.run.app
-      CSC_IDENTITY_AUTO_DISCOVERY: "false"
+    permissions:
+      contents: write
     steps:
       - uses: actions/checkout@v4
+
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
+
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
-      - name: Build frontend (SPA -> backend/static)
-        run: |
-          cd frontend
-          npm install
-          npm run build
-      - name: Install backend deps + PyInstaller
-        run: |
-          cd backend
-          python -m pip install --upgrade pip
-          pip install -r requirements.txt pyinstaller
-      - name: Bundle offline engine with PyInstaller
-        run: |
-          cd backend
-          python -m PyInstaller devstat_engine.spec --noconfirm
-      - name: Build macOS installer (.dmg)
-        run: |
-          cd frontend
-          npm run desktop:build
-      - name: Attach installer to release
-        run: |
-          find frontend/release -type f \( -name "*.dmg" -o -name "*.zip" \) -exec gh release upload "$GITHUB_REF_NAME" {} --clobber \;
 
+      - name: Build frontend SPA (backend/static)
+        working-directory: frontend
+        run: npm install && npm run build
+
+      - name: Install backend deps
+        run: pip install -r requirements.txt pyinstaller
+
+      - name: Bundle engine
+        working-directory: backend
+        run: python -m PyInstaller devstat_engine.spec --noconfirm
+
+      - name: Bundle launcher
+        working-directory: desktop
+        run: python -m PyInstaller launcher.spec --noconfirm
+
+      - name: Package macOS .app zip
+        run: python desktop/package.py --os mac --engine-dir backend/dist/DevStatEngine --launcher desktop/dist/DevStatDesktopLauncher --out desktop/release
+
+      - name: Upload artifact
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh release upload "$GITHUB_REF_NAME" desktop/release/DevStat-Desktop-mac.zip --clobber

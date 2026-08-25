@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Risk, Odds & Diagnostic Tests — Medical Statistics | FRCR 1</title>
+  <link rel="stylesheet" href="css/medstat.css">
+</head>
+<body>
+  <nav class="navbar">
+    <div class="navbar-logo">
+      <span class="logo-main">FRCR 1</span>
+      <span class="logo-sub">· <a href="../FRCR1.html">Hub</a> · <a href="index.html">Medical Statistics</a> · Risk, Odds & Diagnostics</span>
+    </div>
+    <div class="navbar-badge">📊 Chapter 8</div>
+  </nav>
+
+  <div class="breadcrumb">
+    <a href="../FRCR1.html">Home</a><span class="sep">›</span>
+    <a href="index.html">Medical Statistics</a><span class="sep">›</span>
+    <span>Risk, Odds &amp; Diagnostic Tests</span>
+  </div>
+
+  <section class="hero" style="padding:32px 24px 20px;">
+    <div class="hero-inner">
+      <h1 style="font-size:1.8rem;">Risk, Odds &amp; Diagnostic Tests</h1>
+      <p>Absolute and relative risk, odds ratio, NNT, sensitivity, specificity, PPV, NPV, likelihood ratios, ROC curves, and AUC — GCSE to FRCR level.</p>
+    </div>
+  </section>
+
+  <div class="content">
+
+    <!-- ══════ TABS ══════ -->
+    <div class="tab-container">
+      <button class="tab active" data-tab="gcse">GCSE Level</button>
+      <button class="tab" data-tab="frcr">FRCR Level</button>
+      <button class="tab" data-tab="keyfacts">Key Facts</button>
+      <button class="tab" data-tab="clinical">Clinical Relevance</button>
+    </div>
+
+    <div class="tab-contents">
+
+      <!-- GCSE TAB -->
+      <div class="tab-content active" id="tab-gcse">
+        <div class="info-card">
+          <h3>Risk — The Basic Idea</h3>
+          <p><strong>Risk</strong> = number of people with the outcome / total number of people at risk.</p>
+          <p><strong>Absolute Risk Reduction (ARR)</strong> = Risk in control group − Risk in treatment group. If 20% of untreated patients have an event vs 12% of treated patients, ARR = 20% − 12% = 8%.</p>
+          <p><strong>Relative Risk (RR)</strong> = Risk in treatment group / Risk in control group. RR = 12%/20% = 0.60. The treatment reduces risk to 60% of the control risk (a 40% relative reduction).</p>
+          <p><strong>Number Needed to Treat (NNT)</strong> = 1 / ARR. NNT = 1/0.08 = 12.5 ≈ 13. You need to treat 13 patients to prevent one bad outcome.</p>
+          <div class="warning-box">
+            <strong>⚠️ Relative vs Absolute Risk</strong>
+            <div>A treatment may show a "50% relative risk reduction" but this could mean reducing risk from 2% to 1% (ARR = 1%, NNT = 100) or from 50% to 25% (ARR = 25%, NNT = 4). Always look at absolute risk, not just relative risk!</div>
+          </div>
+        </div>
+
+        <div class="info-card">
+          <h3>Diagnostic Test Performance</h3>
+          <p><strong>2×2 table</strong>: Test result (positive/negative) vs gold standard (disease present/absent).</p>
+          <ul>
+            <li><strong>Sensitivity</strong> = P(test + | disease +) = true positives / all diseased. "How good is the test at detecting disease?"</li>
+            <li><strong>Specificity</strong> = P(test − | disease −) = true negatives / all non-diseased. "How good is the test at ruling out disease?"</li>
+            <li><strong>PPV</strong> = P(disease + | test +) = true positives / all positive tests. Depends on disease prevalence.</li>
+            <li><strong>NPV</strong> = P(disease − | test −) = true negatives / all negative tests. Depends on disease prevalence.</li>
+          </ul>
+
+          <!-- 2×2 Diagnostic test table SVG -->
+          <div class="figure-container">
+            <svg viewBox="0 0 520 220" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:520px;display:block;margin:0 auto;">
+              <!-- Title -->
+              <text x="260" y="14" text-anchor="middle" font-size="11" font-weight="700" fill="#1e293b">2×2 Diagnostic Test Table</text>
+
+              <!-- Column headers -->
+              <rect x="150" y="22" width="140" height="28" rx="2" fill="#dbeafe" stroke="#3b82f6" stroke-width="1"/>
+              <text x="220" y="33" text-anchor="middle" font-size="8.5" font-weight="700" fill="#1d4ed8">Disease Present</text>
+              <text x="220" y="44" text-anchor="middle" font-size="8" fill="#1e40af">(Gold Standard +)</text>
+              <rect x="300" y="22" width="140" height="28" rx="2" fill="#fce7f3" stroke="#ec4899" stroke-width="1"/>
+              <text x="370" y="33" text-anchor="middle" font-size="8.5" font-weight="700" fill="#9d174d">Disease Absent</text>
+              <text x="370" y="44" text-anchor="middle" font-size="8" fill="#9d174d">(Gold Standard −)</text>
+              <rect x="450" y="22" width="60" height="28" rx="2" fill="#f1f5f9" stroke="#e2e8f0" stroke-width="1"/>
+              <text x="480" y="39" text-anchor="middle" font-size="8.5" font-weight="700" fill="#475569">Total</text>
+
+              <!-- Row headers -->
+              <rect x="20" y="52" width="128" height="55" rx="2" fill="#dbeafe" stroke="#3b82f6" stroke-width="1"/>
+              <text x="84" y="73" text-anchor="middle" font-size="9" font-weight="700" fill="#1d4ed8">Test Positive</text>
+              <rect x="20" y="109" width="128" height="55" rx="2" fill="#fce7f3" stroke="#ec4899" stroke-width="1"/>
+              <text x="84" y="130" text-anchor="middle" font-size="9" font-weight="700" fill="#9d174d">Test Negative</text>
+              <rect x="20" y="166" width="128" height="28" rx="2" fill="#f1f5f9" stroke="#e2e8f0" stroke-width="1"/>
+              <text x="84" y="183" text-anchor="middle" font-size="8.5" font-weight="700" fill="#475569">Total</text>
+
+              <!-- TP cell -->
+              <rect x="150" y="52" width="140" height="55" rx="2" fill="#dcfce7" stroke="#10b981" stroke-width="1.5"/>
+              <text x="220" y="70" text-anchor="middle" font-size="16" font-weight="700" fill="#065f46">TP</text>
+              <text x="220" y="85" text-anchor="middle" font-size="9" fill="#065f46">True Positive (a)</text>
+              <text x="220" y="99" text-anchor="middle" font-size="7.5" fill="#065f46">Test+ AND Disease+</text>
+
+              <!-- FP cell -->
+              <rect x="300" y="52" width="140" height="55" rx="2" fill="#fee2e2" stroke="#ef4444" stroke-width="1.5"/>
+              <text x="370" y="70" text-anchor="middle" font-size="16" font-weight="700" fill="#b91c1c">FP</text>
+              <text x="370" y="85" text-anchor="middle" font-size="9" fill="#b91c1c">False Positive (b)</text>
+              <text x="370" y="99" text-anchor="middle" font-size="7.5" fill="#b91c1c">Test+ BUT Disease−</text>
+
+              <!-- FN cell -->
+              <rect x="150" y="109" width="140" height="55" rx="2" fill="#fee2e2" stroke="#ef4444" stroke-width="1.5"/>
+              <text x="220" y="127" text-anchor="middle" font-size="16" font-weight="700" fill="#b91c1c">FN</text>
+              <text x="220" y="142" text-anchor="middle" font-size="9" fill="#b91c1c">False Negative (c)</text>
+              <text x="220" y="156" text-anchor="middle" font-size="7.5" fill="#b91c1c">Test− BUT Disease+</text>
+
+              <!-- TN cell -->
+              <rect x="300" y="109" width="140" height="55" rx="2" fill="#dcfce7" stroke="#10b981" stroke-width="1.5"/>
+              <text x="370" y="127" text-anchor="middle" font-size="16" font-weight="700" fill="#065f46">TN</text>
+              <text x="370" y="142" text-anchor="middle" font-size="9" fill="#065f46">True Negative (d)</text>
+              <text x="370" y="156" text-anchor="middle" font-size="7.5" fill="#065f46">Test− AND Disease−</text>
+
+              <!-- Row totals -->
+              <rect x="450" y="52" width="60" height="55" rx="2" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1"/>
+              <text x="480" y="80" text-anchor="middle" font-size="9" fill="#475569">a+b</text>
+              <rect x="450" y="109" width="60" height="55" rx="2" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1"/>
+              <text x="480" y="137" text-anchor="middle" font-size="9" fill="#475569">c+d</text>
+              <!-- Column totals -->
+              <rect x="150" y="166" width="140" height="28" rx="2" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1"/>
+              <text x="220" y="183" text-anchor="middle" font-size="9" fill="#475569">a+c (all diseased)</text>
+              <rect x="300" y="166" width="140" height="28" rx="2" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1"/>
+              <text x="370" y="183" text-anchor="middle" font-size="9" fill="#475569">b+d (all non-diseased)</text>
+              <rect x="450" y="166" width="60" height="28" rx="2" fill="#f1f5f9" stroke="#e2e8f0" stroke-width="1"/>
+              <text x="480" y="183" text-anchor="middle" font-size="9" font-weight="700" fill="#475569">n</text>
+
+              <!-- Formula row -->
+              <text x="260" y="205" text-anchor="middle" font-size="8" font-weight="700" fill="#1d4ed8">Sens = a/(a+c)  |  Spec = d/(b+d)  |  PPV = a/(a+b)  |  NPV = d/(c+d)</text>
+              <text x="260" y="216" text-anchor="middle" font-size="7.5" fill="#475569">SnOUT: high Sensitivity → Negative rules OUT  |  SpIN: high Specificity → Positive rules IN</text>
+            </svg>
+            <p class="figure-caption"><strong>Figure 1:</strong> The 2×2 diagnostic test table. TP/TN (green) are correct results; FP/FN (red) are errors. Sensitivity and specificity are prevalence-independent test properties. PPV and NPV depend on disease prevalence.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- FRCR TAB -->
+      <div class="tab-content" id="tab-frcr">
+        <div class="info-card">
+          <h3>Relative Risk & Odds Ratio — Complete Guide</h3>
+          <p>For a 2×2 table comparing two groups:</p>
+          <table style="width:100%;border-collapse:collapse;margin:10px 0;font-size:0.85rem;">
+            <thead>
+              <tr style="background:#f1f5f9;">
+                <th style="padding:6px 10px;border:1px solid #e2e8f0;"></th>
+                <th style="padding:6px 10px;border:1px solid #e2e8f0;">Event</th>
+                <th style="padding:6px 10px;border:1px solid #e2e8f0;">No Event</th>
+                <th style="padding:6px 10px;border:1px solid #e2e8f0;">Total</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td style="padding:6px 10px;border:1px solid #e2e8f0;">Treatment</td><td style="padding:6px 10px;border:1px solid #e2e8f0;">a</td><td style="padding:6px 10px;border:1px solid #e2e8f0;">b</td><td style="padding:6px 10px;border:1px solid #e2e8f0;">a+b</td></tr>
+              <tr><td style="padding:6px 10px;border:1px solid #e2e8f0;">Control</td><td style="padding:6px 10px;border:1px solid #e2e8f0;">c</td><td style="padding:6px 10px;border:1px solid #e2e8f0;">d</td><td style="padding:6px 10px;border:1px solid #e2e8f0;">c+d</td></tr>
+            </tbody>
+          </table>
+          <p><strong>Risk in treatment group</strong> = a/(a+b). <strong>Risk in control group</strong> = c/(c+d).</p>
+          <p><strong>Relative Risk (RR)</strong> = [a/(a+b)] / [c/(c+d)]. RR < 1 means treatment reduces risk.</p>
+          <p><strong>Odds Ratio (OR)</strong> = (a/b) / (c/d) = ad / bc. OR < 1 means treatment reduces odds.</p>
+          <p><strong>Relative Risk Reduction (RRR)</strong> = 1 − RR. Often expressed as percentage. "Treatment reduces risk by X% relative to control."</p>
+          <p><strong>Absolute Risk Reduction (ARR)</strong> = c/(c+d) − a/(a+b) = risk difference.</p>
+          <p><strong>Number Needed to Treat (NNT)</strong> = 1 / ARR. Always round up. NNT = 1/0.08 = 12.5 → 13.</p>
+          <p><strong>Number Needed to Harm (NNH)</strong> = 1 / (risk of adverse event in treatment group − risk in control group).</p>
+          <div class="warning-box">
+            <strong>⚠️ Exam Trap: OR vs RR</strong>
+            <div>When the outcome is COMMON (>10%), OR > RR. Example: event rate 40% in controls and 20% in treatment. RR = 0.20/0.40 = 0.50. OR = (0.2/0.8)/(0.4/0.6) = 0.25/0.67 = 0.375. The OR (0.375) substantially underestimates the effect compared to RR (0.50) when expressed as a "reduction." For rare outcomes (<10%), OR ≈ RR numerically.</div>
+          </div>
+        </div>
+
+        <div class="info-card">
+          <h3>Diagnostic Test Evaluation — Full Detail</h3>
+          <p><strong>Sensitivity</strong> = a / (a + c). A highly sensitive test rules OUT disease when negative (SnOUT). High sensitivity → few false negatives.</p>
+          <p><strong>Specificity</strong> = d / (b + d). A highly specific test rules IN disease when positive (SpIN). High specificity → few false positives.</p>
+          <p><strong>Positive Predictive Value (PPV)</strong> = a / (a + b). PPV depends on disease prevalence. PPV = (sensitivity × prevalence) / (sensitivity × prevalence + (1−specificity) × (1−prevalence)).</p>
+          <p><strong>Negative Predictive Value (NPV)</strong> = d / (c + d). NPV also depends on prevalence.</p>
+          <p><strong>Key point</strong>: PPV and NPV are <strong>prevalence-dependent</strong>. A test with 95% sensitivity and 95% specificity will have PPV = 95% if prevalence = 50%, but only PPV = 66% if prevalence = 20%. Always consider the disease prevalence in your population when interpreting PPV/NPV.</p>
+        </div>
+
+        <div class="info-card">
+          <h3>Likelihood Ratios</h3>
+          <p>Likelihood ratios are <strong>prevalence-independent</strong> measures of test performance — preferred over PPV/NPV for clinical decision-making.</p>
+          <p><strong>Positive Likelihood Ratio (LR+)</strong> = sensitivity / (1 − specificity). How much more likely is a positive test in diseased vs non-diseased patients? LR+ > 10 is strong evidence to rule in disease.</p>
+          <p><strong>Negative Likelihood Ratio (LR−)</strong> = (1 − sensitivity) / specificity. How much less likely is a negative test in diseased vs non-diseased patients? LR− < 0.1 is strong evidence to rule out disease.</p>
+          <p><strong>Using likelihood ratios with pre-test probability</strong>:</p>
+          <ol>
+            <li>Convert pre-test probability (prevalence) to pre-test odds: odds = p/(1−p).</li>
+            <li>Post-test odds = pre-test odds × LR.</li>
+            <li>Convert back to post-test probability: p = odds/(1+odds).</li>
+          </ol>
+          <p><strong>Fagan's nomogram</strong>: A graphical tool to estimate post-test probability given pre-test probability and LR. No calculation needed — aligns three points on a scale.</p>
+        </div>
+
+        <div class="info-card">
+          <h3>ROC Curves & AUC</h3>
+          <p><strong>ROC (Receiver Operating Characteristic) curve</strong>: Plots sensitivity (true positive rate) vs 1−specificity (false positive rate) across all possible threshold values of a continuous test. Each point on the curve represents a different cut-off.</p>
+          <p><strong>AUC (Area Under the Curve)</strong>:</p>
+          <ul>
+            <li>AUC = 1.0: perfect test (100% sensitivity, 100% specificity at some threshold).</li>
+            <li>AUC > 0.9: excellent diagnostic accuracy.</li>
+            <li>AUC 0.8–0.9: good diagnostic accuracy.</li>
+            <li>AUC 0.7–0.8: fair diagnostic accuracy.</li>
+            <li>AUC = 0.5: no better than chance (diagonal line).</li>
+          </ul>
+          <p><strong>Choosing the optimal threshold</strong>: The point on the ROC curve closest to the top-left corner (0,1) maximises sensitivity + specificity. Alternatively, choose the threshold that maximises the Youden index (J = sensitivity + specificity − 1).</p>
+          <p><strong>Comparing tests</strong>: AUC can be used to compare two diagnostic tests — larger AUC = better discrimination. Tests with partial AUC overlap may have different optimal uses (one may be better at ruling in, another at ruling out).</p>
+
+          <!-- ROC curve diagram -->
+          <div class="figure-container">
+            <svg viewBox="0 0 520 280" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:520px;display:block;margin:0 auto;">
+              <defs>
+                <marker id="roc-arr" markerWidth="7" markerHeight="7" refX="3.5" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 Z" fill="#475569"/></marker>
+              </defs>
+              <!-- Title -->
+              <text x="185" y="14" text-anchor="middle" font-size="11" font-weight="700" fill="#1e293b">ROC Curve — Sensitivity vs 1−Specificity</text>
+
+              <!-- Plot area -->
+              <!-- x: 50 to 300, y: 20 to 265 (245px = 100%) -->
+              <line x1="50" y1="265" x2="305" y2="265" stroke="#475569" stroke-width="1.5" marker-end="url(#roc-arr)"/>
+              <line x1="50" y1="265" x2="50" y2="18" stroke="#475569" stroke-width="1.5" marker-end="url(#roc-arr)"/>
+
+              <!-- Axis labels -->
+              <text x="178" y="277" text-anchor="middle" font-size="9" fill="#64748b">1 − Specificity (False Positive Rate)</text>
+              <text x="14" y="143" text-anchor="middle" font-size="9" fill="#64748b" transform="rotate(-90,14,143)">Sensitivity (True Positive Rate)</text>
+
+              <!-- Tick marks x-axis: 0, 0.25, 0.5, 0.75, 1.0 — each 0.25 = 62.5px -->
+              <line x1="50" y1="265" x2="50" y2="269" stroke="#94a3b8" stroke-width="1"/>
+              <text x="50" y="276" text-anchor="middle" font-size="7.5" fill="#64748b">0</text>
+              <line x1="112" y1="265" x2="112" y2="269" stroke="#94a3b8" stroke-width="1"/>
+              <text x="112" y="276" text-anchor="middle" font-size="7.5" fill="#64748b">0.25</text>
+              <line x1="175" y1="265" x2="175" y2="269" stroke="#94a3b8" stroke-width="1"/>
+              <text x="175" y="276" text-anchor="middle" font-size="7.5" fill="#64748b">0.5</text>
+              <line x1="237" y1="265" x2="237" y2="269" stroke="#94a3b8" stroke-width="1"/>
+              <text x="237" y="276" text-anchor="middle" font-size="7.5" fill="#64748b">0.75</text>
+              <line x1="300" y1="265" x2="300" y2="269" stroke="#94a3b8" stroke-width="1"/>
+              <text x="300" y="276" text-anchor="middle" font-size="7.5" fill="#64748b">1.0</text>
+
+              <!-- Tick marks y-axis: 0, 0.25, 0.5, 0.75, 1.0 -->
+              <line x1="46" y1="265" x2="50" y2="265" stroke="#94a3b8" stroke-width="1"/>
+              <text x="43" y="268" text-anchor="end" font-size="7.5" fill="#64748b">0</text>
+              <line x1="46" y1="204" x2="50" y2="204" stroke="#94a3b8" stroke-width="1"/>
+              <text x="43" y="207" text-anchor="end" font-size="7.5" fill="#64748b">0.25</text>
+              <line x1="46" y1="142" x2="50" y2="142" stroke="#94a3b8" stroke-width="1"/>
+              <text x="43" y="145" text-anchor="end" font-size="7.5" fill="#64748b">0.5</text>
+              <line x1="46" y1="81" x2="50" y2="81" stroke="#94a3b8" stroke-width="1"/>
+              <text x="43" y="84" text-anchor="end" font-size="7.5" fill="#64748b">0.75</text>
+              <line x1="46" y1="20" x2="50" y2="20" stroke="#94a3b8" stroke-width="1"/>
+              <text x="43" y="23" text-anchor="end" font-size="7.5" fill="#64748b">1.0</text>
+
+              <!-- Diagonal reference line (chance, AUC=0.5) -->
+              <line x1="50" y1="265" x2="300" y2="20" stroke="#94a3b8" stroke-width="1.5" stroke-dasharray="5,4"/>
+              <text x="240" y="95" font-size="7.5" fill="#94a3b8" transform="rotate(-44,220,105)">AUC = 0.5 (chance)</text>
+
+              <!-- AUC shade for excellent curve (fill first) -->
+              <path d="M50,265 Q55,240 60,200 Q65,140 70,80 Q80,40 100,28 Q130,22 175,20 Q220,20 270,50 Q290,70 300,265 Z"
+                    fill="#dbeafe" opacity="0.4"/>
+
+              <!-- Curve 1 (blue, AUC≈0.95) — hugs top-left -->
+              <path d="M50,265 Q55,240 60,200 Q65,140 70,80 Q80,40 100,28 Q130,22 175,20 Q220,20 270,50 Q290,70 300,265"
+                    fill="none" stroke="#3b82f6" stroke-width="2.5"/>
+              <text x="80" y="55" font-size="8.5" font-weight="700" fill="#1d4ed8">Excellent (AUC = 0.95)</text>
+
+              <!-- Curve 2 (teal, AUC≈0.80) -->
+              <path d="M50,265 Q60,230 75,185 Q90,145 115,100 Q140,68 170,52 Q200,38 240,32 Q270,28 300,265"
+                    fill="none" stroke="#0d9488" stroke-width="2.5"/>
+              <text x="145" y="80" font-size="8.5" font-weight="700" fill="#0f766e">Good (AUC = 0.80)</text>
+
+              <!-- Curve 3 (amber, AUC≈0.65) -->
+              <path d="M50,265 Q68,235 90,200 Q115,165 145,135 Q175,110 210,90 Q240,75 300,265"
+                    fill="none" stroke="#f59e0b" stroke-width="2.5"/>
+              <text x="185" y="110" font-size="8.5" font-weight="700" fill="#b45309">Fair (AUC = 0.65)</text>
+
+              <!-- Optimal threshold marker on teal (good) curve — approx x=85, y=155 -->
+              <circle cx="85" cy="155" r="7" fill="none" stroke="#0d9488" stroke-width="2"/>
+              <text cx="85" cy="155" text-anchor="middle" font-size="12" fill="#0d9488" x="85" y="159">★</text>
+              <text x="92" y="148" font-size="7.5" fill="#0f766e">Optimal threshold</text>
+              <text x="92" y="158" font-size="7.5" fill="#0f766e">(max Youden index)</text>
+
+              <!-- AUC legend -->
+              <rect x="315" y="20" width="195" height="200" rx="6" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1"/>
+              <text x="412" y="36" text-anchor="middle" font-size="9.5" font-weight="700" fill="#1e293b">AUC Scale</text>
+              <rect x="323" y="44" width="12" height="12" fill="#3b82f6"/>
+              <text x="340" y="54" font-size="9" fill="#475569">&gt; 0.9 — Excellent</text>
+              <rect x="323" y="62" width="12" height="12" fill="#0d9488"/>
+              <text x="340" y="72" font-size="9" fill="#475569">0.8–0.9 — Good</text>
+              <rect x="323" y="80" width="12" height="12" fill="#f59e0b"/>
+              <text x="340" y="90" font-size="9" fill="#475569">0.7–0.8 — Fair</text>
+              <rect x="323" y="98" width="12" height="12" fill="#ef4444"/>
+              <text x="340" y="108" font-size="9" fill="#475569">0.5–0.7 — Poor</text>
+              <rect x="323" y="116" width="12" height="12" fill="#94a3b8"/>
+              <text x="340" y="126" font-size="9" fill="#475569">= 0.5 — No better</text>
+              <text x="340" y="137" font-size="9" fill="#475569">than chance</text>
+              <line x1="323" y1="146" x2="502" y2="146" stroke="#e2e8f0" stroke-width="1"/>
+              <text x="412" y="160" text-anchor="middle" font-size="8.5" font-weight="700" fill="#0f766e">Youden Index</text>
+              <text x="412" y="173" text-anchor="middle" font-size="8" fill="#475569">J = Sensitivity</text>
+              <text x="412" y="184" text-anchor="middle" font-size="8" fill="#475569">+ Specificity − 1</text>
+              <text x="412" y="200" text-anchor="middle" font-size="7.5" fill="#64748b">★ = point closest</text>
+              <text x="412" y="211" text-anchor="middle" font-size="7.5" fill="#64748b">to top-left (0,1)</text>
+            </svg>
+            <p class="figure-caption"><strong>Figure 2:</strong> ROC curve plots sensitivity vs 1−specificity across all thresholds. AUC quantifies overall discrimination. ★ = optimal threshold (maximum Youden index = sensitivity + specificity − 1).</p>
+          </div>
+        </div>
+
+        <div class="info-card">
+          <h3>Agreement Between Tests</h3>
+          <p><strong>Cohen's Kappa (κ)</strong>: Measures agreement between two raters or two tests <strong>beyond chance</strong>.</p>
+          <p>κ = (observed agreement − expected agreement) / (1 − expected agreement).</p>
+          <p><strong>Interpretation</strong>:</p>
+          <ul>
+            <li>κ < 0: poor agreement (worse than chance).</li>
+            <li>κ 0.0–0.2: slight agreement.</li>
+            <li>κ 0.21–0.40: fair agreement.</li>
+            <li>κ 0.41–0.60: moderate agreement.</li>
+            <li>κ 0.61–0.80: substantial agreement.</li>
+            <li>κ 0.81–1.0: almost perfect agreement.</li>
+          </ul>
+          <p><strong>Weighted Kappa</strong>: For ordinal outcomes, accounts for degree of disagreement (a difference of 1 category is less serious than a difference of 3 categories).</p>
+          <p><strong>Bland-Altman plot</strong>: For continuous measurements, plots the difference between two measurements against their mean. Shows bias (mean difference) and limits of agreement (±1.96 × SD of differences). Used for method comparison studies.</p>
+        </div>
+      </div>
+
+      <!-- KEY FACTS TAB -->
+      <div class="tab-content" id="tab-keyfacts">
+        <div class="info-card">
+          <h3>Essential Exam Facts</h3>
+          <div class="key-facts-grid">
+            <div class="fact-item">RR = risk_treated / risk_control. RR < 1 = protective effect.</div>
+            <div class="fact-item">OR = (a/b)/(c/d) = ad/bc. OR ≈ RR only for rare outcomes (<10%).</div>
+            <div class="fact-item">ARR = risk_control − risk_treated. NNT = 1/ARR (round up).</div>
+            <div class="fact-item">RRR = 1 − RR. Misleading when baseline risk is low.</div>
+            <div class="fact-item">Sensitivity = TP/all diseased. SnOUT: high sensitivity → negative test rules OUT disease.</div>
+            <div class="fact-item">Specificity = TN/all non-diseased. SpIN: high specificity → positive test rules IN disease.</div>
+            <div class="fact-item">PPV and NPV are PREVALENCE-DEPENDENT. LR+ and LR− are not.</div>
+            <div class="fact-item">LR+ = sens/(1−spec). >10 = strong rule-in evidence.</div>
+            <div class="fact-item">LR− = (1−sens)/spec. <0.1 = strong rule-out evidence.</div>
+            <div class="fact-item">AUC: >0.9 excellent, 0.8–0.9 good, 0.7–0.8 fair, 0.5 = chance.</div>
+            <div class="fact-item">Cohen's Kappa: agreement beyond chance. 0.61+ = substantial.</div>
+          </div>
+        </div>
+
+        <div class="warning-box">
+          <strong>⚠️ Common Exam Traps</strong>
+          <div>• "50% relative risk reduction" from 2% to 1% gives ARR = 1%, NNT = 100 — not impressive!</div>
+          <div>• PPV decreases as prevalence decreases — a positive test in a low-prevalence population is more likely to be false positive.</div>
+          <div>• AUC = 0.5 means the test is no better than flipping a coin — not "no discrimination at all."</div>
+          <div>• Kappa can be low even with high observed agreement if the expected agreement is also high (prevalence bias).</div>
+          <div>• OR is NOT the same as RR — do not interpret OR as "X times more likely" unless the outcome is rare.</div>
+        </div>
+      </div>
+
+      <!-- CLINICAL TAB -->
+      <div class="tab-content" id="tab-clinical">
+        <div class="clinical-box">
+          <strong>🏥 Why This Matters Clinically</strong>
+          <div>
+            <p><strong>Interpreting trial results with patients</strong>: When discussing treatment benefits with patients, NNT is the most clinically intuitive measure. "You would need to treat 13 patients like you to prevent one heart attack" is more meaningful than "the hazard ratio was 0.75."</p>
+            <p><strong>Screening programmes</strong>: PPV is critical in screening — even with a highly sensitive/specific test, PPV may be low in a low-prevalence screening population. This explains why mass screening for rare diseases produces many false positives.</p>
+            <p><strong>Choosing diagnostic tests</strong>: A high-sensitivity test (LR− low) is best for ruling out disease (screening). A high-specificity test (LR+ high) is best for confirming disease after a positive screening result.</p>
+            <p><strong>Risk communication</strong>: Relative risk reductions are commonly reported in the media and even in medical journals because they sound more impressive. Always convert to ARR and NNT to understand the actual clinical impact. The FRCR exam frequently tests this distinction.</p>
+            <p><strong>Critical appraisal</strong>: When reading a diagnostic test study: (1) Was the test compared to an appropriate gold standard? (2) Was the test evaluated in the relevant clinical population (not a case-control sample that inflates accuracy)? (3) Are PPV/NPV reported with prevalence? (4) Is the ROC curve shown with AUC? (5) Are LRs reported for different thresholds?</p>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /tab-contents -->
+
+    <!-- ══════ WORKED EXAMPLES ══════ -->
+    <div class="section-label"><h2>📐 Worked Examples</h2><div class="section-divider"></div></div>
+
+    <div class="accordion">
+      <button class="accordion-btn">RR, ARR and NNT Calculation</button>
+      <div class="accordion-panel">
+        <div class="accordion-inner">
+          <p><strong>Scenario:</strong> A trial of a new drug reports: mortality 8% in drug group vs 20% in placebo group. Calculate RR, RRR, ARR and NNT.</p>
+          <p><strong>Solution:</strong></p>
+          <p>RR = 0.08 / 0.20 = 0.40. The drug reduces risk to 40% of placebo (60% relative reduction).</p>
+          <p>RRR = 1 − 0.40 = 0.60 = 60%. This sounds impressive.</p>
+          <p>ARR = 0.20 − 0.08 = 0.12 = 12%. The absolute benefit is 12 percentage points.</p>
+          <p>NNT = 1 / 0.12 = 8.3 → 9. You need to treat 9 patients with the drug to prevent one death.</p>
+          <p><strong>Clinical interpretation:</strong> The 60% relative risk reduction sounds dramatic, but the ARR tells you the absolute benefit is modest — 12 out of 100 patients benefit. The NNT of 9 is reasonably good (many effective cancer treatments have NNT > 20).</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="accordion">
+      <button class="accordion-btn">PPV, NPV, and Disease Prevalence</button>
+      <div class="accordion-panel">
+        <div class="accordion-inner">
+          <p><strong>Scenario:</strong> A new CT screening test for lung cancer has 90% sensitivity and 95% specificity. Prevalence of lung cancer in the screening population is 2%. Calculate PPV and NPV.</p>
+          <p><strong>Solution:</strong> Assume 10,000 people screened. Disease present: 200 (2%). Test positive: 180 TP (0.9 × 200) + 490 FP (0.05 × 9,800) = 670 positive tests. PPV = 180/670 = 26.9%. Only 27% of positive tests are true positives!</p>
+          <p>NPV = 9,310 / 9,330 = 99.8% (9,800−490 = 9,310 true negatives; 200−180 = 20 false negatives). A negative result is highly reassuring.</p>
+          <p><strong>Key insight:</strong> Even with good sensitivity and specificity, PPV in screening is low due to low prevalence. This is why screening tests need very high specificity (>99%) to avoid overwhelming false positives.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="accordion">
+      <button class="accordion-btn">Using Likelihood Ratios — Fagan's Nomogram</button>
+      <div class="accordion-panel">
+        <div class="accordion-inner">
+          <p><strong>Scenario:</strong> A patient has a pre-test probability of pulmonary embolism of 15%. A D-dimer test has LR+ = 2.5 and LR− = 0.1. Calculate the post-test probability after a positive and negative result.</p>
+          <p><strong>Solution:</strong> Pre-test odds = 0.15/(1−0.15) = 0.176.</p>
+          <p>After positive test: post-test odds = 0.176 × 2.5 = 0.44. Post-test probability = 0.44/(1+0.44) = 0.31 = 31%.</p>
+          <p>After negative test: post-test odds = 0.176 × 0.1 = 0.0176. Post-test probability = 0.0176/1.0176 = 1.7%.</p>
+          <p><strong>Clinical interpretation:</strong> A positive D-dimer only raises PE probability from 15% to 31% — not enough to confirm PE. A negative D-dimer lowers probability to 1.7% — very good at ruling out PE (this is why D-dimer is used as a rule-out test in suspected PE).</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════ ACTIVE RECALL ══════ -->
+    <div class="section-label"><h2>🧠 Active Recall Questions</h2><div class="section-divider"></div></div>
+
+    <ul class="recall-list">
+      <li class="recall-item"><div class="q">Q: What is the difference between relative risk reduction and absolute risk reduction?</div><div class="a">A: RRR = (risk_control − risk_treated)/risk_control. ARR = risk_control − risk_treated. RRR is independent of baseline risk; ARR depends on baseline risk. Always check ARR to understand clinical impact.</div></li>
+      <li class="recall-item"><div class="q">Q: Why do PPV and NPV depend on disease prevalence?</div><div class="a">A: PPV = TP/(TP+FP). As prevalence decreases, FP increases (because more non-diseased people are tested), so PPV decreases. NPV = TN/(TN+FN). As prevalence decreases, TN increases, so NPV increases.</div></li>
+      <li class="recall-item"><div class="q">Q: What are the advantages of likelihood ratios over PPV/NPV?</div><div class="a">A: LR+ and LR− are prevalence-independent (intrinsic properties of the test). They allow calculation of post-test probability from pre-test probability, which can be tailored to individual patients.</div></li>
+      <li class="recall-item"><div class="q">Q: What does AUC measure and what is the interpretation?</div><div class="a">A: AUC = probability that a randomly selected diseased patient has a higher test value than a randomly selected non-diseased patient. >0.9 excellent, 0.8–0.9 good, 0.7–0.8 fair, 0.5 = chance.</div></li>
+      <li class="recall-item"><div class="q">Q: What does Cohen's Kappa measure?</div><div class="a">A: Agreement between two raters/tests beyond chance. κ = (observed − expected) / (1 − expected). 0.61–0.80 = substantial agreement.</div></li>
+    </ul>
+
+    <!-- ══════ GLOSSARY ══════ -->
+    <div class="glossary-panel">
+      <h3>📖 Glossary</h3>
+      <div class="glossary-grid">
+        <div class="glossary-item"><div class="term">Relative Risk (RR)</div><div class="def">Risk ratio: risk_treated / risk_control.</div></div>
+        <div class="glossary-item"><div class="term">Absolute Risk Reduction (ARR)</div><div class="def">Risk difference: risk_control − risk_treated.</div></div>
+        <div class="glossary-item"><div class="term">Number Needed to Treat (NNT)</div><div class="def">1/ARR. Number of patients who must be treated to prevent one event.</div></div>
+        <div class="glossary-item"><div class="term">Odds Ratio (OR)</div><div class="def">ad/bc from 2×2 table. ≠ RR when outcome is common.</div></div>
+        <div class="glossary-item"><div class="term">Sensitivity</div><div class="def">TP / (TP+FN). SnOUT. Probability of positive test given disease.</div></div>
+        <div class="glossary-item"><div class="term">Specificity</div><div class="def">TN / (TN+FP). SpIN. Probability of negative test given no disease.</div></div>
+        <div class="glossary-item"><div class="term">PPV</div><div class="def">TP / (TP+FP). Probability of disease given positive test. Prevalence-dependent.</div></div>
+        <div class="glossary-item"><div class="term">NPV</div><div class="def">TN / (TN+FN). Probability of no disease given negative test. Prevalence-dependent.</div></div>
+        <div class="glossary-item"><div class="term">LR+</div><div class="def">Sensitivity / (1−Specificity). >10 = strong rule-in.</div></div>
+        <div class="glossary-item"><div class="term">LR−</div><div class="def">(1−Sensitivity) / Specificity. <0.1 = strong rule-out.</div></div>
+        <div class="glossary-item"><div class="term">ROC curve</div><div class="def">Sensitivity vs 1−Specificity across thresholds. AUC = discrimination.</div></div>
+        <div class="glossary-item"><div class="term">Cohen's Kappa</div><div class="def">Agreement beyond chance between two raters/tests.</div></div>
+        <div class="glossary-item"><div class="term">Bland-Altman</div><div class="def">Plots difference vs mean of two measurements. Bias + limits of agreement.</div></div>
+      </div>
+    </div>
+
+  </div><!-- /content -->
+
+  <footer class="footer">
+    <div class="footer-inner">
+      <div>© 2025 FRCR 1 Study Hub</div>
+      <div class="footer-right">For educational use only · Not for clinical decisions</div>
+    </div>
+  </footer>
+
+  <script src="js/radbio.js"></script>
+</body>
+</html>

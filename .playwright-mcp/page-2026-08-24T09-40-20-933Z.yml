@@ -1,0 +1,563 @@
+- generic [ref=f35e3]:
+  - banner [ref=f35e4]:
+    - generic [ref=f35e5] [cursor=pointer]:
+      - img "radar-chart" [ref=f35e7]
+      - generic [ref=f35e11]:
+        - generic [ref=f35e12]: DevStat
+        - generic [ref=f35e13]: Medical Statistics
+    - generic [ref=f35e14]:
+      - img "save" [ref=f35e16] [cursor=pointer]
+      - img "folder-open" [ref=f35e20] [cursor=pointer]
+    - generic [ref=f35e23]:
+      - img "undo" [ref=f35e25]
+      - img "redo" [ref=f35e29]
+    - generic [ref=f35e32]:
+      - button "user devstat.e2e.20260824@example.com" [ref=f35e34] [cursor=pointer]:
+        - img "user" [ref=f35e36]
+        - generic [ref=f35e39]: devstat.e2e.20260824@example.com
+      - button "crown Upgrade" [ref=f35e41] [cursor=pointer]:
+        - img "crown" [ref=f35e43]
+        - generic [ref=f35e46]: Upgrade
+      - img "question-circle" [ref=f35e48] [cursor=pointer]
+      - img "question-circle" [ref=f35e53] [cursor=pointer]
+  - menu [ref=f35e58]:
+    - menuitem [ref=f35e59] [cursor=pointer]:
+      - img "table" [ref=f35e60]
+      - text: Data
+    - menuitem [ref=f35e63] [cursor=pointer]:
+      - img "fund" [ref=f35e64]
+      - text: Analyze
+    - menuitem [ref=f35e67] [cursor=pointer]:
+      - img "apartment" [ref=f35e68]
+      - text: Survival
+    - menuitem [ref=f35e71] [cursor=pointer]:
+      - img "bar-chart" [ref=f35e72]
+      - text: Graphs
+    - menuitem [ref=f35e75] [cursor=pointer]:
+      - img "question-circle" [ref=f35e76]
+      - text: Wizard
+    - menuitem [ref=f35e80] [cursor=pointer]:
+      - img "file-text" [ref=f35e81]
+      - text: Output
+    - menuitem [disabled]
+  - alert [ref=f35e93]:
+    - img "exclamation-circle" [ref=f35e94]
+    - generic [ref=f35e97]:
+      - generic [ref=f35e98]: Online demo — exam practice only
+      - generic [ref=f35e99]: This online version runs on a shared public server. Use it for exam practice with the synthetic practice data only. Do NOT upload real, identifiable or confidential patient data — for real (anonymised) analysis, use the offline desktop app.
+  - main [ref=f35e84]:
+    - generic [ref=f35e100]:
+      - generic [ref=f35e103]:
+        - button "upload Upload Data" [active] [ref=f35e108] [cursor=pointer]:
+          - img "upload" [ref=f35e110]
+          - generic [ref=f35e113]: Upload Data
+        - button "download Download" [ref=f35e115] [cursor=pointer]:
+          - img "download" [ref=f35e117]
+          - generic [ref=f35e120]: Download
+        - button "reload Refresh" [ref=f35e122] [cursor=pointer]:
+          - img "reload" [ref=f35e124]
+          - generic [ref=f35e127]: Refresh
+        - button "undo Undo" [ref=f35e129] [cursor=pointer]:
+          - img "undo" [ref=f35e131]
+          - generic [ref=f35e134]: Undo
+        - button "redo Redo" [ref=f35e136] [cursor=pointer]:
+          - img "redo" [ref=f35e138]
+          - generic [ref=f35e141]: Redo
+        - button "plus Add Col" [ref=f35e145] [cursor=pointer]:
+          - img "plus" [ref=f35e147]
+          - generic [ref=f35e151]: Add Col
+        - button "delete Del Col" [ref=f35e153] [cursor=pointer]:
+          - img "delete" [ref=f35e155]
+          - generic [ref=f35e158]: Del Col
+        - button "calculator Compute" [ref=f35e162] [cursor=pointer]:
+          - img "calculator" [ref=f35e164]
+          - generic [ref=f35e167]: Compute
+        - button "swap Recode" [ref=f35e169] [cursor=pointer]:
+          - img "swap" [ref=f35e171]
+          - generic [ref=f35e174]: Recode
+        - button "Clear" [ref=f35e178] [cursor=pointer]
+      - generic [ref=f35e182]:
+        - tablist [ref=f35e183]:
+          - generic [ref=f35e185]:
+            - tab [selected] [ref=f35e187] [cursor=pointer]:
+              - generic [ref=f35e188]:
+                - img "table" [ref=f35e189]
+                - text: Data View
+            - tab [ref=f35e193] [cursor=pointer]:
+              - generic [ref=f35e194]:
+                - img "column-height" [ref=f35e195]
+                - text: Variable View
+        - tabpanel "table Data View" [ref=f35e200]:
+          - generic [ref=f35e695]:
+            - generic [ref=f35e696]: 1 to 100 of 100. Page 1 of 1
+            - grid [ref=f35e697]:
+              - rowgroup [ref=f35e698]:
+                - row [ref=f35e699]:
+                  - columnheader "patient_id" [ref=f35e700]:
+                    - generic [ref=f35e702] [cursor=pointer]: 
+                    - generic:      
+                  - columnheader "age" [ref=f35e704]:
+                    - generic [ref=f35e706] [cursor=pointer]: 
+                    - generic:      
+                  - columnheader "gender" [ref=f35e708]:
+                    - generic [ref=f35e710] [cursor=pointer]: 
+                    - generic:      
+                  - columnheader "bmi" [ref=f35e712]:
+                    - generic [ref=f35e714] [cursor=pointer]: 
+                    - generic:      
+                  - columnheader "systolic_bp" [ref=f35e716]:
+                    - generic [ref=f35e718] [cursor=pointer]: 
+                    - generic:      
+                  - columnheader "diastolic_bp" [ref=f35e720]:
+                    - generic [ref=f35e722] [cursor=pointer]: 
+                    - generic:      
+                  - columnheader "cholesterol" [ref=f35e724]:
+                    - generic [ref=f35e726] [cursor=pointer]: 
+                    - generic:      
+                  - columnheader "smoking_status" [ref=f35e728]:
+                    - generic [ref=f35e730] [cursor=pointer]: 
+                    - generic:      
+                  - columnheader "diabetes" [ref=f35e732]:
+                    - generic [ref=f35e734] [cursor=pointer]: 
+                    - generic:      
+                  - columnheader "treatment_group" [ref=f35e736]:
+                    - generic [ref=f35e738] [cursor=pointer]: 
+                    - generic:      
+                  - columnheader "outcome" [ref=f35e740]:
+                    - generic [ref=f35e742] [cursor=pointer]: 
+                    - generic:      
+                  - columnheader "pain_score" [ref=f35e744]:
+                    - generic [ref=f35e746] [cursor=pointer]: 
+                    - generic:      
+                  - columnheader "satisfaction" [ref=f35e748]:
+                    - generic [ref=f35e750] [cursor=pointer]: 
+                    - generic:      
+                  - columnheader "quality_of_life" [ref=f35e752]:
+                    - generic [ref=f35e754] [cursor=pointer]: 
+                    - generic:      
+                  - columnheader "exercise_freq" [ref=f35e756]:
+                    - generic [ref=f35e758] [cursor=pointer]: 
+                    - generic:      
+                  - columnheader "admission_date" [ref=f35e760]:
+                    - generic [ref=f35e762] [cursor=pointer]: 
+                    - generic:      
+                  - columnheader "discharge_date" [ref=f35e764]:
+                    - generic [ref=f35e766] [cursor=pointer]: 
+                    - generic:      
+              - rowgroup [ref=f35e768]:
+                - row [ref=f35e769]:
+                  - gridcell "P001" [ref=f35e770]
+                  - gridcell "32" [ref=f35e771]
+                  - gridcell "Male" [ref=f35e772]
+                  - gridcell "26.8" [ref=f35e773]
+                  - gridcell "119" [ref=f35e774]
+                  - gridcell "85" [ref=f35e775]
+                  - gridcell "5.63" [ref=f35e776]
+                  - gridcell "Non-smoker" [ref=f35e777]
+                  - gridcell "No" [ref=f35e778]
+                  - gridcell "Drug B" [ref=f35e779]
+                  - gridcell "Improved" [ref=f35e780]
+                  - gridcell "0" [ref=f35e781]
+                  - gridcell "1" [ref=f35e782]
+                  - gridcell "77.1" [ref=f35e783]
+                  - gridcell "Weekly" [ref=f35e784]
+                  - gridcell "2024-01-18" [ref=f35e785]
+                  - gridcell "2024-01-22" [ref=f35e786]
+                - row [ref=f35e787]:
+                  - gridcell "P002" [ref=f35e788]
+                  - gridcell "44" [ref=f35e789]
+                  - gridcell "Female" [ref=f35e790]
+                  - gridcell "24.7" [ref=f35e791]
+                  - gridcell "108" [ref=f35e792]
+                  - gridcell "95" [ref=f35e793]
+                  - gridcell "5.94" [ref=f35e794]
+                  - gridcell "Non-smoker" [ref=f35e795]
+                  - gridcell "No" [ref=f35e796]
+                  - gridcell "Drug B" [ref=f35e797]
+                  - gridcell "Improved" [ref=f35e798]
+                  - gridcell "6" [ref=f35e799]
+                  - gridcell "3" [ref=f35e800]
+                  - gridcell "93.5" [ref=f35e801]
+                  - gridcell "Weekly" [ref=f35e802]
+                  - gridcell "2024-02-22" [ref=f35e803]
+                  - gridcell "2024-02-28" [ref=f35e804]
+                - row [ref=f35e805]:
+                  - gridcell "." [ref=f35e806]
+                  - gridcell "32" [ref=f35e807]
+                  - gridcell "Male" [ref=f35e808]
+                  - gridcell "27" [ref=f35e809]
+                  - gridcell "104" [ref=f35e810]
+                  - gridcell "78" [ref=f35e811]
+                  - gridcell "6.04" [ref=f35e812]
+                  - gridcell "Ex-smoker" [ref=f35e813]
+                  - gridcell "Yes" [ref=f35e814]
+                  - gridcell "Drug A" [ref=f35e815]
+                  - gridcell "Improved" [ref=f35e816]
+                  - gridcell "8" [ref=f35e817]
+                  - gridcell "2" [ref=f35e818]
+                  - gridcell "55.5" [ref=f35e819]
+                  - gridcell "Daily" [ref=f35e820]
+                  - gridcell "2024-03-27" [ref=f35e821]
+                  - gridcell "2024-04-07" [ref=f35e822]
+                - row [ref=f35e823]:
+                  - gridcell "P004" [ref=f35e824]
+                  - gridcell "33" [ref=f35e825]
+                  - gridcell "Female" [ref=f35e826]
+                  - gridcell "27.7" [ref=f35e827]
+                  - gridcell "143" [ref=f35e828]
+                  - gridcell "76" [ref=f35e829]
+                  - gridcell "4.74" [ref=f35e830]
+                  - gridcell "Ex-smoker" [ref=f35e831]
+                  - gridcell "No" [ref=f35e832]
+                  - gridcell "Drug A" [ref=f35e833]
+                  - gridcell "Improved" [ref=f35e834]
+                  - gridcell "3" [ref=f35e835]
+                  - gridcell "1" [ref=f35e836]
+                  - gridcell "97.8" [ref=f35e837]
+                  - gridcell "Daily" [ref=f35e838]
+                  - gridcell "2024-05-08" [ref=f35e839]
+                  - gridcell "2024-05-13" [ref=f35e840]
+                - row [ref=f35e841]:
+                  - gridcell "P005" [ref=f35e842]
+                  - gridcell "98" [ref=f35e843]
+                  - gridcell "Male" [ref=f35e844]
+                  - gridcell "45" [ref=f35e845]
+                  - gridcell "210" [ref=f35e846]
+                  - gridcell "79" [ref=f35e847]
+                  - gridcell "5.44" [ref=f35e848]
+                  - gridcell "Non-smoker" [ref=f35e849]
+                  - gridcell "No" [ref=f35e850]
+                  - gridcell "Drug A" [ref=f35e851]
+                  - gridcell "Improved" [ref=f35e852]
+                  - gridcell "7" [ref=f35e853]
+                  - gridcell "3" [ref=f35e854]
+                  - gridcell "20.5" [ref=f35e855]
+                  - gridcell "Weekly" [ref=f35e856]
+                  - gridcell "2024-06-23" [ref=f35e857]
+                  - gridcell "2024-07-01" [ref=f35e858]
+                - row [ref=f35e859]:
+                  - gridcell "P006" [ref=f35e860]
+                  - gridcell "76" [ref=f35e861]
+                  - gridcell "Male" [ref=f35e862]
+                  - gridcell "43.7" [ref=f35e863]
+                  - gridcell "130" [ref=f35e864]
+                  - gridcell "88" [ref=f35e865]
+                  - gridcell "5.57" [ref=f35e866]
+                  - gridcell "Smoker" [ref=f35e867]
+                  - gridcell "No" [ref=f35e868]
+                  - gridcell "Placebo" [ref=f35e869]
+                  - gridcell "Improved" [ref=f35e870]
+                  - gridcell "3" [ref=f35e871]
+                  - gridcell "3" [ref=f35e872]
+                  - gridcell "60.3" [ref=f35e873]
+                  - gridcell "Weekly" [ref=f35e874]
+                  - gridcell "2024-06-10" [ref=f35e875]
+                  - gridcell "2024-06-20" [ref=f35e876]
+                - row [ref=f35e877]:
+                  - gridcell "P007" [ref=f35e878]
+                  - gridcell "73" [ref=f35e879]
+                  - gridcell "Female" [ref=f35e880]
+                  - gridcell "31.6" [ref=f35e881]
+                  - gridcell "134" [ref=f35e882]
+                  - gridcell "106" [ref=f35e883]
+                  - gridcell "3.89" [ref=f35e884]
+                  - gridcell "Non-smoker" [ref=f35e885]
+                  - gridcell "No" [ref=f35e886]
+                  - gridcell "Drug B" [ref=f35e887]
+                  - gridcell "Not improved" [ref=f35e888]
+                  - gridcell "10" [ref=f35e889]
+                  - gridcell "1" [ref=f35e890]
+                  - gridcell "49.5" [ref=f35e891]
+                  - gridcell "." [ref=f35e892]
+                  - gridcell "2024-05-24" [ref=f35e893]
+                  - gridcell "2024-05-27" [ref=f35e894]
+                - row [ref=f35e895]:
+                  - gridcell "P008" [ref=f35e896]
+                  - gridcell "51" [ref=f35e897]
+                  - gridcell "Male" [ref=f35e898]
+                  - gridcell "31.1" [ref=f35e899]
+                  - gridcell "140" [ref=f35e900]
+                  - gridcell "81" [ref=f35e901]
+                  - gridcell "4.17" [ref=f35e902]
+                  - gridcell "Non-smoker" [ref=f35e903]
+                  - gridcell "No" [ref=f35e904]
+                  - gridcell "Drug A" [ref=f35e905]
+                  - gridcell "Improved" [ref=f35e906]
+                  - gridcell "9" [ref=f35e907]
+                  - gridcell "2" [ref=f35e908]
+                  - gridcell "64.1" [ref=f35e909]
+                  - gridcell "Daily" [ref=f35e910]
+                  - gridcell "2024-05-26" [ref=f35e911]
+                  - gridcell "2024-06-04" [ref=f35e912]
+                - row [ref=f35e913]:
+                  - gridcell "P009" [ref=f35e914]
+                  - gridcell "29" [ref=f35e915]
+                  - gridcell "Female" [ref=f35e916]
+                  - gridcell "25.3" [ref=f35e917]
+                  - gridcell "121" [ref=f35e918]
+                  - gridcell "83" [ref=f35e919]
+                  - gridcell "5.45" [ref=f35e920]
+                  - gridcell "Ex-smoker" [ref=f35e921]
+                  - gridcell "Yes" [ref=f35e922]
+                  - gridcell "Drug B" [ref=f35e923]
+                  - gridcell "Improved" [ref=f35e924]
+                  - gridcell "7" [ref=f35e925]
+                  - gridcell "4" [ref=f35e926]
+                  - gridcell "84.8" [ref=f35e927]
+                  - gridcell "Daily" [ref=f35e928]
+                  - gridcell "2024-06-13" [ref=f35e929]
+                  - gridcell "2024-06-21" [ref=f35e930]
+                - row [ref=f35e931]:
+                  - gridcell "P010" [ref=f35e932]
+                  - gridcell "28" [ref=f35e933]
+                  - gridcell "." [ref=f35e934]
+                  - gridcell "29.9" [ref=f35e935]
+                  - gridcell "142" [ref=f35e936]
+                  - gridcell "86" [ref=f35e937]
+                  - gridcell "5.88" [ref=f35e938]
+                  - gridcell "Non-smoker" [ref=f35e939]
+                  - gridcell "Yes" [ref=f35e940]
+                  - gridcell "Placebo" [ref=f35e941]
+                  - gridcell "." [ref=f35e942]
+                  - gridcell "7" [ref=f35e943]
+                  - gridcell "4" [ref=f35e944]
+                  - gridcell "." [ref=f35e945]
+                  - gridcell "Never" [ref=f35e946]
+                  - gridcell "2024-05-23" [ref=f35e947]
+                  - gridcell "2024-05-24" [ref=f35e948]
+                - row [ref=f35e949]:
+                  - gridcell "P011" [ref=f35e950]
+                  - gridcell "24" [ref=f35e951]
+                  - gridcell "Female" [ref=f35e952]
+                  - gridcell "27.3" [ref=f35e953]
+                  - gridcell "136" [ref=f35e954]
+                  - gridcell "85" [ref=f35e955]
+                  - gridcell "5.11" [ref=f35e956]
+                  - gridcell "Non-smoker" [ref=f35e957]
+                  - gridcell "No" [ref=f35e958]
+                  - gridcell "Drug B" [ref=f35e959]
+                  - gridcell "Improved" [ref=f35e960]
+                  - gridcell "9" [ref=f35e961]
+                  - gridcell "2" [ref=f35e962]
+                  - gridcell "66.6" [ref=f35e963]
+                  - gridcell "Daily" [ref=f35e964]
+                  - gridcell "2024-05-07" [ref=f35e965]
+                  - gridcell "2024-05-15" [ref=f35e966]
+                - row [ref=f35e967]:
+                  - gridcell "P012" [ref=f35e968]
+                  - gridcell "40" [ref=f35e969]
+                  - gridcell "Male" [ref=f35e970]
+                  - gridcell "30.9" [ref=f35e971]
+                  - gridcell "127" [ref=f35e972]
+                  - gridcell "86" [ref=f35e973]
+                  - gridcell "3.81" [ref=f35e974]
+                  - gridcell "Non-smoker" [ref=f35e975]
+                  - gridcell "Yes" [ref=f35e976]
+                  - gridcell "Drug A" [ref=f35e977]
+                  - gridcell "Not improved" [ref=f35e978]
+                  - gridcell "4" [ref=f35e979]
+                  - gridcell "3" [ref=f35e980]
+                  - gridcell "87.5" [ref=f35e981]
+                  - gridcell "Daily" [ref=f35e982]
+                  - gridcell "." [ref=f35e983]
+                  - gridcell "2024-03-19" [ref=f35e984]
+                - row [ref=f35e985]:
+                  - gridcell "P013" [ref=f35e986]
+                  - gridcell "47" [ref=f35e987]
+                  - gridcell "Male" [ref=f35e988]
+                  - gridcell "26.2" [ref=f35e989]
+                  - gridcell "117" [ref=f35e990]
+                  - gridcell "81" [ref=f35e991]
+                  - gridcell "2.26" [ref=f35e992]
+                  - gridcell "Ex-smoker" [ref=f35e993]
+                  - gridcell "No" [ref=f35e994]
+                  - gridcell "Drug B" [ref=f35e995]
+                  - gridcell "Improved" [ref=f35e996]
+                  - gridcell "4" [ref=f35e997]
+                  - gridcell "5" [ref=f35e998]
+                  - gridcell "89.1" [ref=f35e999]
+                  - gridcell "Rarely" [ref=f35e1000]
+                  - gridcell "2024-01-27" [ref=f35e1001]
+                  - gridcell "2024-01-31" [ref=f35e1002]
+                - row [ref=f35e1003]:
+                  - gridcell "P014" [ref=f35e1004]
+                  - gridcell "74" [ref=f35e1005]
+                  - gridcell "Female" [ref=f35e1006]
+                  - gridcell "36.7" [ref=f35e1007]
+                  - gridcell "95" [ref=f35e1008]
+                  - gridcell "77" [ref=f35e1009]
+                  - gridcell "6.77" [ref=f35e1010]
+                  - gridcell "Non-smoker" [ref=f35e1011]
+                  - gridcell "No" [ref=f35e1012]
+                  - gridcell "Drug B" [ref=f35e1013]
+                  - gridcell "Not improved" [ref=f35e1014]
+                  - gridcell "4" [ref=f35e1015]
+                  - gridcell "1" [ref=f35e1016]
+                  - gridcell "71.8" [ref=f35e1017]
+                  - gridcell "Daily" [ref=f35e1018]
+                  - gridcell "2024-02-01" [ref=f35e1019]
+                  - gridcell "2024-02-08" [ref=f35e1020]
+                - row [ref=f35e1021]:
+                  - gridcell "P015" [ref=f35e1022]
+                  - gridcell "20" [ref=f35e1023]
+                  - gridcell "Female" [ref=f35e1024]
+                  - gridcell "19.5" [ref=f35e1025]
+                  - gridcell "118" [ref=f35e1026]
+                  - gridcell "87" [ref=f35e1027]
+                  - gridcell "6.49" [ref=f35e1028]
+                  - gridcell "Non-smoker" [ref=f35e1029]
+                  - gridcell "No" [ref=f35e1030]
+                  - gridcell "Drug B" [ref=f35e1031]
+                  - gridcell "Not improved" [ref=f35e1032]
+                  - gridcell "6" [ref=f35e1033]
+                  - gridcell "4" [ref=f35e1034]
+                  - gridcell "87.1" [ref=f35e1035]
+                  - gridcell "Never" [ref=f35e1036]
+                  - gridcell "2024-03-11" [ref=f35e1037]
+                  - gridcell "2024-03-22" [ref=f35e1038]
+                - row [ref=f35e1039]:
+                  - gridcell "P016" [ref=f35e1040]
+                  - gridcell "32" [ref=f35e1041]
+                  - gridcell "Male" [ref=f35e1042]
+                  - gridcell "33.8" [ref=f35e1043]
+                  - gridcell "123" [ref=f35e1044]
+                  - gridcell "95" [ref=f35e1045]
+                  - gridcell "7.5" [ref=f35e1046]
+                  - gridcell "Smoker" [ref=f35e1047]
+                  - gridcell "No" [ref=f35e1048]
+                  - gridcell "Placebo" [ref=f35e1049]
+                  - gridcell "Improved" [ref=f35e1050]
+                  - gridcell "7" [ref=f35e1051]
+                  - gridcell "4" [ref=f35e1052]
+                  - gridcell "66" [ref=f35e1053]
+                  - gridcell "Never" [ref=f35e1054]
+                  - gridcell "2024-02-20" [ref=f35e1055]
+                  - gridcell "2024-02-29" [ref=f35e1056]
+                - row [ref=f35e1057]:
+                  - gridcell "P017" [ref=f35e1058]
+                  - gridcell "60" [ref=f35e1059]
+                  - gridcell "Male" [ref=f35e1060]
+                  - gridcell "30.8" [ref=f35e1061]
+                  - gridcell "119" [ref=f35e1062]
+                  - gridcell "71" [ref=f35e1063]
+                  - gridcell "4.98" [ref=f35e1064]
+                  - gridcell "Ex-smoker" [ref=f35e1065]
+                  - gridcell "Yes" [ref=f35e1066]
+                  - gridcell "Drug B" [ref=f35e1067]
+                  - gridcell "Improved" [ref=f35e1068]
+                  - gridcell "7" [ref=f35e1069]
+                  - gridcell "3" [ref=f35e1070]
+                  - gridcell "48.8" [ref=f35e1071]
+                  - gridcell "Daily" [ref=f35e1072]
+                  - gridcell "2024-01-28" [ref=f35e1073]
+                  - gridcell "2024-02-03" [ref=f35e1074]
+                - row [ref=f35e1075]:
+                  - gridcell "P018" [ref=f35e1076]
+                  - gridcell "50" [ref=f35e1077]
+                  - gridcell "Male" [ref=f35e1078]
+                  - gridcell "31.5" [ref=f35e1079]
+                  - gridcell "120" [ref=f35e1080]
+                  - gridcell "79" [ref=f35e1081]
+                  - gridcell "6.67" [ref=f35e1082]
+                  - gridcell "Non-smoker" [ref=f35e1083]
+                  - gridcell "Yes" [ref=f35e1084]
+                  - gridcell "Placebo" [ref=f35e1085]
+                  - gridcell "Not improved" [ref=f35e1086]
+                  - gridcell "4" [ref=f35e1087]
+                  - gridcell "4" [ref=f35e1088]
+                  - gridcell "56.9" [ref=f35e1089]
+                  - gridcell "Rarely" [ref=f35e1090]
+                  - gridcell "2024-02-13" [ref=f35e1091]
+                  - gridcell "2024-02-27" [ref=f35e1092]
+                - row [ref=f35e1093]:
+                  - gridcell "P019" [ref=f35e1094]
+                  - gridcell "34" [ref=f35e1095]
+                  - gridcell "Male" [ref=f35e1096]
+                  - gridcell "30.4" [ref=f35e1097]
+                  - gridcell "120" [ref=f35e1098]
+                  - gridcell "74" [ref=f35e1099]
+                  - gridcell "5.19" [ref=f35e1100]
+                  - gridcell "." [ref=f35e1101]
+                  - gridcell "No" [ref=f35e1102]
+                  - gridcell "Drug A" [ref=f35e1103]
+                  - gridcell "Improved" [ref=f35e1104]
+                  - gridcell "5" [ref=f35e1105]
+                  - gridcell "1" [ref=f35e1106]
+                  - gridcell "57.2" [ref=f35e1107]
+                  - gridcell "Weekly" [ref=f35e1108]
+                  - gridcell "2024-06-24" [ref=f35e1109]
+                  - gridcell "2024-07-05" [ref=f35e1110]
+                - row [ref=f35e1111]:
+                  - gridcell "P020" [ref=f35e1112]
+                  - gridcell "71" [ref=f35e1113]
+                  - gridcell "Male" [ref=f35e1114]
+                  - gridcell "26.9" [ref=f35e1115]
+                  - gridcell "121" [ref=f35e1116]
+                  - gridcell "78" [ref=f35e1117]
+                  - gridcell "5.48" [ref=f35e1118]
+                  - gridcell "Non-smoker" [ref=f35e1119]
+                  - gridcell "No" [ref=f35e1120]
+                  - gridcell "." [ref=f35e1121]
+                  - gridcell "Improved" [ref=f35e1122]
+                  - gridcell "0" [ref=f35e1123]
+                  - gridcell "." [ref=f35e1124]
+                  - gridcell "69.4" [ref=f35e1125]
+                  - gridcell "Weekly" [ref=f35e1126]
+                  - gridcell "2024-03-04" [ref=f35e1127]
+                  - gridcell "2024-03-15" [ref=f35e1128]
+                - row [ref=f35e1129]:
+                  - gridcell "P021" [ref=f35e1130]
+                  - gridcell "26" [ref=f35e1131]
+                  - gridcell "Male" [ref=f35e1132]
+                  - gridcell "22.5" [ref=f35e1133]
+                  - gridcell "135" [ref=f35e1134]
+                  - gridcell "73" [ref=f35e1135]
+                  - gridcell "4.47" [ref=f35e1136]
+                  - gridcell "Ex-smoker" [ref=f35e1137]
+                  - gridcell "No" [ref=f35e1138]
+                  - gridcell "Drug A" [ref=f35e1139]
+                  - gridcell "Not improved" [ref=f35e1140]
+                  - gridcell "4" [ref=f35e1141]
+                  - gridcell "4" [ref=f35e1142]
+                  - gridcell "61.9" [ref=f35e1143]
+                  - gridcell "Never" [ref=f35e1144]
+                  - gridcell "2024-04-14" [ref=f35e1145]
+                  - gridcell "2024-04-25" [ref=f35e1146]
+                - row [ref=f35e1147]:
+                  - gridcell "P022" [ref=f35e1148]
+                  - gridcell "34" [ref=f35e1149]
+                  - gridcell "Male" [ref=f35e1150]
+                  - gridcell "." [ref=f35e1151]
+                  - gridcell "144" [ref=f35e1152]
+                  - gridcell "68" [ref=f35e1153]
+                  - gridcell "4.52" [ref=f35e1154]
+                  - gridcell "Non-smoker" [ref=f35e1155]
+                  - gridcell "No" [ref=f35e1156]
+                  - gridcell "Drug A" [ref=f35e1157]
+                  - gridcell "Improved" [ref=f35e1158]
+                  - gridcell "4" [ref=f35e1159]
+                  - gridcell "5" [ref=f35e1160]
+                  - gridcell "61.4" [ref=f35e1161]
+                  - gridcell "Weekly" [ref=f35e1162]
+                  - gridcell "2024-02-05" [ref=f35e1163]
+                  - gridcell "2024-02-16" [ref=f35e1164]
+              - rowgroup
+              - rowgroup
+              - rowgroup
+            - generic [ref=f35e1171]:
+              - generic [ref=f35e1172]:
+                - generic [ref=f35e1173]: "Page Size:"
+                - combobox "Page Size" [ref=f35e1174]:
+                  - generic [ref=f35e1175]: "200"
+                  - generic [ref=f35e1176] [cursor=pointer]: 
+              - generic [ref=f35e1177]: 1 to 100 of 100
+              - button "First Page" [disabled] [ref=f35e1178]: 
+              - button "Previous Page" [disabled] [ref=f35e1179]: 
+              - generic: Page 1 of 1
+              - button "Next Page" [disabled] [ref=f35e1180]: 
+              - button "Last Page" [disabled] [ref=f35e1181]: 
+      - generic [ref=f35e687]:
+        - strong [ref=f35e690]: test_dataset.csv
+        - generic [ref=f35e691]: 120 rows × 28 cols
+        - generic [ref=f35e693]: 15 numeric, 0 categorical
+        - generic [ref=f35e694]: "Undo: 0 | Redo: 0"

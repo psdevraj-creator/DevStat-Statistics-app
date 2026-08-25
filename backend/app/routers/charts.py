@@ -14,7 +14,7 @@ import base64
 import io
 from typing import Any, Dict, Optional
 
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, Depends, HTTPException
 
 import app.state as _state
 from app.state import require_data
@@ -37,15 +37,58 @@ from app.services.charts import (
 )
 from app.models.dataset import ChartResponse
 
-router = APIRouter(prefix="", tags=["Charts"])
-
-
 # ---------------------------------------------------------------------------
 # Helper
 # ---------------------------------------------------------------------------
 
 
 _require_data = require_data
+
+
+def _chart_block(action_type: str, reason: str, details: str):
+    raise HTTPException(status_code=402, detail={
+        "blocked": True, "action_type": action_type, "reason": reason, "details": details,
+    })
+
+
+def chart_guard():
+    """Gate every chart on the machine+IP free tier (not the session).
+
+    No anonymous use (must sign in). A licensed account is unlimited; a free
+    account is capped at 5 charts on this machine+IP. Fail-CLOSED on errors.
+    """
+    from app import state as _state
+    from app.services.firebase_store import licence_live, trial_check_and_consume
+    try:
+        uid = _state.get_uid()
+        free_teaching = bool(_state.get_teaching() and (_state.get_teaching_session() or {}).get("free"))
+        if not uid and not free_teaching:
+            _chart_block(
+                "account",
+                "A warm hello! 👋 Pop in with a quick free account and we'll save your work "
+                "for you. Your first 5 analyses and 5 charts are free, no card needed.",
+                "Create a free account to start using DevStat.",
+            )
+        if not licence_live(uid) and not _state.get_teaching():
+            gate = trial_check_and_consume(_state.get_device(), _state.get_client_ip(), "chart")
+            if gate.get("blocked"):
+                _chart_block(
+                    "subscription",
+                    gate.get("reason") or "You've had a lovely free run of it! ✨ Your charts "
+                    "allowance is used up — a £25/year licence keeps you going.",
+                    "Upgrade to a £25/year licence to keep analysing.",
+                )
+    except HTTPException:
+        raise
+    except Exception:
+        _chart_block(
+            "account",
+            "We're having a small hiccup. Please sign in and try again.",
+            "If this keeps happening, please contact support.",
+        )
+
+
+router = APIRouter(prefix="", tags=["Charts"], dependencies=[Depends(chart_guard)])
 
 
 # ---------------------------------------------------------------------------

@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>DevStat — User Manual</title>
+<style>
+  :root{--primary:#005eb8;--primary-dark:#003d8b;--bg:#f5f7fa;--card:#fff;--border:#e2e8f0;--text:#1a1a2e;--muted:#5b6470}
+  *{box-sizing:border-box}
+  body{margin:0;font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--text);line-height:1.6}
+  .wrap{max-width:960px;margin:0 auto;padding:28px 20px 80px}
+  h1{font-size:34px;margin:0 0 4px;color:var(--primary-dark)}
+  h2{font-size:24px;margin:44px 0 12px;padding-bottom:8px;border-bottom:3px solid var(--primary);color:var(--primary-dark)}
+  h3{font-size:18px;margin:28px 0 8px;color:var(--primary)}
+  .sub{color:var(--muted);font-size:15px;margin:0 0 24px}
+  .card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:18px 20px;margin:16px 0;box-shadow:0 1px 3px rgba(0,0,0,.04)}
+  .tag{display:inline-block;background:var(--primary);color:#fff;border-radius:6px;padding:2px 10px;font-size:13px;font-weight:600;margin-bottom:6px}
+  .muted{color:var(--muted)}
+  ul{list-style:none;padding-left:0}
+  ul li{padding:6px 0;border-bottom:1px dashed var(--border)}
+  ul li::before{content:"▸ ";color:var(--primary)}
+  figure{margin:18px 0;text-align:center}
+  figure img{max-width:100%;border:1px solid var(--border);border-radius:10px;box-shadow:0 4px 14px rgba(0,0,0,.08)}
+  figcaption{font-size:13px;color:var(--muted);margin-top:8px;font-style:italic}
+  table{border-collapse:collapse;width:100%;margin:12px 0;font-size:15px}
+  th,td{border:1px solid var(--border);padding:8px 12px;text-align:left}
+  th{background:#eef4fb;color:var(--primary-dark)}
+  code{background:#eef2f7;border-radius:4px;padding:2px 6px;font-size:13px}
+  .banner{background:linear-gradient(135deg,var(--primary-dark),var(--primary));color:#fff;border-radius:14px;padding:30px 30px;margin-bottom:8px}
+  .banner h1{color:#fff}
+  .banner .sub{color:#dbeafe}
+  .note{background:#fff8e6;border-left:4px solid #f5a623;padding:12px 16px;border-radius:8px;margin:14px 0}
+  .print{background:#0b3d77;color:#fff;border:none;border-radius:8px;padding:14px 40px;font-size:17px;cursor:pointer;margin-top:8px}
+  .print:hover{background:#124f94}
+  @media print{ .print{display:none} .card{box-shadow:none} }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<div class="banner">
+  <h1>DevStat — User Manual</h1>
+  <p class="sub">Medical Statistics Software · Statistical analysis and visualisation of clinical data</p>
+</div>
+<p class="sub">This manual walks through every feature using real worked examples. All screenshots were generated from
+the included <strong>sample medical dataset</strong> (large clinical dataset with demographic, laboratory, treatment,
+and outcome variables).</p>
+
+<button class="print" onclick="window.print()">Download as PDF</button>
+
+<!-- ============ 1. GETTING STARTED ============ -->
+<h2>1. Getting started</h2>
+<div class="card">
+  <h3>1.1 What DevStat does</h3>
+  <p>DevStat is a desktop application for analysing clinical data — like a modern, easy-to-use version of SPSS.
+  You load a dataset, choose a statistical test or chart, and get clear results you can view, export, and interpret.</p>
+  <ul>
+    <li>Import <strong>CSV, Excel, SPSS (.sav), and Stata (.dta)</strong> files</li>
+    <li>View and edit data in a spreadsheet-style grid with SPSS-style variable metadata</li>
+    <li>Run descriptive statistics, group comparisons, regression, survival, diagnostic tests, factor/reliability,
+        cluster, and power analyses</li>
+    <li>Create 27+ chart types and export results to PDF and images</li>
+  </ul>
+</div>
+
+<div class="card">
+  <h3>1.2 Loading your data</h3>
+  <p>Go to <strong>Data → Data View</strong> and click the <strong>Upload</strong> button. Choose your file. The data grid
+  appears with rows and columns; the status bar shows the shape of the dataset (e.g. rows × columns).</p>
+  <p>For every example in this manual we use the sample medical dataset. Typical columns include:</p>
+  <table>
+    <tr><th>Variable</th><th>Type</th><th>Meaning</th></tr>
+    <tr><td>age</td><td>Numeric</td><td>Age in years</td></tr>
+    <tr><td>bmi, systolic_bp, cholesterol, hemoglobin</td><td>Numeric</td><td>Continuous clinical measurements</td></tr>
+    <tr><td>gender</td><td>Categorical</td><td>Male / Female</td></tr>
+    <tr><td>treatment_group</td><td>Categorical</td><td>Drug A / Drug B / Placebo</td></tr>
+    <tr><td>outcome</td><td>Categorical</td><td>Improved / Not improved</td></tr>
+    <tr><td>survival_months</td><td>Numeric</td><td>Follow-up time for survival analysis</td></tr>
+    <tr><td>event_death</td><td>Binary</td><td>1 = event occurred, 0 = censored</td></tr>
+  </table>
+</div>
+
+<!-- ============ 2. DESCRIPTIVE ============ -->
+<h2>2. Descriptive statistics</h2>
+<div class="card">
+  <h3>2.1 Descriptives</h3>
+  <p><strong>Analyze → Descriptive</strong>. Summarise one or more continuous variables (mean, standard deviation,
+  minimum, maximum, skewness, kurtosis). Select variables and optionally a group to split results.</p>
+  <figure><img src="screenshots/20_descriptives.png" alt="Descriptives output">
+  <figcaption>Descriptive statistics table with N, mean, SD, min, max per variable.</figcaption></figure>
+</div>
+
+<div class="card">
+  <h3>2.2 Frequencies</h3>
+  <p>Show the count and percentage of each category for a categorical variable (e.g. <code>smoking_status</code>).
+  Optionally display a bar chart.</p>
+  <figure><img src="screenshots/21_frequencies.png" alt="Frequencies output">
+  <figcaption>Frequency table with counts and percentages.</figcaption></figure>
+</div>
+
+<div class="card">
+  <h3>2.3 Crosstabs</h3>
+  <p>Cross-tabulate two categorical variables and get the chi-square test of association. Useful for checking whether
+  two categories are related (e.g. treatment group × outcome).</p>
+  <figure><img src="screenshots/22_crosstabs.png" alt="Crosstabs output">
+  <figcaption>Contingency table with counts, percentages, and chi-square test.</figcaption></figure>
+</div>
+
+<div class="card">
+  <h3>2.4 Explore (normality)</h3>
+  <p>Get descriptive statistics per group, plus normality tests (Shapiro–Wilk), Q–Q plots, and boxplots.
+  Especially useful before choosing a test.</p>
+  <figure><img src="screenshots/23_explore.png" alt="Explore output">
+  <figcaption>Group summaries, normality tests, and plots.</figcaption></figure>
+</div>
+
+<div class="card">
+  <h3>2.5 Means</h3>
+  <p>Compare the mean of a continuous variable across groups, with confidence intervals.</p>
+  <figure><img src="screenshots/24_means.png" alt="Means output">
+  <figcaption>Mean and confidence intervals per group.</figcaption></figure>
+</div>
+
+<!-- ============ 3. COMPARE MEANS ============ -->
+<h2>3. Comparing means and groups</h2>
+<div class="card">
+  <h3>3.1 Independent-samples t-test</h3>
+  <p><strong>Analyze → Compare Means → Independent t-test</strong>. Compares the mean of a continuous variable between
+  two unrelated groups (e.g. BMI by gender). Includes Levene's test for equal variances.</p>
+  <figure><img src="screenshots/30_ttest_independent.png" alt="Independent t-test">
+  <figcaption>Group statistics and t-test results.</figcaption></figure>
+</div>
+
+<div class="card">
+  <h3>3.2 Paired t-test</h3>
+  <p>Compare two measurements taken on the same subjects (e.g. systolic vs diastolic blood pressure).</p>
+  <figure><img src="screenshots/31_ttest_paired.png" alt="Paired t-test">
+  <figcaption>Paired comparison of two related measurements.</figcaption></figure>
+</div>
+
+<div class="card">
+  <h3>3.3 One-way ANOVA</h3>
+  <p>Compares the mean of a continuous variable across three or more groups (e.g. cholesterol by treatment group),
+  with optional Tukey post-hoc tests.</p>
+  <figure><img src="screenshots/32_anova.png" alt="One-way ANOVA">
+  <figcaption>ANOVA table (F, df, p) and post-hoc comparisons.</figcaption></figure>
+</div>
+
+<div class="card">
+  <h3>3.4 Non-parametric tests</h3>
+  <p>Use these when data are not normally distributed or you have small samples:</p>
+  <ul>
+    <li><strong>Mann-Whitney U</strong> — two independent groups (image below)</li>
+    <li><strong>Wilcoxon signed-rank</strong> — paired data</li>
+    <li><strong>Kruskal-Wallis</strong> — three or more groups</li>
+    <li><strong>Chi-square / Fisher's exact</strong> — categorical association</li>
+    <li><strong>Friedman</strong>, <strong>McNemar</strong>, <strong>Binomial</strong>, <strong>Runs</strong>,
+        <strong>Kolmogorov-Smirnov</strong></li>
+  </ul>
+  <figure><img src="screenshots/33_mannwhitney.png" alt="Mann-Whitney U">
+  <figcaption>Mann-Whitney U test output.</figcaption></figure>
+</div>
+
+<!-- ============ 4. CORRELATION & REGRESSION ============ -->
+<h2>4. Correlation and regression</h2>
+<div class="card">
+  <h3>4.1 Correlation</h3>
+  <p><strong>Analyze → Correlation</strong>. Compute a matrix of correlations between continuous variables
+  (Pearson or Spearman). Optionally partial correlation controlling for a third variable.</p>
+  <figure><img src="screenshots/41_correlation_pearson.png" alt="Pearson correlation">
+  <figcaption>Pearson correlation matrix with r and p-values.</figcaption></figure>
+</div>
+
+<div class="card">
+  <h3>4.2 Linear regression</h3>
+  <p>Model a continuous outcome from one or more predictors (e.g. systolic BP from age, BMI, cholesterol).
+  Reports R², the ANOVA table, coefficients, and p-values.</p>
+  <figure><img src="screenshots/42_linear_regression.png" alt="Linear regression">
+  <figcaption>Model summary, coefficients, and significance.</figcaption></figure>
+</div>
+
+<div class="card">
+  <h3>4.3 Logistic regression</h3>
+  <p>Model a binary outcome (e.g. diabetes yes/no) from predictors. Reports odds ratios and Wald statistics.</p>
+  <figure><img src="screenshots/42_logistic_regression.png" alt="Logistic regression">
+  <figcaption>Logistic regression odds ratios.</figcaption></figure>
+</div>
+
+<!-- ============ 5. SURVIVAL ============ -->
+<h2>5. Survival analysis</h2>
+<div class="card">
+  <h3>5.1 Kaplan-Meier</h3>
+  <p><strong>Survival → Kaplan-Meier</strong>. Time-to-event analysis with a time variable and a status (event)
+  column. Produces the survival curve, median survival, and log-rank test.</p>
+  <figure><img src="screenshots/08_km_curve.png" alt="Kaplan-Meier curve">
+  <figcaption>Kaplan-Meier survival curve with 95% confidence band.</figcaption></figure>
+</div>
+
+<div class="card">
+  <h3>5.2 Cox regression</h3>
+  <p>Model the hazard of an event from covariates. Reports hazard ratios and confidence intervals.</p>
+  <figure><img src="screenshots/43_cox_regression.png" alt="Cox regression">
+  <figcaption>Cox proportional hazards output.</figcaption></figure>
+</div>
+
+<!-- ============ 6. DIAGNOSTIC ============ -->
+<h2>6. Diagnostic tests and ROC</h2>
+<div class="card">
+  <h3>6.1 Diagnostic test</h3>
+  <p>Compare a test against a gold standard. Produces the 2×2 table (TP, FP, FN, TN) plus sensitivity, specificity,
+  PPV, NPV, and accuracy.</p>
+  <figure><img src="screenshots/45_diagnostic.png" alt="Diagnostic test">
+  <figcaption>2×2 test table with diagnostic metrics.</figcaption></figure>
+</div>
+
+<div class="card">
+  <h3>6.2 ROC curve</h3>
+  <p>Plot the receiver operating characteristic curve for a continuous test variable against a binary outcome,
+  with the area under the curve (AUC).</p>
+  <figure><img src="screenshots/46_roc_analysis.png" alt="ROC curve">
+  <figcaption>ROC curve with AUC annotation.</figcaption></figure>
+</div>
+
+<!-- ============ 7. FACTOR / RELIABILITY / CLUSTER ============ -->
+<h2>7. Factor analysis, reliability, and clustering</h2>
+<div class="card">
+  <h3>7.1 Factor analysis</h3>
+  <p>Identify underlying factors among many variables. Reports KMO, Bartlett's test, factor loadings, and variance explained.</p>
+  <figure><img src="screenshots/47_factor_analysis.png" alt="Factor analysis">
+  <figcaption>KMO/Bartlett's test and rotated factor loadings.</figcaption></figure>
+</div>
+
+<div class="card">
+  <h3>7.2 Reliability (Cronbach's alpha)</h3>
+  <p>Assess internal consistency of a scale using Cronbach's alpha.</p>
+  <figure><img src="screenshots/48_reliability.png" alt="Reliability">
+  <figcaption>Cronbach's alpha and item statistics.</figcaption></figure>
+</div>
+
+<div class="card">
+  <h3>7.3 Cluster analysis</h3>
+  <p>Group observations by similarity (k-means or hierarchical), producing cluster sizes, centroids, and a
+  silhouette score.</p>
+  <figure><img src="screenshots/49_cluster.png" alt="Cluster analysis">
+  <figcaption>Cluster results with sizes and centroids.</figcaption></figure>
+</div>
+
+<!-- ============ 8. POWER ============ -->
+<h2>8. Power analysis</h2>
+<div class="card">
+  <p>Determine the sample size needed to detect a given effect (t-test, ANOVA, or correlation) at a chosen
+  power and alpha.</p>
+  <figure><img src="screenshots/50_power_ttest.png" alt="Power analysis t-test">
+  <figcaption>Required sample size for a t-test.</figcaption></figure>
+  <figure><img src="screenshots/51_power_anova.png" alt="Power analysis ANOVA">
+  <figcaption>Required sample size for one-way ANOVA.</figcaption></figure>
+</div>
+
+<!-- ============ 9. GRAPHS ============ -->
+<h2>9. Graphs and charts</h2>
+<div class="card">
+  <p>The <strong>Graphs</strong> menu offers a gallery of chart types. All are interactive: hover for values, zoom,
+  and export to PNG.</p>
+  <figure><img src="screenshots/01_histogram.png" alt="Histogram">
+  <figcaption>Histogram of a continuous variable, with a normal reference curve.</figcaption></figure>
+  <figure><img src="screenshots/02_boxplot.png" alt="Boxplot">
+  <figcaption>Boxplot of a variable (optionally by group).</figcaption></figure>
+  <figure><img src="screenshots/03_scatter.png" alt="Scatter plot">
+  <figcaption>Scatter plot with regression fit line.</figcaption></figure>
+  <figure><img src="screenshots/05_violin.png" alt="Violin plot">
+  <figcaption>Violin plot showing distribution shape by group.</figcaption></figure>
+  <figure><img src="screenshots/09_correlation_heatmap.png" alt="Correlation heatmap">
+  <figcaption>Correlation heatmap.</figcaption></figure>
+  <figure><img src="screenshots/13_forest_plot.png" alt="Forest plot">
+  <figcaption>Forest plot (effect sizes with confidence intervals).</figcaption></figure>
+  <figure><img src="screenshots/10_swimmer.png" alt="Swimmer plot">
+  <figcaption>Swimmer plot (treatment timelines).</figcaption></figure>
+</div>
+
+<!-- ============ 10. OUTPUT & EXPORT ============ -->
+<h2>10. Output, export, and saving</h2>
+<div class="card">
+  <ul>
+    <li><strong>Output</strong> — a running list of every analysis performed, organised by category. Select items
+        to compare side by side.
+    <li><strong>Export</strong> — results as PDF, charts as PNG, and the dataset as CSV, Excel, SPSS (.sav),
+        or Stata (.dta).
+    <li><strong>Save / Load project</strong> — save your current dataset and analysis view to a
+        <code>.devstat</code> file for later.
+  </ul>
+</div>
+
+<!-- ============ 11. INTERPRETING RESULTS ============ -->
+<h2>11. A short guide to interpreting output</h2>
+<div class="card">
+  <h3>Reading a p-value</h3>
+  <p>A p-value (&lt; 0.05) suggests the result is statistically significant — unlikely to be due to chance. It does not
+  tell you how large the effect is; look at the estimate (mean difference, hazard ratio, correlation) and its
+  confidence interval for practical importance.</p>
+  <h3>Choosing the right test</h3>
+  <p>Use the <strong>Wizard</strong> or <strong>Suggest Test</strong> feature: answer a few questions about your goal,
+  variable types, and design, and DevStat recommends an appropriate test. Hover over any test or chart card in the
+  gallery to see what it is for and whether your current data are suitable.</p>
+  <h3>Common pitfalls</h3>
+  <ul>
+    <li><strong>Normality</strong> — use the Explore feature (Shapiro–Wilk). If data are not normal, prefer a
+        non-parametric test.</li>
+    <li><strong>Multiple testing</strong> — correct for many comparisons (e.g. Tukey post-hoc after ANOVA).</li>
+    <li><strong>Confidence intervals</strong> — a wide interval means an imprecise estimate (often a small sample or
+        few events, e.g. high censoring in survival data).</li>
+  </ul>
+</div>
+
+<div class="note">
+  <strong>Disclaimer:</strong> DevStat is a statistical tool for research and analysis. Results should be interpreted by
+  a qualified statistician or clinician in context of the study design. It does not provide medical advice.
+</div>
+
+</div>
+</body>
+</html>

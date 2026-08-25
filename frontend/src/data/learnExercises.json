@@ -1,0 +1,1012 @@
+{
+ "exercises": [
+  {
+   "topic": "Data types & descriptive statistics",
+   "topic_num": 1,
+   "number": "1.1",
+   "task": "Open Data → Data View, then the Variable View tab, and list the numeric/scale vs categorical variables.",
+   "path": "Data → Data View → Variable View (tab)",
+   "vars": "all variables",
+   "answer": "You should see: scale: age, bmi, systolic_bp, cholesterol, pain_score, new_biomarker, followup_months. Categorical: sex, treatment, smoking, outcome, gold_standard, event_death. Why: measurement scale decides which test you can use."
+  },
+  {
+   "topic": "Data types & descriptive statistics",
+   "topic_num": 1,
+   "number": "1.2",
+   "task": "Run descriptive statistics on age, bmi, systolic_bp, cholesterol.",
+   "path": "Analyze → Descriptive",
+   "vars": "age, bmi, systolic_bp, cholesterol",
+   "answer": "You should see: for each variable: N, mean, SD, median, min, max, skewness. Why: mean+SD summarise symmetric data; median is better with skew."
+  },
+  {
+   "topic": "Data types & descriptive statistics",
+   "topic_num": 1,
+   "number": "1.3",
+   "task": "Identify which variable is skewed and which is roughly symmetric.",
+   "path": "Analyze → Descriptive (skewness column)",
+   "vars": "age, bmi",
+   "answer": "You should see: age and bmi skewness near 0 (symmetric). Why: skewness ≈ ±0.5 is acceptable; >1 is markedly skewed."
+  },
+  {
+   "topic": "Data types & descriptive statistics",
+   "topic_num": 1,
+   "number": "1.4",
+   "task": "Compare mean vs median for age.",
+   "path": "Analyze → Descriptive",
+   "vars": "age",
+   "answer": "You should see: mean ≈ median (both ≈ 58). Why: when mean≈median the distribution is symmetric."
+  },
+  {
+   "topic": "Data types & descriptive statistics",
+   "topic_num": 1,
+   "number": "1.5",
+   "task": "Get frequencies for smoking and for treatment.",
+   "path": "Analyze → Frequencies",
+   "vars": "smoking, treatment",
+   "answer": "You should see: counts + % for each category. Why: frequencies summarise categorical data; report n and %."
+  },
+  {
+   "topic": "Data types & descriptive statistics",
+   "topic_num": 1,
+   "number": "1.6",
+   "task": "Describe the distribution of BMI (central tendency + spread + shape).",
+   "path": "Analyze → Descriptive",
+   "vars": "bmi",
+   "answer": "You should see: mean ≈ 27, SD ≈ 4.9, median ≈ 27, min 15, max 40, skew ≈ 0.2. Why: roughly normal; report mean (SD)."
+  },
+  {
+   "topic": "Data types & descriptive statistics",
+   "topic_num": 1,
+   "number": "1.7",
+   "task": "Find the interquartile range (IQR) equivalent for systolic_bp.",
+   "path": "Analyze → Explore (quartiles)",
+   "vars": "systolic_bp",
+   "answer": "You should see: Q1 ≈ 89, Q3 ≈ 103 (IQR ≈ 14). Why: IQR is robust to outliers; with skew, report median (IQR)."
+  },
+  {
+   "topic": "Data types & descriptive statistics",
+   "topic_num": 1,
+   "number": "1.8",
+   "task": "State whether systolic_bp has outliers.",
+   "path": "Graphs (Boxplot)",
+   "vars": "systolic_bp",
+   "answer": "You should see: a few points beyond the whiskers. Why: boxplots reveal outliers that would distort the mean."
+  },
+  {
+   "topic": "Data types & descriptive statistics",
+   "topic_num": 1,
+   "number": "1.9",
+   "task": "Classify pain_score (0–10).",
+   "path": "Data → Data View → Variable View (Measure)",
+   "vars": "pain_score",
+   "answer": "You should see: ordinal (ordered integer scale, not truly continuous). Why: treat ordinal as non-continuous; prefer non-parametric tests."
+  },
+  {
+   "topic": "Data types & descriptive statistics",
+   "topic_num": 1,
+   "number": "1.10",
+   "task": "Report \"age\" both as mean(SD) and median(IQR) — which fits better?",
+   "path": "Analyze → Descriptive",
+   "vars": "age",
+   "answer": "You should see: symmetric → mean (SD) is fine. Why: symmetric data: mean (SD); skewed: median (IQR)."
+  },
+  {
+   "topic": "Data types & descriptive statistics",
+   "topic_num": 1,
+   "number": "1.11",
+   "task": "Determine which variable is most appropriate to report as a proportion.",
+   "path": "Analyze → Frequencies",
+   "vars": "smoking, outcome",
+   "answer": "You should see: outcome / smoking → counts + %. Why: binary/categorical → proportions, not mean."
+  },
+  {
+   "topic": "Data types & descriptive statistics",
+   "topic_num": 1,
+   "number": "1.12",
+   "task": "Find the coefficient of variation (CV) of BMI.",
+   "path": "Manual: (SD / mean) × 100 from Descriptive",
+   "vars": "bmi",
+   "answer": "You should see: ≈ 5/27 ≈ 18%. Why: CV standardises spread, useful comparing variables on different scales."
+  },
+  {
+   "topic": "Normal distribution & the Central Limit Theorem",
+   "topic_num": 2,
+   "number": "2.1",
+   "task": "Make a histogram of bmi with a normal curve.",
+   "path": "Graphs (Histogram)",
+   "vars": "bmi",
+   "answer": "You should see: bell-shaped with the normal curve close to the bars. Why: normality underpins parametric tests."
+  },
+  {
+   "topic": "Normal distribution & the Central Limit Theorem",
+   "topic_num": 2,
+   "number": "2.2",
+   "task": "Run a Q–Q plot of bmi.",
+   "path": "Graphs (Q-Q plot)",
+   "vars": "bmi",
+   "answer": "You should see: points close to the diagonal. Why: Q-Q is a visual normality check."
+  },
+  {
+   "topic": "Normal distribution & the Central Limit Theorem",
+   "topic_num": 2,
+   "number": "2.3",
+   "task": "Run the Shapiro–Wilk test on bmi.",
+   "path": "Analyze → Explore",
+   "vars": "bmi",
+   "answer": "You should see: p > 0.05 → not significantly non-normal. Why: p > 0.05 means we cannot reject normality."
+  },
+  {
+   "topic": "Normal distribution & the Central Limit Theorem",
+   "topic_num": 2,
+   "number": "2.4",
+   "task": "Estimate the proportion of patients within mean ± 1 SD for age.",
+   "path": "Analyze → Descriptive (mean, SD)",
+   "vars": "age",
+   "answer": "You should see: ≈ 70% fall within mean ± 1 SD. Why: the 68–95–99.7 rule for normal data."
+  },
+  {
+   "topic": "Normal distribution & the Central Limit Theorem",
+   "topic_num": 2,
+   "number": "2.5",
+   "task": "Compute the z-score of a patient aged 78 (mean 58, SD 15).",
+   "path": "Manual",
+   "vars": "age",
+   "answer": "You should see: z = (78−57.8)/14.2 ≈ 1.42 → 92nd centile. Why: z tells you how many SDs from the mean."
+  },
+  {
+   "topic": "Normal distribution & the Central Limit Theorem",
+   "topic_num": 2,
+   "number": "2.6",
+   "task": "Explain why sample mean is more reliable than a single observation.",
+   "path": "Concept",
+   "vars": "—",
+   "answer": "You should see: the standard error of the mean decreases as n grows. Why: SE = SD/√n — the CLT makes means normal even if data aren't."
+  },
+  {
+   "topic": "Normal distribution & the Central Limit Theorem",
+   "topic_num": 2,
+   "number": "2.7",
+   "task": "Check normality of systolic_bp.",
+   "path": "Analyze → Explore",
+   "vars": "systolic_bp",
+   "answer": "You should see: near-normal (p > 0.05). Why: OK for parametric tests on the mean."
+  },
+  {
+   "topic": "Normal distribution & the Central Limit Theorem",
+   "topic_num": 2,
+   "number": "2.8",
+   "task": "Explain why you can still use a t-test on a slightly non-normal variable with n=240.",
+   "path": "Concept (CLT)",
+   "vars": "—",
+   "answer": "You should see: with large n the sample mean is approximately normal. Why: the Central Limit Theorem justifies parametric tests on means for large samples."
+  },
+  {
+   "topic": "Normal distribution & the Central Limit Theorem",
+   "topic_num": 2,
+   "number": "2.9",
+   "task": "Check whether pain_score is normally distributed — and say why that matters.",
+   "path": "Analyze → Explore (pain_score)",
+   "vars": "pain_score",
+   "answer": "You should see: transformed/ordinal → not normal. Why: ordinal data → use non-parametric tests."
+  },
+  {
+   "topic": "Normal distribution & the Central Limit Theorem",
+   "topic_num": 2,
+   "number": "2.10",
+   "task": "State the standard error of the mean for bmi.",
+   "path": "Analyze → Explore (SE)",
+   "vars": "bmi",
+   "answer": "You should see: SD/√n ≈ 5/√240 ≈ 0.32. Why: SE measures how precisely the sample mean estimates the population mean."
+  },
+  {
+   "topic": "Normal distribution & the Central Limit Theorem",
+   "topic_num": 2,
+   "number": "2.11",
+   "task": "Draw the 68/95/99.7 boundaries for bmi.",
+   "path": "Manual from mean±SD",
+   "vars": "bmi",
+   "answer": "You should see: 22–32 (68%), 17–37 (95%), 12–42 (99.7%). Why: the rule-of-thumb spread for normal data."
+  },
+  {
+   "topic": "Confidence intervals & hypothesis testing",
+   "topic_num": 3,
+   "number": "3.1",
+   "task": "Get the mean and 95% CI of systolic_bp by treatment.",
+   "path": "Analyze → Means (dependent systolic_bp, group treatment)",
+   "vars": "systolic_bp, treatment",
+   "answer": "You should see: three means (≈94–100) each with a 95% CI. Why: a 95% CI is the range likely to contain the true mean."
+  },
+  {
+   "topic": "Confidence intervals & hypothesis testing",
+   "topic_num": 3,
+   "number": "3.2",
+   "task": "Interpret two overlapping CIs.",
+   "path": "Analyze → Means",
+   "vars": "systolic_bp, treatment",
+   "answer": "You should see: overlapping CIs suggest no statistically significant difference. Why: overlap implies the difference may be due to chance."
+  },
+  {
+   "topic": "Confidence intervals & hypothesis testing",
+   "topic_num": 3,
+   "number": "3.3",
+   "task": "Identify where the 95% CI excludes the null (a difference of 0) between treatments.",
+   "path": "Analyze → Means",
+   "vars": "systolic_bp, treatment",
+   "answer": "You should see: Drug B–Placebo CIs barely overlap / difference CI excludes 0. Why: when the difference's CI excludes 0, p < 0.05 typically."
+  },
+  {
+   "topic": "Confidence intervals & hypothesis testing",
+   "topic_num": 3,
+   "number": "3.4",
+   "task": "Compute a 95% CI for the mean of bmi.",
+   "path": "Analyze → Means",
+   "vars": "bmi",
+   "answer": "You should see: mean ≈ 27.1, 95% CI ≈ 26.5–27.7. Why: 95% CI = mean ± 1.96 × SE."
+  },
+  {
+   "topic": "Confidence intervals & hypothesis testing",
+   "topic_num": 3,
+   "number": "3.5",
+   "task": "State the null and alternative hypothesis for \"does treatment affect systolic_bp?\"",
+   "path": "Concept",
+   "vars": "—",
+   "answer": "You should see: H₀: no difference between groups; H₁: a difference exists. Why: hypothesis testing starts from the null."
+  },
+  {
+   "topic": "Confidence intervals & hypothesis testing",
+   "topic_num": 3,
+   "number": "3.6",
+   "task": "Explain what a p-value < 0.05 means (and what it does NOT).",
+   "path": "Concept",
+   "vars": "—",
+   "answer": "You should see: the probability of the data if the null were true; it is not the probability the null is true. Why: common misinterpretation — p is not \"5% chance the result is wrong\"."
+  },
+  {
+   "topic": "Confidence intervals & hypothesis testing",
+   "topic_num": 3,
+   "number": "3.7",
+   "task": "Define a Type I error.",
+   "path": "Concept",
+   "vars": "—",
+   "answer": "You should see: rejecting a true null (false positive); risk = α. Why: α = 0.05 → 5% chance of a false positive."
+  },
+  {
+   "topic": "Confidence intervals & hypothesis testing",
+   "topic_num": 3,
+   "number": "3.8",
+   "task": "Define a Type II error and state power.",
+   "path": "Concept",
+   "vars": "—",
+   "answer": "You should see: failing to detect a true effect (false negative); power = 1−β. Why: power is the chance of detecting a real difference."
+  },
+  {
+   "topic": "Confidence intervals & hypothesis testing",
+   "topic_num": 3,
+   "number": "3.9",
+   "task": "Explain the relationship between CI width and sample size.",
+   "path": "Concept",
+   "vars": "—",
+   "answer": "You should see: bigger n → smaller SE → narrower CI. Why: CI narrows as √n grows."
+  },
+  {
+   "topic": "Confidence intervals & hypothesis testing",
+   "topic_num": 3,
+   "number": "3.10",
+   "task": "State when you would use a one-tailed test.",
+   "path": "Concept",
+   "vars": "—",
+   "answer": "You should see: only when a directional (one-sided) hypothesis is justified pre-specified. Why: one-tailed gives more power but demands a strong a priori direction."
+  },
+  {
+   "topic": "Confidence intervals & hypothesis testing",
+   "topic_num": 3,
+   "number": "3.11",
+   "task": "Interpret a result with p = 0.06: significant or not?",
+   "path": "Concept",
+   "vars": "—",
+   "answer": "You should see: not significant at α=0.05, but report the exact p (and CI) rather than just \"NS\". Why: avoid the \"p-hacking\" dichotomisation; report uncertainty."
+  },
+  {
+   "topic": "Parametric tests: t-tests & ANOVA",
+   "topic_num": 4,
+   "number": "4.1",
+   "task": "Run an independent t-test: BMI by sex.",
+   "path": "Analyze → Compare Means (Test type: Independent t-test)",
+   "vars": "bmi (dependent), sex (group)",
+   "answer": "You should see: Levene test + t-test; p ≈ 0.69 → no significant difference. Why: p > 0.05 → fail to reject H₀."
+  },
+  {
+   "topic": "Parametric tests: t-tests & ANOVA",
+   "topic_num": 4,
+   "number": "4.2",
+   "task": "Read Levene's test and say which t-test to use.",
+   "path": "Analyze → Compare Means (Test type: Independent t-test)",
+   "vars": "bmi, sex",
+   "answer": "You should see: Levene p > 0.05 → equal variances → Student's t. Why: if variances differ, use Welch's t."
+  },
+  {
+   "topic": "Parametric tests: t-tests & ANOVA",
+   "topic_num": 4,
+   "number": "4.3",
+   "task": "Run a one-way ANOVA: systolic_bp by treatment.",
+   "path": "Analyze → One-way ANOVA",
+   "vars": "systolic_bp, treatment",
+   "answer": "You should see: F ≈ 7.0, p ≈ 0.001 → significant. Why: at least one group differs. ANOVA doesn't tell you which."
+  },
+  {
+   "topic": "Parametric tests: t-tests & ANOVA",
+   "topic_num": 4,
+   "number": "4.4",
+   "task": "Read the Tukey post-hoc after a significant ANOVA.",
+   "path": "Analyze → One-way ANOVA (post-hoc: Tukey)",
+   "vars": "systolic_bp, treatment",
+   "answer": "You should see: Drug B–Placebo significantly different (p < 0.05). Why: post-hoc adjusts for multiple comparisons."
+  },
+  {
+   "topic": "Parametric tests: t-tests & ANOVA",
+   "topic_num": 4,
+   "number": "4.5",
+   "task": "State why you cannot run three separate t-tests instead of an ANOVA + post-hoc.",
+   "path": "Concept",
+   "vars": "—",
+   "answer": "You should see: multiple testing inflates the Type I error. Why: correction (Tukey/Bonferroni) controls the family-wise error."
+  },
+  {
+   "topic": "Parametric tests: t-tests & ANOVA",
+   "topic_num": 4,
+   "number": "4.6",
+   "task": "Run a paired t-test comparing systolic vs diastolic BP.",
+   "path": "Analyze → Compare Means (Test type: Paired t-test)",
+   "vars": "systolic_bp, diastolic_bp",
+   "answer": "You should see: a clearly significant difference (p < 0.001). Why: paired measures on the same patient remove between-subject variability."
+  },
+  {
+   "topic": "Parametric tests: t-tests & ANOVA",
+   "topic_num": 4,
+   "number": "4.7",
+   "task": "Explain the difference between paired and independent t-tests.",
+   "path": "Concept",
+   "vars": "—",
+   "answer": "You should see: paired = same subjects twice (more power); independent = separate groups. Why: use the design to choose the test."
+  },
+  {
+   "topic": "Parametric tests: t-tests & ANOVA",
+   "topic_num": 4,
+   "number": "4.8",
+   "task": "Check the assumptions for the independent t-test you ran.",
+   "path": "Analyze → Explore (normality per group)",
+   "vars": "bmi, sex",
+   "answer": "You should see: each group near-normal and equal variances. Why: t-test assumes normality + homoscedasticity."
+  },
+  {
+   "topic": "Parametric tests: t-tests & ANOVA",
+   "topic_num": 4,
+   "number": "4.9",
+   "task": "Compute the effect size (Cohen's d) for BMI male vs female.",
+   "path": "From the t-test output (or manual)",
+   "vars": "bmi, sex",
+   "answer": "You should see: d ≈ 0.05 (tiny). Why: a non-significant result with tiny effect — report effect size, not just p."
+  },
+  {
+   "topic": "Parametric tests: t-tests & ANOVA",
+   "topic_num": 4,
+   "number": "4.10",
+   "task": "Run a two-way ANOVA with two factors and interpret interaction.",
+   "path": "Analyze → Factorial ANOVA",
+   "vars": "systolic_bp ~ treatment + sex",
+   "answer": "You should see: main effects + interaction term. Why: interaction = whether the effect of one factor depends on the other."
+  },
+  {
+   "topic": "Parametric tests: t-tests & ANOVA",
+   "topic_num": 4,
+   "number": "4.11",
+   "task": "State when to use a one-sample t-test.",
+   "path": "Concept",
+   "vars": "—",
+   "answer": "You should see: comparing a sample mean to a known reference value. Why: e.g. is our mean BP different from 120?"
+  },
+  {
+   "topic": "Parametric tests: t-tests & ANOVA",
+   "topic_num": 4,
+   "number": "4.12",
+   "task": "Summarise the outcome of testing BMI by sex in one sentence.",
+   "path": "Interpret",
+   "vars": "bmi, sex",
+   "answer": "You should see: \"No significant difference in BMI between sexes (t=…, p=0.69, d=0.06).\" Why: the clinical takeaway is a null result."
+  },
+  {
+   "topic": "Non-parametric & categorical tests",
+   "topic_num": 5,
+   "number": "5.1",
+   "task": "Run a chi-square test: treatment × outcome.",
+   "path": "Analyze → Crosstabs (row treatment, col outcome)",
+   "vars": "treatment, outcome",
+   "answer": "You should see: χ² with p < 0.001 → association. Why: improvement depends on treatment."
+  },
+  {
+   "topic": "Non-parametric & categorical tests",
+   "topic_num": 5,
+   "number": "5.2",
+   "task": "Check the minimum expected count — would Fisher's exact be needed?",
+   "path": "Analyze → Crosstabs",
+   "vars": "treatment, outcome",
+   "answer": "You should see: all expected counts > 5 → chi-square OK. Why: Fisher's exact is for small/sparse tables (expected < 5)."
+  },
+  {
+   "topic": "Non-parametric & categorical tests",
+   "topic_num": 5,
+   "number": "5.3",
+   "task": "Run Fisher's exact on sex × smoking.",
+   "path": "Analyze → Crosstabs (use Fisher's exact)",
+   "vars": "sex, smoking",
+   "answer": "You should see: Fisher exact p — likely non-significant. Why: exact test for 2×2 small tables."
+  },
+  {
+   "topic": "Non-parametric & categorical tests",
+   "topic_num": 5,
+   "number": "5.4",
+   "task": "Run the Mann–Whitney U test on pain_score by sex.",
+   "path": "Analyze → Non-parametric Tests → Mann-Whitney U",
+   "vars": "pain_score, sex",
+   "answer": "You should see: U statistic + p. Why: ranks — for non-normal/ordinal data between two groups."
+  },
+  {
+   "topic": "Non-parametric & categorical tests",
+   "topic_num": 5,
+   "number": "5.5",
+   "task": "Run Wilcoxon signed-rank on pain_score vs a paired ordinal measure.",
+   "path": "Analyze → Non-parametric Tests → Wilcoxon Signed-Rank",
+   "vars": "two related ordinal vars",
+   "answer": "You should see: a rank-based paired test p. Why: the non-parametric equivalent of the paired t-test."
+  },
+  {
+   "topic": "Non-parametric & categorical tests",
+   "topic_num": 5,
+   "number": "5.6",
+   "task": "Run Kruskal–Wallis on pain_score by treatment.",
+   "path": "Analyze → Non-parametric Tests → Kruskal-Wallis",
+   "vars": "pain_score, treatment",
+   "answer": "You should see: H statistic + p. Why: non-parametric one-way ANOVA."
+  },
+  {
+   "topic": "Non-parametric & categorical tests",
+   "topic_num": 5,
+   "number": "5.7",
+   "task": "Run the Sign Test on a paired binary/ordinal change.",
+   "path": "Analyze → Non-parametric Tests → Sign Test",
+   "vars": "two paired variables",
+   "answer": "You should see: counts of +/− differences and a sign-test p. Why: the non-parametric test for paired (before/after) data — like McNemar for binary outcomes."
+  },
+  {
+   "topic": "Non-parametric & categorical tests",
+   "topic_num": 5,
+   "number": "5.8",
+   "task": "Run the binomial test on sex (test proportion 0.5).",
+   "path": "Analyze → Non-parametric Tests → Binomial Test",
+   "vars": "sex",
+   "answer": "You should see: compares observed proportion to 0.5; p ≈ 0.9 → balanced. Why: tests whether a binary proportion differs from a set value."
+  },
+  {
+   "topic": "Non-parametric & categorical tests",
+   "topic_num": 5,
+   "number": "5.9",
+   "task": "Run the runs test on age.",
+   "path": "Analyze → Non-parametric Tests → Runs Test",
+   "vars": "age",
+   "answer": "You should see: tests randomness of the sequence. Why: checks for non-random patterns."
+  },
+  {
+   "topic": "Non-parametric & categorical tests",
+   "topic_num": 5,
+   "number": "5.10",
+   "task": "Run the Kolmogorov–Smirnov test on bmi.",
+   "path": "Analyze → Non-parametric Tests → KS Test",
+   "vars": "bmi",
+   "answer": "You should see: p > 0.05 → consistent with normal. Why: an alternative normality test (less powerful than Shapiro)."
+  },
+  {
+   "topic": "Non-parametric & categorical tests",
+   "topic_num": 5,
+   "number": "5.11",
+   "task": "Run the Friedman test on three related ordinal measures.",
+   "path": "Analyze → Non-parametric Tests → Friedman",
+   "vars": "3 related ordinal vars",
+   "answer": "You should see: the non-parametric repeated-measures ANOVA. Why: for matched/related groups of 3+."
+  },
+  {
+   "topic": "Correlation & linear regression",
+   "topic_num": 6,
+   "number": "6.1",
+   "task": "Run Pearson correlation between age and systolic_bp.",
+   "path": "Analyze → Correlation (method: Pearson)",
+   "vars": "age, systolic_bp",
+   "answer": "You should see: r ≈ 0.7, p < 0.001 → strong positive. Why: older patients have higher systolic BP."
+  },
+  {
+   "topic": "Correlation & linear regression",
+   "topic_num": 6,
+   "number": "6.2",
+   "task": "Run Spearman correlation between age and pain_score.",
+   "path": "Analyze → Correlation (method: Spearman)",
+   "vars": "age, pain_score",
+   "answer": "You should see: ρ for ranked/ordinal data. Why: Spearman for non-normal/ordinal or monotonic relationships."
+  },
+  {
+   "topic": "Correlation & linear regression",
+   "topic_num": 6,
+   "number": "6.3",
+   "task": "Interpret r² for age–systolic_bp.",
+   "path": "From r (≈0.7)",
+   "vars": "age, systolic_bp",
+   "answer": "You should see: r² ≈ 0.48 → 48% of BP variance explained. Why: r² is the proportion of shared variance."
+  },
+  {
+   "topic": "Correlation & linear regression",
+   "topic_num": 6,
+   "number": "6.4",
+   "task": "Build a correlation matrix of age, bmi, systolic_bp, cholesterol.",
+   "path": "Analyze → Correlation",
+   "vars": "4 numeric vars",
+   "answer": "You should see: a 4×4 matrix with r + p for each pair. Why: screening for associations; watch for multiple testing."
+  },
+  {
+   "topic": "Correlation & linear regression",
+   "topic_num": 6,
+   "number": "6.5",
+   "task": "Run simple linear regression: systolic_bp ~ age.",
+   "path": "Analyze → Linear Regression",
+   "vars": "systolic_bp (DV), age",
+   "answer": "You should see: coefficient ≈ 0.47 mmHg/yr, p < 0.001, R² ≈ 0.48. Why: each extra year adds ~0.5 mmHg."
+  },
+  {
+   "topic": "Correlation & linear regression",
+   "topic_num": 6,
+   "number": "6.6",
+   "task": "Run multiple linear regression: systolic_bp ~ age + bmi + cholesterol.",
+   "path": "Analyze → Linear Regression",
+   "vars": "systolic_bp, age, bmi, cholesterol",
+   "answer": "You should see: adjusted model summary + coefficients. Why: adjusts each predictor for the others."
+  },
+  {
+   "topic": "Correlation & linear regression",
+   "topic_num": 6,
+   "number": "6.7",
+   "task": "Interpret the age coefficient in the multiple model.",
+   "path": "Analyze → Linear Regression",
+   "vars": "systolic_bp, age, bmi, cholesterol",
+   "answer": "You should see: age still significant (p < 0.001), coefficient slightly reduced. Why: the effect is adjusted for BMI and cholesterol."
+  },
+  {
+   "topic": "Correlation & linear regression",
+   "topic_num": 6,
+   "number": "6.8",
+   "task": "Check the LINE assumptions of your linear regression.",
+   "path": "Analyze → Linear Regression (residual plots)",
+   "vars": "systolic_bp ~ age",
+   "answer": "You should see: residual vs fit roughly random; residuals ~normal. Why: LINE: Linear, Independent, Normal, Equal-variances errors."
+  },
+  {
+   "topic": "Correlation & linear regression",
+   "topic_num": 6,
+   "number": "6.9",
+   "task": "Compare adjusted R² to R² in the multiple model.",
+   "path": "Analyze → Linear Regression",
+   "vars": "systolic_bp, age, bmi, cholesterol",
+   "answer": "You should see: adjusted R² slightly lower than R². Why: adjusted R² penalises adding unhelpful predictors."
+  },
+  {
+   "topic": "Correlation & linear regression",
+   "topic_num": 6,
+   "number": "6.10",
+   "task": "Identify why you should check for multicollinearity (VIF) before interpreting beta weights.",
+   "path": "Concept (VIF)",
+   "vars": "—",
+   "answer": "You should see: highly correlated predictors destabilise coefficients (VIF > 5–10). Why: cannot separate the individual effects."
+  },
+  {
+   "topic": "Correlation & linear regression",
+   "topic_num": 6,
+   "number": "6.11",
+   "task": "Interpret the intercept in the systolic_bp ~ age model.",
+   "path": "Analyze → Linear Regression",
+   "vars": "systolic_bp, age",
+   "answer": "You should see: intercept ≈ predicted BP at age 0 (extrapolation, not meaningful clinically). Why: intercepts can be out of the observed range."
+  },
+  {
+   "topic": "Logistic regression",
+   "topic_num": 7,
+   "number": "7.1",
+   "task": "Run logistic regression: outcome ~ age + bmi + treatment.",
+   "path": "Analyze → Logistic Regression",
+   "vars": "outcome (DV), age, bmi, treatment",
+   "answer": "You should see: a fitted model with coefficients, ORs, p-values. Why: models the log-odds of \"not improved\"."
+  },
+  {
+   "topic": "Logistic regression",
+   "topic_num": 7,
+   "number": "7.2",
+   "task": "Interpret the odds ratio for treatment (active vs placebo).",
+   "path": "Analyze → Logistic Regression",
+   "vars": "outcome, treatment",
+   "answer": "You should see: OR < 1 for active treatment → lower odds of the negative outcome. Why: OR < 1 = protective."
+  },
+  {
+   "topic": "Logistic regression",
+   "topic_num": 7,
+   "number": "7.3",
+   "task": "Interpret the OR for age.",
+   "path": "Analyze → Logistic Regression",
+   "vars": "outcome, age",
+   "answer": "You should see: OR per year — likely > 1 (older → worse). Why: OR is per 1-unit increase."
+  },
+  {
+   "topic": "Logistic regression",
+   "topic_num": 7,
+   "number": "7.4",
+   "task": "Read the 95% CI of an odds ratio and decide significance.",
+   "path": "Analyze → Logistic Regression",
+   "vars": "outcome, treatment",
+   "answer": "You should see: CI excluding 1 → significant. Why: OR null value is 1; CI excluding 1 = significant."
+  },
+  {
+   "topic": "Logistic regression",
+   "topic_num": 7,
+   "number": "7.5",
+   "task": "Explain what MLE produces in logistic regression.",
+   "path": "Concept",
+   "vars": "—",
+   "answer": "You should see: coefficients that maximise the likelihood of the observed data. Why: logistic uses MLE, not least squares."
+  },
+  {
+   "topic": "Logistic regression",
+   "topic_num": 7,
+   "number": "7.6",
+   "task": "Explain pseudo-R² (e.g. McFadden).",
+   "path": "Concept",
+   "vars": "—",
+   "answer": "You should see: a rough measure of model fit (not comparable to linear R²). Why: used with caution — compare models, don't quote as % explained."
+  },
+  {
+   "topic": "Logistic regression",
+   "topic_num": 7,
+   "number": "7.7",
+   "task": "Interpret the Hosmer–Lemeshow goodness-of-fit test.",
+   "path": "Concept",
+   "vars": "—",
+   "answer": "You should see: p > 0.05 → adequate fit. Why: tests calibration across risk deciles."
+  },
+  {
+   "topic": "Logistic regression",
+   "topic_num": 7,
+   "number": "7.8",
+   "task": "Check AIC/BIC to compare two logistic models.",
+   "path": "Analyze → Logistic Regression",
+   "vars": "nested models",
+   "answer": "You should see: lower AIC/BIC → better (parsimonious) model. Why: penalises complexity."
+  },
+  {
+   "topic": "Logistic regression",
+   "topic_num": 7,
+   "number": "7.9",
+   "task": "Explain the events-per-variable (EPV) rule of thumb.",
+   "path": "Concept",
+   "vars": "—",
+   "answer": "You should see: ≥10 events per predictor to avoid overfitting. Why: too many predictors → unstable estimates."
+  },
+  {
+   "topic": "Logistic regression",
+   "topic_num": 7,
+   "number": "7.10",
+   "task": "State when to use multinomial vs ordinal logistic.",
+   "path": "Concept",
+   "vars": "—",
+   "answer": "You should see: >2 unordered categories → multinomial; ordered → ordinal (proportional odds). Why: use the outcome structure."
+  },
+  {
+   "topic": "Risk, odds & diagnostic tests",
+   "topic_num": 8,
+   "number": "8.1",
+   "task": "Compute the probability of \"Not improved\" overall.",
+   "path": "Analyze → Frequencies (outcome)",
+   "vars": "outcome",
+   "answer": "You should see: ≈ 42%. Why: the baseline risk of the event."
+  },
+  {
+   "topic": "Risk, odds & diagnostic tests",
+   "topic_num": 8,
+   "number": "8.2",
+   "task": "Compute the risk of \"Not improved\" in Placebo vs Drug A.",
+   "path": "Analyze → Crosstabs",
+   "vars": "outcome, treatment",
+   "answer": "You should see: Placebo higher risk than Drug A. Why: risk = events/total in each arm."
+  },
+  {
+   "topic": "Risk, odds & diagnostic tests",
+   "topic_num": 8,
+   "number": "8.3",
+   "task": "Compute the relative risk (RR) of Drug A vs Placebo.",
+   "path": "Manual from 8.2",
+   "vars": "outcome, treatment",
+   "answer": "You should see: RR = risk(A)/risk(Placebo) < 1. Why: RR < 1 = reduced risk with treatment."
+  },
+  {
+   "topic": "Risk, odds & diagnostic tests",
+   "topic_num": 8,
+   "number": "8.4",
+   "task": "Compute the odds ratio of the same comparison.",
+   "path": "Manual (odds ratio from 2×2)",
+   "vars": "outcome, treatment",
+   "answer": "You should see: OR < 1 and roughly similar to RR (common outcome → OR exaggerates). Why: OR and RR diverge when the event is common."
+  },
+  {
+   "topic": "Risk, odds & diagnostic tests",
+   "topic_num": 8,
+   "number": "8.5",
+   "task": "Compute the absolute risk reduction (ARR) and NNT.",
+   "path": "Manual",
+   "vars": "outcome, treatment",
+   "answer": "You should see: ARR = risk diff; NNT = 1/ARR. Why: NNT = number needed to treat for one benefit."
+  },
+  {
+   "topic": "Risk, odds & diagnostic tests",
+   "topic_num": 8,
+   "number": "8.6",
+   "task": "Run a diagnostic test: new_biomarker vs gold_standard.",
+   "path": "Analyze → Diagnostic Test",
+   "vars": "new_biomarker, gold_standard",
+   "answer": "You should see: 2×2 table with sensitivity, specificity, PPV, NPV, accuracy. Why: quantifies test accuracy against a reference."
+  },
+  {
+   "topic": "Risk, odds & diagnostic tests",
+   "topic_num": 8,
+   "number": "8.7",
+   "task": "Interpret the sensitivity and specificity you obtained.",
+   "path": "Analyze → Diagnostic Test",
+   "vars": "new_biomarker, gold_standard",
+   "answer": "You should see: sensitivity = TPR (catches disease); specificity = TNR (rules out). Why: sensitivity/specificity are properties of the test itself."
+  },
+  {
+   "topic": "Risk, odds & diagnostic tests",
+   "topic_num": 8,
+   "number": "8.8",
+   "task": "Explain how PPV changes with disease prevalence.",
+   "path": "Concept",
+   "vars": "—",
+   "answer": "You should see: PPV rises with prevalence; NPV falls. Why: PPV depends on the pre-test probability."
+  },
+  {
+   "topic": "Risk, odds & diagnostic tests",
+   "topic_num": 8,
+   "number": "8.9",
+   "task": "Run an ROC curve for new_biomarker and read the AUC.",
+   "path": "Analyze → ROC Curve",
+   "vars": "new_biomarker, gold_standard",
+   "answer": "You should see: AUC ≈ 0.78 → good discrimination. Why: 0.5 = chance; >0.8 = excellent."
+  },
+  {
+   "topic": "Risk, odds & diagnostic tests",
+   "topic_num": 8,
+   "number": "8.10",
+   "task": "Explain how to pick the optimal cut-off from the ROC.",
+   "path": "Concept (Youden index)",
+   "vars": "—",
+   "answer": "You should see: maximise (sens + spec − 1) → top-left point. Why: balances sensitivity and specificity."
+  },
+  {
+   "topic": "Risk, odds & diagnostic tests",
+   "topic_num": 8,
+   "number": "8.11",
+   "task": "Compute the positive likelihood ratio (LR+).",
+   "path": "Manual: LR+ = sens/(1−spec)",
+   "vars": "new_biomarker, gold_standard",
+   "answer": "You should see: LR+ > 1 (ideally >5). Why: how much a positive test increases the odds of disease."
+  },
+  {
+   "topic": "Survival analysis",
+   "topic_num": 9,
+   "number": "9.1",
+   "task": "Run Kaplan–Meier: followup_months by treatment.",
+   "path": "Survival → Kaplan-Meier",
+   "vars": "time: followup_months; status: event_death; factor: treatment",
+   "answer": "You should see: three survival curves, median survival, log-rank test. Why: KM estimates survival over time."
+  },
+  {
+   "topic": "Survival analysis",
+   "topic_num": 9,
+   "number": "9.2",
+   "task": "Read the median survival for each treatment.",
+   "path": "Survival → Kaplan-Meier",
+   "vars": "followup_months, event_death, treatment",
+   "answer": "You should see: Drug A longest, Placebo shortest median. Why: median survival = time to 50% survival."
+  },
+  {
+   "topic": "Survival analysis",
+   "topic_num": 9,
+   "number": "9.3",
+   "task": "Read the log-rank p-value and interpret.",
+   "path": "Survival → Kaplan-Meier",
+   "vars": "followup_months, event_death, treatment",
+   "answer": "You should see: log-rank p < 0.05 → survival differs between groups. Why: log-rank compares the whole survival curve."
+  },
+  {
+   "topic": "Survival analysis",
+   "topic_num": 9,
+   "number": "9.4",
+   "task": "Explain censoring in the data.",
+   "path": "Survival → Kaplan-Meier",
+   "vars": "event_death",
+   "answer": "You should see: vertical tick marks = censored (event_death=0). Why: a subject is censored if the event hasn't happened by the end of follow-up."
+  },
+  {
+   "topic": "Survival analysis",
+   "topic_num": 9,
+   "number": "9.5",
+   "task": "Run Cox proportional hazards: event ~ age + bmi + treatment.",
+   "path": "Survival → Cox Regression",
+   "vars": "followup_months, event_death, age, bmi, treatment",
+   "answer": "You should see: hazard ratios with 95% CIs and p-values. Why: Cox models the hazard (instantaneous risk)."
+  },
+  {
+   "topic": "Survival analysis",
+   "topic_num": 9,
+   "number": "9.6",
+   "task": "Interpret the hazard ratio for active treatment vs placebo.",
+   "path": "Survival → Cox Regression",
+   "vars": "treatment",
+   "answer": "You should see: HR < 1 → lower hazard (protective). Why: HR < 1 = reduced risk of the event."
+  },
+  {
+   "topic": "Survival analysis",
+   "topic_num": 9,
+   "number": "9.7",
+   "task": "Interpret the HR for age.",
+   "path": "Survival → Cox Regression",
+   "vars": "age",
+   "answer": "You should see: HR > 1 per year → older patients have higher hazard. Why: HR is per unit increase."
+  },
+  {
+   "topic": "Survival analysis",
+   "topic_num": 9,
+   "number": "9.8",
+   "task": "State the proportional hazards assumption.",
+   "path": "Concept (Schoenfeld residuals)",
+   "vars": "—",
+   "answer": "You should see: the HR is constant over time; check with Schoenfeld residuals. Why: if violated, a time-dependent model is needed."
+  },
+  {
+   "topic": "Survival analysis",
+   "topic_num": 9,
+   "number": "9.9",
+   "task": "Explain the difference between Kaplan–Meier and Cox.",
+   "path": "Concept",
+   "vars": "—",
+   "answer": "You should see: KM = descriptive curves + log-rank; Cox = multivariable hazard ratios. Why: Cox lets you adjust for covariates."
+  },
+  {
+   "topic": "Survival analysis",
+   "topic_num": 9,
+   "number": "9.10",
+   "task": "Explain competing risks and when the Fine–Gray model is used.",
+   "path": "Concept",
+   "vars": "—",
+   "answer": "You should see: when an event prevents the event of interest (e.g. death vs recurrence). Why: standard KM overestimates when competing events exist."
+  },
+  {
+   "topic": "Survival analysis",
+   "topic_num": 9,
+   "number": "9.11",
+   "task": "Explain why the survival curve at the far right tail may be unstable.",
+   "path": "Survival → Kaplan-Meier",
+   "vars": "followup_months",
+   "answer": "You should see: few subjects remain at risk → wide CI / unreliable. Why: small numbers at risk at the end."
+  },
+  {
+   "topic": "Study design, sample size & errors",
+   "topic_num": 10,
+   "number": "10.1",
+   "task": "Run a power analysis for an independent t-test (d=0.5, power=0.8).",
+   "path": "Analyze → Power Analysis (Test: Independent t-test (2 groups); ask: How many patients do I need?)",
+   "vars": "effect 0.5, alpha 0.05, power 0.8",
+   "answer": "You should see: ≈64 per group (≈128 total). Why: standard sample size for a medium effect."
+  },
+  {
+   "topic": "Study design, sample size & errors",
+   "topic_num": 10,
+   "number": "10.2",
+   "task": "Run power for a Paired t-test (d=0.5) and compare to the independent t-test.",
+   "path": "Analyze → Power Analysis (Test: Paired t-test (before/after); ask: How many patients do I need?)",
+   "vars": "effect 0.5, alpha 0.05, power 0.8",
+   "answer": "You should see: fewer \"patients\" than the independent t-test for the same effect. Why: a paired design uses each subject as their own control, so it needs a smaller sample for the same power."
+  },
+  {
+   "topic": "Study design, sample size & errors",
+   "topic_num": 10,
+   "number": "10.3",
+   "task": "Run power for a one-way ANOVA (f=0.25, 3 groups).",
+   "path": "Analyze → Power Analysis (Test: ANOVA (3+ groups))",
+   "vars": "f=0.25, 3 groups",
+   "answer": "You should see: a total sample size for 80% power. Why: ANOVA needs more subjects as groups increase."
+  },
+  {
+   "topic": "Study design, sample size & errors",
+   "topic_num": 10,
+   "number": "10.4",
+   "task": "Explain how sample size changes as alpha shrinks.",
+   "path": "Concept",
+   "vars": "—",
+   "answer": "You should see: smaller α (e.g. 0.01) → larger n. Why: stricter significance needs more data."
+  },
+  {
+   "topic": "Study design, sample size & errors",
+   "topic_num": 10,
+   "number": "10.5",
+   "task": "Explain intention-to-treat (ITT) vs per-protocol.",
+   "path": "Concept",
+   "vars": "—",
+   "answer": "You should see: ITT = analyse as randomised; PP = only those who completed. Why: ITT is the primary, unbiased analysis."
+  },
+  {
+   "topic": "Study design, sample size & errors",
+   "topic_num": 10,
+   "number": "10.6",
+   "task": "State the purpose of blinding and randomisation.",
+   "path": "Concept",
+   "vars": "—",
+   "answer": "You should see: randomisation removes allocation bias; blinding reduces bias in assessment. Why: strengthen causal inference."
+  },
+  {
+   "topic": "Study design, sample size & errors",
+   "topic_num": 10,
+   "number": "10.7",
+   "task": "Explain a non-inferiority trial.",
+   "path": "Concept",
+   "vars": "—",
+   "answer": "You should see: shows the new treatment is no worse than control within a margin. Why: bounds the difference, not just equivalence."
+  },
+  {
+   "topic": "Study design, sample size & errors",
+   "topic_num": 10,
+   "number": "10.8",
+   "task": "Explain the multiple-comparisons problem and how to correct it.",
+   "path": "Concept (Bonferroni / FDR)",
+   "vars": "—",
+   "answer": "You should see: more tests → more false positives; correct with Bonferroni/FDR. Why: controls the family-wise or false-discovery rate."
+  },
+  {
+   "topic": "Study design, sample size & errors",
+   "topic_num": 10,
+   "number": "10.9",
+   "task": "Explain confounding and how to address it.",
+   "path": "Concept",
+   "vars": "—",
+   "answer": "You should see: a third variable distorts the association; adjust via stratification/regression/randomisation. Why: confounders create spurious associations."
+  },
+  {
+   "topic": "Study design, sample size & errors",
+   "topic_num": 10,
+   "number": "10.10",
+   "task": "Explain Simpson's paradox with an example.",
+   "path": "Concept",
+   "vars": "—",
+   "answer": "You should see: a trend reverses when data are grouped. Why: confounding by a hidden group."
+  },
+  {
+   "topic": "Study design, sample size & errors",
+   "topic_num": 10,
+   "number": "10.11",
+   "task": "List the main types of bias in observational studies.",
+   "path": "Concept",
+   "vars": "—",
+   "answer": "You should see: selection, recall, information, confounding. Why: recognise and design to minimise them."
+  },
+  {
+   "topic": "Study design, sample size & errors",
+   "topic_num": 10,
+   "number": "10.12",
+   "task": "Explain the difference between statistical and clinical significance.",
+   "path": "Concept",
+   "vars": "—",
+   "answer": "You should see: p<0.05 ≠ clinically important; look at effect size + CI. Why: a tiny statistically significant effect may not matter in practice."
+  }
+ ]
+}

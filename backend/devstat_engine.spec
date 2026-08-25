@@ -20,7 +20,7 @@ a = Analysis(
     ["run_local.py"],
     pathex=["."],
     binaries=[],
-    datas=collect_data_files("app") + collect_data_files("r"),
+    datas=collect_data_files("app") + collect_data_files("r") + [("static", "static")],
     hiddenimports=hidden,
     hookspath=[],
     excludes=["torch", "tensorflow", "matplotlib", "PyQt5", "tkinter", "pytest"],

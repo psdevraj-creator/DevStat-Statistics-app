@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef, useCallback, Suspense } from 'react'
 import { Routes, Route, useNavigate, useLocation } from 'react-router-dom'
-import { Layout, Menu, Typography, Space, Dropdown, ConfigProvider, theme, Badge, Alert, Tag, Tooltip, message, Spin, Button, Modal } from 'antd'
+import { Layout, Menu, Typography, Space, Dropdown, ConfigProvider, theme, Badge, Alert, Tag, Tooltip, message, Spin, Button, Modal, Segmented } from 'antd'
 import {
   BarChartOutlined,
   TableOutlined,
@@ -20,10 +20,14 @@ import {
   LoginOutlined,
   CrownOutlined,
   UserOutlined,
+  DesktopOutlined,
 } from '@ant-design/icons'
 import HelpPanel from './components/HelpPanel'
+import QuestionBanks from './components/QuestionBanks'
+import DesktopEditionGate from './components/DesktopEditionGate'
 import { useAuth } from './stores/authStore'
 import { authApi } from './api/authApi'
+import { getMode, setMode, pricingApi, gbp, datasetApi, setDesktopMode } from './api/client'
 
 // ── Lazy-loaded pages ───────────────────────────────────────────────
 const DataPage = React.lazy(() => import('./pages/DataPage'))
@@ -43,6 +47,7 @@ const WizardPage = React.lazy(() => import('./pages/WizardPage'))
 const PowerPage = React.lazy(() => import('./pages/PowerPage'))
 const ClusterPage = React.lazy(() => import('./pages/ClusterPage'))
 const AuthPage = React.lazy(() => import('./pages/AuthPage'))
+const TeachingPage = React.lazy(() => import('./pages/TeachingPage'))
 
 
 
@@ -97,8 +102,42 @@ const App: React.FC = () => {
   const [backendChecked, setBackendChecked] = useState(false)
   const backoffRef = useRef(1)
   const [showAuthPopup, setShowAuthPopup] = useState(false)
+  const [showPaywall, setShowPaywall] = useState(false)
+  const [usage, setUsage] = useState<{ licensed: boolean; analyses_left?: number; charts_left?: number } | null>(null)
+  const [mode, setModeState] = useState<'exam' | 'live'>(() => (getMode() === 'live' ? 'live' : 'exam'))
+  const [showLiveConsent, setShowLiveConsent] = useState(false)
+  const [learnOpen, setLearnOpen] = useState(false)
+  const [isDesktop, setIsDesktop] = useState(false)
+  const [prices, setPrices] = useState<{ prices: { subscription: number; teaching: number; questionbank: number }; region_label: string } | null>(null)
+  const subPrice = prices ? gbp(prices.prices.subscription) : '£25'
+  const teachPrice = prices ? gbp(prices.prices.teaching) : '£1'
+  const qbPrice = prices ? gbp(prices.prices.questionbank) : '£5'
+  const regionLabel = prices?.region_label || 'your region'
+  const isTeach = location.pathname.startsWith('/teaching')
 
-  // Unmissable "sign in / use free" popup for guests (see note about sign-in).
+  useEffect(() => { pricingApi.status().then((r) => setPrices(r.data)).catch(() => {}) }, [])
+  // "?learn=1" opens the Learn-as-you-do pane on load (e.g. from the FRCR1 site)
+  // and preloads the practice dataset so the user can start immediately.
+  useEffect(() => {
+    if (location.search.includes('learn=1')) {
+      setLearnOpen(true)
+      datasetApi.sample().then(() => { window.dispatchEvent(new CustomEvent('devstat:data-changed')) }).catch(() => {})
+    }
+  }, [location.search])
+
+  const applyMode = (next: 'exam' | 'live') => { setMode(next); setModeState(next) }
+  const changeMode = (next: 'exam' | 'live') => {
+    if (next === 'live' && mode !== 'live') { setShowLiveConsent(true); return }
+    applyMode(next)
+  }
+  const changeSegment = (v: any) => {
+    if (v === 'teaching') { navigate('/teaching'); return }
+    changeMode(v as 'exam' | 'live')
+    if (isTeach) navigate(v === 'exam' ? '/' : '/')
+  }
+
+  // Unmissable "sign in" nudge for signed-out visitors (dismissable for
+  // browsing; any compute attempt re-opens it — see the auth-required event).
   useEffect(() => {
     if (!user && !localStorage.getItem('devstat_dismiss_auth')) {
       const t = setTimeout(() => setShowAuthPopup(true), 600)
@@ -106,9 +145,36 @@ const App: React.FC = () => {
     }
   }, [user])
 
+  // A signed-out use of an analysis/chart (blocked in the API client) re-opens
+  // the sign-in prompt; a 402 (free tier used up) opens the paywall.
+  useEffect(() => {
+    const authRequired = () => {
+      localStorage.removeItem('devstat_dismiss_auth')
+      setShowAuthPopup(true)
+    }
+    const paywall = () => setShowPaywall(true)
+    window.addEventListener('devstat:auth-required', authRequired)
+    window.addEventListener('devstat:paywall', paywall)
+    return () => {
+      window.removeEventListener('devstat:auth-required', authRequired)
+      window.removeEventListener('devstat:paywall', paywall)
+    }
+  }, [])
+
+  // Refresh the free-tier usage badge whenever the user (or route) changes.
+  useEffect(() => {
+    if (!user) { setUsage(null); return }
+    if (user.licensed) { setUsage({ licensed: true }); return }
+    authApi.status().then((s: any) => setUsage({
+      licensed: !!s.licensed,
+      analyses_left: s.analyses_left,
+      charts_left: s.charts_left,
+    })).catch(() => { /* leave stale badge */ })
+  }, [user, location.pathname])
+
   const startCheckout = useCallback(async () => {
     if (!user) {
-      message.info('Please sign in to upgrade to a £25/year DevStat licence.')
+      message.info(`Please sign in to upgrade to a ${subPrice}/year DevStat licence.`)
       navigate('/auth')
       return
     }
@@ -158,7 +224,7 @@ const App: React.FC = () => {
           setBackendChecked(true)
           backoffRef.current = 1
             if (online) {
-            try { const data = await resp.json(); setEngineType(data.engine ?? ''); setCloudRun(!!data.cloud_run) } catch {}
+            try { const data = await resp.json(); setEngineType(data.engine ?? ''); setCloudRun(!!data.cloud_run); const d = !!data.desktop; if (d) { setIsDesktop(true); setDesktopMode(true); setMode('live'); setModeState('live') } } catch {}
           }
           if (!online) schedule()
         }
@@ -198,8 +264,8 @@ const App: React.FC = () => {
     else if (path.startsWith('/wizard')) setMenuKey('wizard')
     else if (path.startsWith('/output')) setMenuKey('output')
     else if (path.startsWith('/transform')) setMenuKey('transform')
+    else if (path.startsWith('/teaching')) setMenuKey('teaching')
     else if (path.startsWith('/syntax')) setMenuKey('syntax')
-    else if (path.startsWith('/ai')) setMenuKey('ai')
   }, [location])
 
   // ── Undo/Redo polling ──────────────────────────────────────────
@@ -336,7 +402,7 @@ const App: React.FC = () => {
       case 'transform': navigate('/transform'); break
       case 'output': navigate('/output'); break
       case 'suggest': navigate('/suggest'); break
-      case 'ai': navigate('/ai'); break
+      case 'teaching': navigate('/teaching'); break
     }
   }
 
@@ -403,6 +469,7 @@ const App: React.FC = () => {
     },
     { key: 'graphs', label: 'Graphs', icon: <BarChartOutlined /> },
     { key: 'wizard', label: 'Wizard', icon: <QuestionCircleOutlined /> },
+    ...(isDesktop ? [] : [{ key: 'teaching', label: 'Teaching', icon: <CrownOutlined /> }]),
 
     { key: 'output', label: 'Output', icon: <FileTextOutlined /> },
   ]
@@ -418,7 +485,8 @@ const App: React.FC = () => {
         },
       }}
     >
-      <Layout style={{ minHeight: '100vh' }}>
+      <DesktopEditionGate enabled={isDesktop}>
+      <Layout style={{ height: '100vh', overflow: 'hidden' }}>
         {/* Gradient Header */}
         <Header
           style={{
@@ -467,17 +535,42 @@ const App: React.FC = () => {
           </Space>
 
           <Space size={16}>
+            {!isDesktop && (
+              <>
+              <Tooltip title="Exam = synthetic data only · Live = data kept only in memory (never stored) · Teaching = guided lessons. Switching to Live asks you to confirm.">
+              <Segmented
+                size="small"
+                value={isTeach ? 'teaching' : mode}
+                onChange={(v) => changeSegment(v)}
+                options={[{ label: 'Exam', value: 'exam' }, { label: 'Live', value: 'live' }, { label: 'Teaching', value: 'teaching' }]}
+                style={{ background: 'rgba(255,255,255,0.18)' }}
+              />
+              </Tooltip>
+              <Tooltip title="Learn as you do — practice datasets with 100 questions each (different from Teaching mode's guided scenarios). Prices adjusted to your region ({regionLabel}).">
+              <Button size="small" icon={<QuestionCircleOutlined />} onClick={() => setLearnOpen(!learnOpen)}>Learn as you do</Button>
+              </Tooltip>
+              </>
+            )}
+            {isDesktop && (
+              <Tooltip title="Desktop Edition — runs fully offline on this machine. Your data never leaves it.">
+                <Tag style={{ color: '#fff', background: 'rgba(255,255,255,0.18)', borderColor: 'rgba(255,255,255,0.35)', margin: 0 }}>
+                  <DesktopOutlined /> Desktop Edition
+                </Tag>
+              </Tooltip>
+            )}
+            {!isDesktop && (
+            <>
             {user ? (
               <Dropdown
                 menu={{ items: [
                   { key: 'acct', label: user.name || user.email || 'Account', disabled: true },
                   { type: 'divider' },
-                  ...(user.licensed ? [] : [{ key: 'upgrade', label: 'Upgrade — £25/year licence' }]),
+                  ...(user.licensed ? [] : [{ key: 'upgrade', label: `Upgrade — ${subPrice}/year licence` }]),
                   { key: 'logout', label: 'Sign out', danger: true },
                 ], onClick: ({ key }) => { if (key === 'logout') { clearSession(); message.success('Signed out') } else if (key === 'upgrade') { startCheckout() } } }}
                 placement="bottomRight"
               >
-                <Button size="small" style={{ color: '#fff', borderColor: 'rgba(255,255,255,0.4)' }} icon={<UserOutlined />}>
+                <Button size="small" style={{ background: 'transparent', borderColor: 'rgba(255,255,255,0.4)', color: '#fff' }} icon={<UserOutlined />}>
                   {user.name || user.email || 'Account'}
                 </Button>
               </Dropdown>
@@ -487,9 +580,20 @@ const App: React.FC = () => {
               </Button>
             )}
             {user && !user.licensed && (
+              <Tooltip title="Free tier — 5 analyses and 5 charts per machine/address. Upgrade for unlimited.">
+                <Tag style={{ color: '#fff', background: 'rgba(255,255,255,0.15)', borderColor: 'rgba(255,255,255,0.3)' }}>
+                  {usage && usage.licensed ? 'Licensed' : usage && typeof usage.analyses_left === 'number'
+                    ? `${usage.analyses_left} analyses · ${usage.charts_left} charts left`
+                    : 'Free'}
+                </Tag>
+              </Tooltip>
+            )}
+            {user && !user.licensed && (
               <Button size="small" type="primary" icon={<CrownOutlined />} onClick={startCheckout}>
                 Upgrade
               </Button>
+            )}
+            </>
             )}
             <Tooltip title="Help">
               <QuestionCircleOutlined
@@ -541,23 +645,24 @@ const App: React.FC = () => {
           />
         )}
 
-        {/* Online (Cloud Run) privacy warning */}
-        {cloudRun && (
+        {/* Online (Cloud Run) mode banner */}
+        {cloudRun && mode === 'live' && (
           <Alert
-            message="Online demo — exam practice only"
-            description="This online version runs on a shared public server. Use it for exam practice with the synthetic practice data only. Do NOT upload real, identifiable or confidential patient data — for real (anonymised) analysis, use the offline desktop app."
-            type="warning"
+            message="Live / confidential mode — temporary, never stored"
+            description="Your data goes to Google's servers only to run the calculation you asked for. It is held briefly in memory and then deleted — it is not stored, saved, or kept anywhere. If you'd rather your data never leave your machine, use the offline desktop version."
+            type="info"
             showIcon
             closable={false}
-            style={{ borderRadius: 0, border: 'none', background: '#fff7ed', borderBottom: '1px solid #fed7aa' }}
+            style={{ borderRadius: 0, border: 'none', background: '#e6f4ff', borderBottom: '1px solid #bae0ff' }}
           />
         )}
 
-        {/* Main Content */}
-        <Content style={{ padding: 16, background: '#f1f5f9', flex: 1, overflow: 'auto' }}>
-          <Suspense fallback={<div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '60vh' }}><Spin size="large" tip="Loading..." /></div>}>
-          <Routes>
-            <Route path=
+        {/* Main Content + inline "Learn as you do" pane (scrollable, not overlay) */}
+        <div style={{ display: 'flex', flex: 1, minHeight: 0 }}>
+          <Content style={{ padding: 16, background: '#f1f5f9', flex: 1, overflow: 'auto' }}>
+            <Suspense fallback={<div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '60vh' }}><Spin size="large" tip="Loading..." /></div>}>
+            <Routes>
+              <Route path=
                 "/" element={<DataPage />} />
             <Route path=
                 "/analyze/descriptive" element={<DescriptivePage />} />
@@ -583,11 +688,29 @@ const App: React.FC = () => {
                 "/output" element={<OutputPage />} />
             <Route path="/analyze/power" element={<PowerPage />} />
             <Route path="/analyze/cluster" element={<ClusterPage />} />
+            <Route path="/teaching" element={<TeachingPage />} />
             <Route path="/auth" element={<AuthPage />} />
 
-          </Routes>
-          </Suspense>
-        </Content>
+            </Routes>
+            </Suspense>
+          </Content>
+          {learnOpen && (
+            <aside style={{ width: 400, flexShrink: 0, display: 'flex', flexDirection: 'column', minHeight: 0, background: '#f8fafc', borderLeft: '1px solid #e2e8f0' }}>
+              <div style={{ padding: '12px 14px', borderBottom: '1px solid #e2e8f0', background: '#fff' }}>
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                  <div>
+                    <Text strong style={{ fontSize: 14 }}>Learn as you do</Text>
+                    <div style={{ fontSize: 12, color: '#64748b' }}>Do the task in the app, then check.</div>
+                  </div>
+                  <Button size="small" type="text" onClick={() => setLearnOpen(false)} aria-label="Close">✕</Button>
+                </div>
+              </div>
+              <div style={{ flex: 1, minHeight: 0, overflowY: 'auto', padding: 12 }}>
+                <QuestionBanks />
+              </div>
+            </aside>
+          )}
+        </div>
       </Layout>
       <HelpPanel open={helpOpen} onClose={() => setHelpOpen(false)} />
       <Modal
@@ -595,25 +718,89 @@ const App: React.FC = () => {
         onCancel={() => { setShowAuthPopup(false); localStorage.setItem('devstat_dismiss_auth', '1') }}
         footer={null}
         centered
-        width={440}
+        width={460}
       >
         <div style={{ textAlign: 'center', padding: '8px 4px' }}>
-          <div style={{ fontSize: 40, marginBottom: 8 }}>📊</div>
-          <Typography.Title level={4} style={{ marginBottom: 8 }}>Free to start — no sign-up needed</Typography.Title>
+          <div style={{ fontSize: 40, marginBottom: 8 }}>👋</div>
+          <Typography.Title level={4} style={{ marginBottom: 8 }}>A warm hello!</Typography.Title>
           <Typography.Paragraph type="secondary" style={{ marginBottom: 16 }}>
-            Use DevStat for your <b>first 3 analyses free</b>. Create an account to
-            save your work and unlock unlimited use for £25/year.
+            Pop in with a quick free account and we'll save your work and keep it safe for you.
+            Your first <b>5 analyses and 5 charts</b> are free, no card needed.
+            <br /><br />
+            And if you ever want more? It's just <b>{subPrice} a year</b> — that's less than a barista
+            coffee each week. Less than two takeaway lunches a month. Pocket change, honestly,
+            and you can use it all you like. <Text type="secondary">(Adjusted for {regionLabel}.)</Text>
           </Typography.Paragraph>
           <Space direction="vertical" style={{ width: '100%' }}>
             <Button type="primary" block size="large" onClick={() => { setShowAuthPopup(false); navigate('/auth') }}>
-              Sign in / Create account
+              Create your free account
             </Button>
             <Button block onClick={() => { setShowAuthPopup(false); localStorage.setItem('devstat_dismiss_auth', '1') }}>
-              Continue free (use the 3 free analyses)
+              Maybe later
             </Button>
           </Space>
         </div>
       </Modal>
+
+      {/* Paywall — a guest (or free user) has used up the free 5 analyses + 5 charts */}
+      <Modal
+        open={showPaywall}
+        onCancel={() => setShowPaywall(false)}
+        footer={null}
+        centered
+        width={460}
+      >
+        <div style={{ textAlign: 'center', padding: '8px 4px' }}>
+          <div style={{ fontSize: 40, marginBottom: 8 }}>✨</div>
+          <Typography.Title level={4} style={{ marginBottom: 8 }}>You've had a lovely free run of it!</Typography.Title>
+          <Typography.Paragraph type="secondary" style={{ marginBottom: 16 }}>
+            That's your 5 analyses and 5 charts — well done, you really know your way around this.
+            If you'd like to keep going, it's just <b>{subPrice} a year</b> — like one pub lunch, or a
+            coffee a week, for the whole year of unlimited number-crunching. <Text type="secondary">(Adjusted for {regionLabel}.)</Text>
+          </Typography.Paragraph>
+          <Space direction="vertical" style={{ width: '100%' }}>
+            <Button type="primary" block size="large" icon={<CrownOutlined />} onClick={() => { setShowPaywall(false); startCheckout() }}>
+              Upgrade — {subPrice}/year
+            </Button>
+            <Button block onClick={() => setShowPaywall(false)}>
+              Maybe later
+            </Button>
+          </Space>
+        </div>
+      </Modal>
+
+      {/* Live / confidential mode consent */}
+      <Modal
+        open={showLiveConsent}
+        onCancel={() => setShowLiveConsent(false)}
+        footer={null}
+        centered
+        width={470}
+      >
+        <div style={{ textAlign: 'center', padding: '8px 4px' }}>
+          <div style={{ fontSize: 40, marginBottom: 8 }}>💛</div>
+          <Typography.Title level={4} style={{ marginBottom: 8 }}>A gentle note about your data</Typography.Title>
+          <Typography.Paragraph type="secondary" style={{ marginBottom: 16 }}>
+            Okay, lovely — just so you know exactly what happens when you use <b>Live mode</b>.
+            Your data only travels to Google's servers to run the calculation you've asked for,
+            and that's all. It's held very briefly in memory while we work, then it's gone — we
+            don't save it, we don't store it, and we don't keep a copy of it anywhere.
+            <br /><br />
+            And if even that little trip isn't for you — no worries, truly. The offline version
+            on your own machine keeps everything safely at home. Whatever you choose, we're just
+            glad you're here.
+          </Typography.Paragraph>
+          <Space direction="vertical" style={{ width: '100%' }}>
+            <Button type="primary" block size="large" onClick={() => { applyMode('live'); setShowLiveConsent(false) }}>
+              Enable Live mode
+            </Button>
+            <Button block onClick={() => setShowLiveConsent(false)}>
+              No thanks, I'll use offline
+            </Button>
+          </Space>
+        </div>
+      </Modal>
+      </DesktopEditionGate>
     </ConfigProvider>
   )
 }

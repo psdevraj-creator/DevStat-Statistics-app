@@ -78,33 +78,63 @@ def run_analysis(
              dispatch_id, analysis_name, n_rows, n_cols,
              {k: v for k, v in params.items()})
 
-    # ── Free-trial gate (3 analyses per machine/IP, LIFETIME) ───────────
-    # A signed-in, licensed user is exempt. Guests get 3 analyses before a
-    # "create an account / pay" prompt. Count is stored in Firestore keyed by
-    # the stable device id (or client IP) so it survives reloads.
+    # ── Account + free-tier gate (bound to machine+IP, NOT the session) ─────
+    # No anonymous use: a visitor must sign in to compute anything. A licensed
+    # account (paid/admin) is unlimited. A signed-in free account is capped at
+    # 5 analyses (+5 charts, gated in the charts router) on this machine+IP;
+    # exhausting it — even after creating a new account or clearing cookies on
+    # the same machine/address — returns a warm paywall prompt. This is
+    # fail-CLOSED: on any gate error the request is blocked, never given away.
     try:
-        from app.state import get_uid, get_device
-        from app.services.firebase_store import licence_live, guest_trial_status, guest_trial_consume
+        from app.state import (get_uid, get_device, get_client_ip, get_teaching,
+                               get_teaching_session)
+        from app.services.firebase_store import licence_live, trial_check_and_consume
         uid = get_uid()
-        licensed = bool(uid) and licence_live(uid)
-        if not licensed:
-            device = get_device() or "guest"
-            status = guest_trial_status(device)
-            if not status.get("eligible", True):
-                log.warning("DISPATCH_GATE | id=%s | analysis=%s | trial_used=%s/%s",
-                            dispatch_id, analysis_name, status.get("used"), status.get("limit"))
+        # Guests may do the FREE teaching lesson (its tests are free), but no
+        # other anonymous compute: the free-analysis path requires a signed-in
+        # account (or being inside a loaded free teaching scenario).
+        free_teaching = bool(get_teaching() and (get_teaching_session() or {}).get("free"))
+        if not uid and not free_teaching:
+            log.warning("DISPATCH_GATE | id=%s | analysis=%s | reason=no_account", dispatch_id, analysis_name)
+            return {
+                "blocked": True,
+                "requires_subscription": True,
+                "action_type": "account",
+                "reason": ("A warm hello! 👋 Pop in with a quick free account and we'll save "
+                           "your work for you. Your first 5 analyses and 5 charts are free, "
+                           "no card needed."),
+                "details": "Create a free account to start using DevStat.",
+                "suggested_alternatives": [],
+            }
+        if licence_live(uid):
+            pass  # paid / admin account — unlimited, skip counters
+        elif get_teaching():
+            pass  # guided Teaching mode — free, consumes no credit
+        else:
+            gate = trial_check_and_consume(get_device(), get_client_ip(), "analysis")
+            if gate.get("blocked"):
+                log.warning("DISPATCH_GATE | id=%s | analysis=%s | trial_used identity=%s",
+                            dispatch_id, analysis_name, gate.get("identity", ""))
                 return {
                     "blocked": True,
                     "requires_subscription": True,
                     "action_type": "subscription",
-                    "reason": f"Your free trial of {status.get('limit')} analyses is used up. "
-                              "Create an account and buy a £25/year licence to continue.",
-                    "details": "Create a free account, then subscribe (£25/yr) to keep analysing.",
+                    "reason": gate.get("reason") or (
+                        "You've had a lovely free run of it! ✨ Your first 5 analyses and "
+                        "5 charts are used up — a £25/year licence keeps you going."),
+                    "details": "Upgrade to a £25/year licence to keep analysing.",
                     "suggested_alternatives": [],
                 }
-            guest_trial_consume(device)
-    except Exception as gate_err:  # never let the gate break a run
-        log.warning("DISPATCH_GATE_FAIL | id=%s | %s", dispatch_id, gate_err)
+    except Exception as gate_err:  # NEVER fail-open on a gate error
+        log.exception("DISPATCH_GATE_FAIL | id=%s | %s", dispatch_id, gate_err)
+        return {
+            "blocked": True,
+            "requires_subscription": True,
+            "action_type": "account",
+            "reason": "We're having a small hiccup. Please sign in and try again.",
+            "details": "If this keeps happening, please contact support.",
+            "suggested_alternatives": [],
+        }
 
     try:
         result = get_engine().run(analysis_name, params)

@@ -165,6 +165,26 @@ async def upload_file(file: UploadFile = File(...)) -> DatasetInfo:
     return _build_dataset_info(df, name=file.filename)
 
 
+@router.post("/sample")
+async def load_sample() -> DatasetInfo:
+    """Load the bundled synthetic practice dataset (Exam mode preload).
+
+    Loading a dataset is not an analysis, so it does not consume a free-tier
+    credit. Analysis remains gated (sign-in + 5 analyses / 5 charts) as usual.
+    """
+    from pathlib import Path as _P
+    path = _P(__file__).resolve().parent.parent / "data" / "devstat-practice-data.csv"
+    if not path.exists():
+        raise HTTPException(status_code=500, detail="Practice dataset is missing.")
+    df = import_file(str(path))
+    _state.set_current_data(df)
+    _state.set_current_filename("devstat-practice-data.csv")
+    init_variable_metadata(df)
+    clear_history()
+    _invalidate_metadata_cache()
+    return _build_dataset_info(df, name="Practice data (synthetic)")
+
+
 def _cleanup_temp(tmp_dir: str) -> None:
     """Remove a temp directory."""
     import shutil

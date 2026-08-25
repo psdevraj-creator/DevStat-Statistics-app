@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Learn as you do — Medical Statistics | FRCR 1</title>
+  <link rel="stylesheet" href="css/medstat.css">
+  <style>
+    .learn-hero{background:linear-gradient(135deg,#065f46,#0d9488);border-radius:20px;padding:34px 30px;color:#fff;margin:24px 0;box-shadow:0 10px 30px rgba(6,95,70,.2)}
+    .learn-hero h1{margin:0 0 8px;font-size:30px}
+    .learn-hero p{opacity:.94;max-width:860px}
+    .learn-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:22px}
+    .btn-dl{display:inline-flex;align-items:center;gap:8px;background:#fff;color:#065f46;font-weight:700;border-radius:12px;padding:12px 20px;text-decoration:none;box-shadow:0 6px 18px rgba(0,0,0,.18)}
+    .btn-dl:hover{transform:translateY(-1px)}
+    .btn-dl.ghost{background:rgba(255,255,255,.16);color:#fff;border:1px solid rgba(255,255,255,.5)}
+    .stats-row{display:flex;flex-wrap:wrap;gap:14px;margin-top:20px}
+    .stat-chip{background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.25);border-radius:12px;padding:8px 16px;font-size:14px}
+    .stat-chip b{font-size:20px;display:block}
+    .topic{background:#fff;border:1px solid #e2e8f0;border-radius:14px;margin:18px 0;overflow:hidden;box-shadow:0 1px 4px rgba(0,0,0,.04)}
+    .topic>summary{cursor:pointer;padding:16px 20px;font-weight:700;font-size:18px;color:#006d5b;list-style:none;display:flex;justify-content:space-between;align-items:center}
+    .topic>summary::-webkit-details-marker{display:none}
+    .topic>summary .chev{transition:transform .2s;color:#94a3b8}
+    .topic[open]>summary .chev{transform:rotate(90deg)}
+    .topic-body{padding:0 20px 20px}
+    .topic-intro{color:#64748b;font-size:14px;margin-bottom:12px}
+    .ex{background:#f8fafc;border:1px solid #edf2f7;border-radius:10px;padding:14px 16px;margin:10px 0}
+    .ex.no{display:flex;gap:10px;align-items:baseline}
+    .ex.no .n{font-weight:800;color:#0d9488;min-width:34px}
+    .ex .task{font-weight:600;color:#334155}
+    .ex .path{font-size:13px;color:#0d9488;margin:6px 0}
+    .ex .vars{font-size:12px;color:#94a3b8}
+    .ex details{margin-top:8px}
+    .ex summary{cursor:pointer;font-size:12.5px;color:#0f766e;font-weight:700;list-style:none;display:inline-block;background:#e6fffa;border:1px solid #99f6e4;border-radius:20px;padding:4px 12px;margin-top:4px;user-select:none}
+    .ex summary::-webkit-details-marker{display:none}
+    .ex summary::after{content:' ▼';color:#0d9488}
+    .ex details[open] > summary::after{content:' ▲';color:#0f766e}
+    .ex .answer{background:#ecfdf5;border-left:4px solid #10b981;padding:10px 14px;border-radius:8px;font-size:13.5px;margin-top:8px}
+    /* Explicitly hide/show the answer so the browser's internal details rule
+       can't leave it invisible — works regardless of browser/version. */
+    .ex details > .answer{display:none}
+    .ex details[open] > .answer{display:block}
+    .ex .answer b{color:#065f46}
+    code{background:#eef2f7;border-radius:4px;padding:1px 6px;font-size:12.5px}
+    .note{font-size:13px;color:#64748b}
+  </style>
+</head>
+<body>
+  <nav class="navbar">
+    <div class="navbar-logo">
+      <span class="logo-main">FRCR 1</span>
+      <span class="logo-sub">· <a href="../FRCR1.html">Hub</a> · <a href="index.html">Medical Statistics</a> · Learn as you do</span>
+    </div>
+    <div class="navbar-badge">🧪 Hands-on with DevStat</div>
+  </nav>
+
+  <div class="breadcrumb">
+    <a href="../FRCR1.html">Home</a><span class="sep">›</span>
+    <a href="index.html">Medical Statistics</a><span class="sep">›</span>
+    <span>Learn as you do</span>
+  </div>
+
+  <section class="hero" style="padding:28px 24px 18px;">
+    <div class="hero-inner">
+      <div class="hero-icon">🧪</div>
+      <h1 style="font-size:1.8rem;">Learn as you do</h1>
+      <p>A complete hands-on practical guide to medical statistics. You use a real statistics app
+      (<strong>DevStat</strong>) on a purpose-built practice dataset to actually run every test from the module,
+      then check your interpretation. Work top-to-bottom, topic-by-topic.</p>
+      <div class="hero-pills">
+        <span class="pill"><span>10</span> Topics</span>
+        <span class="pill"><span>100+</span> Exercises</span>
+        <span class="pill"><span>240</span> Practice patients</span>
+        <span class="pill"><span>£25/yr</span> Full licence</span>
+      </div>
+    </div>
+  </section>
+
+  <div class="content">
+
+    <div class="learn-hero">
+      <h1>Set up in 2 minutes</h1>
+      <p>Download DevStat (Windows/macOS), then load the practice dataset. Every exercise below assumes that dataset is
+      open in <strong>Data → Data View</strong>. The app is free for your first sessions; a £25-a-year licence unlocks
+      full use and renews each year.</p>
+      <div class="learn-actions">
+        <a class="btn-dl" href="https://github.com/psdevraj-creator/DevStat-Statistics-app/releases/latest" target="_blank" rel="noopener">⬇ Download DevStat</a>
+        <a class="btn-dl ghost" href="data/devstat-practice-data.csv" download>📄 Practice dataset (.csv)</a>
+        <a class="btn-dl ghost" href="https://devstat-statistics-app-991466352708.europe-west1.run.app/?learn=1" target="_blank" rel="noopener">🌐 Use online (no install)</a>
+        <a class="btn-dl ghost" href="medical-statistics.html">📖 Study guide</a>
+      </div>
+      <p style="font-size:12.5px;color:#fff8e1;background:rgba(0,0,0,.16);border-radius:8px;padding:8px 12px;margin-top:14px;">
+        ⚠ <strong>Exam-practice only.</strong> The <strong>online</strong> app runs on a shared public server — use it
+        with the synthetic practice data. <strong>Never upload real or confidential patient data</strong>; for real
+        (anonymised) analysis use the offline desktop app.
+      </p>
+      <div class="stats-row">
+        <div class="stat-chip"><b>240</b> patients</div>
+        <div class="stat-chip"><b>13</b> variables</div>
+        <div class="stat-chip"><b>3</b> treatment arms</div>
+        <div class="stat-chip"><b>0</b> coding needed</div>
+      </div>
+    </div>
+
+    <div class="info-card" style="background:#f0fdfa;border:1px solid #99f6e4;margin-bottom:8px;">
+      <h3 style="font-size:0.9rem;">📌 How to use these exercises</h3>
+      <p style="font-size:0.82rem;color:#334155;">
+        Do the task, look at your result, then click <strong>Check</strong> to compare. The “You should see” line tells
+        you whether you’ve got it right; the “Why” short explanation reinforces the concept. If yours differs, re-read
+        the matching chapter in the <a href="medical-statistics.html">study guide</a> and try again. The dataset is
+        synthetic and built so every test gives a clear, reproducible result.
+      </p>
+    </div>
+
+    <!-- Topic 1 -->
+    <details class="topic" open>
+      <summary>1 · Data types &amp; descriptive statistics <span class="chev">▶</span></summary>
+      <div class="topic-body">
+        <p class="topic-intro">Learn to classify variables and summarise numeric data the way DevStat does.</p>
+
+        <div class="ex"><div class="no"><span class="n">1.1</span><div><div class="task">Open Data → Data View, then the Variable View tab, and list the numeric/scale vs categorical variables.</div>
+        <div class="path">Data → Data View → Variable View (tab)</div><div class="vars">all variables</div>
+        <details><summary>Check</summary><div class="answer"><b>You should see:</b> scale: age, bmi, systolic_bp, cholesterol, pain_score, new_biomarker, followup_months. Categorical: sex, treatment, smoking, outcome, gold_standard, event_death. <b>Why:</b> measurement scale decides which test you can use.</div></details></div></div></div>
+
+        <div class="ex"><div class="no"><span class="n">1.2</span><div><div class="task">Run descriptive statistics on age, bmi, systolic_bp, cholesterol.</div>
+        <div class="path">Analyze → Descriptive</div><div class="vars">age, bmi, systolic_bp, cholesterol</div>
+        <details><summary>Check</summary><div class="answer"><b>You should see:</b> for each variable: N, mean, SD, median, min, max, skewness. <b>Why:</b> mean+SD summarise symmetric data; median is better with skew.</div></details></div></div></div>
+
+        <div class="ex"><div class="no"><span class="n">1.3</span><div><div class="task">Identify which variable is skewed and which is roughly symmetric.</div>
+        <div class="path">Analyze → Descriptive (skewness column)</div><div class="vars">age, bmi</div>
+        <details><summary>Check</summary><div class="answer"><b>You should see:</b> age and bmi skewness near 0 (symmetric). <b>Why:</b> skewness ≈ ±0.5 is acceptable; >1 is markedly skewed.</div></details></div></div></div>
+
+        <div class="ex"><div class="no"><span class="n">1.4</span><div><div class="task">Compare mean vs median for age.</div>
+        <div class="path">Analyze → Descriptive</div><div class="vars">age</div>
+        <details><summary>Check</summary><div class="answer"><b>You should see:</b> mean ≈ median (both ≈ 58). <b>Why:</b> when mean≈median the distribution is symmetric.</div></details></div></div></div>
+
+        <div class="ex"><div class="no"><span class="n">1.5</span><div><div class="task">Get frequencies for smoking and for treatment.</div>
+        <div class="path">Analyze → Frequencies</div><div class="vars">smoking, treatment</div>
+        <details><summary>Check</summary><div class="answer"><b>You should see:</b> counts + % for each category. <b>Why:</b> frequencies summarise categorical data; report n and %.</div></details></div></div></div>
+
+        <div class="ex"><div class="no"><span class="n">1.6</span><div><div class="task">Describe the distribution of BMI (central tendency + spread + shape).</div>
+        <div class="path">Analyze → Descriptive</div><div class="vars">bmi</div>
+        <details><summary>Check</summary>          <div class="answer"><b>You should see:</b> mean ≈ 27, SD ≈ 4.9, median ≈ 27, min 15, max 40, skew ≈ 0.2. <b>Why:</b> roughly normal; report mean (SD).</div></details></div></div></div>
+
+        <div class="ex"><div class="no"><span class="n">1.7</span><div><div class="task">Find the interquartile range (IQR) equivalent for systolic_bp.</div>
+        <div class="path">Analyze → Explore (quartiles)</div><div class="vars">systolic_bp</div>
+        <details><summary>Check</summary>          <div class="answer"><b>You should see:</b> Q1 ≈ 89, Q3 ≈ 103 (IQR ≈ 14). <b>Why:</b> IQR is robust to outliers; with skew, report median (IQR).</div></details></div></div></div>
+
+        <div class="ex"><div class="no"><span class="n">1.8</span><div><div class="task">State whether systolic_bp has outliers.</div>
+        <div class="path">Graphs (Boxplot)</div><div class="vars">systolic_bp</div>
+        <details><summary>Check</summary><div class="answer"><b>You should see:</b> a few points beyond the whiskers. <b>Why:</b> boxplots reveal outliers that would distort the mean.</div></details></div></div></div>
+
+        <div class="ex"><div class="no"><span class="n">1.9</span><div><div class="task">Classify pain_score (0–10).</div>
+        <div class="path">Data → Data View → Variable View (Measure)</div><div class="vars">pain_score</div>
+        <details><summary>Check</summary><div class="answer"><b>You should see:</b> ordinal (ordered integer scale, not truly continuous). <b>Why:</b> treat ordinal as non-continuous; prefer non-parametric tests.</div></details></div></div></div>
+
+        <div class="ex"><div class="no"><span class="n">1.10</span><div><div class="task">Report "age" both as mean(SD) and median(IQR) — which fits better?</div>
+        <div class="path">Analyze → Descriptive</div><div class="vars">age</div>
+        <details><summary>Check</summary><div class="answer"><b>You should see:</b> symmetric → mean (SD) is fine. <b>Why:</b> symmetric data: mean (SD); skewed: median (IQR).</div></details></div></div></div>
+
+        <div class="ex"><div class="no"><span class="n">1.11</span><div><div class="task">Determine which variable is most appropriate to report as a proportion.</div>
+        <div class="path">Analyze → Frequencies</div><div class="vars">smoking, outcome</div>
+        <details><summary>Check</summary><div class="answer"><b>You should see:</b> outcome / smoking → counts + %. <b>Why:</b> binary/categorical → proportions, not mean.</div></details></div></div></div>
+
+        <div class="ex"><div class="no"><span class="n">1.12</span><div><div class="task">Find the coefficient of variation (CV) of BMI.</div>
+        <div class="path">Manual: (SD / mean) × 100 from Descriptive</div><div class="vars">bmi</div>
+        <details><summary>Check</summary><div class="answer"><b>You should see:</b> ≈ 5/27 ≈ 18%. <b>Why:</b> CV standardises spread, useful comparing variables on different scales.</div></details></div></div></div>
+      </div>
+    </details>
+
+    <!-- Topic 2 -->
+    <details class="topic">
+      <summary>2 · Normal distribution &amp; the Central Limit Theorem <span class="chev">▶</span></summary>
+      <div class="topic-body">
+        <p class="topic-intro">Check normality and understand why sample means behave.</p>
+
+        <div class="ex"><div class="no"><span class="n">2.1</span><div><div class="task">Make a histogram of bmi with a normal curve.</div>
+        <div class="path">Graphs (Histogram)</div><div class="vars">bmi</div>
+        <details><summary>Check</summary><div class="answer"><b>You should see:</b> bell-shaped with the normal curve close to the bars. <b>Why:</b> normality underpins parametric tests.</div></details></div></div></div>
+
+        <div class="ex"><div class="no"><span class="n">2.2</span><div><div class="task">Run a Q–Q plot of bmi.</div>
+        <div class="path">Graphs (Q-Q plot)</div><div class="vars">bmi</div>
+        <details><summary>Check</summary><div class="answer"><b>You should see:</b> points close to the diagonal. <b>Why:</b> Q-Q is a visual normality check.</div></details></div></div></div>
+
+        <div class="ex"><div class="no"><span class="n">2.3</span><div><div class="task">Run the Shapiro–Wilk test on bmi.</div>
+        <div class="path">Analyze → Explore</div><div class="vars">bmi</div>
+        <details><summary>Check</summary><div class="answer"><b>You should see:</b> p &gt; 0.05 → not significantly non-normal. <b>Why:</b> p &gt; 0.05 means we cannot reject normality.</div></details></div></div></div>
+
+        <div class="ex"><div class="no"><span class="n">2.4</span><div><div class="task">Estimate the proportion of patients within mean ± 1 SD for age.</div>
+        <div class="path">Analyze → Descriptive (mean, SD)</div><div class="vars">age</div>
+        <details><summary>Check</summary>          <div class="answer"><b>You should see:</b> ≈ 70% fall within mean ± 1 SD. <b>Why:</b> the 68–95–99.7 rule for normal data.</div></details></div></div></div>
+
+        <div class="ex"><div class="no"><span class="n">2.5</span><div><div class="task">Compute the z-score of a patient aged 78 (mean 58, SD 15).</div>
+        <div class="path">Manual</div><div class="vars">age</div>
+        <details><summary>Check</summary>          <div class="answer"><b>You should see:</b> z = (78−57.8)/14.2 ≈ 1.42 → 92nd centile. <b>Why:</b> z tells you how many SDs from the mean.</div></details></div></div></div>
+
+        <div class="ex"><div class="no"><span class="n">2.6</span><div><div class="task">Explain why sample mean is more reliable than a single observation.</div>
+        <div class="path">Concept</div><div class="vars">—</div>
+        <details><summary>Check</summary><div class="answer"><b>You should see:</b> the standard error of the mean decreases as n grows. <b>Why:</b> SE = SD/√n — the CLT makes means normal even if data aren't.</div></details></div></div></div>
+
+        <div class="ex"><div class="no"><span class="n">2.7</span><div><div class="task">Check normality of systolic_bp.</div>
+        <div class="path">Analyze → Explore</div><div class="vars">systolic_bp</div>
+        <details><summary>Check</summary><div class="answer"><b>You should see:</b> near-normal (p &gt; 0.05). <b>Why:</b> OK for parametric tests on the mean.</div></details></div></div></div>
+
+        <div class="ex"><div class="no"><span class="n">2.8</span><div><div class="task">Explain why you can still use a t-test on a slightly non-normal variable with n=240.</div>
+        <div class="path">Concept (CLT)</div><div class="vars">—</div>
+        <details><summary>Check</summary><div class="answer"><b>You should see:</b> with large n the sample mean is approximately normal. <b>Why:</b> the Central Limit Theorem justifies parametric tests on means for large samples.</div></details></div></div></div>
+
+        <div class="ex"><div class="no"><span class="n">2.9</span><div><div class="task">Check whether pain_score is normally distributed — and say why that matters.</div>
+        <div class="path">Analyze → Explore (pain_score)</div><div class="vars">pain_score</div>
+        <details><summary>Check</summary><div class="answer"><b>You should see:</b> transformed/ordinal → not normal. <b>Why:</b> ordinal data → use non-parametric tests.</div></details></div></div></div>
+
+        <div class="ex"><div class="no"><span class="n">2.10</span><div><div class="task">State the standard error of the mean for bmi.</div>
+        <div class="path">Analyze → Explore (SE)</div><div class="vars">bmi</div>
+        <details><summary>Check</summary><div class="answer"><b>You should see:</b> SD/√n ≈ 5/√240 ≈ 0.32. <b>Why:</b> SE measures how precisely the sample mean estimates the population mean.</div></details></div></div></div>
+
+        <div class="ex"><div class="no"><span class="n">2.11</span><div><div class="task">Draw the 68/95/99.7 boundaries for bmi.</div>
+        <div class="path">Manual from mean±SD</div><div class="vars">bmi</div>
+        <details><summary>Check</summary><div class="answer"><b>You should see:</b> 22–32 (68%), 17–37 (95%), 12–42 (99.7%). <b>Why:</b> the rule-of-thumb spread for normal data.</div></details></div></div></div>
+      </div>
+    </details>
+
+    <!-- Topic 3 -->
+    <details class="topic">
+      <summary>3 · Confidence intervals &amp; hypothesis testing <span class="chev">▶</span></summary>
+      <div class="topic-body">
+        <p class="topic-intro">Quantify uncertainty, understand p-values and the errors behind decisions.</p>
+
+        <div class="ex"><div class="no"><span class="n">3.1</span><div><div class="task">Get the mean and 95% CI of systolic_bp by treatment.</div>
+        <div class="path">Analyze → Means (dependent systolic_bp, group treatment)</div><div class="vars">systolic_bp, treatment</div>
+        <details><summary>Check</summary>          <div class="answer"><b>You should see:</b> three means (≈94–100) each with a 95% CI. <b>Why:</b> a 95% CI is the range likely to contain the true mean.</div></details></div></div></div>
+
+        <div class="ex"><div class="no"><span class="n">3.2</span><div><div class="task">Interpret two overlapping CIs.</div>
+        <div class="path">Analyze → Means</div><div class="vars">systolic_bp, treatment</div>
+        <details><summary>Check</summary><div class="answer"><b>You should see:</b> overlapping CIs suggest no statistically significant difference. <b>Why:</b> overlap implies the difference may be due to chance.</div></details></div></div></div>
+
+        <div class="ex"><div class="no"><span class="n">3.3</span><div><div class="task">Identify where the 95% CI excludes the null (a difference of 0) between treatments.</div>
+        <div class="path">Analyze → Means</div><div class="vars">systolic_bp, treatment</div>
+        <details><summary>Check</summary><div class="answer"><b>You should see:</b> Drug B–Placebo CIs barely overlap / difference CI excludes 0. <b>Why:</b> when the difference's CI excludes 0, p &lt; 0.05 typically.</div></details></div></div></div>
+
+        <div class="ex"><div class="no"><span class="n">3.4</span><div><div class="task">Compute a 95% CI for the mean of bmi.</div>
+        <div class="path">Analyze → Means</div><div class="vars">bmi</div>
+        <details><summary>Check</summary>          <div class="answer"><b>You should see:</b> mean ≈ 27.1, 95% CI ≈ 26.5–27.7. <b>Why:</b> 95% CI = mean ± 1.96 × SE.</div></details></div></div></div>
+
+        <div class="ex"><div class="no"><span class="n">3.5</span><div><div class="task">State the null and alternative hypothesis for "does treatment affect systolic_bp?"</div>
+        <div class="path">Concept</div><div class="vars">—</div>
+        <details><summary>Check</summary><div class="answer"><b>You should see:</b> H₀: no difference between groups; H₁: a difference exists. <b>Why:</b> hypothesis testing starts from the null.</div></details></div></div></div>
+
+        <div class="ex"><div class="no"><span class="n">3.6</span><div><div class="task">Explain what a p-value &lt; 0.05 means (and what it does NOT).</div>
+        <div class="path">Concept</div><div class="vars">—</div>
+        <details><summary>Check</summary><div class="answer"><b>You should see:</b> the probability of the data if the null were true; it is not the probability the null is true. <b>Why:</b> common misinterpretation — p is not "5% chance the result is wrong".</div></details></div></div></div>
+
+        <div class="ex"><div class="no"><span class="n">3.7</span><div><div class="task">Define a Type I error.</div>
+        <div class="path">Concept</div><div class="vars">—</div>
+        <details><summary>Check</summary><div class="answer"><b>You should see:</b> rejecting a true null (false positive); risk = α. <b>Why:</b> α = 0.05 → 5% chance of a false positive.</div></details></div></div></div>
+
+        <div class="ex"><div class="no"><span class="n">3.8</span><div><div class="task">Define a Type II error and state power.</div>
+        <div class="path">Concept</div><div class="vars">—</div>
+        <details><summary>Check</summary><div class="answer"><b>You should see:</b> failing to detect a true effect (false negative); power = 1−β. <b>Why:</b> power is the chance of detecting a real difference.</div></details></div></div></div>
+
+        <div class="ex"><div class="no"><span class="n">3.9</span><div><div class="task">Explain the relationship between CI width and sample size.</div>
+        <div class="path">Concept</div><div class="vars">—</div>
+        <details><summary>Check</summary><div class="answer"><b>You should see:</b> bigger n → smaller SE → narrower CI. <b>Why:</b> CI narrows as √n grows.</div></details></div></div></div>
+
+        <div class="ex"><div class="no"><span class="n">3.10</span><div><div class="task">State when you would use a one-tailed test.</div>
+        <div class="path">Concept</div><div class="vars">—</div>
+        <details><summary>Check</summary><div class="answer"><b>You should see:</b> only when a directional (one-sided) hypothesis is justified pre-specified. <b>Why:</b> one-tailed gives more power but demands a strong a priori direction.</div></details></div></div></div>
+
+        <div class="ex"><div class="no"><span class="n">3.11</span><div><div class="task">Interpret a result with p = 0.06: significant or not?</div>
+        <div class="path">Concept</div><div class="vars">—</div>
+        <details><summary>Check</summary><div class="answer"><b>You should see:</b> not significant at α=0.05, but report the exact p (and CI) rather than just "NS". <b>Why:</b> avoid the "p-hacking" dichotomisation; report uncertainty.</div></details></div></div></div>
+      </div>
+    </details>
+
+    <!-- Topic 4 -->
+    <details class="topic">
+      <summary>4 · Parametric tests: t-tests &amp; ANOVA <span class="chev">▶</span></summary>
+      <div class="topic-body">
+        <p class="topic-intro">Compare means when data are (approximately) normal.</p>
+
+        <div class="ex"><div class="no"><span class="n">4.1</span><div><div class="task">Run an independent t-test: BMI by sex.</div>
+        <div class="path">Analyze → Compare Means (Test type: Independent t-test)</div><div class="vars">bmi (dependent), sex (group)</div>
+        <details><summary>Check</summary><div class="answer"><b>You should see:</b> Levene test + t-test; p ≈ 0.69 → no significant difference. <b>Why:</b> p &gt; 0.05 → fail to reject H₀.</div></details></div></div></div>
+
+        <div class="ex"><div class="no"><span class="n">4.2</span><div><div class="task">Read Levene's test and say which t-test to use.</div>
+        <div class="path">Analyze → Compare Means (Test type: Independent t-test)</div><div class="vars">bmi, sex</div>
+        <details><summary>Check</summary><div class="answer"><b>You should see:</b> Levene p &gt; 0.05 → equal variances → Student's t. <b>Why:</b> if variances differ, use Welch's t.</div></details></div></div></div>
+
+        <div class="ex"><div class="no"><span class="n">4.3</span><div><div class="task">Run a one-way ANOVA: systolic_bp by treatment.</div>
+        <div class="path">Analyze → One-way ANOVA</div><div class="vars">systolic_bp, treatment</div>
+        <details><summary>Check</summary><div class="answer"><b>You should see:</b> F ≈ 7.0, p ≈ 0.001 → significant. <b>Why:</b> at least one group differs. ANOVA doesn't tell you which.</div></details></div></div></div>
+
+        <div class="ex"><div class="no"><span class="n">4.4</span><div><div class="task">Read the Tukey post-hoc after a significant ANOVA.</div>
+        <div class="path">Analyze → One-way ANOVA (post-hoc: Tukey)</div><div class="vars">systolic_bp, treatment</div>
+        <details><summary>Check</summary><div class="answer"><b>You should see:</b> Drug B–Placebo significantly different (p &lt; 0.05). <b>Why:</b> post-hoc adjusts for multiple comparisons.</div></details></div></div></div>
+
+        <div class="ex"><div class="no"><span class="n">4.5</span><div><div class="task">State why you cannot run three separate t-tests instead of an ANOVA + post-hoc.</div>
+        <div class="path">Concept</div><div class="vars">—</div>
+        <details><summary>Check</summary><div class="answer"><b>You should see:</b> multiple testing inflates the Type I error. <b>Why:</b> correction (Tukey/Bonferroni) controls the family-wise error.</div></details></div></div></div>
+
+        <div class="ex"><div class="no"><span class="n">4.6</span><div><div class="task">Run a paired t-test comparing systolic vs diastolic BP.</div>
+        <div class="path">Analyze → Compare Means (Test type: Paired t-test)</div><div class="vars">systolic_bp, diastolic_bp</div>
+        <details><summary>Check</summary><div class="answer"><b>You should see:</b> a clearly significant difference (p &lt; 0.001). <b>Why:</b> paired measures on the same patient remove between-subject variability.</div></details></div></div></div>
+
+        <div class="ex"><div class="no"><span class="n">4.7</span><div><div class="task">Explain the difference between paired and independent t-tests.</div>
+        <div class="path">Concept</div><div class="vars">—</div>
+        <details><summary>Check</summary><div class="answer"><b>You should see:</b> paired = same subjects twice (more power); independent = separate groups. <b>Why:</b> use the design to choose the test.</div></details></div></div></div>
+
+        <div class="ex"><div class="no"><span class="n">4.8</span><div><div class="task">Check the assumptions for the independent t-test you ran.</div>
+        <div class="path">Analyze → Explore (normality per group)</div><div class="vars">bmi, sex</div>
+        <details><summary>Check</summary><div class="answer"><b>You should see:</b> each group near-normal and equal variances. <b>Why:</b> t-test assumes normality + homoscedasticity.</div></details></div></div></div>
+
+        <div class="ex"><div class="no"><span class="n">4.9</span><div><div class="task">Compute the effect size (Cohen's d) for BMI male vs female.</div>
+        <div class="path">From the t-test output (or manual)</div><div class="vars">bmi, sex</div>
+        <details><summary>Check</summary>          <div class="answer"><b>You should see:</b> d ≈ 0.05 (tiny). <b>Why:</b> a non-significant result with tiny effect — report effect size, not just p.</div></details></div></div></div>
+
+        <div class="ex"><div class="no"><span class="n">4.10</span><div><div class="task">Run a two-way ANOVA with two factors and interpret interaction.</div>
+        <div class="path">Analyze → Factorial ANOVA</div><div class="vars">systolic_bp ~ treatment + sex</div>
+        <details><summary>Check</summary><div class="answer"><b>You should see:</b> main effects + interaction term. <b>Why:</b> interaction = whether the effect of one factor depends on the other.</div></details></div></div></div>
+
+        <div class="ex"><div class="no"><span class="n">4.11</span><div><div class="task">State when to use a one-sample t-test.</div>
+        <div class="path">Concept</div><div class="vars">—</div>
+        <details><summary>Check</summary><div class="answer"><b>You should see:</b> comparing a sample mean to a known reference value. <b>Why:</b> e.g. is our mean BP different from 120?</div></details></div></div></div>
+
+        <div class="ex"><div class="no"><span class="n">4.12</span><div><div class="task">Summarise the outcome of testing BMI by sex in one sentence.</div>
+        <div class="path">Interpret</div><div class="vars">bmi, sex</div>
+        <details><summary>Check</summary><div class="answer"><b>You should see:</b> "No significant difference in BMI between sexes (t=…, p=0.69, d=0.06)." <b>Why:</b> the clinical takeaway is a null result.</div></details></div></div></div>
+      </div>
+    </details>
+
+    <!-- Topic 5 -->
+    <details class="topic">
+      <summary>5 · Non-parametric &amp; categorical tests <span class="chev">▶</span></summary>
+      <div class="topic-body">
+        <p class="topic-intro">When data aren't normal, or you compare proportions.</p>
+
+        <div class="ex"><div class="no"><span class="n">5.1</span><div><div class="task">Run a chi-square test: treatment × outcome.</div>
+        <div class="path">Analyze → Crosstabs (row treatment, col outcome)</div><div class="vars">treatment, outcome</div>
+        <details><summary>Check</summary><div class="answer"><b>You should see:</b> χ² with p &lt; 0.001 → association. <b>Why:</b> improvement depends on treatment.</div></details></div></div></div>
+
+        <div class="ex"><div class="no"><span class="n">5.2</span><div><div class="task">Check the minimum expected count — would Fisher's exact be needed?</div>
+        <div class="path">Analyze → Crosstabs</div><div class="vars">treatment, outcome</div>
+        <details><summary>Check</summary><div class="answer"><b>You should see:</b> all expected counts &gt; 5 → chi-square OK. <b>Why:</b> Fisher's exact is for small/sparse tables (expected &lt; 5).</div></details></div></div></div>
+
+        <div class="ex"><div class="no"><span class="n">5.3</span><div><div class="task">Run Fisher's exact on sex × smoking.</div>
+        <div class="path">Analyze → Crosstabs (use Fisher's exact)</div><div class="vars">sex, smoking</div>
+        <details><summary>Check</summary><div class="answer"><b>You should see:</b> Fisher exact p — likely non-significant. <b>Why:</b> exact test for 2×2 small tables.</div></details></div></div></div>
+
+        <div class="ex"><div class="no"><span class="n">5.4</span><div><div class="task">Run the Mann–Whitney U test on pain_score by sex.</div>
+        <div class="path">Analyze → Non-parametric Tests → Mann-Whitney U</div><div class="vars">pain_score, sex</div>
+        <details><summary>Check</summary><div class="answer"><b>You should see:</b> U statistic + p. <b>Why:</b> ranks — for non-normal/ordinal data between two groups.</div></details></div></div></div>
+
+        <div class="ex"><div class="no"><span class="n">5.5</span><div><div class="task">Run Wilcoxon signed-rank on pain_score vs a paired ordinal measure.</div>
+        <div class="path">Analyze → Non-parametric Tests → Wilcoxon Signed-Rank</div><div class="vars">two related ordinal vars</div>
+        <details><summary>Check</summary><div class="answer"><b>You should see:</b> a rank-based paired test p. <b>Why:</b> the non-parametric equivalent of the paired t-test.</div></details></div></div></div>
+
+        <div class="ex"><div class="no"><span class="n">5.6</span><div><div class="task">Run Kruskal–Wallis on pain_score by treatment.</div>
+        <div class="path">Analyze → Non-parametric Tests → Kruskal-Wallis</div><div class="vars">pain_score, treatment</div>
+        <details><summary>Check</summary><div class="answer"><b>You should see:</b> H statistic + p. <b>Why:</b> non-parametric one-way ANOVA.</div></details></div></div></div>
+
+        <div class="ex"><div class="no"><span class="n">5.7</span><div><div class="task">Run the Sign Test on a paired binary/ordinal change.</div>
+        <div class="path">Analyze → Non-parametric Tests → Sign Test</div><div class="vars">two paired variables</div>
+        <details><summary>Check</summary><div class="answer"><b>You should see:</b> counts of +/− differences and a sign-test p. <b>Why:</b> the non-parametric test for paired (before/after) data — like McNemar for binary outcomes.</div></details></div></div></div>
+
+        <div class="ex"><div class="no"><span class="n">5.8</span><div><div class="task">Run the binomial test on sex (test proportion 0.5).</div>
+        <div class="path">Analyze → Non-parametric Tests → Binomial Test</div><div class="vars">sex</div>
+        <details><summary>Check</summary><div class="answer"><b>You should see:</b> compares observed proportion to 0.5; p ≈ 0.9 → balanced. <b>Why:</b> tests whether a binary proportion differs from a set value.</div></details></div></div></div>
+
+        <div class="ex"><div class="no"><span class="n">5.9</span><div><div class="task">Run the runs test on age.</div>
+        <div class="path">Analyze → Non-parametric Tests → Runs Test</div><div class="vars">age</div>
+        <details><summary>Check</summary><div class="answer"><b>You should see:</b> tests randomness of the sequence. <b>Why:</b> checks for non-random patterns.</div></details></div></div></div>
+
+        <div class="ex"><div class="no"><span class="n">5.10</span><div><div class="task">Run the Kolmogorov–Smirnov test on bmi.</div>
+        <div class="path">Analyze → Non-parametric Tests → KS Test</div><div class="vars">bmi</div>
+        <details><summary>Check</summary><div class="answer"><b>You should see:</b> p &gt; 0.05 → consistent with normal. <b>Why:</b> an alternative normality test (less powerful than Shapiro).</div></details></div></div></div>
+
+        <div class="ex"><div class="no"><span class="n">5.11</span><div><div class="task">Run the Friedman test on three related ordinal measures.</div>
+        <div class="path">Analyze → Non-parametric Tests → Friedman</div><div class="vars">3 related ordinal vars</div>
+        <details><summary>Check</summary><div class="answer"><b>You should see:</b> the non-parametric repeated-measures ANOVA. <b>Why:</b> for matched/related groups of 3+.</div></details></div></div></div>
+      </div>
+    </details>
+
+    <!-- Topic 6 -->
+    <details class="topic">
+      <summary>6 · Correlation &amp; linear regression <span class="chev">▶</span></summary>
+      <div class="topic-body">
+        <p class="topic-intro">Measure association and model a continuous outcome.</p>
+
+        <div class="ex"><div class="no"><span class="n">6.1</span><div><div class="task">Run Pearson correlation between age and systolic_bp.</div>
+        <div class="path">Analyze → Correlation (method: Pearson)</div><div class="vars">age, systolic_bp</div>
+        <details><summary>Check</summary><div class="answer"><b>You should see:</b> r ≈ 0.7, p &lt; 0.001 → strong positive. <b>Why:</b> older patients have higher systolic BP.</div></details></div></div></div>
+
+        <div class="ex"><div class="no"><span class="n">6.2</span><div><div class="task">Run Spearman correlation between age and pain_score.</div>
+        <div class="path">Analyze → Correlation (method: Spearman)</div><div class="vars">age, pain_score</div>
+        <details><summary>Check</summary><div class="answer"><b>You should see:</b> ρ for ranked/ordinal data. <b>Why:</b> Spearman for non-normal/ordinal or monotonic relationships.</div></details></div></div></div>
+
+        <div class="ex"><div class="no"><span class="n">6.3</span><div><div class="task">Interpret r² for age–systolic_bp.</div>
+        <div class="path">From r (≈0.7)</div><div class="vars">age, systolic_bp</div>
+        <details><summary>Check</summary><div class="answer"><b>You should see:</b> r² ≈ 0.48 → 48% of BP variance explained. <b>Why:</b> r² is the proportion of shared variance.</div></details></div></div></div>
+
+        <div class="ex"><div class="no"><span class="n">6.4</span><div><div class="task">Build a correlation matrix of age, bmi, systolic_bp, cholesterol.</div>
+        <div class="path">Analyze → Correlation</div><div class="vars">4 numeric vars</div>
+        <details><summary>Check</summary><div class="answer"><b>You should see:</b> a 4×4 matrix with r + p for each pair. <b>Why:</b> screening for associations; watch for multiple testing.</div></details></div></div></div>
+
+        <div class="ex"><div class="no"><span class="n">6.5</span><div><div class="task">Run simple linear regression: systolic_bp ~ age.</div>
+        <div class="path">Analyze → Linear Regression</div><div class="vars">systolic_bp (DV), age</div>
+        <details><summary>Check</summary>          <div class="answer"><b>You should see:</b> coefficient ≈ 0.47 mmHg/yr, p &lt; 0.001, R² ≈ 0.48. <b>Why:</b> each extra year adds ~0.5 mmHg.</div></details></div></div></div>
+
+        <div class="ex"><div class="no"><span class="n">6.6</span><div><div class="task">Run multiple linear regression: systolic_bp ~ age + bmi + cholesterol.</div>
+        <div class="path">Analyze → Linear Regression</div><div class="vars">systolic_bp, age, bmi, cholesterol</div>
+        <details><summary>Check</summary><div class="answer"><b>You should see:</b> adjusted model summary + coefficients. <b>Why:</b> adjusts each predictor for the others.</div></details></div></div></div>
+
+        <div class="ex"><div class="no"><span class="n">6.7</span><div><div class="task">Interpret the age coefficient in the multiple model.</div>
+        <div class="path">Analyze → Linear Regression</div><div class="vars">systolic_bp, age, bmi, cholesterol</div>
+        <details><summary>Check</summary><div class="answer"><b>You should see:</b> age still significant (p &lt; 0.001), coefficient slightly reduced. <b>Why:</b> the effect is adjusted for BMI and cholesterol.</div></details></div></div></div>
+
+        <div class="ex"><div class="no"><span class="n">6.8</span><div><div class="task">Check the LINE assumptions of your linear regression.</div>
+        <div class="path">Analyze → Linear Regression (residual plots)</div><div class="vars">systolic_bp ~ age</div>
+        <details><summary>Check</summary><div class="answer"><b>You should see:</b> residual vs fit roughly random; residuals ~normal. <b>Why:</b> LINE: Linear, Independent, Normal, Equal-variances errors.</div></details></div></div></div>
+
+        <div class="ex"><div class="no"><span class="n">6.9</span><div><div class="task">Compare adjusted R² to R² in the multiple model.</div>
+        <div class="path">Analyze → Linear Regression</div><div class="vars">systolic_bp, age, bmi, cholesterol</div>
+        <details><summary>Check</summary><div class="answer"><b>You should see:</b> adjusted R² slightly lower than R². <b>Why:</b> adjusted R² penalises adding unhelpful predictors.</div></details></div></div></div>
+
+        <div class="ex"><div class="no"><span class="n">6.10</span><div><div class="task">Identify why you should check for multicollinearity (VIF) before interpreting beta weights.</div>
+        <div class="path">Concept (VIF)</div><div class="vars">—</div>
+        <details><summary>Check</summary><div class="answer"><b>You should see:</b> highly correlated predictors destabilise coefficients (VIF &gt; 5–10). <b>Why:</b> cannot separate the individual effects.</div></details></div></div></div>
+
+        <div class="ex"><div class="no"><span class="n">6.11</span><div><div class="task">Interpret the intercept in the systolic_bp ~ age model.</div>
+        <div class="path">Analyze → Linear Regression</div><div class="vars">systolic_bp, age</div>
+        <details><summary>Check</summary><div class="answer"><b>You should see:</b> intercept ≈ predicted BP at age 0 (extrapolation, not meaningful clinically). <b>Why:</b> intercepts can be out of the observed range.</div></details></div></div></div>
+      </div>
+    </details>
+
+    <!-- Topic 7 -->
+    <details class="topic">
+      <summary>7 · Logistic regression <span class="chev">▶</span></summary>
+      <div class="topic-body">
+        <p class="topic-intro">Model a binary outcome and interpret odds ratios.</p>
+
+        <div class="ex"><div class="no"><span class="n">7.1</span><div><div class="task">Run logistic regression: outcome ~ age + bmi + treatment.</div>
+        <div class="path">Analyze → Logistic Regression</div><div class="vars">outcome (DV), age, bmi, treatment</div>
+        <details><summary>Check</summary><div class="answer"><b>You should see:</b> a fitted model with coefficients, ORs, p-values. <b>Why:</b> models the log-odds of "not improved".</div></details></div></div></div>
+
+        <div class="ex"><div class="no"><span class="n">7.2</span><div><div class="task">Interpret the odds ratio for treatment (active vs placebo).</div>
+        <div class="path">Analyze → Logistic Regression</div><div class="vars">outcome, treatment</div>
+        <details><summary>Check</summary><div class="answer"><b>You should see:</b> OR &lt; 1 for active treatment → lower odds of the negative outcome. <b>Why:</b> OR &lt; 1 = protective.</div></details></div></div></div>
+
+        <div class="ex"><div class="no"><span class="n">7.3</span><div><div class="task">Interpret the OR for age.</div>
+        <div class="path">Analyze → Logistic Regression</div><div class="vars">outcome, age</div>
+        <details><summary>Check</summary><div class="answer"><b>You should see:</b> OR per year — likely &gt; 1 (older → worse). <b>Why:</b> OR is per 1-unit increase.</div></details></div></div></div>
+
+        <div class="ex"><div class="no"><span class="n">7.4</span><div><div class="task">Read the 95% CI of an odds ratio and decide significance.</div>
+        <div class="path">Analyze → Logistic Regression</div><div class="vars">outcome, treatment</div>
+        <details><summary>Check</summary><div class="answer"><b>You should see:</b> CI excluding 1 → significant. <b>Why:</b> OR null value is 1; CI excluding 1 = significant.</div></details></div></div></div>
+
+        <div class="ex"><div class="no"><span class="n">7.5</span><div><div class="task">Explain what MLE produces in logistic regression.</div>
+        <div class="path">Concept</div><div class="vars">—</div>
+        <details><summary>Check</summary><div class="answer"><b>You should see:</b> coefficients that maximise the likelihood of the observed data. <b>Why:</b> logistic uses MLE, not least squares.</div></details></div></div></div>
+
+        <div class="ex"><div class="no"><span class="n">7.6</span><div><div class="task">Explain pseudo-R² (e.g. McFadden).</div>
+        <div class="path">Concept</div><div class="vars">—</div>
+        <details><summary>Check</summary><div class="answer"><b>You should see:</b> a rough measure of model fit (not comparable to linear R²). <b>Why:</b> used with caution — compare models, don't quote as % explained.</div></details></div></div></div>
+
+        <div class="ex"><div class="no"><span class="n">7.7</span><div><div class="task">Interpret the Hosmer–Lemeshow goodness-of-fit test.</div>
+        <div class="path">Concept</div><div class="vars">—</div>
+        <details><summary>Check</summary><div class="answer"><b>You should see:</b> p &gt; 0.05 → adequate fit. <b>Why:</b> tests calibration across risk deciles.</div></details></div></div></div>
+
+        <div class="ex"><div class="no"><span class="n">7.8</span><div><div class="task">Check AIC/BIC to compare two logistic models.</div>
+        <div class="path">Analyze → Logistic Regression</div><div class="vars">nested models</div>
+        <details><summary>Check</summary><div class="answer"><b>You should see:</b> lower AIC/BIC → better (parsimonious) model. <b>Why:</b> penalises complexity.</div></details></div></div></div>
+
+        <div class="ex"><div class="no"><span class="n">7.9</span><div><div class="task">Explain the events-per-variable (EPV) rule of thumb.</div>
+        <div class="path">Concept</div><div class="vars">—</div>
+        <details><summary>Check</summary><div class="answer"><b>You should see:</b> ≥10 events per predictor to avoid overfitting. <b>Why:</b> too many predictors → unstable estimates.</div></details></div></div></div>
+
+        <div class="ex"><div class="no"><span class="n">7.10</span><div><div class="task">State when to use multinomial vs ordinal logistic.</div>
+        <div class="path">Concept</div><div class="vars">—</div>
+        <details><summary>Check</summary><div class="answer"><b>You should see:</b> &gt;2 unordered categories → multinomial; ordered → ordinal (proportional odds). <b>Why:</b> use the outcome structure.</div></details></div></div></div>
+      </div>
+    </details>
+
+    <!-- Topic 8 -->
+    <details class="topic">
+      <summary>8 · Risk, odds &amp; diagnostic tests <span class="chev">▶</span></summary>
+      <div class="topic-body">
+        <p class="topic-intro">Compare risks and measure test accuracy.</p>
+
+        <div class="ex"><div class="no"><span class="n">8.1</span><div><div class="task">Compute the probability of "Not improved" overall.</div>
+        <div class="path">Analyze → Frequencies (outcome)</div><div class="vars">outcome</div>
+        <details><summary>Check</summary>          <div class="answer"><b>You should see:</b> ≈ 42%. <b>Why:</b> the baseline risk of the event.</div></details></div></div></div>
+
+        <div class="ex"><div class="no"><span class="n">8.2</span><div><div class="task">Compute the risk of "Not improved" in Placebo vs Drug A.</div>
+        <div class="path">Analyze → Crosstabs</div><div class="vars">outcome, treatment</div>
+        <details><summary>Check</summary><div class="answer"><b>You should see:</b> Placebo higher risk than Drug A. <b>Why:</b> risk = events/total in each arm.</div></details></div></div></div>
+
+        <div class="ex"><div class="no"><span class="n">8.3</span><div><div class="task">Compute the relative risk (RR) of Drug A vs Placebo.</div>
+        <div class="path">Manual from 8.2</div><div class="vars">outcome, treatment</div>
+        <details><summary>Check</summary><div class="answer"><b>You should see:</b> RR = risk(A)/risk(Placebo) &lt; 1. <b>Why:</b> RR &lt; 1 = reduced risk with treatment.</div></details></div></div></div>
+
+        <div class="ex"><div class="no"><span class="n">8.4</span><div><div class="task">Compute the odds ratio of the same comparison.</div>
+        <div class="path">Manual (odds ratio from 2×2)</div><div class="vars">outcome, treatment</div>
+        <details><summary>Check</summary><div class="answer"><b>You should see:</b> OR &lt; 1 and roughly similar to RR (common outcome → OR exaggerates). <b>Why:</b> OR and RR diverge when the event is common.</div></details></div></div></div>
+
+        <div class="ex"><div class="no"><span class="n">8.5</span><div><div class="task">Compute the absolute risk reduction (ARR) and NNT.</div>
+        <div class="path">Manual</div><div class="vars">outcome, treatment</div>
+        <details><summary>Check</summary><div class="answer"><b>You should see:</b> ARR = risk diff; NNT = 1/ARR. <b>Why:</b> NNT = number needed to treat for one benefit.</div></details></div></div></div>
+
+        <div class="ex"><div class="no"><span class="n">8.6</span><div><div class="task">Run a diagnostic test: new_biomarker vs gold_standard.</div>
+        <div class="path">Analyze → Diagnostic Test</div><div class="vars">new_biomarker, gold_standard</div>
+        <details><summary>Check</summary><div class="answer"><b>You should see:</b> 2×2 table with sensitivity, specificity, PPV, NPV, accuracy. <b>Why:</b> quantifies test accuracy against a reference.</div></details></div></div></div>
+
+        <div class="ex"><div class="no"><span class="n">8.7</span><div><div class="task">Interpret the sensitivity and specificity you obtained.</div>
+        <div class="path">Analyze → Diagnostic Test</div><div class="vars">new_biomarker, gold_standard</div>
+        <details><summary>Check</summary><div class="answer"><b>You should see:</b> sensitivity = TPR (catches disease); specificity = TNR (rules out). <b>Why:</b> sensitivity/specificity are properties of the test itself.</div></details></div></div></div>
+
+        <div class="ex"><div class="no"><span class="n">8.8</span><div><div class="task">Explain how PPV changes with disease prevalence.</div>
+        <div class="path">Concept</div><div class="vars">—</div>
+        <details><summary>Check</summary><div class="answer"><b>You should see:</b> PPV rises with prevalence; NPV falls. <b>Why:</b> PPV depends on the pre-test probability.</div></details></div></div></div>
+
+        <div class="ex"><div class="no"><span class="n">8.9</span><div><div class="task">Run an ROC curve for new_biomarker and read the AUC.</div>
+        <div class="path">Analyze → ROC Curve</div><div class="vars">new_biomarker, gold_standard</div>
+        <details><summary>Check</summary><div class="answer"><b>You should see:</b> AUC ≈ 0.78 → good discrimination. <b>Why:</b> 0.5 = chance; &gt;0.8 = excellent.</div></details></div></div></div>
+
+        <div class="ex"><div class="no"><span class="n">8.10</span><div><div class="task">Explain how to pick the optimal cut-off from the ROC.</div>
+        <div class="path">Concept (Youden index)</div><div class="vars">—</div>
+        <details><summary>Check</summary><div class="answer"><b>You should see:</b> maximise (sens + spec − 1) → top-left point. <b>Why:</b> balances sensitivity and specificity.</div></details></div></div></div>
+
+        <div class="ex"><div class="no"><span class="n">8.11</span><div><div class="task">Compute the positive likelihood ratio (LR+).</div>
+        <div class="path">Manual: LR+ = sens/(1−spec)</div><div class="vars">new_biomarker, gold_standard</div>
+        <details><summary>Check</summary><div class="answer"><b>You should see:</b> LR+ &gt; 1 (ideally &gt;5). <b>Why:</b> how much a positive test increases the odds of disease.</div></details></div></div></div>
+      </div>
+    </details>
+
+    <!-- Topic 9 -->
+    <details class="topic">
+      <summary>9 · Survival analysis <span class="chev">▶</span></summary>
+      <div class="topic-body">
+        <p class="topic-intro">Time-to-event data: curves, log-rank and Cox models.</p>
+
+        <div class="ex"><div class="no"><span class="n">9.1</span><div><div class="task">Run Kaplan–Meier: followup_months by treatment.</div>
+        <div class="path">Survival → Kaplan-Meier</div><div class="vars">time: followup_months; status: event_death; factor: treatment</div>
+        <details><summary>Check</summary><div class="answer"><b>You should see:</b> three survival curves, median survival, log-rank test. <b>Why:</b> KM estimates survival over time.</div></details></div></div></div>
+
+        <div class="ex"><div class="no"><span class="n">9.2</span><div><div class="task">Read the median survival for each treatment.</div>
+        <div class="path">Survival → Kaplan-Meier</div><div class="vars">followup_months, event_death, treatment</div>
+        <details><summary>Check</summary><div class="answer"><b>You should see:</b> Drug A longest, Placebo shortest median. <b>Why:</b> median survival = time to 50% survival.</div></details></div></div></div>
+
+        <div class="ex"><div class="no"><span class="n">9.3</span><div><div class="task">Read the log-rank p-value and interpret.</div>
+        <div class="path">Survival → Kaplan-Meier</div><div class="vars">followup_months, event_death, treatment</div>
+        <details><summary>Check</summary><div class="answer"><b>You should see:</b> log-rank p &lt; 0.05 → survival differs between groups. <b>Why:</b> log-rank compares the whole survival curve.</div></details></div></div></div>
+
+        <div class="ex"><div class="no"><span class="n">9.4</span><div><div class="task">Explain censoring in the data.</div>
+        <div class="path">Survival → Kaplan-Meier</div><div class="vars">event_death</div>
+        <details><summary>Check</summary><div class="answer"><b>You should see:</b> vertical tick marks = censored (event_death=0). <b>Why:</b> a subject is censored if the event hasn't happened by the end of follow-up.</div></details></div></div></div>
+
+        <div class="ex"><div class="no"><span class="n">9.5</span><div><div class="task">Run Cox proportional hazards: event ~ age + bmi + treatment.</div>
+        <div class="path">Survival → Cox Regression</div><div class="vars">followup_months, event_death, age, bmi, treatment</div>
+        <details><summary>Check</summary><div class="answer"><b>You should see:</b> hazard ratios with 95% CIs and p-values. <b>Why:</b> Cox models the hazard (instantaneous risk).</div></details></div></div></div>
+
+        <div class="ex"><div class="no"><span class="n">9.6</span><div><div class="task">Interpret the hazard ratio for active treatment vs placebo.</div>
+        <div class="path">Survival → Cox Regression</div><div class="vars">treatment</div>
+        <details><summary>Check</summary><div class="answer"><b>You should see:</b> HR &lt; 1 → lower hazard (protective). <b>Why:</b> HR &lt; 1 = reduced risk of the event.</div></details></div></div></div>
+
+        <div class="ex"><div class="no"><span class="n">9.7</span><div><div class="task">Interpret the HR for age.</div>
+        <div class="path">Survival → Cox Regression</div><div class="vars">age</div>
+        <details><summary>Check</summary><div class="answer"><b>You should see:</b> HR &gt; 1 per year → older patients have higher hazard. <b>Why:</b> HR is per unit increase.</div></details></div></div></div>
+
+        <div class="ex"><div class="no"><span class="n">9.8</span><div><div class="task">State the proportional hazards assumption.</div>
+        <div class="path">Concept (Schoenfeld residuals)</div><div class="vars">—</div>
+        <details><summary>Check</summary><div class="answer"><b>You should see:</b> the HR is constant over time; check with Schoenfeld residuals. <b>Why:</b> if violated, a time-dependent model is needed.</div></details></div></div></div>
+
+        <div class="ex"><div class="no"><span class="n">9.9</span><div><div class="task">Explain the difference between Kaplan–Meier and Cox.</div>
+        <div class="path">Concept</div><div class="vars">—</div>
+        <details><summary>Check</summary><div class="answer"><b>You should see:</b> KM = descriptive curves + log-rank; Cox = multivariable hazard ratios. <b>Why:</b> Cox lets you adjust for covariates.</div></details></div></div></div>
+
+        <div class="ex"><div class="no"><span class="n">9.10</span><div><div class="task">Explain competing risks and when the Fine–Gray model is used.</div>
+        <div class="path">Concept</div><div class="vars">—</div>
+        <details><summary>Check</summary><div class="answer"><b>You should see:</b> when an event prevents the event of interest (e.g. death vs recurrence). <b>Why:</b> standard KM overestimates when competing events exist.</div></details></div></div></div>
+
+        <div class="ex"><div class="no"><span class="n">9.11</span><div><div class="task">Explain why the survival curve at the far right tail may be unstable.</div>
+        <div class="path">Survival → Kaplan-Meier</div><div class="vars">followup_months</div>
+        <details><summary>Check</summary><div class="answer"><b>You should see:</b> few subjects remain at risk → wide CI / unreliable. <b>Why:</b> small numbers at risk at the end.</div></details></div></div></div>
+      </div>
+    </details>
+
+    <!-- Topic 10 -->
+    <details class="topic">
+      <summary>10 · Study design, sample size &amp; errors <span class="chev">▶</span></summary>
+      <div class="topic-body">
+        <p class="topic-intro">Design studies, size them, and avoid the traps in interpretation.</p>
+
+        <div class="ex"><div class="no"><span class="n">10.1</span><div><div class="task">Run a power analysis for an independent t-test (d=0.5, power=0.8).</div>
+        <div class="path">Analyze → Power Analysis (Test: Independent t-test (2 groups); ask: How many patients do I need?)</div><div class="vars">effect 0.5, alpha 0.05, power 0.8</div>
+        <details><summary>Check</summary><div class="answer"><b>You should see:</b> ≈64 per group (≈128 total). <b>Why:</b> standard sample size for a medium effect.</div></details></div></div></div>
+
+        <div class="ex"><div class="no"><span class="n">10.2</span><div><div class="task">Run power for a Paired t-test (d=0.5) and compare to the independent t-test.</div>
+        <div class="path">Analyze → Power Analysis (Test: Paired t-test (before/after); ask: How many patients do I need?)</div><div class="vars">effect 0.5, alpha 0.05, power 0.8</div>
+        <details><summary>Check</summary><div class="answer"><b>You should see:</b> fewer "patients" than the independent t-test for the same effect. <b>Why:</b> a paired design uses each subject as their own control, so it needs a smaller sample for the same power.</div></details></div></div></div>
+
+        <div class="ex"><div class="no"><span class="n">10.3</span><div><div class="task">Run power for a one-way ANOVA (f=0.25, 3 groups).</div>
+        <div class="path">Analyze → Power Analysis (Test: ANOVA (3+ groups))</div><div class="vars">f=0.25, 3 groups</div>
+        <details><summary>Check</summary><div class="answer"><b>You should see:</b> a total sample size for 80% power. <b>Why:</b> ANOVA needs more subjects as groups increase.</div></details></div></div></div>
+
+        <div class="ex"><div class="no"><span class="n">10.4</span><div><div class="task">Explain how sample size changes as alpha shrinks.</div>
+        <div class="path">Concept</div><div class="vars">—</div>
+        <details><summary>Check</summary><div class="answer"><b>You should see:</b> smaller α (e.g. 0.01) → larger n. <b>Why:</b> stricter significance needs more data.</div></details></div></div></div>
+
+        <div class="ex"><div class="no"><span class="n">10.5</span><div><div class="task">Explain intention-to-treat (ITT) vs per-protocol.</div>
+        <div class="path">Concept</div><div class="vars">—</div>
+        <details><summary>Check</summary><div class="answer"><b>You should see:</b> ITT = analyse as randomised; PP = only those who completed. <b>Why:</b> ITT is the primary, unbiased analysis.</div></details></div></div></div>
+
+        <div class="ex"><div class="no"><span class="n">10.6</span><div><div class="task">State the purpose of blinding and randomisation.</div>
+        <div class="path">Concept</div><div class="vars">—</div>
+        <details><summary>Check</summary><div class="answer"><b>You should see:</b> randomisation removes allocation bias; blinding reduces bias in assessment. <b>Why:</b> strengthen causal inference.</div></details></div></div></div>
+
+        <div class="ex"><div class="no"><span class="n">10.7</span><div><div class="task">Explain a non-inferiority trial.</div>
+        <div class="path">Concept</div><div class="vars">—</div>
+        <details><summary>Check</summary><div class="answer"><b>You should see:</b> shows the new treatment is no worse than control within a margin. <b>Why:</b> bounds the difference, not just equivalence.</div></details></div></div></div>
+
+        <div class="ex"><div class="no"><span class="n">10.8</span><div><div class="task">Explain the multiple-comparisons problem and how to correct it.</div>
+        <div class="path">Concept (Bonferroni / FDR)</div><div class="vars">—</div>
+        <details><summary>Check</summary><div class="answer"><b>You should see:</b> more tests → more false positives; correct with Bonferroni/FDR. <b>Why:</b> controls the family-wise or false-discovery rate.</div></details></div></div></div>
+
+        <div class="ex"><div class="no"><span class="n">10.9</span><div><div class="task">Explain confounding and how to address it.</div>
+        <div class="path">Concept</div><div class="vars">—</div>
+        <details><summary>Check</summary><div class="answer"><b>You should see:</b> a third variable distorts the association; adjust via stratification/regression/randomisation. <b>Why:</b> confounders create spurious associations.</div></details></div></div></div>
+
+        <div class="ex"><div class="no"><span class="n">10.10</span><div><div class="task">Explain Simpson's paradox with an example.</div>
+        <div class="path">Concept</div><div class="vars">—</div>
+        <details><summary>Check</summary><div class="answer"><b>You should see:</b> a trend reverses when data are grouped. <b>Why:</b> confounding by a hidden group.</div></details></div></div></div>
+
+        <div class="ex"><div class="no"><span class="n">10.11</span><div><div class="task">List the main types of bias in observational studies.</div>
+        <div class="path">Concept</div><div class="vars">—</div>
+        <details><summary>Check</summary><div class="answer"><b>You should see:</b> selection, recall, information, confounding. <b>Why:</b> recognise and design to minimise them.</div></details></div></div></div>
+
+        <div class="ex"><div class="no"><span class="n">10.12</span><div><div class="task">Explain the difference between statistical and clinical significance.</div>
+        <div class="path">Concept</div><div class="vars">—</div>
+        <details><summary>Check</summary><div class="answer"><b>You should see:</b> p&lt;0.05 ≠ clinically important; look at effect size + CI. <b>Why:</b> a tiny statistically significant effect may not matter in practice.</div></details></div></div></div>
+      </div>
+    </details>
+
+    <div class="info-card" style="background:#f8fafc;margin-top:8px;">
+      <h3 style="font-size:0.9rem;">📚 Want the theory first?</h3>
+      <p style="font-size:0.82rem;color:#64748b;">
+        Each exercise links to a concept covered in the <a href="medical-statistics.html">complete study guide</a>.
+        Do the practical first, then read the theory, then re-do if needed. The dataset is synthetic, built so every
+        test gives a clean, interpretable result. DevStat is free to try; a £25-a-year licence (renewed each year)
+        unlocks full use.
+      </p>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      <div>© 2025 FRCR 1 Study Hub</div>
+      <div class="footer-right">For educational use only · Not for clinical decisions</div>
+    </div>
+  </footer>
+</body>
+</html>

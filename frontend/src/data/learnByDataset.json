@@ -1,0 +1,1606 @@
+{
+ "survival-qb": [
+  {
+   "number": "1.1",
+   "topic": "Descriptive",
+   "task": "Run descriptive stats for age, split by arm.",
+   "path": "Analyze → Descriptive",
+   "vars": "age (group=arm)",
+   "answer": "You should see: plus-agent: mean 62.95 (SD 8.32, median 63.4); standard: mean 63.02 (SD 9.22, median 63.65)"
+  },
+  {
+   "number": "1.2",
+   "topic": "Descriptive",
+   "task": "Run descriptive stats for bmi, split by arm.",
+   "path": "Analyze → Descriptive",
+   "vars": "bmi (group=arm)",
+   "answer": "You should see: plus-agent: mean 26.53 (SD 4.7, median 26.1); standard: mean 26.91 (SD 4.34, median 27.0)"
+  },
+  {
+   "number": "1.3",
+   "topic": "Descriptive",
+   "task": "Run descriptive stats for efs months, split by arm.",
+   "path": "Analyze → Descriptive",
+   "vars": "efs_months (group=arm)",
+   "answer": "You should see: plus-agent: mean 27.3 (SD 15.46, median 26.66); standard: mean 24.11 (SD 15.6, median 23.36)"
+  },
+  {
+   "number": "1.4",
+   "topic": "Descriptive",
+   "task": "Get overall descriptive stats (N, mean, SD, median) for age.",
+   "path": "Analyze → Descriptive",
+   "vars": "age",
+   "answer": "You should see: n=520.0, mean 62.99, SD 8.8, median 63.5, min 32.7, max 85.0"
+  },
+  {
+   "number": "1.5",
+   "topic": "Descriptive",
+   "task": "Get overall descriptive stats (N, mean, SD, median) for bmi.",
+   "path": "Analyze → Descriptive",
+   "vars": "bmi",
+   "answer": "You should see: n=520.0, mean 26.73, SD 4.51, median 26.7, min 14.3, max 42.8"
+  },
+  {
+   "number": "1.6",
+   "topic": "Descriptive",
+   "task": "Get overall descriptive stats (N, mean, SD, median) for efs months.",
+   "path": "Analyze → Descriptive",
+   "vars": "efs_months",
+   "answer": "You should see: n=520.0, mean 25.62, SD 15.6, median 24.66, min 0.0, max 59.37"
+  },
+  {
+   "number": "1.7",
+   "topic": "Frequencies",
+   "task": "Get frequencies for arm.",
+   "path": "Analyze → Frequencies",
+   "vars": "arm",
+   "answer": "You should see: standard 274 (52.7%); plus-agent 246 (47.3%)"
+  },
+  {
+   "number": "1.8",
+   "topic": "Frequencies",
+   "task": "Get frequencies for sex.",
+   "path": "Analyze → Frequencies",
+   "vars": "sex",
+   "answer": "You should see: male 321 (61.7%); female 199 (38.3%)"
+  },
+  {
+   "number": "1.9",
+   "topic": "Frequencies",
+   "task": "Get frequencies for stage.",
+   "path": "Analyze → Frequencies",
+   "vars": "stage",
+   "answer": "You should see: III 256 (49.2%); IVa 159 (30.6%); II 105 (20.2%)"
+  },
+  {
+   "number": "1.10",
+   "topic": "Explore",
+   "task": "Explore age by arm (quartiles, IQR, outliers).",
+   "path": "Analyze → Explore",
+   "vars": "age (group=arm)",
+   "answer": "You should see: {}"
+  },
+  {
+   "number": "1.11",
+   "topic": "Explore",
+   "task": "Explore bmi by arm (quartiles, IQR, outliers).",
+   "path": "Analyze → Explore",
+   "vars": "bmi (group=arm)",
+   "answer": "You should see: {}"
+  },
+  {
+   "number": "1.12",
+   "topic": "Explore",
+   "task": "Explore efs months by arm (quartiles, IQR, outliers).",
+   "path": "Analyze → Explore",
+   "vars": "efs_months (group=arm)",
+   "answer": "You should see: {}"
+  },
+  {
+   "number": "1.13",
+   "topic": "Compare Means",
+   "task": "Compare age between arm groups (independent t-test).",
+   "path": "Analyze → Compare Means",
+   "vars": "dependent=age, group=arm",
+   "answer": "You should see: Independent t-test t=-0.1, df=518.0, p=0.9236, Cohen's d=-0.01"
+  },
+  {
+   "number": "1.14",
+   "topic": "Compare Means",
+   "task": "Compare bmi between arm groups (independent t-test).",
+   "path": "Analyze → Compare Means",
+   "vars": "dependent=bmi, group=arm",
+   "answer": "You should see: Independent t-test t=-0.96, df=518.0, p=0.337, Cohen's d=-0.08"
+  },
+  {
+   "number": "1.15",
+   "topic": "Compare Means",
+   "task": "Compare efs months between arm groups (independent t-test).",
+   "path": "Analyze → Compare Means",
+   "vars": "dependent=efs_months, group=arm",
+   "answer": "You should see: Independent t-test t=2.34, df=518.0, p=0.0195, Cohen's d=0.21"
+  },
+  {
+   "number": "1.16",
+   "topic": "ANOVA",
+   "task": "One-way ANOVA: does age differ across arm?",
+   "path": "Analyze → One-way ANOVA",
+   "vars": "dv=age, between=arm",
+   "answer": "You should see: One-Way ANOVA F=0.01, df={'between': 1, 'within': 518}, p=0.9236, Eta-squared (η²)=0.0"
+  },
+  {
+   "number": "1.17",
+   "topic": "ANOVA",
+   "task": "One-way ANOVA: does age differ across stage?",
+   "path": "Analyze → One-way ANOVA",
+   "vars": "dv=age, between=stage",
+   "answer": "You should see: One-Way ANOVA F=0.62, df={'between': 2, 'within': 517}, p=0.5406, Eta-squared (η²)=0.0"
+  },
+  {
+   "number": "1.18",
+   "topic": "ANOVA",
+   "task": "One-way ANOVA: does age differ across sex?",
+   "path": "Analyze → One-way ANOVA",
+   "vars": "dv=age, between=sex",
+   "answer": "You should see: One-Way ANOVA F=0.05, df={'between': 1, 'within': 518}, p=0.8236, Eta-squared (η²)=0.0"
+  },
+  {
+   "number": "1.19",
+   "topic": "ANOVA",
+   "task": "One-way ANOVA: does bmi differ across arm?",
+   "path": "Analyze → One-way ANOVA",
+   "vars": "dv=bmi, between=arm",
+   "answer": "You should see: One-Way ANOVA F=0.92, df={'between': 1, 'within': 518}, p=0.337, Eta-squared (η²)=0.0"
+  },
+  {
+   "number": "1.20",
+   "topic": "ANOVA",
+   "task": "One-way ANOVA: does bmi differ across stage?",
+   "path": "Analyze → One-way ANOVA",
+   "vars": "dv=bmi, between=stage",
+   "answer": "You should see: One-Way ANOVA F=2.4, df={'between': 2, 'within': 517}, p=0.0919, Eta-squared (η²)=0.01"
+  },
+  {
+   "number": "1.21",
+   "topic": "ANOVA",
+   "task": "One-way ANOVA: does bmi differ across sex?",
+   "path": "Analyze → One-way ANOVA",
+   "vars": "dv=bmi, between=sex",
+   "answer": "You should see: One-Way ANOVA F=2.72, df={'between': 1, 'within': 518}, p=0.0999, Eta-squared (η²)=0.01"
+  },
+  {
+   "number": "1.22",
+   "topic": "ANOVA",
+   "task": "One-way ANOVA: does efs months differ across arm?",
+   "path": "Analyze → One-way ANOVA",
+   "vars": "dv=efs_months, between=arm",
+   "answer": "You should see: One-Way ANOVA F=5.49, df={'between': 1, 'within': 518}, p=0.0195, Eta-squared (η²)=0.01"
+  },
+  {
+   "number": "1.23",
+   "topic": "ANOVA",
+   "task": "One-way ANOVA: does efs months differ across stage?",
+   "path": "Analyze → One-way ANOVA",
+   "vars": "dv=efs_months, between=stage",
+   "answer": "You should see: One-Way ANOVA F=1.01, df={'between': 2, 'within': 517}, p=0.3636, Eta-squared (η²)=0.0"
+  },
+  {
+   "number": "1.24",
+   "topic": "ANOVA",
+   "task": "One-way ANOVA: does efs months differ across sex?",
+   "path": "Analyze → One-way ANOVA",
+   "vars": "dv=efs_months, between=sex",
+   "answer": "You should see: One-Way ANOVA F=0.16, df={'between': 1, 'within': 518}, p=0.6922, Eta-squared (η²)=0.0"
+  },
+  {
+   "number": "1.25",
+   "topic": "Non-parametric",
+   "task": "Mann-Whitney U for age by arm.",
+   "path": "Analyze → Non-parametric Tests → Mann-Whitney U",
+   "vars": "column=age, group=arm",
+   "answer": "You should see: Mann-Whitney U=33132.0, p=0.7392, Rank-biserial correlation (r)=0.02"
+  },
+  {
+   "number": "1.26",
+   "topic": "Non-parametric",
+   "task": "Mann-Whitney U for bmi by arm.",
+   "path": "Analyze → Non-parametric Tests → Mann-Whitney U",
+   "vars": "column=bmi, group=arm",
+   "answer": "You should see: Mann-Whitney U=31828.0, p=0.2734, Rank-biserial correlation (r)=0.06"
+  },
+  {
+   "number": "1.27",
+   "topic": "Non-parametric",
+   "task": "Mann-Whitney U for efs months by arm.",
+   "path": "Analyze → Non-parametric Tests → Mann-Whitney U",
+   "vars": "column=efs_months, group=arm",
+   "answer": "You should see: Mann-Whitney U=37509.5, p=0.0261, Rank-biserial correlation (r)=-0.11"
+  },
+  {
+   "number": "1.28",
+   "topic": "Non-parametric",
+   "task": "Kruskal-Wallis for age across stage.",
+   "path": "Analyze → Non-parametric Tests → Kruskal-Wallis",
+   "vars": "column=age, group=stage",
+   "answer": "You should see: Kruskal-Wallis H H=1.83, df=2.0, p=0.4014"
+  },
+  {
+   "number": "1.29",
+   "topic": "Non-parametric",
+   "task": "Kruskal-Wallis for bmi across stage.",
+   "path": "Analyze → Non-parametric Tests → Kruskal-Wallis",
+   "vars": "column=bmi, group=stage",
+   "answer": "You should see: Kruskal-Wallis H H=3.47, df=2.0, p=0.1762"
+  },
+  {
+   "number": "1.30",
+   "topic": "Non-parametric",
+   "task": "Kruskal-Wallis for efs months across stage.",
+   "path": "Analyze → Non-parametric Tests → Kruskal-Wallis",
+   "vars": "column=efs_months, group=stage",
+   "answer": "You should see: Kruskal-Wallis H H=1.9, df=2.0, p=0.3863"
+  },
+  {
+   "number": "1.31",
+   "topic": "Crosstabs",
+   "task": "Cross-tabulate efs event by arm (chi-square).",
+   "path": "Analyze → Crosstabs",
+   "vars": "row=efs_event, col=arm",
+   "answer": "You should see: chi2=9.29 | p=0.0023"
+  },
+  {
+   "number": "1.32",
+   "topic": "Crosstabs",
+   "task": "Cross-tabulate path response by arm (chi-square).",
+   "path": "Analyze → Crosstabs",
+   "vars": "row=path_response, col=arm",
+   "answer": "You should see: chi2=28.14 | p=0.0"
+  },
+  {
+   "number": "1.33",
+   "topic": "Crosstabs",
+   "task": "Cross-tabulate delayed surgery by arm (chi-square).",
+   "path": "Analyze → Crosstabs",
+   "vars": "row=delayed_surgery, col=arm",
+   "answer": "You should see: chi2=0.0 | p=0.9831"
+  },
+  {
+   "number": "1.34",
+   "topic": "Correlation",
+   "task": "Pearson correlation between age and bmi.",
+   "path": "Analyze → Correlation",
+   "vars": "age, bmi",
+   "answer": "You should see: r(age:bmi) = 0.02"
+  },
+  {
+   "number": "1.35",
+   "topic": "Correlation",
+   "task": "Pearson correlation between age and efs months.",
+   "path": "Analyze → Correlation",
+   "vars": "age, efs_months",
+   "answer": "You should see: r(age:efs_months) = -0.02"
+  },
+  {
+   "number": "1.36",
+   "topic": "Correlation",
+   "task": "Pearson correlation between bmi and efs months.",
+   "path": "Analyze → Correlation",
+   "vars": "bmi, efs_months",
+   "answer": "You should see: r(age:efs_months) = 0.03"
+  },
+  {
+   "number": "1.37",
+   "topic": "Linear Regression",
+   "task": "Regress efs months on age, bmi.",
+   "path": "Analyze → Linear Regression",
+   "vars": "dv=efs_months, predictors=age,bmi",
+   "answer": "You should see: const b=24.25 (p=0.0001); age b=-0.03 (p=0.7041); bmi b=0.12 (p=0.4254)"
+  },
+  {
+   "number": "1.39",
+   "topic": "Linear Regression",
+   "task": "Regress survival months on age.",
+   "path": "Analyze → Linear Regression",
+   "vars": "dv=survival_months, predictors=age",
+   "answer": ""
+  },
+  {
+   "number": "1.40",
+   "topic": "Linear Regression",
+   "task": "Regress bmi on age.",
+   "path": "Analyze → Linear Regression",
+   "vars": "dv=bmi, predictors=age",
+   "answer": "You should see: const b=26.08 (p=0.0); age b=0.01 (p=0.6457)"
+  },
+  {
+   "number": "1.41",
+   "topic": "Logistic Regression",
+   "task": "Model efs event on arm, age.",
+   "path": "Analyze → Logistic Regression",
+   "vars": "dv=efs_event, predictors=arm,age",
+   "answer": "You should see: const OR=0.74 (p=0.6378); arm_standard OR=1.72 (p=0.0024); age OR=1.0 (p=0.7053)"
+  },
+  {
+   "number": "1.42",
+   "topic": "Logistic Regression",
+   "task": "Model efs event on arm.",
+   "path": "Analyze → Logistic Regression",
+   "vars": "dv=efs_event, predictors=arm",
+   "answer": "You should see: const OR=0.94 (p=0.6101); arm_standard OR=1.72 (p=0.0024)"
+  },
+  {
+   "number": "1.43",
+   "topic": "Logistic Regression",
+   "task": "Model path response on arm.",
+   "path": "Analyze → Logistic Regression",
+   "vars": "dv=path_response, predictors=arm",
+   "answer": "You should see: const OR=0.37 (p=0.0); arm_standard OR=0.27 (p=0.0)"
+  },
+  {
+   "number": "1.44",
+   "topic": "Kaplan-Meier",
+   "task": "Kaplan-Meier survival of efs months by arm.",
+   "path": "Survival → Kaplan-Meier",
+   "vars": "time=efs_months, status=efs_event, factor=arm",
+   "answer": "You should see: medians plus-agent 38.5; standard 27.02; logrank chi2=9.48, p=0.0021; events=288, censored=232"
+  },
+  {
+   "number": "1.45",
+   "topic": "Kaplan-Meier",
+   "task": "Kaplan-Meier survival of efs months by stage.",
+   "path": "Survival → Kaplan-Meier",
+   "vars": "time=efs_months, status=efs_event, factor=stage",
+   "answer": "You should see: medians II 35.58; III 31.26; IVa 36.23; logrank chi2=2.44, p=0.2953; events=288, censored=232"
+  },
+  {
+   "number": "1.46",
+   "topic": "Kaplan-Meier",
+   "task": "Kaplan-Meier survival of efs months by sex.",
+   "path": "Survival → Kaplan-Meier",
+   "vars": "time=efs_months, status=efs_event, factor=sex",
+   "answer": "You should see: medians female 33.41; male 32.48; logrank chi2=0.7, p=0.4015; events=288, censored=232"
+  },
+  {
+   "number": "1.47",
+   "topic": "Cox Regression",
+   "task": "Cox model of efs months on arm.",
+   "path": "Survival → Cox Regression",
+   "vars": "time=efs_months, status=efs_event, covariates=arm",
+   "answer": "You should see: arm_standard HR=1.44 (p=0.0022)"
+  },
+  {
+   "number": "1.48",
+   "topic": "Cox Regression",
+   "task": "Cox model of efs months on arm, age.",
+   "path": "Survival → Cox Regression",
+   "vars": "time=efs_months, status=efs_event, covariates=arm,age",
+   "answer": "You should see: arm_standard HR=1.44 (p=0.0023); age HR=1.0 (p=0.6875)"
+  },
+  {
+   "number": "1.49",
+   "topic": "Diagnostic Test",
+   "task": "Diagnostic accuracy of efs months for efs event (threshold 1).",
+   "path": "Analyze → Diagnostic Test",
+   "vars": "test=efs_months, gold=efs_event",
+   "answer": "You should see: sens=0.0, spec=1.0, ppv=1.0, npv=0.45, auc=None"
+  },
+  {
+   "number": "1.50",
+   "topic": "ROC Curve",
+   "task": "ROC curve of efs months for efs event — read the AUC.",
+   "path": "Analyze → ROC Curve",
+   "vars": "test=efs_months, gold=efs_event",
+   "answer": ""
+  },
+  {
+   "number": "2.49",
+   "topic": "Crosstabs",
+   "task": "Cross-tabulate arm by sex and read the chi-square.",
+   "path": "Analyze → Crosstabs",
+   "vars": "row=arm, col=sex",
+   "answer": "You should see: chi2=0.32, p=0.5701, Cramer's V=0.02"
+  },
+  {
+   "number": "2.50",
+   "topic": "Crosstabs",
+   "task": "Cross-tabulate arm by stage and read the chi-square.",
+   "path": "Analyze → Crosstabs",
+   "vars": "row=arm, col=stage",
+   "answer": "You should see: chi2=1.42, p=0.4927, Cramer's V=0.05"
+  },
+  {
+   "number": "2.51",
+   "topic": "Crosstabs",
+   "task": "Cross-tabulate arm by path response and read the chi-square.",
+   "path": "Analyze → Crosstabs",
+   "vars": "row=arm, col=path_response",
+   "answer": "You should see: chi2=28.14, p=0.0, Cramer's V=0.23"
+  },
+  {
+   "number": "2.52",
+   "topic": "Crosstabs",
+   "task": "Cross-tabulate arm by delayed surgery and read the chi-square.",
+   "path": "Analyze → Crosstabs",
+   "vars": "row=arm, col=delayed_surgery",
+   "answer": "You should see: chi2=0.0, p=0.9831, Cramer's V=0.0"
+  },
+  {
+   "number": "2.53",
+   "topic": "Crosstabs",
+   "task": "Cross-tabulate arm by adverse grade and read the chi-square.",
+   "path": "Analyze → Crosstabs",
+   "vars": "row=arm, col=adverse_grade",
+   "answer": "You should see: chi2=38.12, p=0.0, Cramer's V=0.27"
+  },
+  {
+   "number": "2.54",
+   "topic": "Crosstabs",
+   "task": "Cross-tabulate sex by stage and read the chi-square.",
+   "path": "Analyze → Crosstabs",
+   "vars": "row=sex, col=stage",
+   "answer": "You should see: chi2=3.24, p=0.1981, Cramer's V=0.08"
+  },
+  {
+   "number": "2.55",
+   "topic": "Crosstabs",
+   "task": "Cross-tabulate sex by path response and read the chi-square.",
+   "path": "Analyze → Crosstabs",
+   "vars": "row=sex, col=path_response",
+   "answer": "You should see: chi2=1.91, p=0.1666, Cramer's V=0.06"
+  },
+  {
+   "number": "2.56",
+   "topic": "Crosstabs",
+   "task": "Cross-tabulate sex by delayed surgery and read the chi-square.",
+   "path": "Analyze → Crosstabs",
+   "vars": "row=sex, col=delayed_surgery",
+   "answer": "You should see: chi2=0.26, p=0.6086, Cramer's V=0.02"
+  },
+  {
+   "number": "2.57",
+   "topic": "Crosstabs",
+   "task": "Cross-tabulate sex by adverse grade and read the chi-square.",
+   "path": "Analyze → Crosstabs",
+   "vars": "row=sex, col=adverse_grade",
+   "answer": "You should see: chi2=1.37, p=0.849, Cramer's V=0.05"
+  },
+  {
+   "number": "2.58",
+   "topic": "Crosstabs",
+   "task": "Cross-tabulate stage by path response and read the chi-square.",
+   "path": "Analyze → Crosstabs",
+   "vars": "row=stage, col=path_response",
+   "answer": "You should see: chi2=0.68, p=0.7122, Cramer's V=0.04"
+  },
+  {
+   "number": "2.59",
+   "topic": "Crosstabs",
+   "task": "Cross-tabulate stage by delayed surgery and read the chi-square.",
+   "path": "Analyze → Crosstabs",
+   "vars": "row=stage, col=delayed_surgery",
+   "answer": "You should see: chi2=0.01, p=0.9938, Cramer's V=0.0"
+  },
+  {
+   "number": "2.60",
+   "topic": "Crosstabs",
+   "task": "Cross-tabulate stage by adverse grade and read the chi-square.",
+   "path": "Analyze → Crosstabs",
+   "vars": "row=stage, col=adverse_grade",
+   "answer": "You should see: chi2=13.81, p=0.0868, Cramer's V=0.12"
+  },
+  {
+   "number": "2.61",
+   "topic": "Crosstabs",
+   "task": "Cross-tabulate path response by delayed surgery and read the chi-square.",
+   "path": "Analyze → Crosstabs",
+   "vars": "row=path_response, col=delayed_surgery",
+   "answer": "You should see: chi2=0.08, p=0.7821, Cramer's V=0.01"
+  },
+  {
+   "number": "2.62",
+   "topic": "Crosstabs",
+   "task": "Cross-tabulate path response by adverse grade and read the chi-square.",
+   "path": "Analyze → Crosstabs",
+   "vars": "row=path_response, col=adverse_grade",
+   "answer": "You should see: chi2=7.98, p=0.0922, Cramer's V=0.12"
+  },
+  {
+   "number": "2.63",
+   "topic": "Crosstabs",
+   "task": "Cross-tabulate delayed surgery by adverse grade and read the chi-square.",
+   "path": "Analyze → Crosstabs",
+   "vars": "row=delayed_surgery, col=adverse_grade",
+   "answer": "You should see: chi2=4.62, p=0.329, Cramer's V=0.09"
+  },
+  {
+   "number": "2.64",
+   "topic": "Correlation",
+   "task": "Pearson correlation between age and bmi.",
+   "path": "Analyze → Correlation",
+   "vars": "age, bmi",
+   "answer": "You should see: r = 0.02"
+  },
+  {
+   "number": "2.65",
+   "topic": "Correlation",
+   "task": "Pearson correlation between age and efs months.",
+   "path": "Analyze → Correlation",
+   "vars": "age, efs_months",
+   "answer": "You should see: r = -0.016"
+  },
+  {
+   "number": "2.66",
+   "topic": "Correlation",
+   "task": "Pearson correlation between age and efs event.",
+   "path": "Analyze → Correlation",
+   "vars": "age, efs_event",
+   "answer": "You should see: r = 0.017"
+  },
+  {
+   "number": "2.67",
+   "topic": "Correlation",
+   "task": "Pearson correlation between age and path response.",
+   "path": "Analyze → Correlation",
+   "vars": "age, path_response",
+   "answer": "You should see: r = -0.037"
+  },
+  {
+   "number": "2.68",
+   "topic": "Correlation",
+   "task": "Pearson correlation between age and adverse grade.",
+   "path": "Analyze → Correlation",
+   "vars": "age, adverse_grade",
+   "answer": "You should see: r = -0.031"
+  },
+  {
+   "number": "2.69",
+   "topic": "Correlation",
+   "task": "Pearson correlation between age and delayed surgery.",
+   "path": "Analyze → Correlation",
+   "vars": "age, delayed_surgery",
+   "answer": "You should see: r = -0.047"
+  },
+  {
+   "number": "2.70",
+   "topic": "Correlation",
+   "task": "Pearson correlation between bmi and efs months.",
+   "path": "Analyze → Correlation",
+   "vars": "bmi, efs_months",
+   "answer": "You should see: r = 0.035"
+  },
+  {
+   "number": "2.71",
+   "topic": "Correlation",
+   "task": "Pearson correlation between bmi and efs event.",
+   "path": "Analyze → Correlation",
+   "vars": "bmi, efs_event",
+   "answer": "You should see: r = -0.025"
+  },
+  {
+   "number": "2.72",
+   "topic": "Correlation",
+   "task": "Pearson correlation between bmi and path response.",
+   "path": "Analyze → Correlation",
+   "vars": "bmi, path_response",
+   "answer": "You should see: r = -0.067"
+  },
+  {
+   "number": "2.73",
+   "topic": "Correlation",
+   "task": "Pearson correlation between bmi and adverse grade.",
+   "path": "Analyze → Correlation",
+   "vars": "bmi, adverse_grade",
+   "answer": "You should see: r = -0.095"
+  },
+  {
+   "number": "2.74",
+   "topic": "Correlation",
+   "task": "Pearson correlation between bmi and delayed surgery.",
+   "path": "Analyze → Correlation",
+   "vars": "bmi, delayed_surgery",
+   "answer": "You should see: r = 0.022"
+  },
+  {
+   "number": "2.75",
+   "topic": "Correlation",
+   "task": "Pearson correlation between efs months and efs event.",
+   "path": "Analyze → Correlation",
+   "vars": "efs_months, efs_event",
+   "answer": "You should see: r = -0.583"
+  },
+  {
+   "number": "2.76",
+   "topic": "Correlation",
+   "task": "Pearson correlation between efs months and path response.",
+   "path": "Analyze → Correlation",
+   "vars": "efs_months, path_response",
+   "answer": "You should see: r = 0.05"
+  },
+  {
+   "number": "2.77",
+   "topic": "Correlation",
+   "task": "Pearson correlation between efs months and adverse grade.",
+   "path": "Analyze → Correlation",
+   "vars": "efs_months, adverse_grade",
+   "answer": "You should see: r = 0.058"
+  },
+  {
+   "number": "2.78",
+   "topic": "Correlation",
+   "task": "Pearson correlation between efs months and delayed surgery.",
+   "path": "Analyze → Correlation",
+   "vars": "efs_months, delayed_surgery",
+   "answer": "You should see: r = -0.036"
+  },
+  {
+   "number": "2.79",
+   "topic": "Correlation",
+   "task": "Pearson correlation between efs event and path response.",
+   "path": "Analyze → Correlation",
+   "vars": "efs_event, path_response",
+   "answer": "You should see: r = 0.026"
+  },
+  {
+   "number": "2.80",
+   "topic": "Correlation",
+   "task": "Pearson correlation between efs event and adverse grade.",
+   "path": "Analyze → Correlation",
+   "vars": "efs_event, adverse_grade",
+   "answer": "You should see: r = 0.023"
+  },
+  {
+   "number": "2.81",
+   "topic": "Correlation",
+   "task": "Pearson correlation between efs event and delayed surgery.",
+   "path": "Analyze → Correlation",
+   "vars": "efs_event, delayed_surgery",
+   "answer": "You should see: r = 0.098"
+  },
+  {
+   "number": "2.82",
+   "topic": "Correlation",
+   "task": "Pearson correlation between path response and adverse grade.",
+   "path": "Analyze → Correlation",
+   "vars": "path_response, adverse_grade",
+   "answer": "You should see: r = 0.072"
+  },
+  {
+   "number": "2.83",
+   "topic": "Correlation",
+   "task": "Pearson correlation between path response and delayed surgery.",
+   "path": "Analyze → Correlation",
+   "vars": "path_response, delayed_surgery",
+   "answer": "You should see: r = 0.012"
+  },
+  {
+   "number": "2.84",
+   "topic": "Correlation",
+   "task": "Pearson correlation between adverse grade and delayed surgery.",
+   "path": "Analyze → Correlation",
+   "vars": "adverse_grade, delayed_surgery",
+   "answer": "You should see: r = 0.045"
+  },
+  {
+   "number": "2.85",
+   "topic": "Linear Regression",
+   "task": "Regress age on bmi.",
+   "path": "Analyze → Linear Regression",
+   "vars": "dv=age, predictors=bmi",
+   "answer": "You should see: const b=61.94 (p=0.0); bmi b=0.04 (p=0.6457)"
+  },
+  {
+   "number": "2.86",
+   "topic": "Logistic Regression",
+   "task": "Model efs event on age.",
+   "path": "Analyze → Logistic Regression",
+   "vars": "dv=efs_event, predictors=age",
+   "answer": "You should see: const OR=0.97 (p=0.9644); age OR=1.0 (p=0.6986)"
+  },
+  {
+   "number": "2.87",
+   "topic": "Logistic Regression",
+   "task": "Model path response on arm, age.",
+   "path": "Analyze → Logistic Regression",
+   "vars": "dv=path_response, predictors=arm,age",
+   "answer": "You should see: const OR=0.77 (p=0.7696); arm_standard OR=0.27 (p=0.0); age OR=0.99 (p=0.3865)"
+  },
+  {
+   "number": "2.88",
+   "topic": "Logistic Regression",
+   "task": "Model delayed surgery on arm.",
+   "path": "Analyze → Logistic Regression",
+   "vars": "dv=delayed_surgery, predictors=arm",
+   "answer": "You should see: const OR=0.11 (p=0.0); arm_standard OR=1.01 (p=0.9831)"
+  },
+  {
+   "number": "2.89",
+   "topic": "Kaplan-Meier",
+   "task": "Kaplan-Meier of efs months by arm.",
+   "path": "Survival → Kaplan-Meier",
+   "vars": "time=efs_months, status=efs_event, factor=arm",
+   "answer": "You should see: medians plus-agent 38.5; standard 27.02; logrank chi2=9.48, p=0.0021"
+  },
+  {
+   "number": "2.90",
+   "topic": "Kaplan-Meier",
+   "task": "Kaplan-Meier of efs months by sex.",
+   "path": "Survival → Kaplan-Meier",
+   "vars": "time=efs_months, status=efs_event, factor=sex",
+   "answer": "You should see: medians female 33.41; male 32.48; logrank chi2=0.7, p=0.4015"
+  },
+  {
+   "number": "2.91",
+   "topic": "Kaplan-Meier",
+   "task": "Kaplan-Meier of efs months by stage.",
+   "path": "Survival → Kaplan-Meier",
+   "vars": "time=efs_months, status=efs_event, factor=stage",
+   "answer": "You should see: medians II 35.58; III 31.26; IVa 36.23; logrank chi2=2.44, p=0.2953"
+  },
+  {
+   "number": "2.92",
+   "topic": "Cox Regression",
+   "task": "Cox model of efs months on age.",
+   "path": "Survival → Cox Regression",
+   "vars": "time=efs_months, status=efs_event, covariates=age",
+   "answer": "You should see: age HR=1.0 (p=0.6494)"
+  },
+  {
+   "number": "2.93",
+   "topic": "Cox Regression",
+   "task": "Cox model of efs months on arm, sex.",
+   "path": "Survival → Cox Regression",
+   "vars": "time=efs_months, status=efs_event, covariates=arm,sex",
+   "answer": "You should see: arm_standard HR=1.45 (p=0.0018); sex_male HR=1.14 (p=0.299)"
+  },
+  {
+   "number": "2.94",
+   "topic": "Non-parametric",
+   "task": "Kruskal-Wallis for efs months across sex.",
+   "path": "Analyze → Non-parametric Tests → Kruskal-Wallis",
+   "vars": "column=efs_months, group=sex",
+   "answer": "You should see: H=0.16, df=1.0, p=0.6923"
+  },
+  {
+   "number": "2.95",
+   "topic": "Non-parametric",
+   "task": "Kruskal-Wallis for bmi across sex.",
+   "path": "Analyze → Non-parametric Tests → Kruskal-Wallis",
+   "vars": "column=bmi, group=sex",
+   "answer": "You should see: H=2.0, df=1.0, p=0.157"
+  },
+  {
+   "number": "3.97",
+   "topic": "Descriptive",
+   "task": "Get overall N, mean, SD and median for age (all patients).",
+   "path": "Analyze → Descriptive",
+   "vars": "age",
+   "answer": "You should see: n=520.0, mean 62.99, SD 8.8, median 63.5, min 32.7, max 85.0"
+  },
+  {
+   "number": "3.98",
+   "topic": "Descriptive",
+   "task": "Get overall N, mean, SD and median for bmi (all patients).",
+   "path": "Analyze → Descriptive",
+   "vars": "bmi",
+   "answer": "You should see: n=520.0, mean 26.73, SD 4.51, median 26.7, min 14.3, max 42.8"
+  },
+  {
+   "number": "3.99",
+   "topic": "Descriptive",
+   "task": "Get overall N, mean, SD and median for efs months (all patients).",
+   "path": "Analyze → Descriptive",
+   "vars": "efs_months",
+   "answer": "You should see: n=520.0, mean 25.62, SD 15.6, median 24.66, min 0.0, max 59.37"
+  },
+  {
+   "number": "3.100",
+   "topic": "Descriptive",
+   "task": "Get overall N, mean, SD and median for adverse grade (all patients).",
+   "path": "Analyze → Descriptive",
+   "vars": "adverse_grade",
+   "answer": "You should see: n=520.0, mean 2.67, SD 1.07, median 3.0, min 0.0, max 4.0"
+  }
+ ],
+ "qol-qb": [
+  {
+   "number": "1.1",
+   "topic": "Descriptive",
+   "task": "Run descriptive stats for age, split by technique.",
+   "path": "Analyze → Descriptive",
+   "vars": "age (group=technique)",
+   "answer": "You should see: novel: mean 60.21 (SD 10.13, median 59.8); standard: mean 59.49 (SD 9.45, median 59.0)"
+  },
+  {
+   "number": "1.2",
+   "topic": "Descriptive",
+   "task": "Run descriptive stats for qol swallow 26wk, split by technique.",
+   "path": "Analyze → Descriptive",
+   "vars": "qol_swallow_26wk (group=technique)",
+   "answer": "You should see: novel: mean 64.94 (SD 14.79, median 65.9); standard: mean 59.38 (SD 17.84, median 58.8)"
+  },
+  {
+   "number": "1.3",
+   "topic": "Descriptive",
+   "task": "Run descriptive stats for qol swallow baseline, split by technique.",
+   "path": "Analyze → Descriptive",
+   "vars": "qol_swallow_baseline (group=technique)",
+   "answer": "You should see: novel: mean 69.83 (SD 14.16, median 69.2); standard: mean 71.52 (SD 14.79, median 71.3)"
+  },
+  {
+   "number": "1.4",
+   "topic": "Descriptive",
+   "task": "Run descriptive stats for survival months, split by technique.",
+   "path": "Analyze → Descriptive",
+   "vars": "survival_months (group=technique)",
+   "answer": "You should see: novel: mean 30.81 (SD 13.21, median 30.83); standard: mean 27.75 (SD 13.77, median 28.68)"
+  },
+  {
+   "number": "1.5",
+   "topic": "Descriptive",
+   "task": "Run descriptive stats for weight loss pct, split by technique.",
+   "path": "Analyze → Descriptive",
+   "vars": "weight_loss_pct (group=technique)",
+   "answer": "You should see: novel: mean 4.98 (SD 3.09, median 5.2); standard: mean 6.56 (SD 2.82, median 6.8)"
+  },
+  {
+   "number": "1.6",
+   "topic": "Descriptive",
+   "task": "Get overall descriptive stats (N, mean, SD, median) for age.",
+   "path": "Analyze → Descriptive",
+   "vars": "age",
+   "answer": "You should see: n=360.0, mean 59.84, SD 9.78, median 59.55, min 27.4, max 83.9"
+  },
+  {
+   "number": "1.7",
+   "topic": "Descriptive",
+   "task": "Get overall descriptive stats (N, mean, SD, median) for qol swallow 26wk.",
+   "path": "Analyze → Descriptive",
+   "vars": "qol_swallow_26wk",
+   "answer": "You should see: n=360.0, mean 62.15, SD 16.6, median 62.85, min 7.0, max 100.0"
+  },
+  {
+   "number": "1.8",
+   "topic": "Descriptive",
+   "task": "Get overall descriptive stats (N, mean, SD, median) for qol swallow baseline.",
+   "path": "Analyze → Descriptive",
+   "vars": "qol_swallow_baseline",
+   "answer": "You should see: n=360.0, mean 70.68, SD 14.49, median 70.45, min 28.3, max 100.0"
+  },
+  {
+   "number": "1.9",
+   "topic": "Frequencies",
+   "task": "Get frequencies for technique.",
+   "path": "Analyze → Frequencies",
+   "vars": "technique",
+   "answer": "You should see: standard 181 (50.3%); novel 179 (49.7%)"
+  },
+  {
+   "number": "1.10",
+   "topic": "Frequencies",
+   "task": "Get frequencies for sex.",
+   "path": "Analyze → Frequencies",
+   "vars": "sex",
+   "answer": "You should see: male 267 (74.2%); female 93 (25.8%)"
+  },
+  {
+   "number": "1.11",
+   "topic": "Frequencies",
+   "task": "Get frequencies for site.",
+   "path": "Analyze → Frequencies",
+   "vars": "site",
+   "answer": "You should see: oropharynx 150 (41.7%); oral_cavity 115 (31.9%); larynx 95 (26.4%)"
+  },
+  {
+   "number": "1.12",
+   "topic": "Frequencies",
+   "task": "Get frequencies for toxicity grade.",
+   "path": "Analyze → Frequencies",
+   "vars": "toxicity_grade",
+   "answer": "You should see: 2 136 (37.8%); 3 92 (25.6%); 1 70 (19.4%); 0 35 (9.7%); 4 27 (7.5%)"
+  },
+  {
+   "number": "1.13",
+   "topic": "Frequencies",
+   "task": "Get frequencies for mucositis grade.",
+   "path": "Analyze → Frequencies",
+   "vars": "mucositis_grade",
+   "answer": "You should see: 2 154 (42.8%); 1 114 (31.7%); 3 53 (14.7%); 0 39 (10.8%)"
+  },
+  {
+   "number": "1.14",
+   "topic": "Explore",
+   "task": "Explore age by technique (quartiles, IQR, outliers).",
+   "path": "Analyze → Explore",
+   "vars": "age (group=technique)",
+   "answer": "You should see: {}"
+  },
+  {
+   "number": "1.15",
+   "topic": "Explore",
+   "task": "Explore qol swallow 26wk by technique (quartiles, IQR, outliers).",
+   "path": "Analyze → Explore",
+   "vars": "qol_swallow_26wk (group=technique)",
+   "answer": "You should see: {}"
+  },
+  {
+   "number": "1.16",
+   "topic": "Explore",
+   "task": "Explore qol swallow baseline by technique (quartiles, IQR, outliers).",
+   "path": "Analyze → Explore",
+   "vars": "qol_swallow_baseline (group=technique)",
+   "answer": "You should see: {}"
+  },
+  {
+   "number": "1.17",
+   "topic": "Compare Means",
+   "task": "Compare age between technique groups (independent t-test).",
+   "path": "Analyze → Compare Means",
+   "vars": "dependent=age, group=technique",
+   "answer": "You should see: Independent t-test t=0.7, df=358.0, p=0.4873, Cohen's d=0.07"
+  },
+  {
+   "number": "1.18",
+   "topic": "Compare Means",
+   "task": "Compare qol swallow 26wk between technique groups (independent t-test).",
+   "path": "Analyze → Compare Means",
+   "vars": "dependent=qol_swallow_26wk, group=technique",
+   "answer": "You should see: Independent t-test t=3.22, df=347.44, p=0.0014, Cohen's d=0.34"
+  },
+  {
+   "number": "1.19",
+   "topic": "Compare Means",
+   "task": "Compare qol swallow baseline between technique groups (independent t-test).",
+   "path": "Analyze → Compare Means",
+   "vars": "dependent=qol_swallow_baseline, group=technique",
+   "answer": "You should see: Independent t-test t=-1.11, df=358.0, p=0.2689, Cohen's d=-0.12"
+  },
+  {
+   "number": "1.20",
+   "topic": "Compare Means",
+   "task": "Compare survival months between technique groups (independent t-test).",
+   "path": "Analyze → Compare Means",
+   "vars": "dependent=survival_months, group=technique",
+   "answer": "You should see: Independent t-test t=2.15, df=358.0, p=0.0325, Cohen's d=0.23"
+  },
+  {
+   "number": "1.21",
+   "topic": "Compare Means",
+   "task": "Compare weight loss pct between technique groups (independent t-test).",
+   "path": "Analyze → Compare Means",
+   "vars": "dependent=weight_loss_pct, group=technique",
+   "answer": "You should see: Independent t-test t=-5.07, df=358.0, p=0.0, Cohen's d=-0.53"
+  },
+  {
+   "number": "1.22",
+   "topic": "ANOVA",
+   "task": "One-way ANOVA: does age differ across technique?",
+   "path": "Analyze → One-way ANOVA",
+   "vars": "dv=age, between=technique",
+   "answer": "You should see: One-Way ANOVA F=0.48, df={'between': 1, 'within': 358}, p=0.4873, Eta-squared (η²)=0.0"
+  },
+  {
+   "number": "1.23",
+   "topic": "ANOVA",
+   "task": "One-way ANOVA: does age differ across site?",
+   "path": "Analyze → One-way ANOVA",
+   "vars": "dv=age, between=site",
+   "answer": "You should see: One-Way ANOVA F=1.21, df={'between': 2, 'within': 357}, p=0.3006, Eta-squared (η²)=0.01"
+  },
+  {
+   "number": "1.24",
+   "topic": "ANOVA",
+   "task": "One-way ANOVA: does age differ across sex?",
+   "path": "Analyze → One-way ANOVA",
+   "vars": "dv=age, between=sex",
+   "answer": "You should see: One-Way ANOVA F=0.01, df={'between': 1, 'within': 358}, p=0.9087, Eta-squared (η²)=0.0"
+  },
+  {
+   "number": "1.25",
+   "topic": "ANOVA",
+   "task": "One-way ANOVA: does qol swallow 26wk differ across technique?",
+   "path": "Analyze → One-way ANOVA",
+   "vars": "dv=qol_swallow_26wk, between=technique",
+   "answer": "You should see: One-Way ANOVA F=10.35, df={'between': 1, 'within': 358}, p=0.0014, Eta-squared (η²)=0.03"
+  },
+  {
+   "number": "1.26",
+   "topic": "ANOVA",
+   "task": "One-way ANOVA: does qol swallow 26wk differ across site?",
+   "path": "Analyze → One-way ANOVA",
+   "vars": "dv=qol_swallow_26wk, between=site",
+   "answer": "You should see: One-Way ANOVA F=2.39, df={'between': 2, 'within': 357}, p=0.093, Eta-squared (η²)=0.01"
+  },
+  {
+   "number": "1.27",
+   "topic": "ANOVA",
+   "task": "One-way ANOVA: does qol swallow 26wk differ across sex?",
+   "path": "Analyze → One-way ANOVA",
+   "vars": "dv=qol_swallow_26wk, between=sex",
+   "answer": "You should see: One-Way ANOVA F=1.08, df={'between': 1, 'within': 358}, p=0.3002, Eta-squared (η²)=0.0"
+  },
+  {
+   "number": "1.28",
+   "topic": "ANOVA",
+   "task": "One-way ANOVA: does qol swallow baseline differ across technique?",
+   "path": "Analyze → One-way ANOVA",
+   "vars": "dv=qol_swallow_baseline, between=technique",
+   "answer": "You should see: One-Way ANOVA F=1.23, df={'between': 1, 'within': 358}, p=0.2689, Eta-squared (η²)=0.0"
+  },
+  {
+   "number": "1.29",
+   "topic": "ANOVA",
+   "task": "One-way ANOVA: does qol swallow baseline differ across site?",
+   "path": "Analyze → One-way ANOVA",
+   "vars": "dv=qol_swallow_baseline, between=site",
+   "answer": "You should see: One-Way ANOVA F=1.16, df={'between': 2, 'within': 357}, p=0.3145, Eta-squared (η²)=0.01"
+  },
+  {
+   "number": "1.30",
+   "topic": "ANOVA",
+   "task": "One-way ANOVA: does qol swallow baseline differ across sex?",
+   "path": "Analyze → One-way ANOVA",
+   "vars": "dv=qol_swallow_baseline, between=sex",
+   "answer": "You should see: One-Way ANOVA F=0.01, df={'between': 1, 'within': 358}, p=0.9031, Eta-squared (η²)=0.0"
+  },
+  {
+   "number": "1.31",
+   "topic": "ANOVA",
+   "task": "One-way ANOVA: does survival months differ across technique?",
+   "path": "Analyze → One-way ANOVA",
+   "vars": "dv=survival_months, between=technique",
+   "answer": "You should see: One-Way ANOVA F=4.61, df={'between': 1, 'within': 358}, p=0.0325, Eta-squared (η²)=0.01"
+  },
+  {
+   "number": "1.32",
+   "topic": "ANOVA",
+   "task": "One-way ANOVA: does survival months differ across site?",
+   "path": "Analyze → One-way ANOVA",
+   "vars": "dv=survival_months, between=site",
+   "answer": "You should see: One-Way ANOVA F=1.95, df={'between': 2, 'within': 357}, p=0.1434, Eta-squared (η²)=0.01"
+  },
+  {
+   "number": "1.33",
+   "topic": "ANOVA",
+   "task": "One-way ANOVA: does survival months differ across sex?",
+   "path": "Analyze → One-way ANOVA",
+   "vars": "dv=survival_months, between=sex",
+   "answer": "You should see: One-Way ANOVA F=0.02, df={'between': 1, 'within': 358}, p=0.8869, Eta-squared (η²)=0.0"
+  },
+  {
+   "number": "1.34",
+   "topic": "Non-parametric",
+   "task": "Mann-Whitney U for age by technique.",
+   "path": "Analyze → Non-parametric Tests → Mann-Whitney U",
+   "vars": "column=age, group=technique",
+   "answer": "You should see: Mann-Whitney U=16728.5, p=0.5924, Rank-biserial correlation (r)=-0.03"
+  },
+  {
+   "number": "1.35",
+   "topic": "Non-parametric",
+   "task": "Mann-Whitney U for qol swallow 26wk by technique.",
+   "path": "Analyze → Non-parametric Tests → Mann-Whitney U",
+   "vars": "column=qol_swallow_26wk, group=technique",
+   "answer": "You should see: Mann-Whitney U=19336.0, p=0.0015, Rank-biserial correlation (r)=-0.19"
+  },
+  {
+   "number": "1.36",
+   "topic": "Non-parametric",
+   "task": "Mann-Whitney U for qol swallow baseline by technique.",
+   "path": "Analyze → Non-parametric Tests → Mann-Whitney U",
+   "vars": "column=qol_swallow_baseline, group=technique",
+   "answer": "You should see: Mann-Whitney U=14912.5, p=0.1925, Rank-biserial correlation (r)=0.08"
+  },
+  {
+   "number": "1.37",
+   "topic": "Non-parametric",
+   "task": "Mann-Whitney U for survival months by technique.",
+   "path": "Analyze → Non-parametric Tests → Mann-Whitney U",
+   "vars": "column=survival_months, group=technique",
+   "answer": "You should see: Mann-Whitney U=18199.5, p=0.0428, Rank-biserial correlation (r)=-0.12"
+  },
+  {
+   "number": "1.38",
+   "topic": "Non-parametric",
+   "task": "Kruskal-Wallis for age across site.",
+   "path": "Analyze → Non-parametric Tests → Kruskal-Wallis",
+   "vars": "column=age, group=site",
+   "answer": "You should see: Kruskal-Wallis H H=2.24, df=2.0, p=0.3269"
+  },
+  {
+   "number": "1.39",
+   "topic": "Non-parametric",
+   "task": "Kruskal-Wallis for qol swallow 26wk across site.",
+   "path": "Analyze → Non-parametric Tests → Kruskal-Wallis",
+   "vars": "column=qol_swallow_26wk, group=site",
+   "answer": "You should see: Kruskal-Wallis H H=5.44, df=2.0, p=0.066"
+  },
+  {
+   "number": "1.40",
+   "topic": "Non-parametric",
+   "task": "Kruskal-Wallis for qol swallow baseline across site.",
+   "path": "Analyze → Non-parametric Tests → Kruskal-Wallis",
+   "vars": "column=qol_swallow_baseline, group=site",
+   "answer": "You should see: Kruskal-Wallis H H=2.88, df=2.0, p=0.2374"
+  },
+  {
+   "number": "1.41",
+   "topic": "Crosstabs",
+   "task": "Cross-tabulate feeding tube by technique (chi-square).",
+   "path": "Analyze → Crosstabs",
+   "vars": "row=feeding_tube, col=technique",
+   "answer": "You should see: chi2=0.62 | p=0.4324"
+  },
+  {
+   "number": "1.42",
+   "topic": "Crosstabs",
+   "task": "Cross-tabulate survival event by technique (chi-square).",
+   "path": "Analyze → Crosstabs",
+   "vars": "row=survival_event, col=technique",
+   "answer": "You should see: chi2=0.7 | p=0.4039"
+  },
+  {
+   "number": "1.43",
+   "topic": "Correlation",
+   "task": "Pearson correlation between age and qol swallow 26wk.",
+   "path": "Analyze → Correlation",
+   "vars": "age, qol_swallow_26wk",
+   "answer": "You should see: r(age:qol_swallow_26wk) = -0.0"
+  },
+  {
+   "number": "1.44",
+   "topic": "Correlation",
+   "task": "Pearson correlation between age and qol swallow baseline.",
+   "path": "Analyze → Correlation",
+   "vars": "age, qol_swallow_baseline",
+   "answer": "You should see: r(age:qol_swallow_baseline) = -0.01"
+  },
+  {
+   "number": "1.45",
+   "topic": "Correlation",
+   "task": "Pearson correlation between age and survival months.",
+   "path": "Analyze → Correlation",
+   "vars": "age, survival_months",
+   "answer": "You should see: r(age:survival_months) = -0.01"
+  },
+  {
+   "number": "1.46",
+   "topic": "Correlation",
+   "task": "Pearson correlation between age and weight loss pct.",
+   "path": "Analyze → Correlation",
+   "vars": "age, weight_loss_pct",
+   "answer": "You should see: r(age:weight_loss_pct) = 0.02"
+  },
+  {
+   "number": "1.47",
+   "topic": "Correlation",
+   "task": "Pearson correlation between qol swallow 26wk and qol swallow baseline.",
+   "path": "Analyze → Correlation",
+   "vars": "qol_swallow_26wk, qol_swallow_baseline",
+   "answer": "You should see: r(age:qol_swallow_baseline) = -0.13"
+  },
+  {
+   "number": "1.48",
+   "topic": "Correlation",
+   "task": "Pearson correlation between qol swallow 26wk and survival months.",
+   "path": "Analyze → Correlation",
+   "vars": "qol_swallow_26wk, survival_months",
+   "answer": "You should see: r(age:survival_months) = 0.06"
+  },
+  {
+   "number": "1.49",
+   "topic": "Correlation",
+   "task": "Pearson correlation between qol swallow 26wk and weight loss pct.",
+   "path": "Analyze → Correlation",
+   "vars": "qol_swallow_26wk, weight_loss_pct",
+   "answer": "You should see: r(age:weight_loss_pct) = -0.03"
+  },
+  {
+   "number": "1.50",
+   "topic": "Correlation",
+   "task": "Pearson correlation between qol swallow baseline and survival months.",
+   "path": "Analyze → Correlation",
+   "vars": "qol_swallow_baseline, survival_months",
+   "answer": "You should see: r(age:survival_months) = -0.0"
+  },
+  {
+   "number": "1.51",
+   "topic": "Correlation",
+   "task": "Pearson correlation between qol swallow baseline and weight loss pct.",
+   "path": "Analyze → Correlation",
+   "vars": "qol_swallow_baseline, weight_loss_pct",
+   "answer": "You should see: r(age:weight_loss_pct) = 0.03"
+  },
+  {
+   "number": "1.52",
+   "topic": "Correlation",
+   "task": "Pearson correlation between survival months and weight loss pct.",
+   "path": "Analyze → Correlation",
+   "vars": "survival_months, weight_loss_pct",
+   "answer": "You should see: r(age:weight_loss_pct) = 0.05"
+  },
+  {
+   "number": "1.53",
+   "topic": "Linear Regression",
+   "task": "Regress qol swallow 26wk on age, bmi.",
+   "path": "Analyze → Linear Regression",
+   "vars": "dv=qol_swallow_26wk, predictors=age,bmi",
+   "answer": ""
+  },
+  {
+   "number": "1.54",
+   "topic": "Linear Regression",
+   "task": "Regress qol swallow 26wk on age, bmi, survival months.",
+   "path": "Analyze → Linear Regression",
+   "vars": "dv=qol_swallow_26wk, predictors=age,bmi,survival_months",
+   "answer": ""
+  },
+  {
+   "number": "1.55",
+   "topic": "Linear Regression",
+   "task": "Regress survival months on age.",
+   "path": "Analyze → Linear Regression",
+   "vars": "dv=survival_months, predictors=age",
+   "answer": "You should see: const b=29.92 (p=0.0); age b=-0.01 (p=0.8829)"
+  },
+  {
+   "number": "1.56",
+   "topic": "Linear Regression",
+   "task": "Regress bmi on age.",
+   "path": "Analyze → Linear Regression",
+   "vars": "dv=bmi, predictors=age",
+   "answer": ""
+  },
+  {
+   "number": "1.57",
+   "topic": "Logistic Regression",
+   "task": "Model feeding tube on technique, age.",
+   "path": "Analyze → Logistic Regression",
+   "vars": "dv=feeding_tube, predictors=technique,age",
+   "answer": "You should see: const OR=0.02 (p=0.0026); technique_standard OR=1.41 (p=0.4079); age OR=1.02 (p=0.2971)"
+  },
+  {
+   "number": "1.58",
+   "topic": "Logistic Regression",
+   "task": "Model feeding tube on technique.",
+   "path": "Analyze → Logistic Regression",
+   "vars": "dv=feeding_tube, predictors=technique",
+   "answer": "You should see: const OR=0.07 (p=0.0); technique_standard OR=1.38 (p=0.434)"
+  },
+  {
+   "number": "1.59",
+   "topic": "Logistic Regression",
+   "task": "Model survival event on technique.",
+   "path": "Analyze → Logistic Regression",
+   "vars": "dv=survival_event, predictors=technique",
+   "answer": "You should see: const OR=0.42 (p=0.0); technique_standard OR=1.21 (p=0.4042)"
+  },
+  {
+   "number": "1.60",
+   "topic": "Kaplan-Meier",
+   "task": "Kaplan-Meier survival of survival months by technique.",
+   "path": "Survival → Kaplan-Meier",
+   "vars": "time=survival_months, status=survival_event, factor=technique",
+   "answer": "You should see: medians novel not reached; standard not reached; logrank chi2=1.45, p=0.2282; events=114, censored=246"
+  },
+  {
+   "number": "1.61",
+   "topic": "Kaplan-Meier",
+   "task": "Kaplan-Meier survival of survival months by site.",
+   "path": "Survival → Kaplan-Meier",
+   "vars": "time=survival_months, status=survival_event, factor=site",
+   "answer": "You should see: medians larynx not reached; oral_cavity not reached; oropharynx not reached; logrank chi2=2.09, p=0.3522; events=114, censored=246"
+  },
+  {
+   "number": "1.62",
+   "topic": "Kaplan-Meier",
+   "task": "Kaplan-Meier survival of survival months by sex.",
+   "path": "Survival → Kaplan-Meier",
+   "vars": "time=survival_months, status=survival_event, factor=sex",
+   "answer": "You should see: medians female 47.6; male not reached; logrank chi2=0.0, p=0.9558; events=114, censored=246"
+  },
+  {
+   "number": "1.63",
+   "topic": "Cox Regression",
+   "task": "Cox model of survival months on technique.",
+   "path": "Survival → Cox Regression",
+   "vars": "time=survival_months, status=survival_event, covariates=technique",
+   "answer": "You should see: technique_standard HR=1.25 (p=0.2291)"
+  },
+  {
+   "number": "1.64",
+   "topic": "Cox Regression",
+   "task": "Cox model of survival months on technique, age.",
+   "path": "Survival → Cox Regression",
+   "vars": "time=survival_months, status=survival_event, covariates=technique,age",
+   "answer": "You should see: technique_standard HR=1.26 (p=0.2253); age HR=1.0 (p=0.776)"
+  },
+  {
+   "number": "1.65",
+   "topic": "Diagnostic Test",
+   "task": "Diagnostic accuracy of survival months for survival event (threshold 1).",
+   "path": "Analyze → Diagnostic Test",
+   "vars": "test=survival_months, gold=survival_event",
+   "answer": "You should see: sens=0.0, spec=1.0, ppv=0.0, npv=0.68, auc=None"
+  },
+  {
+   "number": "1.66",
+   "topic": "ROC Curve",
+   "task": "ROC curve of survival months for survival event — read the AUC.",
+   "path": "Analyze → ROC Curve",
+   "vars": "test=survival_months, gold=survival_event",
+   "answer": ""
+  },
+  {
+   "number": "2.66",
+   "topic": "Crosstabs",
+   "task": "Cross-tabulate technique by sex and read the chi-square.",
+   "path": "Analyze → Crosstabs",
+   "vars": "row=technique, col=sex",
+   "answer": "You should see: chi2=0.44, p=0.5065, Cramer's V=0.04"
+  },
+  {
+   "number": "2.67",
+   "topic": "Crosstabs",
+   "task": "Cross-tabulate technique by site and read the chi-square.",
+   "path": "Analyze → Crosstabs",
+   "vars": "row=technique, col=site",
+   "answer": "You should see: chi2=0.01, p=0.996, Cramer's V=0.0"
+  },
+  {
+   "number": "2.68",
+   "topic": "Crosstabs",
+   "task": "Cross-tabulate technique by feeding tube and read the chi-square.",
+   "path": "Analyze → Crosstabs",
+   "vars": "row=technique, col=feeding_tube",
+   "answer": "You should see: chi2=0.62, p=0.4324, Cramer's V=0.04"
+  },
+  {
+   "number": "2.69",
+   "topic": "Crosstabs",
+   "task": "Cross-tabulate technique by toxicity grade and read the chi-square.",
+   "path": "Analyze → Crosstabs",
+   "vars": "row=technique, col=toxicity_grade",
+   "answer": "You should see: chi2=6.16, p=0.1872, Cramer's V=0.13"
+  },
+  {
+   "number": "2.70",
+   "topic": "Crosstabs",
+   "task": "Cross-tabulate technique by mucositis grade and read the chi-square.",
+   "path": "Analyze → Crosstabs",
+   "vars": "row=technique, col=mucositis_grade",
+   "answer": "You should see: chi2=6.98, p=0.0726, Cramer's V=0.14"
+  },
+  {
+   "number": "2.71",
+   "topic": "Crosstabs",
+   "task": "Cross-tabulate sex by site and read the chi-square.",
+   "path": "Analyze → Crosstabs",
+   "vars": "row=sex, col=site",
+   "answer": "You should see: chi2=1.71, p=0.4245, Cramer's V=0.07"
+  },
+  {
+   "number": "2.72",
+   "topic": "Crosstabs",
+   "task": "Cross-tabulate sex by feeding tube and read the chi-square.",
+   "path": "Analyze → Crosstabs",
+   "vars": "row=sex, col=feeding_tube",
+   "answer": "You should see: chi2=1.13, p=0.2882, Cramer's V=0.06"
+  },
+  {
+   "number": "2.73",
+   "topic": "Crosstabs",
+   "task": "Cross-tabulate sex by toxicity grade and read the chi-square.",
+   "path": "Analyze → Crosstabs",
+   "vars": "row=sex, col=toxicity_grade",
+   "answer": "You should see: chi2=2.19, p=0.701, Cramer's V=0.08"
+  },
+  {
+   "number": "2.74",
+   "topic": "Crosstabs",
+   "task": "Cross-tabulate sex by mucositis grade and read the chi-square.",
+   "path": "Analyze → Crosstabs",
+   "vars": "row=sex, col=mucositis_grade",
+   "answer": "You should see: chi2=0.56, p=0.9056, Cramer's V=0.04"
+  },
+  {
+   "number": "2.75",
+   "topic": "Crosstabs",
+   "task": "Cross-tabulate site by feeding tube and read the chi-square.",
+   "path": "Analyze → Crosstabs",
+   "vars": "row=site, col=feeding_tube",
+   "answer": "You should see: chi2=0.6, p=0.7405, Cramer's V=0.04"
+  },
+  {
+   "number": "2.76",
+   "topic": "Crosstabs",
+   "task": "Cross-tabulate site by toxicity grade and read the chi-square.",
+   "path": "Analyze → Crosstabs",
+   "vars": "row=site, col=toxicity_grade",
+   "answer": "You should see: chi2=3.78, p=0.8761, Cramer's V=0.07"
+  },
+  {
+   "number": "2.77",
+   "topic": "Crosstabs",
+   "task": "Cross-tabulate site by mucositis grade and read the chi-square.",
+   "path": "Analyze → Crosstabs",
+   "vars": "row=site, col=mucositis_grade",
+   "answer": "You should see: chi2=4.03, p=0.6725, Cramer's V=0.07"
+  },
+  {
+   "number": "2.78",
+   "topic": "Crosstabs",
+   "task": "Cross-tabulate feeding tube by toxicity grade and read the chi-square.",
+   "path": "Analyze → Crosstabs",
+   "vars": "row=feeding_tube, col=toxicity_grade",
+   "answer": "You should see: chi2=6.24, p=0.1818, Cramer's V=0.13"
+  },
+  {
+   "number": "2.79",
+   "topic": "Crosstabs",
+   "task": "Cross-tabulate feeding tube by mucositis grade and read the chi-square.",
+   "path": "Analyze → Crosstabs",
+   "vars": "row=feeding_tube, col=mucositis_grade",
+   "answer": "You should see: chi2=3.73, p=0.2924, Cramer's V=0.1"
+  },
+  {
+   "number": "2.80",
+   "topic": "Crosstabs",
+   "task": "Cross-tabulate toxicity grade by mucositis grade and read the chi-square.",
+   "path": "Analyze → Crosstabs",
+   "vars": "row=toxicity_grade, col=mucositis_grade",
+   "answer": "You should see: chi2=15.28, p=0.2264, Cramer's V=0.12"
+  },
+  {
+   "number": "2.81",
+   "topic": "Correlation",
+   "task": "Pearson correlation between age and qol swallow 26wk.",
+   "path": "Analyze → Correlation",
+   "vars": "age, qol_swallow_26wk",
+   "answer": "You should see: r = -0.0"
+  },
+  {
+   "number": "2.82",
+   "topic": "Correlation",
+   "task": "Pearson correlation between age and qol swallow baseline.",
+   "path": "Analyze → Correlation",
+   "vars": "age, qol_swallow_baseline",
+   "answer": "You should see: r = -0.008"
+  },
+  {
+   "number": "2.83",
+   "topic": "Correlation",
+   "task": "Pearson correlation between age and weight loss pct.",
+   "path": "Analyze → Correlation",
+   "vars": "age, weight_loss_pct",
+   "answer": "You should see: r = 0.021"
+  },
+  {
+   "number": "2.84",
+   "topic": "Correlation",
+   "task": "Pearson correlation between age and survival months.",
+   "path": "Analyze → Correlation",
+   "vars": "age, survival_months",
+   "answer": "You should see: r = -0.008"
+  },
+  {
+   "number": "2.85",
+   "topic": "Correlation",
+   "task": "Pearson correlation between age and survival event.",
+   "path": "Analyze → Correlation",
+   "vars": "age, survival_event",
+   "answer": "You should see: r = 0.012"
+  },
+  {
+   "number": "2.86",
+   "topic": "Correlation",
+   "task": "Pearson correlation between age and feeding tube.",
+   "path": "Analyze → Correlation",
+   "vars": "age, feeding_tube",
+   "answer": "You should see: r = 0.053"
+  },
+  {
+   "number": "2.87",
+   "topic": "Correlation",
+   "task": "Pearson correlation between age and toxicity grade.",
+   "path": "Analyze → Correlation",
+   "vars": "age, toxicity_grade",
+   "answer": "You should see: r = -0.036"
+  },
+  {
+   "number": "2.88",
+   "topic": "Correlation",
+   "task": "Pearson correlation between age and mucositis grade.",
+   "path": "Analyze → Correlation",
+   "vars": "age, mucositis_grade",
+   "answer": "You should see: r = 0.024"
+  },
+  {
+   "number": "2.89",
+   "topic": "Correlation",
+   "task": "Pearson correlation between qol swallow 26wk and qol swallow baseline.",
+   "path": "Analyze → Correlation",
+   "vars": "qol_swallow_26wk, qol_swallow_baseline",
+   "answer": "You should see: r = -0.126"
+  },
+  {
+   "number": "2.90",
+   "topic": "Correlation",
+   "task": "Pearson correlation between qol swallow 26wk and weight loss pct.",
+   "path": "Analyze → Correlation",
+   "vars": "qol_swallow_26wk, weight_loss_pct",
+   "answer": "You should see: r = -0.03"
+  },
+  {
+   "number": "2.91",
+   "topic": "Correlation",
+   "task": "Pearson correlation between qol swallow 26wk and survival months.",
+   "path": "Analyze → Correlation",
+   "vars": "qol_swallow_26wk, survival_months",
+   "answer": "You should see: r = 0.061"
+  },
+  {
+   "number": "2.92",
+   "topic": "Correlation",
+   "task": "Pearson correlation between qol swallow 26wk and survival event.",
+   "path": "Analyze → Correlation",
+   "vars": "qol_swallow_26wk, survival_event",
+   "answer": "You should see: r = 0.012"
+  },
+  {
+   "number": "2.93",
+   "topic": "Correlation",
+   "task": "Pearson correlation between qol swallow 26wk and feeding tube.",
+   "path": "Analyze → Correlation",
+   "vars": "qol_swallow_26wk, feeding_tube",
+   "answer": "You should see: r = 0.057"
+  },
+  {
+   "number": "2.94",
+   "topic": "Correlation",
+   "task": "Pearson correlation between qol swallow 26wk and toxicity grade.",
+   "path": "Analyze → Correlation",
+   "vars": "qol_swallow_26wk, toxicity_grade",
+   "answer": "You should see: r = 0.008"
+  },
+  {
+   "number": "2.95",
+   "topic": "Correlation",
+   "task": "Pearson correlation between qol swallow 26wk and mucositis grade.",
+   "path": "Analyze → Correlation",
+   "vars": "qol_swallow_26wk, mucositis_grade",
+   "answer": "You should see: r = -0.04"
+  },
+  {
+   "number": "2.96",
+   "topic": "Correlation",
+   "task": "Pearson correlation between qol swallow baseline and weight loss pct.",
+   "path": "Analyze → Correlation",
+   "vars": "qol_swallow_baseline, weight_loss_pct",
+   "answer": "You should see: r = 0.032"
+  },
+  {
+   "number": "2.97",
+   "topic": "Correlation",
+   "task": "Pearson correlation between qol swallow baseline and survival months.",
+   "path": "Analyze → Correlation",
+   "vars": "qol_swallow_baseline, survival_months",
+   "answer": "You should see: r = -0.001"
+  },
+  {
+   "number": "2.98",
+   "topic": "Correlation",
+   "task": "Pearson correlation between qol swallow baseline and survival event.",
+   "path": "Analyze → Correlation",
+   "vars": "qol_swallow_baseline, survival_event",
+   "answer": "You should see: r = -0.018"
+  },
+  {
+   "number": "2.99",
+   "topic": "Correlation",
+   "task": "Pearson correlation between qol swallow baseline and feeding tube.",
+   "path": "Analyze → Correlation",
+   "vars": "qol_swallow_baseline, feeding_tube",
+   "answer": "You should see: r = 0.004"
+  }
+ ]
+}

@@ -48,3 +48,9 @@ weasyprint>=62
 # ── AI Assistant (LLM integration — optional, install manually) ────────
 # litellm>=1.40
 # python-dotenv>=1.0
+
+# -- Auth (DevStat own Firebase project) -------------------------------
+firebase-admin>=6.0
+
+# -- Billing (DevStat Stripe, shared account) -------------------------
+stripe>=8.0

@@ -1,0 +1,516 @@
+- generic [ref=f2e1]:
+  - generic [ref=f2e3]:
+    - banner [ref=f2e4]:
+      - generic [ref=f2e5] [cursor=pointer]:
+        - img "radar-chart" [ref=f2e7]
+        - generic [ref=f2e11]:
+          - generic [ref=f2e12]: DevStat
+          - generic [ref=f2e13]: Medical Statistics
+      - generic [ref=f2e14]:
+        - img "save" [ref=f2e16] [cursor=pointer]
+        - img "folder-open" [ref=f2e20] [cursor=pointer]
+      - generic [ref=f2e23]:
+        - img "undo" [ref=f2e25]
+        - img "redo" [ref=f2e29]
+      - generic [ref=f2e32]:
+        - button "login Sign in" [ref=f2e34] [cursor=pointer]:
+          - img "login" [ref=f2e36]
+          - generic [ref=f2e39]: Sign in
+        - img "question-circle" [ref=f2e41] [cursor=pointer]
+        - img "question-circle" [ref=f2e46] [cursor=pointer]
+    - menu [ref=f2e51]:
+      - menuitem [ref=f2e52] [cursor=pointer]:
+        - img "table" [ref=f2e53]
+        - text: Data
+      - menuitem [expanded] [active] [ref=f2e56] [cursor=pointer]:
+        - img "fund" [ref=f2e57]
+        - text: Analyze
+      - menuitem [ref=f2e60] [cursor=pointer]:
+        - img "apartment" [ref=f2e61]
+        - text: Survival
+      - menuitem [ref=f2e64] [cursor=pointer]:
+        - img "bar-chart" [ref=f2e65]
+        - text: Graphs
+      - menuitem [ref=f2e68] [cursor=pointer]:
+        - img "question-circle" [ref=f2e69]
+        - text: Wizard
+      - menuitem [ref=f2e73] [cursor=pointer]:
+        - img "file-text" [ref=f2e74]
+        - text: Output
+      - menuitem [disabled]
+    - alert [ref=f2e86]:
+      - img "exclamation-circle" [ref=f2e87]
+      - generic [ref=f2e90]:
+        - generic [ref=f2e91]: Online demo — exam practice only
+        - generic [ref=f2e92]: This online version runs on a shared public server. Use it for exam practice with the synthetic practice data only. Do NOT upload real, identifiable or confidential patient data — for real (anonymised) analysis, use the offline desktop app.
+    - main [ref=f2e77]:
+      - generic [ref=f2e93]:
+        - generic [ref=f2e96]:
+          - button "upload Upload Data" [ref=f2e101] [cursor=pointer]:
+            - img "upload" [ref=f2e103]
+            - generic [ref=f2e106]: Upload Data
+          - button "download Download" [ref=f2e108] [cursor=pointer]:
+            - img "download" [ref=f2e165]
+            - generic [ref=f2e168]: Download
+          - button "reload Refresh" [ref=f2e110] [cursor=pointer]:
+            - img "reload" [ref=f2e112]
+            - generic [ref=f2e115]: Refresh
+          - button "undo Undo" [ref=f2e117] [cursor=pointer]:
+            - img "undo" [ref=f2e170]
+            - generic [ref=f2e173]: Undo
+          - button "redo Redo" [ref=f2e119] [cursor=pointer]:
+            - img "redo" [ref=f2e175]
+            - generic [ref=f2e178]: Redo
+          - button "plus Add Col" [ref=f2e123] [cursor=pointer]:
+            - img "plus" [ref=f2e180]
+            - generic [ref=f2e184]: Add Col
+          - button "delete Del Col" [ref=f2e125] [cursor=pointer]:
+            - img "delete" [ref=f2e186]
+            - generic [ref=f2e189]: Del Col
+          - button "calculator Compute" [ref=f2e129] [cursor=pointer]:
+            - img "calculator" [ref=f2e191]
+            - generic [ref=f2e194]: Compute
+          - button "swap Recode" [ref=f2e131] [cursor=pointer]:
+            - img "swap" [ref=f2e196]
+            - generic [ref=f2e199]: Recode
+          - button "Clear" [ref=f2e135] [cursor=pointer]
+        - generic [ref=f2e138]:
+          - tablist [ref=f2e139]:
+            - generic [ref=f2e141]:
+              - tab [selected] [ref=f2e143] [cursor=pointer]:
+                - generic [ref=f2e144]:
+                  - img "table" [ref=f2e145]
+                  - text: Data View
+              - tab [ref=f2e149] [cursor=pointer]:
+                - generic [ref=f2e150]:
+                  - img "column-height" [ref=f2e151]
+                  - text: Variable View
+          - tabpanel "table Data View" [ref=f2e156]:
+            - generic [ref=f2e201]:
+              - generic [ref=f2e202]: 1 to 100 of 100. Page 1 of 1
+              - grid [ref=f2e203]:
+                - rowgroup [ref=f2e204]:
+                  - row [ref=f2e205]:
+                    - columnheader "patient_id" [ref=f2e206]:
+                      - generic [ref=f2e208] [cursor=pointer]: 
+                      - generic:      
+                    - columnheader "age" [ref=f2e210]:
+                      - generic [ref=f2e212] [cursor=pointer]: 
+                      - generic:      
+                    - columnheader "sex" [ref=f2e214]:
+                      - generic [ref=f2e216] [cursor=pointer]: 
+                      - generic:      
+                    - columnheader "bmi" [ref=f2e218]:
+                      - generic [ref=f2e220] [cursor=pointer]: 
+                      - generic:      
+                    - columnheader "treatment" [ref=f2e222]:
+                      - generic [ref=f2e224] [cursor=pointer]: 
+                      - generic:      
+                    - columnheader "systolic_bp" [ref=f2e226]:
+                      - generic [ref=f2e228] [cursor=pointer]: 
+                      - generic:      
+                    - columnheader "cholesterol" [ref=f2e230]:
+                      - generic [ref=f2e232] [cursor=pointer]: 
+                      - generic:      
+                    - columnheader "smoking" [ref=f2e234]:
+                      - generic [ref=f2e236] [cursor=pointer]: 
+                      - generic:      
+                    - columnheader "pain_score" [ref=f2e238]:
+                      - generic [ref=f2e240] [cursor=pointer]: 
+                      - generic:      
+                    - columnheader "outcome" [ref=f2e242]:
+                      - generic [ref=f2e244] [cursor=pointer]: 
+                      - generic:      
+                    - columnheader "new_biomarker" [ref=f2e246]:
+                      - generic [ref=f2e248] [cursor=pointer]: 
+                      - generic:      
+                    - columnheader "gold_standard" [ref=f2e250]:
+                      - generic [ref=f2e252] [cursor=pointer]: 
+                      - generic:      
+                    - columnheader "followup_months" [ref=f2e254]:
+                      - generic [ref=f2e256] [cursor=pointer]: 
+                      - generic:      
+                    - columnheader "event_death" [ref=f2e258]:
+                      - generic [ref=f2e260] [cursor=pointer]: 
+                      - generic:      
+                - rowgroup [ref=f2e262]:
+                  - row [ref=f2e263]:
+                    - gridcell "1" [ref=f2e264]
+                    - gridcell "65" [ref=f2e265]
+                    - gridcell "Male" [ref=f2e266]
+                    - gridcell "28.4" [ref=f2e267]
+                    - gridcell "Drug B" [ref=f2e268]
+                    - gridcell "91" [ref=f2e269]
+                    - gridcell "6" [ref=f2e270]
+                    - gridcell "Yes" [ref=f2e271]
+                    - gridcell "4" [ref=f2e272]
+                    - gridcell "Improved" [ref=f2e273]
+                    - gridcell "0.66" [ref=f2e274]
+                    - gridcell "0" [ref=f2e275]
+                    - gridcell "57.5" [ref=f2e276]
+                    - gridcell "0" [ref=f2e277]
+                  - row [ref=f2e278]:
+                    - gridcell "2" [ref=f2e279]
+                    - gridcell "56" [ref=f2e280]
+                    - gridcell "Male" [ref=f2e281]
+                    - gridcell "21.4" [ref=f2e282]
+                    - gridcell "Placebo" [ref=f2e283]
+                    - gridcell "108" [ref=f2e284]
+                    - gridcell "5.26" [ref=f2e285]
+                    - gridcell "Yes" [ref=f2e286]
+                    - gridcell "3" [ref=f2e287]
+                    - gridcell "Improved" [ref=f2e288]
+                    - gridcell "1.82" [ref=f2e289]
+                    - gridcell "1" [ref=f2e290]
+                    - gridcell "29.7" [ref=f2e291]
+                    - gridcell "0" [ref=f2e292]
+                  - row [ref=f2e293]:
+                    - gridcell "3" [ref=f2e294]
+                    - gridcell "68" [ref=f2e295]
+                    - gridcell "Male" [ref=f2e296]
+                    - gridcell "39.2" [ref=f2e297]
+                    - gridcell "Drug B" [ref=f2e298]
+                    - gridcell "109" [ref=f2e299]
+                    - gridcell "6.01" [ref=f2e300]
+                    - gridcell "No" [ref=f2e301]
+                    - gridcell "4" [ref=f2e302]
+                    - gridcell "Improved" [ref=f2e303]
+                    - gridcell "1.4" [ref=f2e304]
+                    - gridcell "1" [ref=f2e305]
+                    - gridcell "38" [ref=f2e306]
+                    - gridcell "0" [ref=f2e307]
+                  - row [ref=f2e308]:
+                    - gridcell "4" [ref=f2e309]
+                    - gridcell "81" [ref=f2e310]
+                    - gridcell "Female" [ref=f2e311]
+                    - gridcell "27.6" [ref=f2e312]
+                    - gridcell "Drug B" [ref=f2e313]
+                    - gridcell "102" [ref=f2e314]
+                    - gridcell "5.11" [ref=f2e315]
+                    - gridcell "No" [ref=f2e316]
+                    - gridcell "10" [ref=f2e317]
+                    - gridcell "Not improved" [ref=f2e318]
+                    - gridcell "1.84" [ref=f2e319]
+                    - gridcell "0" [ref=f2e320]
+                    - gridcell "21" [ref=f2e321]
+                    - gridcell "0" [ref=f2e322]
+                  - row [ref=f2e323]:
+                    - gridcell "5" [ref=f2e324]
+                    - gridcell "54" [ref=f2e325]
+                    - gridcell "Female" [ref=f2e326]
+                    - gridcell "27.5" [ref=f2e327]
+                    - gridcell "Placebo" [ref=f2e328]
+                    - gridcell "91" [ref=f2e329]
+                    - gridcell "5.29" [ref=f2e330]
+                    - gridcell "Yes" [ref=f2e331]
+                    - gridcell "6" [ref=f2e332]
+                    - gridcell "Not improved" [ref=f2e333]
+                    - gridcell "0" [ref=f2e334]
+                    - gridcell "0" [ref=f2e335]
+                    - gridcell "5.1" [ref=f2e336]
+                    - gridcell "0" [ref=f2e337]
+                  - row [ref=f2e338]:
+                    - gridcell "6" [ref=f2e339]
+                    - gridcell "54" [ref=f2e340]
+                    - gridcell "Female" [ref=f2e341]
+                    - gridcell "30.6" [ref=f2e342]
+                    - gridcell "Drug B" [ref=f2e343]
+                    - gridcell "92" [ref=f2e344]
+                    - gridcell "3" [ref=f2e345]
+                    - gridcell "No" [ref=f2e346]
+                    - gridcell "5" [ref=f2e347]
+                    - gridcell "Not improved" [ref=f2e348]
+                    - gridcell "0.85" [ref=f2e349]
+                    - gridcell "1" [ref=f2e350]
+                    - gridcell "20.9" [ref=f2e351]
+                    - gridcell "0" [ref=f2e352]
+                  - row [ref=f2e353]:
+                    - gridcell "7" [ref=f2e354]
+                    - gridcell "82" [ref=f2e355]
+                    - gridcell "Male" [ref=f2e356]
+                    - gridcell "29.4" [ref=f2e357]
+                    - gridcell "Drug A" [ref=f2e358]
+                    - gridcell "104" [ref=f2e359]
+                    - gridcell "6.21" [ref=f2e360]
+                    - gridcell "Yes" [ref=f2e361]
+                    - gridcell "5" [ref=f2e362]
+                    - gridcell "Improved" [ref=f2e363]
+                    - gridcell "0.41" [ref=f2e364]
+                    - gridcell "0" [ref=f2e365]
+                    - gridcell "52.1" [ref=f2e366]
+                    - gridcell "0" [ref=f2e367]
+                  - row [ref=f2e368]:
+                    - gridcell "8" [ref=f2e369]
+                    - gridcell "70" [ref=f2e370]
+                    - gridcell "Male" [ref=f2e371]
+                    - gridcell "28.1" [ref=f2e372]
+                    - gridcell "Drug A" [ref=f2e373]
+                    - gridcell "106" [ref=f2e374]
+                    - gridcell "5.58" [ref=f2e375]
+                    - gridcell "No" [ref=f2e376]
+                    - gridcell "3" [ref=f2e377]
+                    - gridcell "Improved" [ref=f2e378]
+                    - gridcell "0.12" [ref=f2e379]
+                    - gridcell "1" [ref=f2e380]
+                    - gridcell "15" [ref=f2e381]
+                    - gridcell "0" [ref=f2e382]
+                  - row [ref=f2e383]:
+                    - gridcell "9" [ref=f2e384]
+                    - gridcell "51" [ref=f2e385]
+                    - gridcell "Male" [ref=f2e386]
+                    - gridcell "23" [ref=f2e387]
+                    - gridcell "Placebo" [ref=f2e388]
+                    - gridcell "97" [ref=f2e389]
+                    - gridcell "6.3" [ref=f2e390]
+                    - gridcell "No" [ref=f2e391]
+                    - gridcell "3" [ref=f2e392]
+                    - gridcell "Not improved" [ref=f2e393]
+                    - gridcell "1.44" [ref=f2e394]
+                    - gridcell "1" [ref=f2e395]
+                    - gridcell "35.7" [ref=f2e396]
+                    - gridcell "1" [ref=f2e397]
+                  - row [ref=f2e398]:
+                    - gridcell "10" [ref=f2e399]
+                    - gridcell "66" [ref=f2e400]
+                    - gridcell "Male" [ref=f2e401]
+                    - gridcell "29.4" [ref=f2e402]
+                    - gridcell "Drug B" [ref=f2e403]
+                    - gridcell "85" [ref=f2e404]
+                    - gridcell "2.5" [ref=f2e405]
+                    - gridcell "Yes" [ref=f2e406]
+                    - gridcell "8" [ref=f2e407]
+                    - gridcell "Not improved" [ref=f2e408]
+                    - gridcell "2" [ref=f2e409]
+                    - gridcell "0" [ref=f2e410]
+                    - gridcell "47.5" [ref=f2e411]
+                    - gridcell "0" [ref=f2e412]
+                  - row [ref=f2e413]:
+                    - gridcell "11" [ref=f2e414]
+                    - gridcell "51" [ref=f2e415]
+                    - gridcell "Female" [ref=f2e416]
+                    - gridcell "36.4" [ref=f2e417]
+                    - gridcell "Placebo" [ref=f2e418]
+                    - gridcell "108" [ref=f2e419]
+                    - gridcell "7.5" [ref=f2e420]
+                    - gridcell "Yes" [ref=f2e421]
+                    - gridcell "2" [ref=f2e422]
+                    - gridcell "Improved" [ref=f2e423]
+                    - gridcell "0.52" [ref=f2e424]
+                    - gridcell "0" [ref=f2e425]
+                    - gridcell "20" [ref=f2e426]
+                    - gridcell "0" [ref=f2e427]
+                  - row [ref=f2e428]:
+                    - gridcell "12" [ref=f2e429]
+                    - gridcell "51" [ref=f2e430]
+                    - gridcell "Female" [ref=f2e431]
+                    - gridcell "33.7" [ref=f2e432]
+                    - gridcell "Drug A" [ref=f2e433]
+                    - gridcell "103" [ref=f2e434]
+                    - gridcell "5.05" [ref=f2e435]
+                    - gridcell "Yes" [ref=f2e436]
+                    - gridcell "3" [ref=f2e437]
+                    - gridcell "Improved" [ref=f2e438]
+                    - gridcell "0.71" [ref=f2e439]
+                    - gridcell "0" [ref=f2e440]
+                    - gridcell "45.1" [ref=f2e441]
+                    - gridcell "1" [ref=f2e442]
+                  - row [ref=f2e443]:
+                    - gridcell "13" [ref=f2e444]
+                    - gridcell "62" [ref=f2e445]
+                    - gridcell "Female" [ref=f2e446]
+                    - gridcell "35" [ref=f2e447]
+                    - gridcell "Drug A" [ref=f2e448]
+                    - gridcell "91" [ref=f2e449]
+                    - gridcell "6.42" [ref=f2e450]
+                    - gridcell "No" [ref=f2e451]
+                    - gridcell "7" [ref=f2e452]
+                    - gridcell "Not improved" [ref=f2e453]
+                    - gridcell "0.47" [ref=f2e454]
+                    - gridcell "1" [ref=f2e455]
+                    - gridcell "17.7" [ref=f2e456]
+                    - gridcell "1" [ref=f2e457]
+                  - row [ref=f2e458]:
+                    - gridcell "14" [ref=f2e459]
+                    - gridcell "29" [ref=f2e460]
+                    - gridcell "Male" [ref=f2e461]
+                    - gridcell "24.4" [ref=f2e462]
+                    - gridcell "Drug A" [ref=f2e463]
+                    - gridcell "85" [ref=f2e464]
+                    - gridcell "4.06" [ref=f2e465]
+                    - gridcell "Yes" [ref=f2e466]
+                    - gridcell "3" [ref=f2e467]
+                    - gridcell "Improved" [ref=f2e468]
+                    - gridcell "0" [ref=f2e469]
+                    - gridcell "0" [ref=f2e470]
+                    - gridcell "96.4" [ref=f2e471]
+                    - gridcell "0" [ref=f2e472]
+                  - row [ref=f2e473]:
+                    - gridcell "15" [ref=f2e474]
+                    - gridcell "32" [ref=f2e475]
+                    - gridcell "Female" [ref=f2e476]
+                    - gridcell "22.1" [ref=f2e477]
+                    - gridcell "Drug B" [ref=f2e478]
+                    - gridcell "85" [ref=f2e479]
+                    - gridcell "5.87" [ref=f2e480]
+                    - gridcell "No" [ref=f2e481]
+                    - gridcell "4" [ref=f2e482]
+                    - gridcell "Improved" [ref=f2e483]
+                    - gridcell "0.16" [ref=f2e484]
+                    - gridcell "0" [ref=f2e485]
+                    - gridcell "77.7" [ref=f2e486]
+                    - gridcell "1" [ref=f2e487]
+                  - row [ref=f2e488]:
+                    - gridcell "16" [ref=f2e489]
+                    - gridcell "50" [ref=f2e490]
+                    - gridcell "Female" [ref=f2e491]
+                    - gridcell "26.4" [ref=f2e492]
+                    - gridcell "Drug B" [ref=f2e493]
+                    - gridcell "89" [ref=f2e494]
+                    - gridcell "4.04" [ref=f2e495]
+                    - gridcell "Yes" [ref=f2e496]
+                    - gridcell "2" [ref=f2e497]
+                    - gridcell "Improved" [ref=f2e498]
+                    - gridcell "0.21" [ref=f2e499]
+                    - gridcell "0" [ref=f2e500]
+                    - gridcell "16.9" [ref=f2e501]
+                    - gridcell "0" [ref=f2e502]
+                  - row [ref=f2e503]:
+                    - gridcell "17" [ref=f2e504]
+                    - gridcell "43" [ref=f2e505]
+                    - gridcell "Female" [ref=f2e506]
+                    - gridcell "27.3" [ref=f2e507]
+                    - gridcell "Drug B" [ref=f2e508]
+                    - gridcell "87" [ref=f2e509]
+                    - gridcell "4.51" [ref=f2e510]
+                    - gridcell "No" [ref=f2e511]
+                    - gridcell "4" [ref=f2e512]
+                    - gridcell "Improved" [ref=f2e513]
+                    - gridcell "2.75" [ref=f2e514]
+                    - gridcell "1" [ref=f2e515]
+                    - gridcell "17.3" [ref=f2e516]
+                    - gridcell "0" [ref=f2e517]
+                  - row [ref=f2e518]:
+                    - gridcell "18" [ref=f2e519]
+                    - gridcell "63" [ref=f2e520]
+                    - gridcell "Female" [ref=f2e521]
+                    - gridcell "32.5" [ref=f2e522]
+                    - gridcell "Drug B" [ref=f2e523]
+                    - gridcell "111" [ref=f2e524]
+                    - gridcell "7.31" [ref=f2e525]
+                    - gridcell "No" [ref=f2e526]
+                    - gridcell "3" [ref=f2e527]
+                    - gridcell "Improved" [ref=f2e528]
+                    - gridcell "2.1" [ref=f2e529]
+                    - gridcell "1" [ref=f2e530]
+                    - gridcell "21.1" [ref=f2e531]
+                    - gridcell "0" [ref=f2e532]
+                  - row [ref=f2e533]:
+                    - gridcell "19" [ref=f2e534]
+                    - gridcell "44" [ref=f2e535]
+                    - gridcell "Male" [ref=f2e536]
+                    - gridcell "18.5" [ref=f2e537]
+                    - gridcell "Placebo" [ref=f2e538]
+                    - gridcell "90" [ref=f2e539]
+                    - gridcell "4.99" [ref=f2e540]
+                    - gridcell "No" [ref=f2e541]
+                    - gridcell "4" [ref=f2e542]
+                    - gridcell "Improved" [ref=f2e543]
+                    - gridcell "0.6" [ref=f2e544]
+                    - gridcell "1" [ref=f2e545]
+                    - gridcell "45" [ref=f2e546]
+                    - gridcell "0" [ref=f2e547]
+                  - row [ref=f2e548]:
+                    - gridcell "20" [ref=f2e549]
+                    - gridcell "37" [ref=f2e550]
+                    - gridcell "Male" [ref=f2e551]
+                    - gridcell "34.6" [ref=f2e552]
+                    - gridcell "Drug B" [ref=f2e553]
+                    - gridcell "85" [ref=f2e554]
+                    - gridcell "5.44" [ref=f2e555]
+                    - gridcell "No" [ref=f2e556]
+                    - gridcell "4" [ref=f2e557]
+                    - gridcell "Improved" [ref=f2e558]
+                    - gridcell "0.72" [ref=f2e559]
+                    - gridcell "0" [ref=f2e560]
+                    - gridcell "57.4" [ref=f2e561]
+                    - gridcell "1" [ref=f2e562]
+                  - row [ref=f2e563]:
+                    - gridcell "21" [ref=f2e564]
+                    - gridcell "80" [ref=f2e565]
+                    - gridcell "Male" [ref=f2e566]
+                    - gridcell "26.2" [ref=f2e567]
+                    - gridcell "Drug B" [ref=f2e568]
+                    - gridcell "94" [ref=f2e569]
+                    - gridcell "6.16" [ref=f2e570]
+                    - gridcell "No" [ref=f2e571]
+                    - gridcell "1" [ref=f2e572]
+                    - gridcell "Improved" [ref=f2e573]
+                    - gridcell "2.05" [ref=f2e574]
+                    - gridcell "1" [ref=f2e575]
+                    - gridcell "89.4" [ref=f2e576]
+                    - gridcell "0" [ref=f2e577]
+                  - row [ref=f2e578]:
+                    - gridcell "22" [ref=f2e579]
+                    - gridcell "55" [ref=f2e580]
+                    - gridcell "Female" [ref=f2e581]
+                    - gridcell "24.9" [ref=f2e582]
+                    - gridcell "Placebo" [ref=f2e583]
+                    - gridcell "92" [ref=f2e584]
+                    - gridcell "5.75" [ref=f2e585]
+                    - gridcell "No" [ref=f2e586]
+                    - gridcell "8" [ref=f2e587]
+                    - gridcell "Not improved" [ref=f2e588]
+                    - gridcell "2.63" [ref=f2e589]
+                    - gridcell "1" [ref=f2e590]
+                    - gridcell "65.4" [ref=f2e591]
+                    - gridcell "1" [ref=f2e592]
+                - rowgroup
+                - rowgroup
+                - rowgroup
+              - generic [ref=f2e596]:
+                - generic [ref=f2e597]:
+                  - generic [ref=f2e598]: "Page Size:"
+                  - combobox "Page Size" [ref=f2e599]:
+                    - generic [ref=f2e600]: "200"
+                    - generic [ref=f2e601] [cursor=pointer]: 
+                - generic [ref=f2e602]: 1 to 100 of 100
+                - button "First Page" [disabled] [ref=f2e603]: 
+                - button "Previous Page" [disabled] [ref=f2e604]: 
+                - generic: Page 1 of 1
+                - button "Next Page" [disabled] [ref=f2e605]: 
+                - button "Last Page" [disabled] [ref=f2e606]: 
+        - generic [ref=f2e607]:
+          - strong [ref=f2e610]: devstat-practice-data.csv
+          - generic [ref=f2e611]: 240 rows × 14 cols
+          - generic [ref=f2e613]: 10 numeric, 0 categorical
+          - generic [ref=f2e614]: "Undo: 0 | Redo: 0"
+  - menu [ref=f2e616]:
+    - menuitem "Descriptive" [ref=f2e617] [cursor=pointer]
+    - menuitem "Frequencies" [ref=f2e618] [cursor=pointer]
+    - menuitem "Crosstabs" [ref=f2e619] [cursor=pointer]
+    - menuitem "Explore" [ref=f2e620] [cursor=pointer]
+    - separator [ref=f2e621]
+    - menuitem "Compare Means" [ref=f2e622] [cursor=pointer]
+    - menuitem "One-way ANOVA" [ref=f2e623] [cursor=pointer]
+    - menuitem "Means" [ref=f2e624] [cursor=pointer]
+    - menuitem "Factorial ANOVA" [ref=f2e625] [cursor=pointer]
+    - separator [ref=f2e626]
+    - menuitem "Non-parametric Tests" [ref=f2e627] [cursor=pointer]
+    - menuitem "Chi-square Test" [ref=f2e628] [cursor=pointer]
+    - separator [ref=f2e629]
+    - menuitem "Correlation" [ref=f2e630] [cursor=pointer]
+    - menuitem "Partial Correlation" [ref=f2e631] [cursor=pointer]
+    - separator [ref=f2e632]
+    - menuitem "Linear Regression" [ref=f2e633] [cursor=pointer]
+    - menuitem "Logistic Regression" [ref=f2e634] [cursor=pointer]
+    - menuitem "Mixed Model" [ref=f2e635] [cursor=pointer]
+    - separator [ref=f2e636]
+    - menuitem "Factor Analysis" [ref=f2e637] [cursor=pointer]
+    - menuitem "Reliability" [ref=f2e638] [cursor=pointer]
+    - menuitem "Cluster Analysis" [ref=f2e639] [cursor=pointer]
+    - menuitem "Power Analysis" [ref=f2e640] [cursor=pointer]
+    - separator [ref=f2e641]
+    - menuitem "Diagnostic Test" [ref=f2e642] [cursor=pointer]
+    - menuitem "ROC Curve" [ref=f2e643] [cursor=pointer]
+    - separator [ref=f2e644]
+    - menuitem "Suggest Test" [ref=f2e645] [cursor=pointer]

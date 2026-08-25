@@ -1,0 +1,43 @@
+- generic [ref=f11e3]:
+  - banner [ref=f11e4]:
+    - generic [ref=f11e5] [cursor=pointer]:
+      - img "radar-chart" [ref=f11e7]
+      - generic [ref=f11e11]:
+        - generic [ref=f11e12]: DevStat
+        - generic [ref=f11e13]: Medical Statistics
+    - generic [ref=f11e14]:
+      - img "save" [ref=f11e16] [cursor=pointer]
+      - img "folder-open" [ref=f11e20] [cursor=pointer]
+    - generic [ref=f11e23]:
+      - img "undo" [ref=f11e25]
+      - img "redo" [ref=f11e29]
+    - generic [ref=f11e32]:
+      - button "user devstat.e2e.20260824@example.com" [ref=f11e34] [cursor=pointer]:
+        - img "user" [ref=f11e36]
+        - generic [ref=f11e39]: devstat.e2e.20260824@example.com
+      - button "crown Upgrade" [ref=f11e41] [cursor=pointer]:
+        - img "crown" [ref=f11e43]
+        - generic [ref=f11e46]: Upgrade
+      - img "question-circle" [ref=f11e48] [cursor=pointer]
+      - img "question-circle" [ref=f11e53] [cursor=pointer]
+  - menu [ref=f11e58]:
+    - menuitem [ref=f11e59] [cursor=pointer]:
+      - img "table" [ref=f11e60]
+      - text: Data
+    - menuitem [ref=f11e63] [cursor=pointer]:
+      - img "fund" [ref=f11e64]
+      - text: Analyze
+    - menuitem [ref=f11e67] [cursor=pointer]:
+      - img "apartment" [ref=f11e68]
+      - text: Survival
+    - menuitem [ref=f11e71] [cursor=pointer]:
+      - img "bar-chart" [ref=f11e72]
+      - text: Graphs
+    - menuitem [ref=f11e75] [cursor=pointer]:
+      - img "question-circle" [ref=f11e76]
+      - text: Wizard
+    - menuitem [ref=f11e80] [cursor=pointer]:
+      - img "file-text" [ref=f11e81]
+      - text: Output
+    - menuitem [disabled]
+  - main [ref=f11e84]

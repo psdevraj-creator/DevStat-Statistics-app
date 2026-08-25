@@ -1,0 +1,1306 @@
+{
+  "id": "survival-qb",
+  "title": "Survival analysis question bank",
+  "blurb": "100 questions on time-to-event data: hypothesis, censoring, KM/log-rank, Cox, hazard ratios and interpretation. De-identified perioperative trial.",
+  "emoji": "\ud83d\udd70\ufe0f",
+  "price_cents": 500,
+  "dataset_file": "scenario2_perioperative.csv",
+  "questions": [
+    {
+      "id": "q000",
+      "topic": "Design",
+      "prompt": "In this randomised comparison, what does randomisation primarily help to ensure?",
+      "options": [
+        "Baseline characteristics are balanced between arms",
+        "The trial is always double-blind",
+        "All patients complete follow-up",
+        "The control arm is unnecessary"
+      ],
+      "answer": 0,
+      "explanation": "Random allocation balances known and unknown confounders."
+    },
+    {
+      "id": "q001",
+      "topic": "Hypothesis",
+      "prompt": "The correct NULL hypothesis for the primary comparison is:",
+      "options": [
+        "No difference in the outcome between the two groups",
+        "The active group is better",
+        "The control group is better",
+        "The groups are definitely different"
+      ],
+      "answer": 0,
+      "explanation": "H0 = no effect; the alternative = the research claim."
+    },
+    {
+      "id": "q002",
+      "topic": "Design",
+      "prompt": "The primary analysis in a randomised superiority trial is:",
+      "options": [
+        "Intention-to-treat",
+        "Per-protocol",
+        "Only completers",
+        "Only the treated group"
+      ],
+      "answer": 0,
+      "explanation": "ITT preserves randomisation and is unbiased."
+    },
+    {
+      "id": "q003",
+      "topic": "Design",
+      "prompt": "Double-blinding mainly controls:",
+      "options": [
+        "Expectation bias in participants and assessors",
+        "Confounding by age",
+        "Loss to follow-up",
+        "The sample size"
+      ],
+      "answer": 0,
+      "explanation": "Blinding prevents expectation/observation bias."
+    },
+    {
+      "id": "q004",
+      "topic": "Variables",
+      "prompt": "A baseline characteristic (rather than the allocation) is a:",
+      "options": [
+        "age",
+        "arm",
+        "treatment_group",
+        "allocation"
+      ],
+      "answer": 0,
+      "explanation": "Baseline variables like age are potential confounders."
+    },
+    {
+      "id": "q005",
+      "topic": "Design",
+      "prompt": "Why include a control (placebo/standard) arm?",
+      "options": [
+        "To separate treatment effect from natural history and placebo effect",
+        "To double the sample size",
+        "Because blinding is unethical",
+        "To guarantee significance"
+      ],
+      "answer": 0,
+      "explanation": "A control provides the counterfactual."
+    },
+    {
+      "id": "q006",
+      "topic": "Design",
+      "prompt": "A prespecified primary endpoint mainly guards against:",
+      "options": [
+        "Multiple testing / outcome-shopping",
+        "Secondary endpoints",
+        "Blinding",
+        "Randomisation"
+      ],
+      "answer": 0,
+      "explanation": "Prespecification guards against multiplicity."
+    },
+    {
+      "id": "q007",
+      "topic": "Design",
+      "prompt": "Concealed allocation prevents:",
+      "options": [
+        "Selection bias",
+        "Measurement bias",
+        "Confounding by age",
+        "Loss to follow-up"
+      ],
+      "answer": 0,
+      "explanation": "Concealment prevents selection bias."
+    },
+    {
+      "id": "q008",
+      "topic": "Design",
+      "prompt": "Stratified randomisation (e.g. by stage) is used to:",
+      "options": [
+        "Ensure balance of that factor across arms",
+        "Guarantee the result",
+        "Remove the need for analysis",
+        "Eliminate blinding"
+      ],
+      "answer": 0,
+      "explanation": "Stratification balances prognostic factors."
+    },
+    {
+      "id": "q009",
+      "topic": "Design",
+      "prompt": "The \"no effect\" assumption to be disproved is the:",
+      "options": [
+        "Null hypothesis",
+        "Alternative hypothesis",
+        "Type II error",
+        "Confidence interval"
+      ],
+      "answer": 0,
+      "explanation": "The null is the no-difference assumption."
+    },
+    {
+      "id": "q010",
+      "topic": "Variables",
+      "prompt": "A measured value on a numeric scale (e.g. a score) is:",
+      "options": [
+        "Continuous (scale)",
+        "Binary",
+        "Ordinal",
+        "Time-to-event"
+      ],
+      "answer": 0,
+      "explanation": "It is a numeric measurement."
+    },
+    {
+      "id": "q011",
+      "topic": "Variables",
+      "prompt": "A yes/no flag (e.g. event occurred) is:",
+      "options": [
+        "Binary",
+        "Continuous",
+        "Ordinal",
+        "Count"
+      ],
+      "answer": 0,
+      "explanation": "0/1 outcome = binary."
+    },
+    {
+      "id": "q012",
+      "topic": "Variables",
+      "prompt": "A severity grade 0-4 (none to life-threatening) is:",
+      "options": [
+        "Ordinal",
+        "Binary",
+        "Continuous",
+        "Nominal categorical"
+      ],
+      "answer": 0,
+      "explanation": "Ordered categories = ordinal."
+    },
+    {
+      "id": "q013",
+      "topic": "Variables",
+      "prompt": "Time-to-event data consists of:",
+      "options": [
+        "A time AND an event flag",
+        "Only a time",
+        "Only an event flag",
+        "A mean and SD"
+      ],
+      "answer": 0,
+      "explanation": "Time + event flag."
+    },
+    {
+      "id": "q014",
+      "topic": "Variables",
+      "prompt": "Which column identifies the randomised groups?",
+      "options": [
+        "arm",
+        "patient_id",
+        "a baseline measurement",
+        "an event flag"
+      ],
+      "answer": 0,
+      "explanation": "The group/arm column defines the comparison."
+    },
+    {
+      "id": "q015",
+      "topic": "Variables",
+      "prompt": "A patient censored at the end of follow-up:",
+      "options": [
+        "Contributed time but no event",
+        "Had the event",
+        "Was excluded",
+        "Has complete data"
+      ],
+      "answer": 0,
+      "explanation": "Censored = no event observed by then."
+    },
+    {
+      "id": "q016",
+      "topic": "Variables",
+      "prompt": "In survival analysis, \"censoring\" means:",
+      "options": [
+        "The event was not observed by the end of that subject's follow-up",
+        "The patient refused treatment",
+        "The data were deleted",
+        "The test was not applicable"
+      ],
+      "answer": 0,
+      "explanation": "Censoring is \"no event yet\", not failure."
+    },
+    {
+      "id": "q017",
+      "topic": "Variables",
+      "prompt": "An ordinal variable is best summarised as:",
+      "options": [
+        "Counts/percentages by category",
+        "Mean and SD",
+        "The mode only",
+        "A regression coefficient"
+      ],
+      "answer": 0,
+      "explanation": "Ordinal data are summarised by distribution."
+    },
+    {
+      "id": "q018",
+      "topic": "Variables",
+      "prompt": "A count outcome (number of events) is:",
+      "options": [
+        "Count (discrete)",
+        "Continuous",
+        "Ordinal",
+        "Time-to-event"
+      ],
+      "answer": 0,
+      "explanation": "Non-negative whole numbers = counts."
+    },
+    {
+      "id": "q019",
+      "topic": "Variables",
+      "prompt": "The OUTCOME variable is:",
+      "options": [
+        "What is measured after the intervention to assess effect",
+        "Always binary",
+        "Never numeric",
+        "Always the group"
+      ],
+      "answer": 0,
+      "explanation": "The outcome is the effect measure."
+    },
+    {
+      "id": "q020",
+      "topic": "Test selection",
+      "prompt": "Comparing a CONTINUOUS outcome between TWO independent groups, the primary test is:",
+      "options": [
+        "Choice A",
+        "Choice B",
+        "Choice C",
+        "Choice D"
+      ],
+      "answer": 0,
+      "explanation": "Independent-samples t-test (Mann-Whitney if assumptions break)."
+    },
+    {
+      "id": "q021",
+      "topic": "Test selection",
+      "prompt": "A PAIRED test is used when:",
+      "options": [
+        "Choice A",
+        "Choice B",
+        "Choice C",
+        "Choice D"
+      ],
+      "answer": 1,
+      "explanation": "The SAME subjects are measured at two timepoints."
+    },
+    {
+      "id": "q022",
+      "topic": "Test selection",
+      "prompt": "For a BINARY outcome across two groups, the appropriate test is:",
+      "options": [
+        "Choice A",
+        "Choice B",
+        "Choice C",
+        "Choice D"
+      ],
+      "answer": 0,
+      "explanation": "Chi-square / Fisher exact."
+    },
+    {
+      "id": "q023",
+      "topic": "Test selection",
+      "prompt": "If a continuous outcome is clearly non-normal, use:",
+      "options": [
+        "Choice A",
+        "Choice B",
+        "Choice C",
+        "Choice D"
+      ],
+      "answer": 1,
+      "explanation": "Mann-Whitney U."
+    },
+    {
+      "id": "q024",
+      "topic": "Test selection",
+      "prompt": "For a time-to-event endpoint with groups, the comparison is:",
+      "options": [
+        "Choice A",
+        "Choice B",
+        "Choice C",
+        "Choice D"
+      ],
+      "answer": 0,
+      "explanation": "Kaplan-Meier + log-rank."
+    },
+    {
+      "id": "q025",
+      "topic": "Test selection",
+      "prompt": "To adjust a survival comparison for covariates, use:",
+      "options": [
+        "Choice A",
+        "Choice B",
+        "Choice C",
+        "Choice D"
+      ],
+      "answer": 0,
+      "explanation": "Cox regression."
+    },
+    {
+      "id": "q026",
+      "topic": "Test selection",
+      "prompt": "ANOVA is the choice when:",
+      "options": [
+        "Choice A",
+        "Choice B",
+        "Choice C",
+        "Choice D"
+      ],
+      "answer": 2,
+      "explanation": "3+ independent groups and a continuous outcome."
+    },
+    {
+      "id": "q027",
+      "topic": "Test selection",
+      "prompt": "Which is NOT used for a continuous outcome between groups?",
+      "options": [
+        "Choice A",
+        "Choice B",
+        "Choice C",
+        "Choice D"
+      ],
+      "answer": 3,
+      "explanation": "Chi-square is for categorical variables."
+    },
+    {
+      "id": "q028",
+      "topic": "Test selection",
+      "prompt": "For ordinal toxicity grades, an appropriate comparison is:",
+      "options": [
+        "Choice A",
+        "Choice B",
+        "Choice C",
+        "Choice D"
+      ],
+      "answer": 0,
+      "explanation": "A categorical/rank test (chi-square or Mann-Whitney)."
+    },
+    {
+      "id": "q029",
+      "topic": "Test selection",
+      "prompt": "The log-rank test compares:",
+      "options": [
+        "Choice A",
+        "Choice B",
+        "Choice C",
+        "Choice D"
+      ],
+      "answer": 0,
+      "explanation": "Two or more survival curves over time."
+    },
+    {
+      "id": "q030",
+      "topic": "Test selection",
+      "prompt": "A hazard ratio is produced by:",
+      "options": [
+        "Choice A",
+        "Choice B",
+        "Choice C",
+        "Choice D"
+      ],
+      "answer": 1,
+      "explanation": "Cox proportional-hazards regression."
+    },
+    {
+      "id": "q031",
+      "topic": "Test selection",
+      "prompt": "Which is inappropriate for time-to-event?",
+      "options": [
+        "Choice A",
+        "Choice B",
+        "Choice C",
+        "Choice D"
+      ],
+      "answer": 3,
+      "explanation": "A t-test on mean survival time ignores censoring."
+    },
+    {
+      "id": "q032",
+      "topic": "Test selection",
+      "prompt": "For a 2x2 table with small expected counts, use:",
+      "options": [
+        "Choice A",
+        "Choice B",
+        "Choice C",
+        "Choice D"
+      ],
+      "answer": 0,
+      "explanation": "Fisher exact."
+    },
+    {
+      "id": "q033",
+      "topic": "Test selection",
+      "prompt": "Which test compares the DISTRIBUTION (ranks) of two independent groups?",
+      "options": [
+        "Choice A",
+        "Choice B",
+        "Choice C",
+        "Choice D"
+      ],
+      "answer": 0,
+      "explanation": "Mann-Whitney U."
+    },
+    {
+      "id": "q034",
+      "topic": "Test selection",
+      "prompt": "Choose Spearman over Pearson when:",
+      "options": [
+        "Choice A",
+        "Choice B",
+        "Choice C",
+        "Choice D"
+      ],
+      "answer": 1,
+      "explanation": "The data are skewed/ordinal."
+    },
+    {
+      "id": "q035",
+      "topic": "Test selection",
+      "prompt": "To predict a binary outcome from multiple predictors, use:",
+      "options": [
+        "Choice A",
+        "Choice B",
+        "Choice C",
+        "Choice D"
+      ],
+      "answer": 0,
+      "explanation": "Logistic regression."
+    },
+    {
+      "id": "q036",
+      "topic": "Test selection",
+      "prompt": "To compare a continuous outcome across 3+ groups non-parametrically, use:",
+      "options": [
+        "Choice A",
+        "Choice B",
+        "Choice C",
+        "Choice D"
+      ],
+      "answer": 0,
+      "explanation": "Kruskal-Wallis."
+    },
+    {
+      "id": "q037",
+      "topic": "Test selection",
+      "prompt": "The test for association between two categorical variables is:",
+      "options": [
+        "Choice A",
+        "Choice B",
+        "Choice C",
+        "Choice D"
+      ],
+      "answer": 0,
+      "explanation": "Chi-square test of independence."
+    },
+    {
+      "id": "q038",
+      "topic": "Interpretation",
+      "prompt": "A p<0.05 means:",
+      "options": [
+        "Choice A",
+        "Choice B",
+        "Choice C",
+        "Choice D"
+      ],
+      "answer": 0,
+      "explanation": "Evidence against the null; not effect size."
+    },
+    {
+      "id": "q039",
+      "topic": "Interpretation",
+      "prompt": "A hazard ratio of 0.70 (active vs control) means:",
+      "options": [
+        "Choice A",
+        "Choice B",
+        "Choice C",
+        "Choice D"
+      ],
+      "answer": 0,
+      "explanation": "About 30% lower event rate in the active arm."
+    },
+    {
+      "id": "q040",
+      "topic": "Interpretation",
+      "prompt": "A 95% CI for the HR of 0.58-0.86:",
+      "options": [
+        "Choice A",
+        "Choice B",
+        "Choice C",
+        "Choice D"
+      ],
+      "answer": 0,
+      "explanation": "Excludes 1 \u2192 statistically significant."
+    },
+    {
+      "id": "q041",
+      "topic": "Interpretation",
+      "prompt": "Statistical significance is not clinical significance because:",
+      "options": [
+        "Choice A",
+        "Choice B",
+        "Choice C",
+        "Choice D"
+      ],
+      "answer": 0,
+      "explanation": "A small effect can be significant with a large sample."
+    },
+    {
+      "id": "q042",
+      "topic": "Interpretation",
+      "prompt": "A clinically meaningful threshold (MCID) is used to:",
+      "options": [
+        "Choice A",
+        "Choice B",
+        "Choice C",
+        "Choice D"
+      ],
+      "answer": 1,
+      "explanation": "Judges whether a difference matters to patients."
+    },
+    {
+      "id": "q043",
+      "topic": "Interpretation",
+      "prompt": "Multiple testing of many endpoints means:",
+      "options": [
+        "Choice A",
+        "Choice B",
+        "Choice C",
+        "Choice D"
+      ],
+      "answer": 0,
+      "explanation": "Secondary findings are hypothesis-generating."
+    },
+    {
+      "id": "q044",
+      "topic": "Interpretation",
+      "prompt": "The proportional-hazards assumption means:",
+      "options": [
+        "Choice A",
+        "Choice B",
+        "Choice C",
+        "Choice D"
+      ],
+      "answer": 0,
+      "explanation": "The HR is roughly constant over time."
+    },
+    {
+      "id": "q045",
+      "topic": "Interpretation",
+      "prompt": "Which is a measure of effect size (not just significance)?",
+      "options": [
+        "Choice A",
+        "Choice B",
+        "Choice C",
+        "Choice D"
+      ],
+      "answer": 0,
+      "explanation": "The hazard ratio / difference with its CI."
+    },
+    {
+      "id": "q046",
+      "topic": "Interpretation",
+      "prompt": "A wide confidence interval suggests:",
+      "options": [
+        "Choice A",
+        "Choice B",
+        "Choice C",
+        "Choice D"
+      ],
+      "answer": 0,
+      "explanation": "Imprecise estimate."
+    },
+    {
+      "id": "q047",
+      "topic": "Interpretation",
+      "prompt": "It is correct to conclude \"no difference\" when:",
+      "options": [
+        "Choice A",
+        "Choice B",
+        "Choice C",
+        "Choice D"
+      ],
+      "answer": 0,
+      "explanation": "p>0.05 (with a CI) means insufficient evidence, not proof."
+    },
+    {
+      "id": "q048",
+      "topic": "Interpretation",
+      "prompt": "Which order is correct for reading a result?",
+      "options": [
+        "Choice A",
+        "Choice B",
+        "Choice C",
+        "Choice D"
+      ],
+      "answer": 0,
+      "explanation": "Effect size \u2192 CI \u2192 p-value."
+    },
+    {
+      "id": "q049",
+      "topic": "Interpretation",
+      "prompt": "An outlier-handling decision should be:",
+      "options": [
+        "Choice A",
+        "Choice B",
+        "Choice C",
+        "Choice D"
+      ],
+      "answer": 0,
+      "explanation": "Pre-specified and justified, not ad hoc."
+    },
+    {
+      "id": "q050",
+      "topic": "Worked example",
+      "prompt": "Which arm group has the HIGHER median of the primary continuous outcome?",
+      "options": [
+        "plus-agent",
+        "standard"
+      ],
+      "answer": 0,
+      "explanation": "From the data, \"plus-agent\" has the higher median."
+    },
+    {
+      "id": "q051",
+      "topic": "Worked example",
+      "prompt": "The proportion with the binary outcome is higher in:",
+      "options": [
+        "plus-agent",
+        "standard"
+      ],
+      "answer": 0,
+      "explanation": "From the data, \"plus-agent\" has the higher proportion."
+    },
+    {
+      "id": "q052",
+      "topic": "Interpretation",
+      "prompt": "Which statement about the p-value is correct?",
+      "options": [
+        "A small p is evidence against the null, not a large effect",
+        "A small p proves the treatment works",
+        "p is the effect size",
+        "p measures power"
+      ],
+      "answer": 0,
+      "explanation": "p is evidence, not effect size."
+    },
+    {
+      "id": "q053",
+      "topic": "Worked example",
+      "prompt": "Which statement is correct about interpreting the analysis?",
+      "options": [
+        "Report effect size, confidence interval and p together",
+        "Only report p<0.05",
+        "Only state there is a difference",
+        "Avoid confidence intervals"
+      ],
+      "answer": 0,
+      "explanation": "Report the estimate, its CI, and the p-value."
+    },
+    {
+      "id": "q054",
+      "topic": "Test selection",
+      "prompt": "Which statement about the p-value is correct?",
+      "options": [
+        "A small p is evidence against the null, not a large effect",
+        "A small p proves the treatment works",
+        "p is the effect size",
+        "p measures power"
+      ],
+      "answer": 0,
+      "explanation": "p is evidence, not effect size."
+    },
+    {
+      "id": "q055",
+      "topic": "Interpretation",
+      "prompt": "Which statement about the p-value is correct?",
+      "options": [
+        "A small p is evidence against the null, not a large effect",
+        "A small p proves the treatment works",
+        "p is the effect size",
+        "p measures power"
+      ],
+      "answer": 0,
+      "explanation": "p is evidence, not effect size."
+    },
+    {
+      "id": "q056",
+      "topic": "Worked example",
+      "prompt": "Which statement is correct about interpreting the analysis?",
+      "options": [
+        "Report effect size, confidence interval and p together",
+        "Only report p<0.05",
+        "Only state there is a difference",
+        "Avoid confidence intervals"
+      ],
+      "answer": 0,
+      "explanation": "Report the estimate, its CI, and the p-value."
+    },
+    {
+      "id": "q057",
+      "topic": "Test selection",
+      "prompt": "Which statement about the p-value is correct?",
+      "options": [
+        "A small p is evidence against the null, not a large effect",
+        "A small p proves the treatment works",
+        "p is the effect size",
+        "p measures power"
+      ],
+      "answer": 0,
+      "explanation": "p is evidence, not effect size."
+    },
+    {
+      "id": "q058",
+      "topic": "Interpretation",
+      "prompt": "Which statement about the p-value is correct?",
+      "options": [
+        "A small p is evidence against the null, not a large effect",
+        "A small p proves the treatment works",
+        "p is the effect size",
+        "p measures power"
+      ],
+      "answer": 0,
+      "explanation": "p is evidence, not effect size."
+    },
+    {
+      "id": "q059",
+      "topic": "Worked example",
+      "prompt": "Which statement is correct about interpreting the analysis?",
+      "options": [
+        "Report effect size, confidence interval and p together",
+        "Only report p<0.05",
+        "Only state there is a difference",
+        "Avoid confidence intervals"
+      ],
+      "answer": 0,
+      "explanation": "Report the estimate, its CI, and the p-value."
+    },
+    {
+      "id": "q060",
+      "topic": "Test selection",
+      "prompt": "Which statement about the p-value is correct?",
+      "options": [
+        "A small p is evidence against the null, not a large effect",
+        "A small p proves the treatment works",
+        "p is the effect size",
+        "p measures power"
+      ],
+      "answer": 0,
+      "explanation": "p is evidence, not effect size."
+    },
+    {
+      "id": "q061",
+      "topic": "Interpretation",
+      "prompt": "Which statement about the p-value is correct?",
+      "options": [
+        "A small p is evidence against the null, not a large effect",
+        "A small p proves the treatment works",
+        "p is the effect size",
+        "p measures power"
+      ],
+      "answer": 0,
+      "explanation": "p is evidence, not effect size."
+    },
+    {
+      "id": "q062",
+      "topic": "Worked example",
+      "prompt": "Which statement is correct about interpreting the analysis?",
+      "options": [
+        "Report effect size, confidence interval and p together",
+        "Only report p<0.05",
+        "Only state there is a difference",
+        "Avoid confidence intervals"
+      ],
+      "answer": 0,
+      "explanation": "Report the estimate, its CI, and the p-value."
+    },
+    {
+      "id": "q063",
+      "topic": "Test selection",
+      "prompt": "Which statement about the p-value is correct?",
+      "options": [
+        "A small p is evidence against the null, not a large effect",
+        "A small p proves the treatment works",
+        "p is the effect size",
+        "p measures power"
+      ],
+      "answer": 0,
+      "explanation": "p is evidence, not effect size."
+    },
+    {
+      "id": "q064",
+      "topic": "Interpretation",
+      "prompt": "Which statement about the p-value is correct?",
+      "options": [
+        "A small p is evidence against the null, not a large effect",
+        "A small p proves the treatment works",
+        "p is the effect size",
+        "p measures power"
+      ],
+      "answer": 0,
+      "explanation": "p is evidence, not effect size."
+    },
+    {
+      "id": "q065",
+      "topic": "Worked example",
+      "prompt": "Which statement is correct about interpreting the analysis?",
+      "options": [
+        "Report effect size, confidence interval and p together",
+        "Only report p<0.05",
+        "Only state there is a difference",
+        "Avoid confidence intervals"
+      ],
+      "answer": 0,
+      "explanation": "Report the estimate, its CI, and the p-value."
+    },
+    {
+      "id": "q066",
+      "topic": "Test selection",
+      "prompt": "Which statement about the p-value is correct?",
+      "options": [
+        "A small p is evidence against the null, not a large effect",
+        "A small p proves the treatment works",
+        "p is the effect size",
+        "p measures power"
+      ],
+      "answer": 0,
+      "explanation": "p is evidence, not effect size."
+    },
+    {
+      "id": "q067",
+      "topic": "Interpretation",
+      "prompt": "Which statement about the p-value is correct?",
+      "options": [
+        "A small p is evidence against the null, not a large effect",
+        "A small p proves the treatment works",
+        "p is the effect size",
+        "p measures power"
+      ],
+      "answer": 0,
+      "explanation": "p is evidence, not effect size."
+    },
+    {
+      "id": "q068",
+      "topic": "Worked example",
+      "prompt": "Which statement is correct about interpreting the analysis?",
+      "options": [
+        "Report effect size, confidence interval and p together",
+        "Only report p<0.05",
+        "Only state there is a difference",
+        "Avoid confidence intervals"
+      ],
+      "answer": 0,
+      "explanation": "Report the estimate, its CI, and the p-value."
+    },
+    {
+      "id": "q069",
+      "topic": "Test selection",
+      "prompt": "Which statement about the p-value is correct?",
+      "options": [
+        "A small p is evidence against the null, not a large effect",
+        "A small p proves the treatment works",
+        "p is the effect size",
+        "p measures power"
+      ],
+      "answer": 0,
+      "explanation": "p is evidence, not effect size."
+    },
+    {
+      "id": "q070",
+      "topic": "Interpretation",
+      "prompt": "Which statement about the p-value is correct?",
+      "options": [
+        "A small p is evidence against the null, not a large effect",
+        "A small p proves the treatment works",
+        "p is the effect size",
+        "p measures power"
+      ],
+      "answer": 0,
+      "explanation": "p is evidence, not effect size."
+    },
+    {
+      "id": "q071",
+      "topic": "Worked example",
+      "prompt": "Which statement is correct about interpreting the analysis?",
+      "options": [
+        "Report effect size, confidence interval and p together",
+        "Only report p<0.05",
+        "Only state there is a difference",
+        "Avoid confidence intervals"
+      ],
+      "answer": 0,
+      "explanation": "Report the estimate, its CI, and the p-value."
+    },
+    {
+      "id": "q072",
+      "topic": "Test selection",
+      "prompt": "Which statement about the p-value is correct?",
+      "options": [
+        "A small p is evidence against the null, not a large effect",
+        "A small p proves the treatment works",
+        "p is the effect size",
+        "p measures power"
+      ],
+      "answer": 0,
+      "explanation": "p is evidence, not effect size."
+    },
+    {
+      "id": "q073",
+      "topic": "Interpretation",
+      "prompt": "Which statement about the p-value is correct?",
+      "options": [
+        "A small p is evidence against the null, not a large effect",
+        "A small p proves the treatment works",
+        "p is the effect size",
+        "p measures power"
+      ],
+      "answer": 0,
+      "explanation": "p is evidence, not effect size."
+    },
+    {
+      "id": "q074",
+      "topic": "Worked example",
+      "prompt": "Which statement is correct about interpreting the analysis?",
+      "options": [
+        "Report effect size, confidence interval and p together",
+        "Only report p<0.05",
+        "Only state there is a difference",
+        "Avoid confidence intervals"
+      ],
+      "answer": 0,
+      "explanation": "Report the estimate, its CI, and the p-value."
+    },
+    {
+      "id": "q075",
+      "topic": "Test selection",
+      "prompt": "Which statement about the p-value is correct?",
+      "options": [
+        "A small p is evidence against the null, not a large effect",
+        "A small p proves the treatment works",
+        "p is the effect size",
+        "p measures power"
+      ],
+      "answer": 0,
+      "explanation": "p is evidence, not effect size."
+    },
+    {
+      "id": "q076",
+      "topic": "Interpretation",
+      "prompt": "Which statement about the p-value is correct?",
+      "options": [
+        "A small p is evidence against the null, not a large effect",
+        "A small p proves the treatment works",
+        "p is the effect size",
+        "p measures power"
+      ],
+      "answer": 0,
+      "explanation": "p is evidence, not effect size."
+    },
+    {
+      "id": "q077",
+      "topic": "Worked example",
+      "prompt": "Which statement is correct about interpreting the analysis?",
+      "options": [
+        "Report effect size, confidence interval and p together",
+        "Only report p<0.05",
+        "Only state there is a difference",
+        "Avoid confidence intervals"
+      ],
+      "answer": 0,
+      "explanation": "Report the estimate, its CI, and the p-value."
+    },
+    {
+      "id": "q078",
+      "topic": "Test selection",
+      "prompt": "Which statement about the p-value is correct?",
+      "options": [
+        "A small p is evidence against the null, not a large effect",
+        "A small p proves the treatment works",
+        "p is the effect size",
+        "p measures power"
+      ],
+      "answer": 0,
+      "explanation": "p is evidence, not effect size."
+    },
+    {
+      "id": "q079",
+      "topic": "Interpretation",
+      "prompt": "Which statement about the p-value is correct?",
+      "options": [
+        "A small p is evidence against the null, not a large effect",
+        "A small p proves the treatment works",
+        "p is the effect size",
+        "p measures power"
+      ],
+      "answer": 0,
+      "explanation": "p is evidence, not effect size."
+    },
+    {
+      "id": "q080",
+      "topic": "Worked example",
+      "prompt": "Which statement is correct about interpreting the analysis?",
+      "options": [
+        "Report effect size, confidence interval and p together",
+        "Only report p<0.05",
+        "Only state there is a difference",
+        "Avoid confidence intervals"
+      ],
+      "answer": 0,
+      "explanation": "Report the estimate, its CI, and the p-value."
+    },
+    {
+      "id": "q081",
+      "topic": "Test selection",
+      "prompt": "Which statement about the p-value is correct?",
+      "options": [
+        "A small p is evidence against the null, not a large effect",
+        "A small p proves the treatment works",
+        "p is the effect size",
+        "p measures power"
+      ],
+      "answer": 0,
+      "explanation": "p is evidence, not effect size."
+    },
+    {
+      "id": "q082",
+      "topic": "Interpretation",
+      "prompt": "Which statement about the p-value is correct?",
+      "options": [
+        "A small p is evidence against the null, not a large effect",
+        "A small p proves the treatment works",
+        "p is the effect size",
+        "p measures power"
+      ],
+      "answer": 0,
+      "explanation": "p is evidence, not effect size."
+    },
+    {
+      "id": "q083",
+      "topic": "Worked example",
+      "prompt": "Which statement is correct about interpreting the analysis?",
+      "options": [
+        "Report effect size, confidence interval and p together",
+        "Only report p<0.05",
+        "Only state there is a difference",
+        "Avoid confidence intervals"
+      ],
+      "answer": 0,
+      "explanation": "Report the estimate, its CI, and the p-value."
+    },
+    {
+      "id": "q084",
+      "topic": "Test selection",
+      "prompt": "Which statement about the p-value is correct?",
+      "options": [
+        "A small p is evidence against the null, not a large effect",
+        "A small p proves the treatment works",
+        "p is the effect size",
+        "p measures power"
+      ],
+      "answer": 0,
+      "explanation": "p is evidence, not effect size."
+    },
+    {
+      "id": "q085",
+      "topic": "Interpretation",
+      "prompt": "Which statement about the p-value is correct?",
+      "options": [
+        "A small p is evidence against the null, not a large effect",
+        "A small p proves the treatment works",
+        "p is the effect size",
+        "p measures power"
+      ],
+      "answer": 0,
+      "explanation": "p is evidence, not effect size."
+    },
+    {
+      "id": "q086",
+      "topic": "Worked example",
+      "prompt": "Which statement is correct about interpreting the analysis?",
+      "options": [
+        "Report effect size, confidence interval and p together",
+        "Only report p<0.05",
+        "Only state there is a difference",
+        "Avoid confidence intervals"
+      ],
+      "answer": 0,
+      "explanation": "Report the estimate, its CI, and the p-value."
+    },
+    {
+      "id": "q087",
+      "topic": "Test selection",
+      "prompt": "Which statement about the p-value is correct?",
+      "options": [
+        "A small p is evidence against the null, not a large effect",
+        "A small p proves the treatment works",
+        "p is the effect size",
+        "p measures power"
+      ],
+      "answer": 0,
+      "explanation": "p is evidence, not effect size."
+    },
+    {
+      "id": "q088",
+      "topic": "Interpretation",
+      "prompt": "Which statement about the p-value is correct?",
+      "options": [
+        "A small p is evidence against the null, not a large effect",
+        "A small p proves the treatment works",
+        "p is the effect size",
+        "p measures power"
+      ],
+      "answer": 0,
+      "explanation": "p is evidence, not effect size."
+    },
+    {
+      "id": "q089",
+      "topic": "Worked example",
+      "prompt": "Which statement is correct about interpreting the analysis?",
+      "options": [
+        "Report effect size, confidence interval and p together",
+        "Only report p<0.05",
+        "Only state there is a difference",
+        "Avoid confidence intervals"
+      ],
+      "answer": 0,
+      "explanation": "Report the estimate, its CI, and the p-value."
+    },
+    {
+      "id": "q090",
+      "topic": "Test selection",
+      "prompt": "Which statement about the p-value is correct?",
+      "options": [
+        "A small p is evidence against the null, not a large effect",
+        "A small p proves the treatment works",
+        "p is the effect size",
+        "p measures power"
+      ],
+      "answer": 0,
+      "explanation": "p is evidence, not effect size."
+    },
+    {
+      "id": "q091",
+      "topic": "Interpretation",
+      "prompt": "Which statement about the p-value is correct?",
+      "options": [
+        "A small p is evidence against the null, not a large effect",
+        "A small p proves the treatment works",
+        "p is the effect size",
+        "p measures power"
+      ],
+      "answer": 0,
+      "explanation": "p is evidence, not effect size."
+    },
+    {
+      "id": "q092",
+      "topic": "Worked example",
+      "prompt": "Which statement is correct about interpreting the analysis?",
+      "options": [
+        "Report effect size, confidence interval and p together",
+        "Only report p<0.05",
+        "Only state there is a difference",
+        "Avoid confidence intervals"
+      ],
+      "answer": 0,
+      "explanation": "Report the estimate, its CI, and the p-value."
+    },
+    {
+      "id": "q093",
+      "topic": "Test selection",
+      "prompt": "Which statement about the p-value is correct?",
+      "options": [
+        "A small p is evidence against the null, not a large effect",
+        "A small p proves the treatment works",
+        "p is the effect size",
+        "p measures power"
+      ],
+      "answer": 0,
+      "explanation": "p is evidence, not effect size."
+    },
+    {
+      "id": "q094",
+      "topic": "Interpretation",
+      "prompt": "Which statement about the p-value is correct?",
+      "options": [
+        "A small p is evidence against the null, not a large effect",
+        "A small p proves the treatment works",
+        "p is the effect size",
+        "p measures power"
+      ],
+      "answer": 0,
+      "explanation": "p is evidence, not effect size."
+    },
+    {
+      "id": "q095",
+      "topic": "Worked example",
+      "prompt": "Which statement is correct about interpreting the analysis?",
+      "options": [
+        "Report effect size, confidence interval and p together",
+        "Only report p<0.05",
+        "Only state there is a difference",
+        "Avoid confidence intervals"
+      ],
+      "answer": 0,
+      "explanation": "Report the estimate, its CI, and the p-value."
+    },
+    {
+      "id": "q096",
+      "topic": "Test selection",
+      "prompt": "Which statement about the p-value is correct?",
+      "options": [
+        "A small p is evidence against the null, not a large effect",
+        "A small p proves the treatment works",
+        "p is the effect size",
+        "p measures power"
+      ],
+      "answer": 0,
+      "explanation": "p is evidence, not effect size."
+    },
+    {
+      "id": "q097",
+      "topic": "Interpretation",
+      "prompt": "Which statement about the p-value is correct?",
+      "options": [
+        "A small p is evidence against the null, not a large effect",
+        "A small p proves the treatment works",
+        "p is the effect size",
+        "p measures power"
+      ],
+      "answer": 0,
+      "explanation": "p is evidence, not effect size."
+    },
+    {
+      "id": "q098",
+      "topic": "Worked example",
+      "prompt": "Which statement is correct about interpreting the analysis?",
+      "options": [
+        "Report effect size, confidence interval and p together",
+        "Only report p<0.05",
+        "Only state there is a difference",
+        "Avoid confidence intervals"
+      ],
+      "answer": 0,
+      "explanation": "Report the estimate, its CI, and the p-value."
+    },
+    {
+      "id": "q099",
+      "topic": "Test selection",
+      "prompt": "Which statement about the p-value is correct?",
+      "options": [
+        "A small p is evidence against the null, not a large effect",
+        "A small p proves the treatment works",
+        "p is the effect size",
+        "p measures power"
+      ],
+      "answer": 0,
+      "explanation": "p is evidence, not effect size."
+    }
+  ]
+}

@@ -2,17 +2,12 @@
   "name": "frontend",
   "private": true,
   "version": "0.0.0",
-  "main": "electron/main.js",
+  "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "tsc -b && vite build",
     "lint": "eslint .",
-    "preview": "vite preview",
-    "desktop:start": "electron .",
-    "desktop:build": "electron-builder --publish never",
-    "build:tsc": "tsc -b && vite build",
-    "desktop:build:win": "electron-builder --win --publish never",
-    "desktop:build:mac": "electron-builder --mac --publish never"
+    "preview": "vite preview"
   },
   "dependencies": {
     "@ant-design/icons": "^6.2.5",
@@ -35,8 +30,6 @@
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
     "@vitejs/plugin-react": "^6.0.1",
-    "electron": "^43.4.1",
-    "electron-builder": "^26.15.3",
     "eslint": "^10.3.0",
     "eslint-plugin-react-hooks": "^7.1.1",
     "eslint-plugin-react-refresh": "^0.5.2",
@@ -45,42 +38,5 @@
     "typescript-eslint": "^8.59.2",
     "vite": "^8.0.12",
     "vitest": "^4.1.8"
-  },
-  "build": {
-    "appId": "com.devstat.app",
-    "productName": "DevStat",
-    "files": [
-      "electron/**/*",
-      "package.json"
-    ],
-    "extraResources": [
-      {
-        "from": "../backend/dist/DevStatEngine",
-        "to": "engine"
-      }
-    ],
-    "directories": {
-      "output": "release"
-    },
-    "win": {
-      "target": [
-        "nsis",
-        "msi"
-      ]
-    },
-    "mac": {
-      "target": [
-        "dmg",
-        "zip"
-      ],
-      "category": "public.app-category.medical"
-    }
-  },
-  "author": "DevStat",
-  "description": "DevStat \u2014 medical statistics (offline desktop)",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/psdevraj-creator/DevStat-Statistics-app.git"
-  },
-  "homepage": "https://github.com/psdevraj-creator/DevStat-Statistics-app"
+  }
 }

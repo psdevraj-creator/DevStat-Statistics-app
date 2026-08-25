@@ -11,7 +11,7 @@ import { AgGridReact } from 'ag-grid-react'
 import { AllCommunityModule } from 'ag-grid-community'
 import 'ag-grid-community/styles/ag-grid.css'
 import 'ag-grid-community/styles/ag-theme-alpine.css'
-import { datasetApi, api } from '../api/client'
+import { datasetApi, api, getMode } from '../api/client'
 import outputStore from '../stores/outputStore'
 import VariableView from '../components/VariableView'
 import { useKeyboardShortcuts, type ShortcutAction } from '../hooks/useKeyboardShortcuts'
@@ -170,6 +170,30 @@ const DataPage: React.FC = () => {
   useEffect(() => {
     loadData()
   }, [loadData])
+
+  // Re-load when a dataset is chosen from the right-hand pane (auto-load).
+  useEffect(() => {
+    const onData = () => loadData()
+    window.addEventListener('devstat:data-changed', onData)
+    return () => window.removeEventListener('devstat:data-changed', onData)
+  }, [loadData])
+
+  // Exam mode convenience: preload the bundled synthetic practice dataset when
+  // nothing is loaded yet (no upload headache, no credit consumed — loading a
+  // dataset is not an analysis).
+  useEffect(() => {
+    const loadPreload = async () => {
+      try {
+        const info = await datasetApi.info()
+        if (!info?.data && getMode() === 'exam') {
+          await datasetApi.sample()
+          loadData()
+        }
+      } catch { /* ignore */ }
+    }
+    loadPreload()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   // ── Keyboard Shortcuts ─────────────────────────────────────────────
 

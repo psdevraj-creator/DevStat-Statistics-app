@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>DevStat — Download</title>
+<meta name="description" content="Download DevStat, a medical statistics application for statistical analysis and visualisation of clinical data. Free for Windows and macOS.">
+<style>
+  :root{--primary:#005eb8;--primary-dark:#003d8b;--accent:#7cc4ff;--bg:#0b1626;--bg2:#0f2337;--card:#14253a;--border:#24425f;--text:#eaf2fb;--muted:#9fb6cd;--ok:#2ecc71;--gold:#f5a623}
+  *{box-sizing:border-box}
+  body{margin:0;font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:linear-gradient(160deg,#0b1626 0%,#0f2337 60%,#0b1626 100%);color:var(--text);line-height:1.65}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 24px 80px}
+  a{color:var(--accent);text-decoration:none}
+  a:hover{text-decoration:underline}
+  .top{cursor:pointer}
+  .hero{text-align:center;padding:64px 16px 40px}
+  .logo{width:96px;height:96px;border-radius:24px;background:linear-gradient(135deg,var(--primary-dark),var(--primary));display:inline-flex;align-items:center;justify-content:center;font-size:44px;font-weight:800;color:#fff;box-shadow:0 10px 40px rgba(0,94,184,.4)}
+  h1{font-size:44px;margin:22px 0 6px}
+  .tagline{font-size:19px;color:var(--muted);max-width:720px;margin:0 auto 26px}
+  .ver{display:inline-block;background:rgba(0,94,184,.25);border:1px solid var(--primary);color:var(--accent);border-radius:30px;padding:4px 16px;font-size:14px;font-weight:600}
+  .plats{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;margin:34px 0 8px}
+  .btn{display:flex;align-items:center;gap:14px;background:linear-gradient(135deg,var(--primary),var(--primary-dark));color:#fff;border:none;border-radius:16px;padding:18px 30px;font-size:17px;font-weight:700;cursor:pointer;box-shadow:0 10px 30px rgba(0,94,184,.4);text-align:left;text-decoration:none!important;transition:transform .15s}
+  .btn:hover{transform:translateY(-2px)}
+  .btn svg{width:34px;height:34px}
+  .btn small{display:block;font-size:12px;font-weight:400;opacity:.85}
+  .btn.mac{background:linear-gradient(135deg,#3a3a3a,#1f1f1f);box-shadow:0 10px 30px rgba(0,0,0,.5)}
+  .hp-note{text-align:center;color:var(--muted);font-size:14px}
+  .section{margin-top:56px}
+  h2{font-size:28px;border-left:5px solid var(--primary);padding-left:16px;margin:0 0 22px;color:#fff}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:18px}
+  .card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:22px}
+  .card h3{margin:0 0 10px;font-size:19px;color:#fff}
+  .card p{margin:0;color:var(--muted)}
+  .card .num{font-size:30px;font-weight:800;color:var(--accent);display:block;margin-bottom:6px}
+  .step{display:grid;grid-template-columns:56px 1fr;gap:18px;align-items:start;background:var(--card);border:1px solid var(--border);border-radius:16px;padding:20px;margin-bottom:14px}
+  .step .n{width:44px;height:44px;border-radius:12px;background:linear-gradient(135deg,var(--primary),var(--primary-dark));display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:800}
+  .step h4{margin:0 0 6px;color:#fff;font-size:17px}
+  .step p{margin:0;color:var(--muted)}
+  table{border-collapse:collapse;width:100%;margin:14px 0;font-size:15px}
+  th,td{border:1px solid var(--border);padding:10px 14px;text-align:left}
+  th{background:rgba(0,94,184,.18);color:#fff}
+  .shots{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;margin-top:10px}
+  .shots figure{margin:0}
+  .shots img{width:100%;border:1px solid var(--border);border-radius:12px}
+  .shots figcaption{font-size:13px;color:var(--muted);text-align:center;margin-top:6px}
+  .dl-manual{display:inline-flex;align-items:center;gap:10px;background:rgba(46,204,113,.12);border:1px solid var(--ok);color:var(--ok);border-radius:12px;padding:14px 24px;font-weight:700;margin:6px 8px 6px 0}
+  .free{background:rgba(245,166,35,.12);border:1px solid var(--gold);border-radius:16px;padding:26px;margin-top:60px;text-align:center;color:#ffe0a6}
+  .free h2{border:none;padding:0;margin:0 0 10px;color:#ffd27a;font-size:24px}
+  .footer{margin-top:50px;text-align:center;color:var(--muted);font-size:13px;border-top:1px solid var(--border);padding-top:24px}
+  .muted{color:var(--muted)}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<div class="hero">
+  <div class="logo">D</div>
+  <h1>DevStat</h1>
+  <p class="tagline">Medical Statistics Software — statistical analysis and visualisation of clinical data.
+  A modern, easy-to-use alternative to SPSS.</p>
+  <span class="ver">Version 1.2 · Windows &amp; macOS</span>
+
+  <div class="plats">
+    <a class="btn" href="https://github.com/psdevraj-creator/DevStat-Statistics-app/releases/latest" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 9v12"/></svg>
+      <span>Windows · .msi<small>Download for Windows 10 / 11</small></span>
+    </a>
+    <a class="btn mac" href="https://github.com/psdevraj-creator/DevStat-Statistics-app/releases/latest" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M2 12h20"/><circle cx="12" cy="12" r="10"/></svg>
+      <span>macOS · .dmg<small>Download for Apple Silicon / Intel</small></span>
+    </a>
+  </div>
+  <p class="hp-note">All installers are hosted on the GitHub Releases page.</p>
+</div>
+
+<div class="section">
+  <h2>Why DevStat</h2>
+  <div class="grid">
+    <div class="card"><span class="num">27+</span><h3>Chart types</h3><p>Histograms, boxplots, survival curves, ROC, forest plots and more — all interactive.</p></div>
+    <div class="card"><span class="num">20+</span><h3>Statistical tests</h3><p>t-tests, ANOVA, regression, survival, non-parametric, factor, cluster and power analysis.</p></div>
+    <div class="card"><span class="num">100%</span><h3>Offline &amp; private</h3><p>All analysis runs locally on your machine. Your data never leaves your computer.</p></div>
+    <div class="card"><span class="num">0</span><h3>Dependencies</h3><p>Everything is bundled — install once and run. No Python, R, or extra setup.</p></div>
+  </div>
+</div>
+
+<div class="section">
+  <h2>How to download &amp; install</h2>
+
+  <div class="step"><div class="n">1</div><div><h4>Windows (.msi)</h4><p>Click the <strong>Windows</strong> button above, get the <code>.msi</code> installer, and double-click it. Follow the single-screen setup wizard.</p></div></div>
+  <div class="step"><div class="n">2</div><div><h4>macOS (.dmg)</h4><p>Click the <strong>macOS</strong> button above, open the <code>.dmg</code>, and drag <strong>DevStat</strong> into your Applications folder.</p></div></div>
+  <div class="step"><div class="n">3</div><div><h4>First launch</h4><p>Open DevStat from your Start menu or Applications. A desktop-style window opens — click <strong>Data → Upload</strong> and choose your dataset.</p></div></div>
+  <div class="step"><div class="n">4</div><div><h4>Updates</h4><p>DevStat checks for new versions on launch. When one is available, a prompt appears offering you to install it.</p></div></div>
+
+  <h3 class="muted" style="margin-top:28px">System requirements</h3>
+  <table>
+    <tr><th>Platform</th><th>Windows</th><th>macOS</th></tr>
+    <tr><td>OS</td><td>Windows 10 or 11</td><td>macOS 12 or newer</td></tr>
+    <tr><td>Memory</td><td>4 GB RAM (8 GB recommended)</td><td>4 GB RAM (8 GB recommended)</td></tr>
+    <tr><td>Disk</td><td>500 MB free</td><td>500 MB free</td></tr>
+    <tr><td>Internet</td><td>Not required (offline)</td><td>Not required (offline)</td></tr>
+  </table>
+</div>
+
+<div class="section">
+  <h2>User manual</h2>
+  <p class="muted">A complete guide with real worked examples, covering every feature.</p>
+  <div>
+    <a class="dl-manual" href="DevStat_Manual.pdf" download>Download Manual (.pdf)</a>
+    <a class="dl-manual" style="background:rgba(124,196,255,.1);border-color:var(--accent);color:var(--accent)" href="DevStat_Manual.html">Read Manual (online)</a>
+  </div>
+</div>
+
+<div class="section">
+  <h2>What it looks like</h2>
+  <div class="shots">
+    <figure><img src="screenshots/01_histogram.png" alt="Histogram"><figcaption>Histogram with normal curve</figcaption></figure>
+    <figure><img src="screenshots/03_scatter.png" alt="Scatter plot"><figcaption>Scatter with regression line</figcaption></figure>
+    <figure><img src="screenshots/08_km_curve.png" alt="Kaplan-Meier"><figcaption>Kaplan-Meier survival</figcaption></figure>
+    <figure><img src="screenshots/09_correlation_heatmap.png" alt="Correlation heatmap"><figcaption>Correlation heatmap</figcaption></figure>
+  </div>
+</div>
+
+<div class="free">
+  <h2>Free — for now</h2>
+  <p style="margin:0 0 6px">DevStat is currently provided <strong>completely free of charge</strong>, to be used and shared freely.</p>
+  <p style="margin:0">This free availability will continue for as long as resources allow.</p>
+</div>
+
+<div class="footer">
+  Built by Dr Dev Srinivasan · <a href="https://github.com/psdevraj-creator/DevStat-Statistics-app" target="_blank" rel="noopener">View source on GitHub</a><br>
+  DevStat is a statistical and visualisation tool for research and analysis. It does not provide medical advice.
+</div>
+
+</div>
+</body>
+</html>

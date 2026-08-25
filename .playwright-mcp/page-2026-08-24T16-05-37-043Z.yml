@@ -1,0 +1,81 @@
+- generic [ref=f61e3]:
+  - banner [ref=f61e4]:
+    - generic [ref=f61e5] [cursor=pointer]:
+      - img "radar-chart" [ref=f61e7]
+      - generic [ref=f61e11]:
+        - generic [ref=f61e12]: DevStat
+        - generic [ref=f61e13]: Medical Statistics
+    - generic [ref=f61e14]:
+      - img "save" [ref=f61e16] [cursor=pointer]
+      - img "folder-open" [ref=f61e20] [cursor=pointer]
+    - generic [ref=f61e23]:
+      - img "undo" [ref=f61e25]
+      - img "redo" [ref=f61e29]
+    - generic [ref=f61e32]:
+      - button "login Sign in" [ref=f61e34] [cursor=pointer]:
+        - img "login" [ref=f61e36]
+        - generic [ref=f61e39]: Sign in
+      - img "question-circle" [ref=f61e41] [cursor=pointer]
+      - img "question-circle" [ref=f61e46] [cursor=pointer]
+  - menu [ref=f61e51]:
+    - menuitem [ref=f61e52] [cursor=pointer]:
+      - img "table" [ref=f61e53]
+      - text: Data
+    - menuitem [ref=f61e56] [cursor=pointer]:
+      - img "fund" [ref=f61e57]
+      - text: Analyze
+    - menuitem [ref=f61e60] [cursor=pointer]:
+      - img "apartment" [ref=f61e61]
+      - text: Survival
+    - menuitem [ref=f61e64] [cursor=pointer]:
+      - img "bar-chart" [ref=f61e65]
+      - text: Graphs
+    - menuitem [ref=f61e68] [cursor=pointer]:
+      - img "question-circle" [ref=f61e69]
+      - text: Wizard
+    - menuitem [ref=f61e73] [cursor=pointer]:
+      - img "file-text" [ref=f61e74]
+      - text: Output
+    - menuitem [disabled]
+  - alert [ref=f61e77]:
+    - img "exclamation-circle" [ref=f61e78]
+    - generic [ref=f61e81]:
+      - generic [ref=f61e82]: Online demo — exam practice only
+      - generic [ref=f61e83]: This online version runs on a shared public server. Use it for exam practice with the synthetic practice data only. Do NOT upload real, identifiable or confidential patient data — for real (anonymised) analysis, use the offline desktop app.
+  - main [ref=f61e84]:
+    - generic [ref=f61e177]:
+      - generic [ref=f61e178]:
+        - generic [ref=f61e179]: 📊
+        - heading "DevStat" [level=3] [ref=f61e180]
+        - text: Sign in to your account
+        - button "New here? Create an account" [ref=f61e182] [cursor=pointer]
+      - separator [ref=f61e184]
+      - generic [ref=f61e185]:
+        - tablist [ref=f61e186]:
+          - generic [ref=f61e188]:
+            - tab [selected] [ref=f61e190] [cursor=pointer]:
+              - generic [ref=f61e191]:
+                - img "mail" [ref=f61e192]
+                - text: Email
+            - tab [ref=f61e196] [cursor=pointer]:
+              - generic [ref=f61e197]:
+                - img "google" [ref=f61e198]
+                - text: Google
+        - tabpanel "mail Email" [ref=f61e203]:
+          - generic [ref=f61e204]:
+            - generic [ref=f61e206]:
+              - generic "Email" [ref=f61e208]: "* Email"
+              - generic [ref=f61e212]:
+                - img "user" [ref=f61e214]
+                - textbox "* Email" [ref=f61e217]:
+                  - /placeholder: you@example.com
+            - generic [ref=f61e219]:
+              - generic "Password" [ref=f61e221]: "* Password"
+              - generic [ref=f61e225]:
+                - img "lock" [ref=f61e227]
+                - textbox "* Password" [ref=f61e230]:
+                  - /placeholder: ••••••••
+                - img "eye-invisible" [ref=f61e232] [cursor=pointer]
+            - button "lock Sign in" [ref=f61e236] [cursor=pointer]:
+              - img "lock" [ref=f61e238]
+              - generic [ref=f61e241]: Sign in

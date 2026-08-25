@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Survival Analysis — Medical Statistics | FRCR 1</title>
+  <link rel="stylesheet" href="css/medstat.css">
+</head>
+<body>
+  <nav class="navbar">
+    <div class="navbar-logo">
+      <span class="logo-main">FRCR 1</span>
+      <span class="logo-sub">· <a href="../FRCR1.html">Hub</a> · <a href="index.html">Medical Statistics</a> · Survival Analysis</span>
+    </div>
+    <div class="navbar-badge">📊 Chapter 9</div>
+  </nav>
+
+  <div class="breadcrumb">
+    <a href="../FRCR1.html">Home</a><span class="sep">›</span>
+    <a href="index.html">Medical Statistics</a><span class="sep">›</span>
+    <span>Survival Analysis</span>
+  </div>
+
+  <section class="hero" style="padding:32px 24px 20px;">
+    <div class="hero-inner">
+      <h1 style="font-size:1.8rem;">Survival Analysis</h1>
+      <p>Kaplan-Meier curves, log-rank test, Cox proportional hazards model, hazard ratios, censoring, competing risks, and assumptions — GCSE to FRCR level.</p>
+    </div>
+  </section>
+
+  <div class="content">
+
+    <!-- ══════ TABS ══════ -->
+    <div class="tab-container">
+      <button class="tab active" data-tab="gcse">GCSE Level</button>
+      <button class="tab" data-tab="frcr">FRCR Level</button>
+      <button class="tab" data-tab="keyfacts">Key Facts</button>
+      <button class="tab" data-tab="clinical">Clinical Relevance</button>
+    </div>
+
+    <div class="tab-contents">
+
+      <!-- GCSE TAB -->
+      <div class="tab-content active" id="tab-gcse">
+        <div class="info-card">
+          <h3>Survival Data — The Basics</h3>
+          <p>Survival analysis deals with "time-to-event" data — how long until a patient dies, has a recurrence, or some other event. The key feature is <strong>censoring</strong>: some patients haven't had the event by the end of the study, or they drop out. We still use their information up to the point they left the study.</p>
+          <p><strong>Censoring</strong>: A patient is "censored" if we don't know their exact event time. Common reasons: (1) Patient is still alive at the end of follow-up, (2) Patient is lost to follow-up, (3) Patient dies from a different cause. Censored patients are represented as tick marks on Kaplan-Meier curves.</p>
+          <p><strong>Kaplan-Meier curve</strong>: A step-function graph showing the proportion of patients surviving over time. It accounts for censoring by adjusting the denominator at each event time.</p>
+          <p><strong>Median survival</strong>: The time at which 50% of patients have experienced the event (or are censored before that point). This is the most commonly reported survival summary in oncology.</p>
+
+          <!-- Kaplan-Meier curve diagram -->
+          <div class="figure-container">
+            <svg viewBox="0 0 520 285" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:520px;display:block;margin:0 auto;">
+              <defs><marker id="km-arr" markerWidth="7" markerHeight="7" refX="3.5" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 Z" fill="#475569"/></marker></defs>
+              <!-- Title -->
+              <text x="230" y="14" text-anchor="middle" font-size="11" font-weight="700" fill="#1e293b">Kaplan-Meier Survival Curves</text>
+
+              <!-- Axes -->
+              <!-- x: 50 to 410 → 0 to 36 months (10px/month), y: 20 to 210 → 1.0 to 0 (190px) -->
+              <line x1="50" y1="210" x2="415" y2="210" stroke="#475569" stroke-width="1.5" marker-end="url(#km-arr)"/>
+              <line x1="50" y1="210" x2="50" y2="18" stroke="#475569" stroke-width="1.5" marker-end="url(#km-arr)"/>
+              <!-- x-axis ticks -->
+              <line x1="50" y1="210" x2="50" y2="214" stroke="#94a3b8" stroke-width="1"/>
+              <text x="50" y="222" text-anchor="middle" font-size="8" fill="#64748b">0</text>
+              <line x1="170" y1="210" x2="170" y2="214" stroke="#94a3b8" stroke-width="1"/>
+              <text x="170" y="222" text-anchor="middle" font-size="8" fill="#64748b">12</text>
+              <line x1="290" y1="210" x2="290" y2="214" stroke="#94a3b8" stroke-width="1"/>
+              <text x="290" y="222" text-anchor="middle" font-size="8" fill="#64748b">24</text>
+              <line x1="410" y1="210" x2="410" y2="214" stroke="#94a3b8" stroke-width="1"/>
+              <text x="410" y="222" text-anchor="middle" font-size="8" fill="#64748b">36</text>
+              <text x="230" y="234" text-anchor="middle" font-size="9" fill="#64748b">Time (months)</text>
+              <!-- y-axis ticks -->
+              <line x1="46" y1="210" x2="50" y2="210" stroke="#94a3b8" stroke-width="1"/>
+              <text x="43" y="213" text-anchor="end" font-size="8" fill="#64748b">0</text>
+              <line x1="46" y1="115" x2="50" y2="115" stroke="#94a3b8" stroke-width="1"/>
+              <text x="43" y="118" text-anchor="end" font-size="8" fill="#64748b">0.5</text>
+              <line x1="46" y1="20" x2="50" y2="20" stroke="#94a3b8" stroke-width="1"/>
+              <text x="43" y="23" text-anchor="end" font-size="8" fill="#64748b">1.0</text>
+              <text x="16" y="115" text-anchor="middle" font-size="9" fill="#64748b" transform="rotate(-90,16,115)">Survival probability S(t)</text>
+
+              <!-- 50% horizontal dashed line -->
+              <line x1="50" y1="115" x2="410" y2="115" stroke="#94a3b8" stroke-width="1" stroke-dasharray="4,3"/>
+              <text x="415" y="118" font-size="7.5" fill="#64748b">50%</text>
+
+              <!-- Treatment curve (blue): step function, reaches ~0.52 at 36 months -->
+              <!-- Steps at months 3,6,9,12,15,18,21,24 → x = 50+month*10, y = 20 + (1-surv)*190 -->
+              <!-- S after each step: 0.95, 0.88, 0.80, 0.72, 0.65, 0.60, 0.56, 0.52 -->
+              <!-- y: 0.95→29, 0.88→43, 0.80→58, 0.72→74, 0.65→89, 0.60→96, 0.56→103, 0.52→111 -->
+              <path d="M50,20 H80 V29 H110 V43 H140 V58 H170 V74 H200 V89 H230 V96 H260 V103 H290 V111 H410"
+                    fill="none" stroke="#3b82f6" stroke-width="2.5"/>
+              <!-- Treatment censoring ticks -->
+              <line x1="95" y1="24" x2="95" y2="18" stroke="#3b82f6" stroke-width="1.5"/>
+              <line x1="125" y1="36" x2="125" y2="30" stroke="#3b82f6" stroke-width="1.5"/>
+              <line x1="185" y1="66" x2="185" y2="60" stroke="#3b82f6" stroke-width="1.5"/>
+              <line x1="245" y1="92" x2="245" y2="86" stroke="#3b82f6" stroke-width="1.5"/>
+              <line x1="320" y1="107" x2="320" y2="101" stroke="#3b82f6" stroke-width="1.5"/>
+
+              <!-- Control curve (red): steeper decline, ~0.30 at 36 months -->
+              <!-- Steps at months 3,5,8,11,14,17,20,22 -->
+              <!-- S: 0.92, 0.83, 0.73, 0.62, 0.52, 0.44, 0.38, 0.33 -->
+              <!-- y: 0.92→35, 0.83→52, 0.73→71, 0.62→92, 0.52→111, 0.44→126, 0.38→138, 0.33→147 -->
+              <path d="M50,20 H80 V35 H100 V52 H130 V71 H160 V92 H190 V111 H220 V126 H250 V138 H270 V147 H410"
+                    fill="none" stroke="#ef4444" stroke-width="2.5"/>
+              <!-- Control censoring ticks -->
+              <line x1="90" y1="28" x2="90" y2="22" stroke="#ef4444" stroke-width="1.5"/>
+              <line x1="145" y1="62" x2="145" y2="56" stroke="#ef4444" stroke-width="1.5"/>
+              <line x1="205" y1="103" x2="205" y2="97" stroke="#ef4444" stroke-width="1.5"/>
+              <line x1="340" y1="143" x2="340" y2="137" stroke="#ef4444" stroke-width="1.5"/>
+
+              <!-- Median survival annotations -->
+              <!-- Treatment: curve crosses 50% at ~month 29 → x=340 -->
+              <line x1="50" y1="115" x2="340" y2="115" stroke="#3b82f6" stroke-width="1" stroke-dasharray="3,2" opacity="0.6"/>
+              <line x1="340" y1="115" x2="340" y2="210" stroke="#3b82f6" stroke-width="1" stroke-dasharray="3,2" opacity="0.6"/>
+              <text x="340" y="207" text-anchor="middle" font-size="7.5" fill="#1d4ed8">~29m</text>
+
+              <!-- Control: crosses 50% at ~month 14 → x=190 -->
+              <line x1="50" y1="115" x2="190" y2="115" stroke="#ef4444" stroke-width="1" stroke-dasharray="3,2" opacity="0.6"/>
+              <line x1="190" y1="115" x2="190" y2="210" stroke="#ef4444" stroke-width="1" stroke-dasharray="3,2" opacity="0.6"/>
+              <text x="190" y="207" text-anchor="middle" font-size="7.5" fill="#b91c1c">~14m</text>
+
+              <!-- Legend -->
+              <rect x="52" y="158" width="130" height="46" rx="4" fill="white" stroke="#e2e8f0" stroke-width="1"/>
+              <line x1="60" y1="170" x2="85" y2="170" stroke="#3b82f6" stroke-width="2"/>
+              <text x="90" y="173" font-size="8.5" fill="#1d4ed8">Treatment (n=50)</text>
+              <line x1="60" y1="185" x2="85" y2="185" stroke="#ef4444" stroke-width="2"/>
+              <text x="90" y="188" font-size="8.5" fill="#b91c1c">Control (n=50)</text>
+              <text x="60" y="199" font-size="8" fill="#64748b">| = censored</text>
+
+              <!-- Log-rank p annotation -->
+              <rect x="300" y="158" width="110" height="22" rx="4" fill="#f0fdf4" stroke="#10b981" stroke-width="1"/>
+              <text x="355" y="172" text-anchor="middle" font-size="9" font-weight="700" fill="#065f46">Log-rank p = 0.01</text>
+
+              <!-- Numbers at risk table -->
+              <text x="50" y="246" font-size="7.5" font-weight="700" fill="#475569">Numbers at risk:</text>
+              <text x="50" y="257" font-size="7.5" fill="#1d4ed8">Treatment:</text>
+              <text x="170" y="257" text-anchor="middle" font-size="7.5" fill="#1d4ed8">50</text>
+              <text x="290" y="257" text-anchor="middle" font-size="7.5" fill="#1d4ed8">32</text>
+              <text x="410" y="257" text-anchor="middle" font-size="7.5" fill="#1d4ed8">12</text>
+              <text x="50" y="268" font-size="7.5" fill="#b91c1c">Control:</text>
+              <text x="170" y="268" text-anchor="middle" font-size="7.5" fill="#b91c1c">50</text>
+              <text x="290" y="268" text-anchor="middle" font-size="7.5" fill="#b91c1c">20</text>
+              <text x="410" y="268" text-anchor="middle" font-size="7.5" fill="#b91c1c">6</text>
+              <!-- Time column headers for NaR -->
+              <text x="170" y="246" text-anchor="middle" font-size="7" fill="#64748b">t=12</text>
+              <text x="290" y="246" text-anchor="middle" font-size="7" fill="#64748b">t=24</text>
+              <text x="410" y="246" text-anchor="middle" font-size="7" fill="#64748b">t=36</text>
+            </svg>
+            <p class="figure-caption"><strong>Figure 1:</strong> Kaplan-Meier survival curves comparing treatment vs control groups. Each step down represents one or more events. Tick marks (|) are censored patients. Median survival is read at the 50% line. Numbers at risk decrease as patients have events or are censored.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- FRCR TAB -->
+      <div class="tab-content" id="tab-frcr">
+        <div class="info-card">
+          <h3>Kaplan-Meier Estimator — Full Detail</h3>
+          <p><strong>Product-limit estimator</strong> (Kaplan-Meier): Ŝ(t) = Π (nᵢ − dᵢ) / nᵢ, where the product is over all event times ≤ t, nᵢ = number at risk just before time tᵢ, and dᵢ = number of events at time tᵢ.</p>
+          <p><strong>Properties</strong>:</p>
+          <ul>
+            <li>Only defined at event times — between events, survival is constant (step function).</li>
+            <li>Each step down represents an event at that time.</li>
+            <li>Censored patients contribute to the "number at risk" until they are censored, after which they are removed from the denominator.</li>
+            <li>The curve becomes less reliable at later times (fewer patients at risk).</li>
+          </ul>
+          <p><strong>Confidence intervals around KM estimates</strong>: Greenwood's formula calculates SE(Ŝ(t)), used to construct CIs. CIs widen over time as fewer patients remain at risk.</p>
+          <p><strong>Median survival from KM curve</strong>: The time Ŝ(t) = 0.50. If the curve never drops below 0.50, median survival cannot be calculated — report survival at 1, 2, or 5 years instead.</p>
+          <p><strong>Survival at specific time points</strong>: Often reported as "1-year survival," "5-year survival," etc. These are vertical slices through the KM curve at specific times.</p>
+        </div>
+
+        <div class="info-card">
+          <h3>Log-Rank Test</h3>
+          <p><strong>Use</strong>: Compares survival distributions between two (or more) groups. Tests H₀: the survival curves are the same across groups.</p>
+          <p><strong>How it works</strong>: At each event time, calculates expected number of events in each group assuming H₀ (proportional to number at risk). Sums observed − expected across all times. χ²-like statistic with (k−1) df.</p>
+          <p><strong>Assumptions</strong>:</p>
+          <ol>
+            <li>Survival curves are comparable (non-crossing) — the ratio of hazards is constant over time (proportional hazards).</li>
+            <li>Censoring is independent of the event (non-informative censoring).</li>
+            <li>Groups are comparable at baseline (randomisation helps ensure this).</li>
+          </ol>
+          <p><strong>Limitation</strong>: The log-rank test only tells you whether the curves differ overall — it does not estimate the magnitude of the difference. For that, you need Cox regression (hazard ratio).</p>
+          <p><strong>Weighted log-rank tests</strong>: The standard log-rank test is most powerful when the proportional hazards assumption holds. Alternatives (Peto-Peto, Gehan-Wilcoxon) give more weight to early events and may be more powerful when hazards are not proportional.</p>
+          <div class="warning-box">
+            <strong>⚠️ Exam Trap: Log-Rank Assumptions</strong>
+            <div>The log-rank test assumes proportional hazards (the ratio of event rates between groups is constant over time). If survival curves cross, the log-rank test is not appropriate — use alternative tests or time-dependent covariates in Cox regression.</div>
+          </div>
+        </div>
+
+        <div class="info-card">
+          <h3>Cox Proportional Hazards Model</h3>
+          <p><strong>Semi-parametric model</strong>: h(t|x) = h₀(t) × exp(β₁x₁ + β₂x₂ + ... + βₖxₖ).</p>
+          <p>h(t|x) = hazard at time t for a patient with covariates x. h₀(t) = baseline hazard (unspecified — not estimated). exp(βᵢ) = <strong>Hazard Ratio (HR)</strong> for predictor xᵢ.</p>
+          <p><strong>Hazard Ratio interpretation</strong>:</p>
+          <ul>
+            <li>HR = 1: no effect on hazard.</li>
+            <li>HR > 1: increased hazard (worse survival).</li>
+            <li>HR < 1: decreased hazard (better survival).</li>
+          </ul>
+          <p><strong>Example</strong>: HR = 0.65 for treatment (vs control) means the treatment reduces the hazard of death by 35% at any given time, assuming proportional hazards.</p>
+          <p><strong>Why semi-parametric?</strong> The baseline hazard h₀(t) is left unspecified — the model makes no assumptions about its shape. Only the regression coefficients (β) are estimated parametrically. This is the key advantage of Cox regression — it is robust to the shape of the survival curve.</p>
+          <p><strong>Partial likelihood estimation</strong>: Cox models use a "partial likelihood" that considers only the order of events, not the exact times. This is mathematically elegant and computationally efficient.</p>
+        </div>
+
+        <div class="info-card">
+          <h3>Proportional Hazards Assumption — Checking & Violations</h3>
+          <p><strong>Checking the assumption</strong>:</p>
+          <ul>
+            <li><strong>Log-log survival plot</strong>: Plot log(−log(Ŝ(t))) vs log(t) for each group. Parallel lines indicate proportional hazards. Crossing lines indicate violation.</li>
+            <li><strong>Schoenfeld residuals</strong>: Test correlation between residuals and time. A significant test (p < 0.05) indicates non-proportionality.</li>
+            <li><strong>Time-dependent covariates</strong>: Include an interaction term between the predictor and time. If significant, the hazard ratio changes over time — proportional hazards assumption is violated.</li>
+          </ul>
+          <p><strong>What to do if violated</strong>:</p>
+          <ul>
+            <li><strong>Stratified Cox model</strong>: Stratify by the offending variable (allow different baseline hazards for different levels of the variable) while estimating other coefficients.</li>
+            <li><strong>Time-dependent covariates</strong>: Include a time-by-predictor interaction to model time-varying HR.</li>
+            <li><strong>Parametric survival models</strong>: Weibull, log-normal, log-logistic — these assume specific hazard shapes but can handle non-proportional hazards.</li>
+            <li><strong>Landmark analysis</strong>: Fix a time point and analyse survival from that point forward.</li>
+          </ul>
+        </div>
+
+        <div class="info-card">
+          <h3>Censoring — Types & Assumptions</h3>
+          <p><strong>Right censoring</strong> (most common): Patient is event-free at last follow-up. Common reasons: study ends, patient withdraws, patient dies of other cause.</p>
+          <p><strong>Left censoring</strong>: The event happened before the study started (e.g., a test that was positive "sometime in the past"). Less common.</p>
+          <p><strong>Interval censoring</strong>: The event occurred between two observation times (e.g., between two clinic visits). Common in oncology (tumour progression detected at imaging visits).</p>
+          <p><strong>Non-informative censoring assumption</strong>: Censored patients should have the same future risk of the event as patients who remain in the study (conditional on covariates). This is violated if patients drop out because they are too sick (informative censoring). For example, if very ill patients drop out and are censored, the remaining patients appear to have better survival than they truly do.</p>
+          <p><strong>Competing risks</strong>: When patients can experience one of several mutually exclusive events (e.g., cancer death vs cardiovascular death). Standard KM analysis treats competing events as censoring — this can bias estimates. Use <strong>Cumulative Incidence Function (CIF)</strong> with Gray's test instead of KM/log-rank. The Fine-Gray model is a regression model for competing risks data.</p>
+
+          <!-- Censoring types swimmer plot -->
+          <div class="figure-container">
+            <svg viewBox="0 0 520 175" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:520px;display:block;margin:0 auto;">
+              <defs><marker id="cen-arr" markerWidth="7" markerHeight="7" refX="3.5" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 Z" fill="#475569"/></marker></defs>
+              <!-- Title -->
+              <text x="260" y="13" text-anchor="middle" font-size="11" font-weight="700" fill="#1e293b">Types of Censoring — Timeline Illustration</text>
+
+              <!-- x-axis: months 0 to 24, from x=80 to x=430, 14.58px/month -->
+              <line x1="80" y1="155" x2="435" y2="155" stroke="#475569" stroke-width="1.5" marker-end="url(#cen-arr)"/>
+              <text x="80" y="165" text-anchor="middle" font-size="7.5" fill="#64748b">0</text>
+              <line x1="80" y1="153" x2="80" y2="157" stroke="#94a3b8" stroke-width="1"/>
+              <text x="226" y="165" text-anchor="middle" font-size="7.5" fill="#64748b">12</text>
+              <line x1="226" y1="153" x2="226" y2="157" stroke="#94a3b8" stroke-width="1"/>
+              <text x="372" y="165" text-anchor="middle" font-size="7.5" fill="#64748b">24</text>
+              <line x1="372" y1="153" x2="372" y2="157" stroke="#94a3b8" stroke-width="1"/>
+              <text x="260" y="175" text-anchor="middle" font-size="9" fill="#64748b">Study time (months)</text>
+
+              <!-- Patient label column -->
+              <text x="72" y="28" text-anchor="end" font-size="7.5" fill="#475569">Pt 1</text>
+              <text x="72" y="48" text-anchor="end" font-size="7.5" fill="#475569">Pt 2</text>
+              <text x="72" y="68" text-anchor="end" font-size="7.5" fill="#475569">Pt 3</text>
+              <text x="72" y="88" text-anchor="end" font-size="7.5" fill="#475569">Pt 4</text>
+              <text x="72" y="108" text-anchor="end" font-size="7.5" fill="#475569">Pt 5</text>
+              <text x="72" y="128" text-anchor="end" font-size="7.5" fill="#475569">Pt 6</text>
+
+              <!-- x = 80 + months * (372-80)/24 = 80 + months*12.17 -->
+              <!-- Pt 1: event at month 18 → x = 80+18*12.17 = 299 -->
+              <line x1="80" y1="25" x2="299" y2="25" stroke="#3b82f6" stroke-width="3"/>
+              <circle cx="299" cy="25" r="5" fill="#3b82f6"/>
+              <text x="306" y="28" font-size="7.5" fill="#1d4ed8">Event (m18)</text>
+
+              <!-- Pt 2: right-censored at month 24 (end of study) → x=372 -->
+              <line x1="80" y1="45" x2="372" y2="45" stroke="#f59e0b" stroke-width="3"/>
+              <line x1="372" y1="40" x2="372" y2="50" stroke="#f59e0b" stroke-width="2.5"/>
+              <text x="378" y="48" font-size="7.5" fill="#b45309">End of study (censored)</text>
+
+              <!-- Pt 3: right-censored (lost) at month 12 → x=226 -->
+              <line x1="80" y1="65" x2="226" y2="65" stroke="#f59e0b" stroke-width="3"/>
+              <line x1="226" y1="60" x2="226" y2="70" stroke="#f59e0b" stroke-width="2.5"/>
+              <text x="232" y="68" font-size="7.5" fill="#b45309">Lost to follow-up (censored)</text>
+
+              <!-- Pt 4: event at month 8 → x=80+8*12.17=177 -->
+              <line x1="80" y1="85" x2="177" y2="85" stroke="#3b82f6" stroke-width="3"/>
+              <circle cx="177" cy="85" r="5" fill="#3b82f6"/>
+              <text x="184" y="88" font-size="7.5" fill="#1d4ed8">Event (m8)</text>
+
+              <!-- Pt 5: right-censored (withdrew) at month 15 → x=80+15*12.17=263 -->
+              <line x1="80" y1="105" x2="263" y2="105" stroke="#f59e0b" stroke-width="3"/>
+              <line x1="263" y1="100" x2="263" y2="110" stroke="#f59e0b" stroke-width="2.5"/>
+              <text x="269" y="108" font-size="7.5" fill="#b45309">Withdrew (censored)</text>
+
+              <!-- Pt 6: event at month 20 → x=80+20*12.17=323 -->
+              <line x1="80" y1="125" x2="323" y2="125" stroke="#3b82f6" stroke-width="3"/>
+              <circle cx="323" cy="125" r="5" fill="#3b82f6"/>
+              <text x="330" y="128" font-size="7.5" fill="#1d4ed8">Event (m20)</text>
+
+              <!-- Legend -->
+              <line x1="80" y1="142" x2="100" y2="142" stroke="#3b82f6" stroke-width="3"/>
+              <circle cx="100" cy="142" r="4" fill="#3b82f6"/>
+              <text x="107" y="145" font-size="8" fill="#475569">● = Event occurred</text>
+              <line x1="220" y1="142" x2="240" y2="142" stroke="#f59e0b" stroke-width="3"/>
+              <line x1="240" y1="138" x2="240" y2="146" stroke="#f59e0b" stroke-width="2.5"/>
+              <text x="247" y="145" font-size="8" fill="#475569">| = Censored (event time unknown)</text>
+            </svg>
+            <p class="figure-caption"><strong>Figure 2:</strong> Censoring in survival analysis. Patients are censored when their event time is unknown — end of study, lost to follow-up, or withdrawal. Censored patients contribute data up to their censoring time, then are excluded from the risk set.</p>
+          </div>
+        </div>
+
+        <div class="info-card">
+          <h3>Key Differences: Cox vs Logistic Regression</h3>
+          <table style="width:100%;border-collapse:collapse;margin:10px 0;font-size:0.85rem;">
+            <thead>
+              <tr style="background:#f1f5f9;">
+                <th style="padding:6px 10px;border:1px solid #e2e8f0;">Feature</th>
+                <th style="padding:6px 10px;border:1px solid #e2e8f0;">Logistic Regression</th>
+                <th style="padding:6px 10px;border:1px solid #e2e8f0;">Cox Regression</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td style="padding:6px 10px;border:1px solid #e2e8f0;">Outcome</td><td style="padding:6px 10px;border:1px solid #e2e8f0;">Binary (event/no event at fixed time)</td><td style="padding:6px 10px;border:1px solid #e2e8f0;">Time to event (handles censoring)</td></tr>
+              <tr><td style="padding:6px 10px;border:1px solid #e2e8f0;">Effect measure</td><td style="padding:6px 10px;border:1px solid #e2e8f0;">Odds Ratio (OR)</td><td style="padding:6px 10px;border:1px solid #e2e8f0;">Hazard Ratio (HR)</td></tr>
+              <tr><td style="padding:6px 10px;border:1px solid #e2e8f0;">Estimation</td><td style="padding:6px 10px;border:1px solid #e2e8f0;">MLE (full likelihood)</td><td style="padding:6px 10px;border:1px solid #e2e8f0;">Partial likelihood</td></tr>
+              <tr><td style="padding:6px 10px;border:1px solid #e2e8f0;">Key assumption</td><td style="padding:6px 10px;border:1px solid #e2e8f0;">Linear log-odds</td><td style="padding:6px 10px;border:1px solid #e2e8f0;">Proportional hazards</td></tr>
+              <tr><td style="padding:6px 10px;border:1px solid #e2e8f0;">Time component</td><td style="padding:6px 10px;border:1px solid #e2e8f0;">Ignores time (binary at fixed point)</td><td style="padding:6px 10px;border:1px solid #e2e8f0;">Explicitly models time</td></tr>
+            </tbody>
+          </table>
+          <p><strong>When to use which</strong>: If all patients have complete follow-up to a fixed time point (e.g., 5-year survival yes/no), logistic regression can be used. However, Cox regression is preferred because it uses time information more efficiently and handles censoring naturally. Cox regression is the standard for time-to-event analysis in oncology.</p>
+        </div>
+      </div>
+
+      <!-- KEY FACTS TAB -->
+      <div class="tab-content" id="tab-keyfacts">
+        <div class="info-card">
+          <h3>Essential Exam Facts</h3>
+          <div class="key-facts-grid">
+            <div class="fact-item">KM curve: product-limit estimator of survival. Step function at event times.</div>
+            <div class="fact-item">Censoring: patient event-free at last follow-up. Tick marks on KM curve.</div>
+            <div class="fact-item">Median survival: time when Ŝ(t) = 0.50. Cannot be calculated if curve stays above 0.50.</div>
+            <div class="fact-item">Log-rank test: compares survival curves between groups. PH assumption.</div>
+            <div class="fact-item">Cox PH model: h(t) = h₀(t) × exp(βX). Semi-parametric. HR = exp(β).</div>
+            <div class="fact-item">Proportional hazards: HR is constant over time. Check with Schoenfeld residuals.</div>
+            <div class="fact-item">If PH violated: stratified Cox, time-dependent covariate, or parametric models.</div>
+            <div class="fact-item">Competing risks: use CIF + Fine-Gray model instead of KM + Cox.</div>
+            <div class="fact-item">Non-informative censoring: censored patients have same risk as those remaining.</div>
+            <div class="fact-item">Cox preferred over logistic regression for time-to-event data.</div>
+          </div>
+        </div>
+
+        <div class="warning-box">
+          <strong>⚠️ Common Exam Traps</strong>
+          <div>• HR is NOT relative risk — it is a ratio of HAZARDS (instantaneous event rates). HR and RR are different measures.</div>
+          <div>• Crossing KM curves → PH violated → do not use standard Cox or log-rank.</div>
+          <div>• If median survival is not reached, report survival at specific time points (e.g., 2-year OS = 72%).</div>
+          <div>• Competing risks must be handled differently — treating competing events as censoring overestimates the risk of the event of interest.</div>
+          <div>• Cox regression does NOT assume the shape of the baseline hazard — only that hazards are proportional.</div>
+        </div>
+      </div>
+
+      <!-- CLINICAL TAB -->
+      <div class="tab-content" id="tab-clinical">
+        <div class="clinical-box">
+          <strong>🏥 Why This Matters Clinically</strong>
+          <div>
+            <p><strong>Oncology trials</strong>: Overall survival (OS) and progression-free survival (PFS) are the most common endpoints in cancer clinical trials. They are analysed using KM curves, log-rank tests for primary comparison, and Cox regression for adjusted HR with 95% CI.</p>
+            <p><strong>Interpreting hazard ratios</strong>: An HR of 0.75 does NOT mean "25% of patients lived longer." It means the INSTANTANEOUS RISK of death is 25% lower at any given time. The absolute survival benefit depends on the baseline hazard (how aggressive the cancer is).</p>
+            <p><strong>Landmark analysis for late effects</strong>: In radiotherapy trials, late toxicities may not appear for years. Landmark analysis (e.g., "survival without late toxicity at 5 years") is commonly used. KM curves with competing risk methods are essential for accurate estimates of toxicity rates.</p>
+            <p><strong>Critical appraisal</strong>: When reading a survival analysis paper: (1) Are the KM curves clearly labelled with numbers at risk? (2) Was the log-rank test used appropriately (PH assumption checked)? (3) Are HRs reported with 95% CIs? (4) Was the PH assumption tested (Schoenfeld residuals or log-log plot)? (5) Were competing risks considered? (6) Is censoring explained and non-informative?</p>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /tab-contents -->
+
+    <!-- ══════ WORKED EXAMPLES ══════ -->
+    <div class="section-label"><h2>📐 Worked Examples</h2><div class="section-divider"></div></div>
+
+    <div class="accordion">
+      <button class="accordion-btn">Interpreting a Kaplan-Meier Curve</button>
+      <div class="accordion-panel">
+        <div class="accordion-inner">
+          <p><strong>Scenario:</strong> A KM curve shows: median OS for treatment = 24 months (95% CI: 20–28), median OS for control = 18 months (95% CI: 15–21). 2-year survival: treatment 52%, control 38%. Log-rank p = 0.01. Interpret.</p>
+          <p><strong>Solution:</strong> Median OS is 6 months longer with treatment (24 vs 18 months). At 2 years, 52% of treatment patients are alive vs 38% of controls — an absolute difference of 14 percentage points. The log-rank test is significant (p = 0.01), indicating the curves differ overall. The shaded areas (CIs) around each curve show the precision of the estimates — they should not overlap for statistical significance at individual time points.</p>
+          <p><strong>Key insight:</strong> Always check the number at risk table below KM curves. If few patients remain at 5 years, the 5-year survival estimate is unreliable.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="accordion">
+      <button class="accordion-btn">Cox Regression — HR Interpretation</button>
+      <div class="accordion-panel">
+        <div class="accordion-inner">
+          <p><strong>Scenario:</strong> A Cox model for OS includes: treatment (new vs standard, HR = 0.65, 95% CI 0.50–0.85), age (per 10 years, HR = 1.20, 95% CI 1.10–1.31), ECOG (per 1 point, HR = 1.45, 95% CI 1.30–1.62). Interpret.</p>
+          <p><strong>Solution:</strong> Adjusted for age and ECOG, the new treatment reduces the hazard of death by 35% (HR = 0.65, 95% CI 0.50–0.85). This is statistically significant (CI does not include 1.0).</p>
+          <p>Each 10-year increase in age increases hazard by 20% (HR = 1.20), adjusted for treatment and ECOG.</p>
+          <p>Each 1-point increase in ECOG increases hazard by 45% (HR = 1.45), adjusted for treatment and age — ECOG is the strongest independent predictor.</p>
+          <p><strong>Key insight:</strong> The natural log of HR is the coefficient (β). So β_treatment = ln(0.65) = −0.43. The negative value indicates reduced hazard.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="accordion">
+      <button class="accordion-btn">Checking Proportional Hazards</button>
+      <div class="accordion-panel">
+        <div class="accordion-inner">
+          <p><strong>Scenario:</strong> You run a Cox model and the Schoenfeld residual test gives p = 0.003 for the treatment variable. The log-log survival curves for the two treatment groups show converging lines. What does this mean and what can you do?</p>
+          <p><strong>Solution:</strong> The proportional hazards assumption is violated (p = 0.003 < 0.05; non-parallel log-log lines). The treatment effect changes over time — the survival curves converge (hazard ratio is not constant).</p>
+          <p>Options: (1) Include a time-by-treatment interaction term. (2) Use a stratified Cox model by treatment. (3) Report a time-varying HR (e.g., HR in first year = 0.50, HR after first year = 0.85). (4) Use parametric survival models.</p>
+          <p><strong>Clinical relevance:</strong> A treatment might have a strong early effect but wane over time. Reporting a single HR would be misleading — it would underestimate the early effect or overestimate the late effect.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════ ACTIVE RECALL ══════ -->
+    <div class="section-label"><h2>🧠 Active Recall Questions</h2><div class="section-divider"></div></div>
+
+    <ul class="recall-list">
+      <li class="recall-item"><div class="q">Q: What is censoring in survival analysis?</div><div class="a">A: A patient is censored if their exact event time is not known — they were event-free at last follow-up, lost to follow-up, or died from a competing cause. Their data contributes to the analysis up to the point of censoring.</div></li>
+      <li class="recall-item"><div class="q">Q: What does the log-rank test compare?</div><div class="a">A: It compares the overall survival distributions between groups. H₀: the survival curves are identical. It assumes proportional hazards (non-crossing curves).</div></li>
+      <li class="recall-item"><div class="q">Q: What is the proportional hazards assumption in Cox regression?</div><div class="a">A: The hazard ratio between groups is constant over time. Checked by Schoenfeld residuals (p > 0.05 = OK) or log-log survival plots (parallel lines = OK).</div></li>
+      <li class="recall-item"><div class="q">Q: How does Cox regression differ from logistic regression for time-to-event data?</div><div class="a">A: Cox regression uses time-to-event data and handles censoring, giving a hazard ratio. Logistic regression ignores time and censoring, giving an OR at a fixed time point. Cox is the standard for survival data.</div></li>
+      <li class="recall-item"><div class="q">Q: What are competing risks and how should they be analysed?</div><div class="a">A: Competing risks occur when patients can experience one of several mutually exclusive events (e.g., cancer death vs cardiac death). Use Cumulative Incidence Function (CIF) and Fine-Gray model instead of KM and Cox.</div></li>
+    </ul>
+
+    <!-- ══════ GLOSSARY ══════ -->
+    <div class="glossary-panel">
+      <h3>📖 Glossary</h3>
+      <div class="glossary-grid">
+        <div class="glossary-item"><div class="term">Kaplan-Meier</div><div class="def">Non-parametric estimator of survival. Product-limit method.</div></div>
+        <div class="glossary-item"><div class="term">Censoring</div><div class="def">Patient event-free at last follow-up. Right censoring is most common.</div></div>
+        <div class="glossary-item"><div class="term">Median survival</div><div class="def">Time when 50% of patients have had the event (or are censored).</div></div>
+        <div class="glossary-item"><div class="term">Log-rank test</div><div class="def">Compares survival curves between groups. Assumes proportional hazards.</div></div>
+        <div class="glossary-item"><div class="term">Cox PH model</div><div class="def">Semi-parametric regression for survival. h(t) = h₀(t) × exp(βX).</div></div>
+        <div class="glossary-item"><div class="term">Hazard Ratio (HR)</div><div class="def">exp(β) from Cox model. Ratio of instantaneous event rates.</div></div>
+        <div class="glossary-item"><div class="term">Proportional hazards</div><div class="def">Assumption that HR is constant over time.</div></div>
+        <div class="glossary-item"><div class="term">Schoenfeld residuals</div><div class="def">Used to test proportional hazards assumption. p < 0.05 = violation.</div></div>
+        <div class="glossary-item"><div class="term">Partial likelihood</div><div class="def">Estimation method for Cox models. Based on event ordering.</div></div>
+        <div class="glossary-item"><div class="term">Competing risks</div><div class="def">Multiple mutually exclusive events. Use CIF + Fine-Gray model.</div></div>
+        <div class="glossary-item"><div class="term">Fine-Gray model</div><div class="def">Regression model for competing risks. Subdistribution hazard ratio.</div></div>
+        <div class="glossary-item"><div class="term">Landmark analysis</div><div class="def">Analysis from a fixed time point. For later outcomes.</div></div>
+      </div>
+    </div>
+
+  </div><!-- /content -->
+
+  <footer class="footer">
+    <div class="footer-inner">
+      <div>© 2025 FRCR 1 Study Hub</div>
+      <div class="footer-right">For educational use only · Not for clinical decisions</div>
+    </div>
+  </footer>
+
+  <script src="js/radbio.js"></script>
+</body>
+</html>

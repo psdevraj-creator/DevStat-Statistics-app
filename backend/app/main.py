@@ -24,12 +24,11 @@ from fastapi.responses import FileResponse, JSONResponse
 
 from app.state import _session_id_var
 from app.config import PROJECT_NAME, VERSION
-from app.routers import data, analysis, charts, output, suggest, transform, wizard, r_status, eligibility, project, auth, license
-try:
-    from app.routers import ai
-    AI_AVAILABLE = True
-except ImportError:
-    AI_AVAILABLE = False
+from app.routers import data, analysis, charts, output, suggest, transform, wizard, r_status, eligibility, project, auth, license, teaching, questionbank
+from app.config import OFFLINE
+# AI assistant removed from the product — the router is not mounted (the ai
+# package is present but intentionally disabled so /api/ai/* returns 404).
+AI_AVAILABLE = False
 
 # ── Analysis engine ───────────────────────────────────────────────────────
 from r.engine import AnalysisEngine
@@ -185,22 +184,27 @@ def create_app() -> FastAPI:
     async def _session_middleware(request: Request, call_next):
         sid = request.cookies.get("session_id") or str(uuid.uuid4())
         token = _session_id_var.set(sid)
+        from app import state as _state
+        # App mode ('exam'|'live') + teaching flag must be set before anything is
+        # restored so that LIVE (confidential) mode never re-loads stored data.
+        _state.set_mode(request.headers.get("x-devstat-mode", ""))
+        _state.set_teaching(request.headers.get("x-devstat-teaching", "") in ("1", "true", "yes"))
+        # Machine + IP identity for the free-tier gate (bound to the physical
+        # machine AND the address — never the session). It is independent of the
+        # account so clearing cookies / making a new account cannot refresh the
+        # used-up free allowance.
+        _state.set_device(request.headers.get("x-devstat-device", ""))
+        _state.set_client_ip(_client_ip(request))
         # Per-USER isolation: if a valid DevStat session token is present, key
         # the in-memory session by the user's uid (so no account can ever see
         # another account's data) and restore their stored dataset.
         auth = request.headers.get("authorization", "")
         if auth.lower().startswith("bearer "):
             from app.services.session_guard import peek_uid
-            from app import state as _state
             uid = peek_uid(auth[7:].strip())
             if uid:
                 _state.set_uid(uid)
                 _state.restore_user_dataset()
-        # Guest machine id (stable device id or client IP) for the 3-use trial gate.
-        device = request.headers.get("x-devstat-device", "") or _client_ip(request)
-        if device:
-            from app import state as _state
-            _state.set_device(device)
         response = await call_next(request)
         response.set_cookie("session_id", sid, httponly=True, samesite="lax")
         _session_id_var.reset(token)
@@ -215,12 +219,12 @@ def create_app() -> FastAPI:
     app.include_router(transform.router, prefix="/api/transform", tags=["Transform"])
     app.include_router(wizard.router, prefix="/api/wizard", tags=["Wizard"])
     app.include_router(r_status.router, prefix="/api", tags=["Health"])
-    if AI_AVAILABLE:
-        app.include_router(ai.router, prefix="/api", tags=["AI Assistant"])
     app.include_router(eligibility.router)
     app.include_router(project.router, prefix="/api")
     app.include_router(auth.router, prefix="/api/auth", tags=["Auth"])
     app.include_router(license.router, prefix="/api", tags=["License"])
+    app.include_router(teaching.router, prefix="/api", tags=["Teaching"])
+    app.include_router(questionbank.router, prefix="/api", tags=["Question Bank"])
 
     # ---- Health check --------------------------------------------------------
     @app.get("/api/health", tags=["Health"])
@@ -233,6 +237,7 @@ def create_app() -> FastAPI:
             "version": VERSION,
             "engine": "py",
             "cloud_run": cloud_run,
+            "desktop": OFFLINE,
             "ai_available": AI_AVAILABLE,
         }
 

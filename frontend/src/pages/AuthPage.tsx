@@ -39,12 +39,12 @@ export default function AuthPage() {
         const cred = await createUserWithEmailAndPassword(auth, values.email, values.password)
         // Anti-bot: only email registrations require verification before use.
         await sendEmailVerification(cred.user)
-        setVerifyNotice('Account created. We sent a verification link to your email — please verify it before signing in.')
+        setVerifyNotice('Account created. We sent a verification link to your email — check your inbox AND your Spam/Junk folder (some providers route it there), then verify before signing in.')
         return
       }
       const cred = await signInWithEmailAndPassword(auth, values.email, values.password)
       if (!cred.user.emailVerified) {
-        setVerifyNotice('Please verify your email first (a verification email was sent when you registered). You can resend it below.')
+        setVerifyNotice('Please verify your email first (a verification email was sent when you registered — check your inbox and your Spam/Junk folder). You can resend it below.')
         return
       }
       const token = await cred.user.getIdToken()

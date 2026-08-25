@@ -1,0 +1,40 @@
+- generic [ref=f6e3]:
+  - banner [ref=f6e4]:
+    - generic [ref=f6e5] [cursor=pointer]:
+      - img "radar-chart" [ref=f6e7]
+      - generic [ref=f6e11]:
+        - generic [ref=f6e12]: DevStat
+        - generic [ref=f6e13]: Medical Statistics
+    - generic [ref=f6e14]:
+      - img "save" [ref=f6e16] [cursor=pointer]
+      - img "folder-open" [ref=f6e20] [cursor=pointer]
+    - generic [ref=f6e23]:
+      - img "undo" [ref=f6e25]
+      - img "redo" [ref=f6e29]
+    - generic [ref=f6e32]:
+      - button "login Sign in" [ref=f6e34] [cursor=pointer]:
+        - img "login" [ref=f6e36]
+        - generic [ref=f6e39]: Sign in
+      - img "question-circle" [ref=f6e41] [cursor=pointer]
+      - img "question-circle" [ref=f6e46] [cursor=pointer]
+  - menu [ref=f6e51]:
+    - menuitem [ref=f6e52] [cursor=pointer]:
+      - img "table" [ref=f6e53]
+      - text: Data
+    - menuitem [ref=f6e56] [cursor=pointer]:
+      - img "fund" [ref=f6e57]
+      - text: Analyze
+    - menuitem [ref=f6e60] [cursor=pointer]:
+      - img "apartment" [ref=f6e61]
+      - text: Survival
+    - menuitem [ref=f6e64] [cursor=pointer]:
+      - img "bar-chart" [ref=f6e65]
+      - text: Graphs
+    - menuitem [ref=f6e68] [cursor=pointer]:
+      - img "question-circle" [ref=f6e69]
+      - text: Wizard
+    - menuitem [ref=f6e73] [cursor=pointer]:
+      - img "file-text" [ref=f6e74]
+      - text: Output
+    - menuitem [disabled]
+  - main [ref=f6e77]
