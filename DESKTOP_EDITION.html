@@ -285,11 +285,11 @@ document.addEventListener('DOMContentLoaded', function(){
       fetch(a.href, {method:'HEAD'}).then(function(r){
         if(r.ok){ window.location.href = a.href; }
         else {
-          alert('The macOS build is created on a Mac, so it isn\u2019t uploaded here yet.\n\nTo finish: build the zip on a Mac and add DevStat-Desktop-mac.zip to the downloads folder. See the Installation section for the steps.');
+          alert('\ud83c\udf4e The macOS version is in the works! We\u2019re polishing it now, and it will appear right here as soon as it\u2019s ready.\n\nIn the meantime, the Windows version is ready to download \u2014 and on any Mac you can use the Online app in your browser. Your same account works on both.');
           document.getElementById('install') && document.getElementById('install').scrollIntoView({behavior:'smooth'});
         }
       }).catch(function(){
-        alert('Couldn\u2019t reach the macOS download. See the Installation section for how to build it on a Mac.');
+        alert('\ud83c\udf4e The macOS version is in the works! We\u2019re polishing it now, and it will appear right here as soon as it\u2019s ready. For now, Windows is ready to download \u2014 and the Online app works on any Mac.');
         document.getElementById('install') && document.getElementById('install').scrollIntoView({behavior:'smooth'});
       });
     });
