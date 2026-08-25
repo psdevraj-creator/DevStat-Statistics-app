@@ -558,8 +558,6 @@ const App: React.FC = () => {
                 </Tag>
               </Tooltip>
             )}
-            {!isDesktop && (
-            <>
             {user ? (
               <Dropdown
                 menu={{ items: [
@@ -592,8 +590,6 @@ const App: React.FC = () => {
               <Button size="small" type="primary" icon={<CrownOutlined />} onClick={startCheckout}>
                 Upgrade
               </Button>
-            )}
-            </>
             )}
             <Tooltip title="Help">
               <QuestionCircleOutlined
