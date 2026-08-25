@@ -26,8 +26,8 @@ import HelpPanel from './components/HelpPanel'
 import QuestionBanks from './components/QuestionBanks'
 import DesktopEditionGate from './components/DesktopEditionGate'
 import { useAuth } from './stores/authStore'
-import { authApi } from './api/authApi'
-import { getMode, setMode, pricingApi, gbp, datasetApi, setDesktopMode, desktopLicenceApi } from './api/client'
+import { authApi, storeDevStatSession } from './api/authApi'
+import { getMode, setMode, pricingApi, gbp, datasetApi, setDesktopMode, desktopLicenceApi, accountApi } from './api/client'
 
 // ── Lazy-loaded pages ───────────────────────────────────────────────
 const DataPage = React.lazy(() => import('./pages/DataPage'))
@@ -101,6 +101,7 @@ const App: React.FC = () => {
   const [backendOnline, setBackendOnline] = useState(true)
   const [backendChecked, setBackendChecked] = useState(false)
   const backoffRef = useRef(1)
+  const healthFailsRef = useRef(0)
   const [showAuthPopup, setShowAuthPopup] = useState(false)
   const [showPaywall, setShowPaywall] = useState(false)
   const [usage, setUsage] = useState<{ licensed: boolean; analyses_left?: number; charts_left?: number } | null>(null)
@@ -221,9 +222,10 @@ const App: React.FC = () => {
 
     const check = async () => {
       try {
-        const resp = await fetch('/api/health', { signal: AbortSignal.timeout(3000) })
+        const resp = await fetch('/api/health', { signal: AbortSignal.timeout(6000) })
         const online = resp.ok
         if (!cancelled) {
+          healthFailsRef.current = 0
           setIsBackendOnline(online)
           setBackendOnline(online)
           setBackendChecked(true)
@@ -235,8 +237,14 @@ const App: React.FC = () => {
         }
       } catch {
         if (!cancelled) {
-          setIsBackendOnline(false)
-          setBackendOnline(false)
+          // The engine warms up in a background thread, so the first health
+          // check can occasionally time out. Only flag the backend as down
+          // after a couple of consecutive failures, so we don't flash an
+          // alarming message during normal startup.
+          healthFailsRef.current += 1
+          const down = healthFailsRef.current >= 2
+          setIsBackendOnline(!down)
+          setBackendOnline(!down)
           setBackendChecked(true)
           schedule()
         }
@@ -479,6 +487,46 @@ const App: React.FC = () => {
     { key: 'output', label: 'Output', icon: <FileTextOutlined /> },
   ]
 
+  const openDesktopLogin = () => {
+    const { availWidth = 1280, availHeight = 800 } = window.screen || {}
+    const features = `width=${availWidth},height=${availHeight},left=0,top=0,resizable=yes,scrollbars=yes`
+    const w = window.open(`${accountApi.defaults.baseURL}/auth?desktop=1`, 'devstat_login', features)
+    if (w) w.focus()
+  }
+
+  useEffect(() => {
+    const onMsg = (e: MessageEvent) => {
+      const d = e.data
+      if (d && d.type === 'devstat-login' && d.session) {
+        storeDevStatSession(d.session)
+        if (isDesktop) desktopLicenceApi.sync(!!d.session.licensed, d.session.licensed_until).catch(() => {})
+        message.success('Welcome back')
+        window.location.reload()
+      }
+    }
+    window.addEventListener('message', onMsg)
+    return () => window.removeEventListener('message', onMsg)
+  }, [isDesktop])
+
+  // Desktop Edition close guard: confirm if there's unsaved output, and once the
+  // window actually closes tell the engine to shut down (no Ctrl+C needed).
+  useEffect(() => {
+    if (!isDesktop) return
+    const onBeforeUnload = (e: BeforeUnloadEvent) => {
+      if (outputStore.getEntries().length > 0) {
+        e.preventDefault()
+        e.returnValue = 'You have unsaved output. Close DevStat?'
+      }
+    }
+    const onPageHide = () => { try { navigator.sendBeacon('/api/desktop/shutdown') } catch {} }
+    window.addEventListener('beforeunload', onBeforeUnload)
+    window.addEventListener('pagehide', onPageHide)
+    return () => {
+      window.removeEventListener('beforeunload', onBeforeUnload)
+      window.removeEventListener('pagehide', onPageHide)
+    }
+  }, [isDesktop])
+
   return (
     <ConfigProvider
       theme={{
@@ -578,7 +626,7 @@ const App: React.FC = () => {
                 </Button>
               </Dropdown>
             ) : (
-              <Button size="small" type="primary" icon={<LoginOutlined />} onClick={() => navigate('/auth')}>
+              <Button size="small" type="primary" icon={<LoginOutlined />} onClick={() => (isDesktop ? openDesktopLogin() : navigate('/auth'))}>
                 Sign in
               </Button>
             )}
@@ -637,9 +685,9 @@ const App: React.FC = () => {
         {/* Backend Offline Banner */}
         {backendChecked && !backendOnline && (
           <Alert
-            message="Backend is not running"
-            description="The DevStat backend server is unreachable. Start it via launch_gui.bat or run: py -3.14 -m uvicorn app.main:create_app --factory in the backend/ directory."
-            type="error"
+            message="Starting the statistics engine…"
+            description="DevStat warms up its statistics engine on first launch — this only takes a few seconds. If you're still seeing this, wait about 10 seconds and press F5 to refresh, or close and reopen the app. (Developer build? Start the backend with launch_gui.bat, or run: py -3.14 -m uvicorn app.main:create_app --factory.)"
+            type="warning"
             showIcon
             closable={false}
             style={{ borderRadius: 0, border: 'none' }}

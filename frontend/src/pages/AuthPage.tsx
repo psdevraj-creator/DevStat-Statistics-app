@@ -22,6 +22,14 @@ export default function AuthPage() {
   // DevStat session (signed token + licence/usage entitlement from Firestore).
   async function finish(idToken: string, provider: 'google' | 'email') {
     const s = await authApi.session(idToken)
+    // Desktop Edition: this login page was opened in a popup by the desktop app.
+    // Hand the session back to the opener (desktop window) and close, so the
+    // desktop logs in without any cross-origin API call.
+    if (window.opener && new URLSearchParams(window.location.search).get('desktop') === '1') {
+      window.opener.postMessage({ type: 'devstat-login', session: s }, '*')
+      window.close()
+      return
+    }
     storeDevStatSession(s)
     message.success(provider === 'email' ? 'Signed in' : 'Welcome back')
     navigate('/')

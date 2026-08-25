@@ -60,3 +60,42 @@ Everything below is live and tested, including Firestore (container), LIVE Strip
 - Likely causes to check: (a) build context not picking up `backend/Dockerfile` (try submitting with an explicit absolute source path; avoid `cmd /c` wrappers which change CWD); (b) the OLD **root** `cloudbuild.yaml` + **root multi-stage** `Dockerfile` (service `devstat`, region `us-central1`) were removed in the Desktop Edition push — verify nothing still references them; (c) **default gcloud project is `pubmed-search-504823`** — always pass `--project devstat-499409`.
 - Reconcile: backend/Dockerfile expects `static` pre-built; the root multi-stage Dockerfile built the frontend inside Docker. Decide which is canonical for the live app and keep the files + workflow consistent.
 
+## SESSION 2026-08-25 — DESKTOP EDITION (Option #2) + DEPLOYS — READ NEXT SESSION
+### Architecture now (Option #2: account ONLINE, analysis OFFLINE)
+- **Desktop = same online account.** The desktop SPA sends `login/register/subscription` to the LIVE Cloud Run app (cloud origin), so Firebase/Stripe creds stay OUT of the desktop build.
+- **Login flow (desktop):** header "Sign in" → `window.open(<cloud>/auth?desktop=1)` popup → user logs in on the online app → AuthPage `postMessage({type:'devstat-login', session})` to the opener → desktop stores session (`storeDevStatSession`) + syncs local licence → reloads. No cross-origin API calls from the desktop.
+- **Analysis (desktop):** runs on the local engine, token-validated (`peek_uid` → uid). Gate uses a LOCAL store `app/services/desktop_licence.py` (5 analyses + 5 charts per uid+machine; licensed-until synced from cloud). No teaching/question-bank on desktop (`main.py` mounts teaching/license/questionbank ONLY when `not OFFLINE`).
+- **Close guard (desktop):** `beforeunload` confirm if unsaved output; `pagehide` → `navigator.sendBeacon('/api/desktop/shutdown')` → engine `os._exit(0)` → launcher (waiting on engine) exits. No Ctrl+C needed.
+
+### Key files changed
+- Frontend: `src/api/client.ts` (`accountApi` = ACCOUNT_API_URL = `https://devstat-statistics-app-991466352708.europe-west1.run.app`, `attachInterceptors` for both instances, `desktopLicenceApi`), `src/api/authApi.ts` (uses `accountApi`), `src/App.tsx` (desktop login popup + postMessage listener + close guard + licence sync), `src/pages/AuthPage.tsx` (postMessage hand-off when `?desktop=1` + `window.opener`).
+- Backend: `app/services/desktop_licence.py` (new, local store), `app/routers/desktop.py` (new: `/api/desktop/licence-status`, `/sync-licence`, `/shutdown`), `app/main.py` (mount desktop router; mount license/teaching/questionbank only when `not OFFLINE`), `r/dispatcher.py` + `app/routers/charts.py` (OFFLINE gate uses `desktop_licence`), `backend/devstat_engine.spec` (datas include `("static","static")`).
+- Launcher: `desktop/launcher.py` — frees port 8210 before starting (kills stale engine), sets `DEVSTAT_AUTH_SECRET` (cloud value) so the local engine validates the cloud login token (LOW RISK: local-only paywall bypass; data never leaves machine).
+
+### Online app — DEPLOYED & HEALTHY
+- Live revision `devstat-statistics-app-00103-4f2` runs the NEW image `gcr.io/devstat-499409/devstat@sha256:88f7c77165779a293c2ebd0899f2e0f319c9e64d1a1c879d4e4ad56e7c6e4d95`.
+- Health on `https://devstat-statistics-app-991466352708.europe-west1.run.app/api/health` = 200, `desktop:false`, `cloud_run:true`. **Online app unchanged/unbroken** (all desktop changes are `isDesktop`/`OFFLINE`-gated).
+- Deployed with `gcloud run deploy ... --image <digest> --min-instances 1 --max-instances 1 --memory 512Mi --cpu 1 --timeout 300` (no env flags → existing env preserved).
+
+### CLOUD BUILD — NOW FIXED (read this)
+- The earlier `/workspace/Dockerfile: no such file` was caused by (a) running via `cmd /c` (wrong CWD → context lacked `backend/Dockerfile`) and (b) an **815 MB build context** (PyInstaller `dist/` + `build/` not excluded; project lives in OneDrive which locks files).
+- Fix applied: `backend/.gcloudignore` + `.dockerignore` now exclude `dist/`, `build/`, `*.log`, pid files. Builds now SUCCEED when run DIRECTLY (not `cmd /c`): `cd backend && gcloud builds submit . --project devstat-499409 --tag gcr.io/devstat-499409/devstat:latest`.
+- **PyInstaller rebuild for the desktop zip must use `--distpath`/`--workpath` OUTSIDE OneDrive** (temp), else PyInstaller's clean of the old `dist/DevStatEngine` hits `PermissionError: Access is denied` (OneDrive holds the file handles). Working: `python -m PyInstaller devstat_engine.spec --noconfirm --log-level WARN --distpath C:\Users\DELL73~1\AppData\Local\Temp\opencode\dsdist --workpath C:\Users\DELL73~1\AppData\Local\Temp\opencode\dsbuild`. This produced `dsdist\DevStatEngine\DevStatEngine.exe` (78 MB, written 19:30).
+- **Zip packaging trap:** `desktop/package.py` writing the zip straight into the OneDrive `downloads/` folder → OneDrive truncates/locks the in-progress zip → CORRUPT zip ("End of Central Directory not found"). FIX: run `package.py --out <TEMP non-OneDrive dir>` to produce a VALID zip, THEN copy the single zip into `hostinger_deployment\downloads\`. (The last run to `C:\Users\DELL73~1\AppData\Local\Temp\opencode\pkgout` needs verification — check for a valid `DevStat-Desktop-win.zip` there before copying.)
+
+### Progress helper scripts (new, global)
+- `OneDrive\opencode-config\scripts\progress.ps1` (run a job in background, write progress JSON to `~/.opencode/progress/<name>.json` every 5s) + `watch-progress.ps1` (live bar). Usage: `powershell -File progress.ps1 -Name X -Run "cmd" -WorkDir D -EstimateSecs N`.
+
+### Global AGENTS.md (OneDrive opencode-config) — added
+- **#0 HARD RULE:** check for + USE skills and MCPs before ANY action; never bypass (non-negotiable).
+- **Model escalation:** default coder `deepseek-v4-flash`; if 3 attempts at the same problem fail → switch to `deepseek-v4-pro`, revert to flash when solved; v4-flash paired with experimental v4 vision.
+
+### PENDING / NEXT
+1. ✅ DONE (session 2 continuation): Windows zip rebuilt + shipped. With OneDrive flicked OFF, all PyInstaller builds run **in-place** (no distpath/workpath redirect needed); engine `dist\DevStatEngine\DevStatEngine.exe` (78 MB) rebuilt clean (exit 0; was failing on OneDrive handle locks), launcher `desktop\dist\DevStatDesktopLauncher.exe` (8.2 MB) built, engine smoke-tested (`/api/health` ok). Packaged to temp then copied to `...\Systemic Therapy Explorer\hostinger_deployment\downloads\DevStat-Desktop-win.zip` (257.3 MB, 6323 entries, valid central dir). Corrupt 173 MB zip + stale unpacked folder archived to temp `deploy_ckpt`. Site link `./downloads/DevStat-Desktop-win.zip` is the only reference.
+2. ✅ DONE: macOS intentionally dropped (user: too complex/tedious; no false promises). macOS removed from `STATS_MANUAL.html`, `desktop-edition.html` (card/tile/CTA/JS), `index.html`, `learn-as-you-do.html`. Might re-add if ever built on a Mac.
+3. ✅ DONE: desktop.py double-prefix bug fixed (`APIRouter(prefix="")`) — was `/api/desktop/api/desktop/...`; `/api/desktop/shutdown` returned 405 via SPA catch-all and `licence-status` silently returned HTML. Now correct. Console hidden (`CREATE_NO_WINDOW`) in launcher.py. Login popup opens full (`openDesktopLogin` uses full screen size).
+4. ✅ DONE: transient "Backend is not running" on first launch — caused by `main.py` loading the analysis engine in a background thread, so the first `/api/health` could exceed the frontend's 3s timeout. Fixed in `App.tsx`: health timeout 6000ms + tolerate 2 consecutive failures before flagging down; banner softened to "Starting the statistics engine…" (warning) with wait/F5/reopen guidance; notes added to `STATS_MANUAL.html` and `desktop-edition.html` FAQ. Final zip rebuilt (258 MB, 6351 entries) + shipped; warm-up banner verified present in bundled JS.
+5. Commit + push the current source changes to GitHub ONLY after the regenerated desktop zip is verified (user: "bypass GitHub — build directly, push only when all good, same as pubmed").
+6. Optional: CORS_ORIGINS on Cloud Run — NOT needed for the popup-login flow (all account calls are same-origin in the cloud popup). The earlier `--update-env-vars` attempt fails on gcloud dict-arg escaping; use a flags-file if ever needed.
+
+

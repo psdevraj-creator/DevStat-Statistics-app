@@ -13,3 +13,5 @@ devstat-firebase-sa.json
 devstat_envvars.json
 *.bak*
 _archive
+dist/
+build/

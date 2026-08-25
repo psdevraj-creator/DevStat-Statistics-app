@@ -152,7 +152,8 @@ def main() -> None:
 
     print(f"[DevStat Desktop Edition] starting engine: {cmd}")
     free_port(PORT)
-    engine = subprocess.Popen(cmd, cwd=cwd, env=env)
+    flags = subprocess.CREATE_NO_WINDOW if os.name == "nt" else 0
+    engine = subprocess.Popen(cmd, cwd=cwd, env=env, creationflags=flags)
 
     try:
         if not wait_for_engine():

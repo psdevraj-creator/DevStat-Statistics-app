@@ -9,3 +9,11 @@ __pycache__/
 .env
 *.db
 devstat_crash.log
+dist/
+build/
+*.log
+*.out.log
+*.err.log
+.build.pid
+.engine_build.pid
+.gcloud_build.pid

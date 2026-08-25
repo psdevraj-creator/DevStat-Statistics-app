@@ -15,7 +15,7 @@ from pydantic import BaseModel
 from app import state as _state
 from app.services import desktop_licence
 
-router = APIRouter(prefix="/api/desktop", tags=["Desktop Edition"])
+router = APIRouter(prefix="", tags=["Desktop Edition"])
 
 
 class SyncLicenceBody(BaseModel):
@@ -37,3 +37,13 @@ async def sync_licence(body: SyncLicenceBody) -> Dict[str, Any]:
     if not uid:
         return {"ok": False, "reason": "Not signed in."}
     return {"ok": True, **desktop_licence.sync_licence(uid, body.licensed, body.licensed_until)}
+
+
+@router.post("/shutdown")
+async def shutdown() -> Dict[str, Any]:
+    """Desktop Edition: the user closed the app window. Exit the engine so no
+    stale process holds the port. Reached via `navigator.sendBeacon` on window
+    close (reliable even without a normal response)."""
+    import threading
+    threading.Thread(target=lambda: __import__("os")._exit(0), daemon=True).start()
+    return {"ok": True, "shutting_down": True}
