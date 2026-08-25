@@ -72,6 +72,7 @@ frontend/dist/
 
 # Test artifacts
 frontend/test-results/
+.playwright-mcp/
 
 # Project logs
 devstat-logs-*.json

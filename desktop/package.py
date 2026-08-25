@@ -16,6 +16,16 @@ from pathlib import Path
 APP_NAME = "DevStat Desktop Edition"
 
 
+def _lp(path) -> str:
+    """Return an extended-length (\\\\?\\-prefixed) absolute path so Python and
+    the zip writer can handle the deep _internal/... paths PyInstaller creates
+    (which exceed Windows' MAX_PATH on long OneDrive paths)."""
+    p = str(Path(path).resolve())
+    if p.startswith("\\\\?\\"):
+        return p
+    return "\\\\?\\" + p
+
+
 def assemble(out: Path, engine_dir: Path, launcher: Path, os_name: str) -> Path:
     out.mkdir(parents=True, exist_ok=True)
     app = out / APP_NAME
@@ -51,11 +61,11 @@ def assemble(out: Path, engine_dir: Path, launcher: Path, os_name: str) -> Path:
             encoding="utf-8",
         )
         # Engine is looked up relative to the launcher; place at engine/.
-        shutil.copytree(engine_dir, bundle / "Contents" / "Resources" / "engine")
+        shutil.copytree(_lp(engine_dir), _lp(bundle / "Contents" / "Resources" / "engine"))
     else:
         app.mkdir(parents=True, exist_ok=True)
         shutil.copy2(launcher, app / (launcher.name or "DevStatDesktopLauncher.exe"))
-        shutil.copytree(engine_dir, app / "engine")
+        shutil.copytree(_lp(engine_dir), _lp(app / "engine"))
 
         # A convenience start script (the launcher exe is the real entry point).
         (app / "START-HERE.txt").write_text(
@@ -72,7 +82,7 @@ def assemble(out: Path, engine_dir: Path, launcher: Path, os_name: str) -> Path:
     with zipfile.ZipFile(zip_path, "w", zipfile.ZIP_DEFLATED) as z:
         for f in sorted(base.rglob("*")):
             if f.is_file():
-                z.write(f, f.relative_to(out))
+                z.write(_lp(f), f.relative_to(out))
     return zip_path
 
 
