@@ -1,7 +1,7 @@
 # DevStat — Medical Statistics Software
 
 [![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://github.com/psdevraj-creator/DevStat-Statistics-app/codespaces)
-[![User Guide](https://img.shields.io/badge/%F0%9F%93%96-User_Guide_%26_Statistics_Manual-005eb8?style=for-the-badge)](https://psdevraj-creator.github.io/DevStat-Statistics-app/STATS_MANUAL.html)
+[![User Guide](https://img.shields.io/badge/%F0%9F%93%96-User_Guide_%26_Statistics_Manual-005eb8?style=for-the-badge)](https://dpsoncology.com/STATS_MANUAL.html)
 
 > **Try it instantly in your browser** — click the Codespaces badge above. No installation, no setup.
 
