@@ -105,7 +105,7 @@ footer a{color:#7dd3fc}
 <nav class="nav"><div class="wrap">
   <div class="brand"><span class="dot">DV</span> DevStat <span style="color:var(--muted);font-weight:400">Desktop Edition</span></div>
   <div class="navlinks">
-    <a href="#features">Features</a><a href="#how">How it works</a><a href="#install">Install</a><a href="#download">Download</a><a href="#pricing">Pricing</a><a href="#faq">FAQ</a><a href="https://dpsoncology.com">Online app</a>
+    <a href="#features">Features</a><a href="#how">How it works</a><a href="#install">Install</a><a href="#download">Download</a><a href="#pricing">Pricing</a><a href="#faq">FAQ</a><a href="https://devstat-statistics-app-991466352708.europe-west1.run.app">Online app</a>
   </div>
 </div></nav>
 
@@ -116,7 +116,7 @@ footer a{color:#7dd3fc}
     <p>DevStat Desktop Edition puts a full statistics suite on your machine. Analyse clinical data with confidence — <b>your data never leaves your device</b>.</p>
     <div class="cta">
       <a class="btn btn-w" href="#download">⬇ Download for Windows / macOS</a>
-      <a class="btn btn-o" href="https://dpsoncology.com" target="_blank" rel="noopener">Try the online app</a>
+      <a class="btn btn-o" href="https://devstat-statistics-app-991466352708.europe-west1.run.app" target="_blank" rel="noopener">Try the online app</a>
     </div>
   </div>
   <div class="hero-browser">
@@ -151,7 +151,7 @@ footer a{color:#7dd3fc}
     <div class="ic">🔐</div>
     <div>
       <b>Your data stays with you</b>
-      <span>Analysis is computed locally and never uploaded. Signing in, registering and your subscription go online — that's separate from your data, and the same account works on the <a href="https://dpsoncology.com">online DevStat</a> too.</span>
+      <span>Analysis is computed locally and never uploaded. Signing in, registering and your subscription go online — that's separate from your data, and the same account works on the <a href="https://devstat-statistics-app-991466352708.europe-west1.run.app">online DevStat</a> too.</span>
     </div>
   </div>
 </div></section>
@@ -182,7 +182,7 @@ footer a{color:#7dd3fc}
       <div class="emoji">☁️</div>
       <h4>Online app</h4>
       <p style="font-size:14.5px;color:var(--muted);margin-bottom:16px">Use DevStat right in your browser — great on the go or on any device. Also includes the <b>Teaching mode</b> and <b>practice datasets</b> with guided lessons.</p>
-      <a class="btn btn-o" href="https://dpsoncology.com" target="_blank" rel="noopener" style="background:var(--bg)">Open the online app</a>
+      <a class="btn btn-o" href="https://devstat-statistics-app-991466352708.europe-west1.run.app" target="_blank" rel="noopener" style="background:var(--bg)">Open the online app</a>
     </div>
   </div>
 </div></section>
@@ -214,7 +214,7 @@ footer a{color:#7dd3fc}
       </ol>
     </div>
   </div>
-  <div class="callout" style="margin-top:18px"><b>Everything stays on your machine.</b> The analysis engine runs locally. Signing in, registering and your licence go online (same account as the <a href="https://dpsoncology.com">online app</a>) — your data is never uploaded.</div>
+  <div class="callout" style="margin-top:18px"><b>Everything stays on your machine.</b> The analysis engine runs locally. Signing in, registering and your licence go online (same account as the <a href="https://devstat-statistics-app-991466352708.europe-west1.run.app">online app</a>) — your data is never uploaded.</div>
 </div></section>
 
 <section class="section" id="download"><div class="wrap">
@@ -252,7 +252,7 @@ footer a{color:#7dd3fc}
       <div class="b">MOST POPULAR</div>
       <div class="amt">£25<small> / year</small></div>
       <ul><li><span class="chk">✓</span> Unlimited analyses &amp; charts</li><li><span class="chk">✓</span> Every feature included</li><li><span class="chk">✓</span> Shared with the online app</li><li><span class="chk">✓</span> One licence, all your machines</li></ul>
-      <a class="btn btn-w" href="https://dpsoncology.com">Upgrade online</a>
+      <a class="btn btn-w" href="https://devstat-statistics-app-991466352708.europe-west1.run.app">Upgrade online</a>
     </div>
   </div>
 </div></section>
@@ -271,8 +271,30 @@ footer a{color:#7dd3fc}
 
 <footer><div class="wrap">
   <div>© 2026 DevStat · Built for clinicians and researchers.</div>
-  <div><a href="https://github.com/psdevraj-creator/DevStat-Statistics-app">GitHub</a> &nbsp;·&nbsp; <a href="./STATS_MANUAL.html">User Guide &amp; Statistics Manual</a> &nbsp;·&nbsp; <a href="https://dpsoncology.com">dpsoncology.com</a></div>
+  <div><a href="https://github.com/psdevraj-creator/DevStat-Statistics-app">GitHub</a> &nbsp;·&nbsp; <a href="./STATS_MANUAL.html">User Guide &amp; Statistics Manual</a> &nbsp;·&nbsp; <a href="./">dpsoncology.com</a></div>
 </div></footer>
 
+<script>
+// macOS build is produced on a Mac, so its zip may not be uploaded yet.
+// Instead of a 404, check the file and only download if present; otherwise
+// point the user at the installation section.
+document.addEventListener('DOMContentLoaded', function(){
+  document.querySelectorAll('a.dlbtn[href$="mac.zip"]').forEach(function(a){
+    a.addEventListener('click', function(e){
+      e.preventDefault();
+      fetch(a.href, {method:'HEAD'}).then(function(r){
+        if(r.ok){ window.location.href = a.href; }
+        else {
+          alert('The macOS build is created on a Mac, so it isn\u2019t uploaded here yet.\n\nTo finish: build the zip on a Mac and add DevStat-Desktop-mac.zip to the downloads folder. See the Installation section for the steps.');
+          document.getElementById('install') && document.getElementById('install').scrollIntoView({behavior:'smooth'});
+        }
+      }).catch(function(){
+        alert('Couldn\u2019t reach the macOS download. See the Installation section for how to build it on a Mac.');
+        document.getElementById('install') && document.getElementById('install').scrollIntoView({behavior:'smooth'});
+      });
+    });
+  });
+});
+</script>
 </body>
 </html>
