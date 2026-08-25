@@ -60,6 +60,17 @@ def chart_guard():
     from app import state as _state
     from app.services.firebase_store import licence_live, trial_check_and_consume
     try:
+        from app.config import OFFLINE
+        if OFFLINE:
+            # Desktop Edition: offline analysis. Account handled online; local store.
+            from app.services import desktop_licence
+            uid = _state.get_uid()
+            if not uid:
+                _chart_block("account", "Sign in to use the DevStat Desktop Edition — the same account works on the online app.", "Sign in with your DevStat account to begin.")
+            gate = desktop_licence.consume(uid, "chart")
+            if gate.get("blocked"):
+                _chart_block("subscription", str(gate.get("reason") or ""), str(gate.get("details") or ""))
+            return
         uid = _state.get_uid()
         free_teaching = bool(_state.get_teaching() and (_state.get_teaching_session() or {}).get("free"))
         if not uid and not free_teaching:

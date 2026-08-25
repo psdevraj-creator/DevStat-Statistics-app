@@ -1,4 +1,4 @@
-import { api, getToken } from '../api/client'
+import { accountApi, getToken } from '../api/client'
 import { useAuth } from '../stores/authStore'
 
 // A stable per-device id used for the concurrent-session/device guard.
@@ -19,36 +19,36 @@ export function getDeviceId(): string {
 export const authApi = {
   // Create a DevStat session with a Firebase ID token + this device's id.
   session: async (idToken: string) => {
-    const res = await api.post('/api/auth/session', { id_token: idToken, device_id: getDeviceId() })
+    const res = await accountApi.post('/api/auth/session', { id_token: idToken, device_id: getDeviceId() })
     return res.data
   },
   me: async () => {
-    const res = await api.get('/api/auth/me', {
+    const res = await accountApi.get('/api/auth/me', {
       headers: getToken() ? { Authorization: `Bearer ${getToken()}` } : {},
     })
     return res.data
   },
   logout: async () => {
     try {
-      await api.post('/api/auth/logout', {})
+      await accountApi.post('/api/auth/logout', {})
     } catch {
       // ignore
     }
   },
   status: async () => {
-    const res = await api.get('/api/license/status', {
+    const res = await accountApi.get('/api/license/status', {
       headers: getToken() ? { Authorization: `Bearer ${getToken()}` } : {},
     })
     return res.data
   },
   use: async () => {
-    const res = await api.post('/api/license/use', {}, {
+    const res = await accountApi.post('/api/license/use', {}, {
       headers: getToken() ? { Authorization: `Bearer ${getToken()}` } : {},
     })
     return res.data
   },
   checkout: async () => {
-    const res = await api.post('/api/license/checkout', {}, {
+    const res = await accountApi.post('/api/license/checkout', {}, {
       headers: getToken() ? { Authorization: `Bearer ${getToken()}` } : {},
     })
     return res.data
@@ -71,3 +71,4 @@ export function storeDevStatSession(session: any) {
     session.session_token ?? '',
   )
 }
+

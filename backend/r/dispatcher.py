@@ -86,43 +86,77 @@ def run_analysis(
     # the same machine/address — returns a warm paywall prompt. This is
     # fail-CLOSED: on any gate error the request is blocked, never given away.
     try:
-        from app.state import (get_uid, get_device, get_client_ip, get_teaching,
-                               get_teaching_session)
-        from app.services.firebase_store import licence_live, trial_check_and_consume
-        uid = get_uid()
-        # Guests may do the FREE teaching lesson (its tests are free), but no
-        # other anonymous compute: the free-analysis path requires a signed-in
-        # account (or being inside a loaded free teaching scenario).
-        free_teaching = bool(get_teaching() and (get_teaching_session() or {}).get("free"))
-        if not uid and not free_teaching:
-            log.warning("DISPATCH_GATE | id=%s | analysis=%s | reason=no_account", dispatch_id, analysis_name)
-            return {
-                "blocked": True,
-                "requires_subscription": True,
-                "action_type": "account",
-                "reason": ("A warm hello! 👋 Pop in with a quick free account and we'll save "
-                           "your work for you. Your first 5 analyses and 5 charts are free, "
-                           "no card needed."),
-                "details": "Create a free account to start using DevStat.",
-                "suggested_alternatives": [],
-            }
-        if licence_live(uid):
-            pass  # paid / admin account — unlimited, skip counters
-        elif get_teaching():
-            pass  # guided Teaching mode — free, consumes no credit
+        from app.config import OFFLINE
+        if not OFFLINE:
+            from app.state import (get_uid, get_device, get_client_ip, get_teaching,
+                                   get_teaching_session)
+            from app.services.firebase_store import licence_live, trial_check_and_consume
+            uid = get_uid()
+            # Guests may do the FREE teaching lesson (its tests are free), but no
+            # other anonymous compute: the free-analysis path requires a signed-in
+            # account (or being inside a loaded free teaching scenario).
+            free_teaching = bool(get_teaching() and (get_teaching_session() or {}).get("free"))
+            if not uid and not free_teaching:
+                log.warning("DISPATCH_GATE | id=%s | analysis=%s | reason=no_account", dispatch_id, analysis_name)
+                return {
+                    "blocked": True,
+                    "requires_subscription": True,
+                    "action_type": "account",
+                    "reason": ("A warm hello! 👋 Pop in with a quick free account and we'll save "
+                               "your work for you. Your first 5 analyses and 5 charts are free, "
+                               "no card needed."),
+                    "details": "Create a free account to start using DevStat.",
+                    "suggested_alternatives": [],
+                }
+            if licence_live(uid):
+                pass  # paid / admin account — unlimited, skip counters
+            elif get_teaching():
+                pass  # guided Teaching mode — free, consumes no credit
+            else:
+                gate = trial_check_and_consume(get_device(), get_client_ip(), "analysis")
+                if gate.get("blocked"):
+                    log.warning("DISPATCH_GATE | id=%s | analysis=%s | trial_used identity=%s",
+                                dispatch_id, analysis_name, gate.get("identity", ""))
+                    return {
+                        "blocked": True,
+                        "requires_subscription": True,
+                        "action_type": "subscription",
+                        "reason": gate.get("reason") or (
+                            "You've had a lovely free run of it! ✨ Your first 5 analyses and "
+                            "5 charts are used up — a £25/year licence keeps you going."),
+                        "details": "Upgrade to a £25/year licence to keep analysing.",
+                        "suggested_alternatives": [],
+                    }
         else:
-            gate = trial_check_and_consume(get_device(), get_client_ip(), "analysis")
+            # Desktop Edition: analysis runs FULLY OFFLINE. Account, login and
+            # subscription are handled ONLINE (the SPA routes /api/auth + /api/license
+            # to the live Cloud Run app). Here we only need the signed-in uid (from
+            # the devstat session token) plus a LOCAL licence store, so a subscribed
+            # account stays unlocked offline and free users get 5 analyses + 5 charts.
+            # No teaching / question-bank components exist in the Desktop Edition.
+            from app.services import desktop_licence
+            from app.state import get_uid
+            uid = get_uid()
+            if not uid:
+                log.warning("DISPATCH_GATE | id=%s | analysis=%s | reason=no_account", dispatch_id, analysis_name)
+                return {
+                    "blocked": True,
+                    "requires_subscription": True,
+                    "action_type": "account",
+                    "reason": "Sign in to use the DevStat Desktop Edition — the same account works on the online app.",
+                    "details": "Sign in with your DevStat account to begin.",
+                    "suggested_alternatives": [],
+                }
+            gate = desktop_licence.consume(uid, "analysis")
             if gate.get("blocked"):
-                log.warning("DISPATCH_GATE | id=%s | analysis=%s | trial_used identity=%s",
-                            dispatch_id, analysis_name, gate.get("identity", ""))
+                log.warning("DISPATCH_GATE | id=%s | analysis=%s | offline trial_used uid=%s",
+                            dispatch_id, analysis_name, uid)
                 return {
                     "blocked": True,
                     "requires_subscription": True,
                     "action_type": "subscription",
-                    "reason": gate.get("reason") or (
-                        "You've had a lovely free run of it! ✨ Your first 5 analyses and "
-                        "5 charts are used up — a £25/year licence keeps you going."),
-                    "details": "Upgrade to a £25/year licence to keep analysing.",
+                    "reason": gate.get("reason"),
+                    "details": gate.get("details"),
                     "suggested_alternatives": [],
                 }
     except Exception as gate_err:  # NEVER fail-open on a gate error

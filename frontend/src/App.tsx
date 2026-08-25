@@ -27,7 +27,7 @@ import QuestionBanks from './components/QuestionBanks'
 import DesktopEditionGate from './components/DesktopEditionGate'
 import { useAuth } from './stores/authStore'
 import { authApi } from './api/authApi'
-import { getMode, setMode, pricingApi, gbp, datasetApi, setDesktopMode } from './api/client'
+import { getMode, setMode, pricingApi, gbp, datasetApi, setDesktopMode, desktopLicenceApi } from './api/client'
 
 // ── Lazy-loaded pages ───────────────────────────────────────────────
 const DataPage = React.lazy(() => import('./pages/DataPage'))
@@ -170,6 +170,11 @@ const App: React.FC = () => {
       analyses_left: s.analyses_left,
       charts_left: s.charts_left,
     })).catch(() => { /* leave stale badge */ })
+    if (isDesktop) {
+      authApi.status().then((s: any) => {
+        desktopLicenceApi.sync(!!s.licensed, s.licensed_until).catch(() => {})
+      }).catch(() => {})
+    }
   }, [user, location.pathname])
 
   const startCheckout = useCallback(async () => {

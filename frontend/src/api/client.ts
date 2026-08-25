@@ -64,9 +64,10 @@ let _desktop = false
 export function setDesktopMode(v: boolean): void { _desktop = !!v }
 export function isDesktopMode(): boolean { return _desktop }
 
-// ── Logging interceptors — log EVERY API call ─────────────────────────
-api.interceptors.request.use(
-  config => {
+// ── Logging interceptors — attach to an axios instance ───────────────────
+function attachInterceptors(inst: any) {
+  inst.interceptors.request.use(
+    config => {
     const requestId = `${Date.now()}_${Math.random().toString(36).slice(2, 8)}`
     ;(config as any)._logRequestId = requestId
     ;(config as any)._logStartTime = Date.now()
@@ -112,8 +113,8 @@ api.interceptors.request.use(
   },
 )
 
-api.interceptors.response.use(
-  response => {
+  inst.interceptors.response.use(
+    response => {
     const requestId = (response.config as any)._logRequestId || '?'
     const startTime = (response.config as any)._logStartTime || Date.now()
     const elapsed = Date.now() - startTime
@@ -166,6 +167,28 @@ api.interceptors.response.use(
     return Promise.reject(error)
   },
 )
+}
+
+// Online account API — login / register / subscription go to the LIVE Cloud
+// Run app (which holds the Firebase + Stripe credentials). Data & analysis stay
+// on the local engine (same-origin `api`) so nothing is uploaded. This keeps
+// secrets out of the desktop build.
+export const ACCOUNT_API_URL = 'https://devstat-statistics-app-991466352708.europe-west1.run.app'
+export const accountApi = axios.create({
+  baseURL: ACCOUNT_API_URL,
+  headers: { 'Content-Type': 'application/json' },
+  timeout: 120000,
+})
+attachInterceptors(api)
+attachInterceptors(accountApi)
+
+// Desktop Edition — local licence store (analysis runs offline). The SPA syncs
+// the cloud licence status here so offline analysis matches the account.
+export const desktopLicenceApi = {
+  sync: (licensed: boolean, licensed_until?: string | null) =>
+    api.post('/api/desktop/sync-licence', { licensed, licensed_until }),
+  status: () => api.get('/api/desktop/licence-status'),
+}
 
 // ── Types ──────────────────────────────────────────────────────────────────
 

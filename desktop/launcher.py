@@ -26,6 +26,10 @@ LOCAL_HOST = "127.0.0.1"
 PORT = int(os.environ.get("DEVSTAT_LOCAL_PORT", "8210"))
 LOCAL_URL = f"http://{LOCAL_HOST}:{PORT}"
 OFFLINE_ENV = os.environ.get("DEVSTAT_OFFLINE", "1")
+# Session-signing secret shared with the online backend (so the local engine can
+# validate the login token for the analysis gate). Low risk: only enables a local
+# paywall bypass; data never leaves the machine.
+AUTH_SECRET = "db9ffa3d3aa6aee74301e4203e018e8bbfbedcb16e06d7c6cf35d33fd03fbc03"
 
 
 def _here() -> Path:
@@ -143,6 +147,7 @@ def main() -> None:
     cmd, cwd = find_engine()
     env = dict(os.environ)
     env["DEVSTAT_OFFLINE"] = OFFLINE_ENV
+    env["DEVSTAT_AUTH_SECRET"] = AUTH_SECRET
     env["DEVSTAT_LOCAL_PORT"] = str(PORT)
 
     print(f"[DevStat Desktop Edition] starting engine: {cmd}")

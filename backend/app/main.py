@@ -24,7 +24,7 @@ from fastapi.responses import FileResponse, JSONResponse
 
 from app.state import _session_id_var
 from app.config import PROJECT_NAME, VERSION
-from app.routers import data, analysis, charts, output, suggest, transform, wizard, r_status, eligibility, project, auth, license, teaching, questionbank
+from app.routers import data, analysis, charts, output, suggest, transform, wizard, r_status, eligibility, project, auth, license, teaching, questionbank, desktop
 from app.config import OFFLINE
 # AI assistant removed from the product — the router is not mounted (the ai
 # package is present but intentionally disabled so /api/ai/* returns 404).
@@ -222,9 +222,14 @@ def create_app() -> FastAPI:
     app.include_router(eligibility.router)
     app.include_router(project.router, prefix="/api")
     app.include_router(auth.router, prefix="/api/auth", tags=["Auth"])
-    app.include_router(license.router, prefix="/api", tags=["License"])
-    app.include_router(teaching.router, prefix="/api", tags=["Teaching"])
-    app.include_router(questionbank.router, prefix="/api", tags=["Question Bank"])
+    app.include_router(desktop.router, prefix="/api/desktop", tags=["Desktop Edition"])
+    if not OFFLINE:
+        # Online app: Stripe licence, Teaching mode and Question Banks.
+        # The Desktop Edition has none of these (account handled online, teaching
+        # removed from desktop) — so they are not mounted when OFFLINE.
+        app.include_router(license.router, prefix="/api", tags=["License"])
+        app.include_router(teaching.router, prefix="/api", tags=["Teaching"])
+        app.include_router(questionbank.router, prefix="/api", tags=["Question Bank"])
 
     # ---- Health check --------------------------------------------------------
     @app.get("/api/health", tags=["Health"])
