@@ -52,3 +52,11 @@ Everything below is live and tested, including Firestore (container), LIVE Strip
 ## NEXT / PENDING
 1. Optional hardening: full device-registry check on `/api/analysis` instead of HMAC-only `peek_uid`.
 2. Live-test a real £1/£5 purchase + the free paywall with an actual card (surface checkout confirmed LIVE already; Firestore write verified).
+
+## CLOUD BUILD ISSUE — INVESTIGATE NEXT VISIT
+**Status: live app (`devstat-statistics-app`, europe-west1) is fine and untouched.** But a fresh build+deploy is currently failing.
+- Symptom: `gcloud builds submit .` fails at the Docker step with `unable to evaluate symlinks in Dockerfile path: lstat /workspace/Dockerfile: no such file or directory`.
+- Deploy process that SHOULD work (from this doc): `cd frontend && npm run build` (→ `backend/static`) then `cd backend && gcloud builds submit . --tag gcr.io/devstat-499409/devstat --project devstat-499409` then `gcloud run deploy devstat-statistics-app --project devstat-499409 --region europe-west1 --image gcr.io/devstat-499409/devstat --min-instances 1 --max-instances 1 --memory 512Mi --cpu 1 --timeout 300 --env-vars-file devstat_envvars.json`.
+- Likely causes to check: (a) build context not picking up `backend/Dockerfile` (try submitting with an explicit absolute source path; avoid `cmd /c` wrappers which change CWD); (b) the OLD **root** `cloudbuild.yaml` + **root multi-stage** `Dockerfile` (service `devstat`, region `us-central1`) were removed in the Desktop Edition push — verify nothing still references them; (c) **default gcloud project is `pubmed-search-504823`** — always pass `--project devstat-499409`.
+- Reconcile: backend/Dockerfile expects `static` pre-built; the root multi-stage Dockerfile built the frontend inside Docker. Decide which is canonical for the live app and keep the files + workflow consistent.
+

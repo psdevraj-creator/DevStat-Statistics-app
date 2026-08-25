@@ -30,7 +30,7 @@ def assemble(out: Path, engine_dir: Path, launcher: Path, os_name: str) -> Path:
     out.mkdir(parents=True, exist_ok=True)
     app = out / APP_NAME
     if app.exists():
-        shutil.rmtree(app)
+        shutil.rmtree(_lp(app))
 
     if os_name == "mac":
         # Build a minimal .app bundle at the top level.

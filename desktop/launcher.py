@@ -94,6 +94,49 @@ def wait_for_engine(retries: int = 60) -> bool:
     return False
 
 
+def free_port(port: int) -> None:
+    """Kill any process already bound to `port` before we start a new engine.
+
+    A previous DevStat run that never closed leaves a stale engine holding
+    127.0.0.1:<port>; the new engine then can't bind and the app appears to do
+    nothing (no login screen). We free the port first so every launch is clean.
+    """
+    system = platform.system()
+    try:
+        if system == "Windows":
+            out = subprocess.check_output(["netstat", "-ano"], text=True, errors="ignore")
+            pids = set()
+            for line in out.splitlines():
+                # e.g. "TCP  127.0.0.1:8210  0.0.0.0:0  LISTENING  12345"
+                if "LISTENING" not in line:
+                    continue
+                parts = line.split()
+                for idx, tok in enumerate(parts):
+                    if tok.endswith(f":{port}") and idx + 1 < len(parts):
+                        pid = parts[-1]
+                        if pid and pid != "0":
+                            pids.add(pid)
+            for pid in pids:
+                try:
+                    subprocess.run(["taskkill", "/PID", pid, "/F"], capture_output=True)
+                except Exception:
+                    pass
+        else:
+            # macOS / Linux
+            try:
+                out = subprocess.check_output(["lsof", "-ti", f"tcp:{port}"], text=True, errors="ignore")
+                for pid in out.split():
+                    if pid:
+                        try:
+                            subprocess.run(["kill", "-9", pid], capture_output=True)
+                        except Exception:
+                            pass
+            except Exception:
+                pass
+    except Exception:
+        pass
+
+
 def main() -> None:
     system = platform.system()
 
@@ -103,6 +146,7 @@ def main() -> None:
     env["DEVSTAT_LOCAL_PORT"] = str(PORT)
 
     print(f"[DevStat Desktop Edition] starting engine: {cmd}")
+    free_port(PORT)
     engine = subprocess.Popen(cmd, cwd=cwd, env=env)
 
     try:
